@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 01 - Các khái niệm cơ bản về Đa phương tiện</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>CÁC KHÁI NIỆM CƠ BẢN<br>VỀ ĐA PHƯƠNG TIỆN</h1>
+    <p class="subtitle">Multimedia: Khái niệm, Dữ liệu, MIRS & MM-DBMS, Ứng dụng thực tế</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>KHÁI NIỆM ĐA PHƯƠNG TIỆN</h1>
+    <p class="section-desc">Media types, Classification, Multimedia Data và các kiểu dữ liệu đa phương tiện</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KIỂU MEDIA LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Các kiểu thông tin và biểu diễn thông tin: <strong>văn bản, hình ảnh, đồ họa, video</strong>… và tất cả các thông tin có thể biểu diễn, lưu trữ, truyền, xử lý dưới dạng số.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><h4>Văn bản (Text)</h4><p>Dữ liệu chữ, ký tự, số — định dạng ASCII, Unicode</p></div>
+      <div class="card accent-orange"><h4>Ảnh tĩnh (Image)</h4><p>Ma trận điểm ảnh (pixel), JPEG, PNG, BMP</p></div>
+      <div class="card accent-green"><h4>Âm thanh (Audio)</h4><p>Tín hiệu âm thanh số hóa — WAV, MP3, AAC</p></div>
+      <div class="card accent-gold"><h4>Hoạt hình (Animation)</h4><p>Chuỗi frame thay đổi theo thời gian — GIF, SWF</p></div>
+      <div class="card accent-purple"><h4>Video</h4><p>Chuỗi khung hình liên tiếp — MP4, AVI, MOV</p></div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PHÂN LOẠI MEDIA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Theo định dạng vật lý</h3>
+        <ul>
+          <li><strong>Text</strong> — văn bản số</li>
+          <li><strong>Image</strong> — ảnh tĩnh</li>
+          <li><strong>Graphics</strong> — đồ họa vector</li>
+          <li><strong>Audio</strong> — âm thanh</li>
+          <li><strong>Video</strong> — phim, hoạt hình</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Theo mối liên hệ thời gian</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Media tĩnh (Static)</h4><p>Nội dung và ý nghĩa không phụ thuộc thời gian biểu diễn: văn bản, ảnh tĩnh, đồ họa</p></div>
+          <div class="card accent-orange"><h4>Media động (Dynamic)</h4><p>Có chiều thời gian: hoạt hình, âm thanh, video. Yêu cầu xử lý theo timeline.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MULTIMEDIA LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Multimedia</strong>: Tập hợp các kiểu media được sử dụng cùng nhau, trong đó có ít nhất một kiểu dữ liệu <strong>không phải dạng văn bản</strong>: hoạt hình, âm thanh, video.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Multimedia Data</h3>
+        <p>Biểu diễn của các kiểu dữ liệu media <strong>khác nhau</strong> mà máy tính có thể đọc được.</p>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Ví dụ</h4>
+          <p>File MP3 (audio), file MP4 (video), file PNG (image), file PDF (text + image)</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Multimedia Database</h3>
+        <p>Hệ thống lưu trữ và quản lý dữ liệu multimedia — bao gồm cả metadata và nội dung media.</p>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Khác biệt</h4>
+          <p>Không chỉ lưu bytes — mà phải hiểu ngữ nghĩa, tìm kiếm theo nội dung (CBIR, CBVR).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>DỮ LIỆU ĐA PHƯƠNG TIỆN</h1>
+    <p class="section-desc">Văn bản, Đồ họa, Ảnh, Âm thanh và Đặc điểm chung</p>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DỮ LIỆU VĂN BẢN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Đặc điểm</h3>
+        <ul>
+          <li>Chứa thông tin chủ đạo của tài liệu</li>
+          <li>Đầu vào: bàn phím, OCR (nhận dạng ký tự), âm thanh (Speech-to-text)</li>
+          <li>Dữ liệu trên đĩa, phụ đề phim</li>
+          <li>Có thể nén với tỷ lệ cao (10:1)</li>
+        </ul>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Ứng dụng</h4>
+          <p>Tài liệu văn bản, sách điện tử, email, phụ đề phim, metadata của ảnh/video</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Xử lý văn bản</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>Tokenization</strong> — tách từ, loại bỏ dấu câu</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>Stop words</strong> — loại bỏ từ không mang nghĩa ("the", "a", "of")</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p><strong>Stemming</strong> — đưa từ về dạng gốc (running → run)</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p><strong>Indexing</strong> — đánh chỉ mục để tìm kiếm nhanh</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DỮ LIỆU ĐỒ HỌA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Đồ họa gồm các <strong>cấu trúc đặc biệt</strong> được xây dựng bởi các đối tượng cơ bản:</p>
+        <ul style="margin-top:6px;">
+          <li>Đường cong (curves)</li>
+          <li>Đường thẳng (lines)</li>
+          <li>Đa giác (polygons)</li>
+          <li>Đường tròn (circles)</li>
+          <li>Ellipse, arc, spline...</li>
+        </ul>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Khác với ảnh raster</h4>
+          <p>Đồ họa lưu <strong>công thức toán học</strong>, không phải ma trận pixel → phóng to/thu nhỏ không mất chất lượng (scalable)</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Định dạng phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>SVG</h4><p>Vector 2D, XML-based, web-friendly</p></div>
+          <div class="card accent-green"><h4>AI / EPS</h4><p>Adobe Illustrator, PostScript</p></div>
+          <div class="card accent-orange"><h4>DXF / DWG</h4><p>CAD — kỹ thuật, kiến trúc</p></div>
+          <div class="card accent-gold"><h4>WMF / EMF</h4><p>Windows Metafile, Office graphics</p></div>
+          <div class="card accent-purple"><h4>3DS / OBJ</h4><p>3D graphics — mesh, vertices, normals</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DỮ LIỆU ẢNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>Ảnh số là một <strong>chuỗi các điểm ảnh (pixels)</strong> biểu diễn một vùng hiển thị trên màn hình.</p>
+        <div class="card" style="margin-top:8px;">
+          <h4>Pixel (Picture Element)</h4>
+          <p>Mỗi pixel mang thông tin về màu sắc tại một vị trí (x, y) trên ảnh.</p>
+        </div>
+        <h3 style="margin-top:10px;">Kích thước & Dung lượng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Ảnh 512×512 đơn sắc (1 bit/pixel):<br>
+            512 × 512 × 1 bit = 262,144 bits = 32 KB<br><br>
+            Ảnh 1024×768, 24-bit màu:<br>
+            1024 × 768 × 3 bytes ≈ 2.3 MB
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Phân loại ảnh</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Ảnh nhị phân (Binary)</h4><p>I(x,y) ∈ {0, 1} — đen/trắng, 1 bit/pixel</p></div>
+          <div class="card accent-orange"><h4>Ảnh mức xám (Grayscale)</h4><p>I(x,y) ∈ [0..255] — 8 bits/pixel</p></div>
+          <div class="card accent-green"><h4>Ảnh màu (Color)</h4><p>RGB: 3 kênh × 8 bits = 24 bits/pixel (16.7 triệu màu)</p></div>
+          <div class="card accent-gold"><h4>Định dạng phổ biến</h4><p>JPEG (nén), PNG (lossless), BMP (không nén), TIFF, GIF</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MÔ HÌNH MÀU (COLOR MODELS)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>RGB — Red Green Blue</h3>
+        <p>Phổ biến nhất trên màn hình và camera. Mỗi màu là tổ hợp của 3 kênh R, G, B (0–255).</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            #FF5733 → R=255, G=87, B=51<br>
+            White = (255, 255, 255)<br>
+            Black = (0, 0, 0)
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">HSV / HSL</h3>
+        <p>Hue (sắc độ), Saturation (độ bão hòa), Value/Lightness — gần với cách con người nhận thức màu.</p>
+      </div>
+      <div class="col">
+        <h3>CMYK — Cyan Magenta Yellow Key</h3>
+        <p>Dùng trong in ấn — 4 kênh: C, M, Y, K (black).</p>
+        <h3 style="margin-top:10px;">YUV / YCbCr</h3>
+        <p>Dùng trong truyền hình và video. Tách độ sáng (Y) khỏi màu (U/V hoặc Cb/Cr).</p>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>CMYK vs RGB</h4>
+          <p>RGB: additive (cộng thêm ánh sáng) → màn hình.<br>CMYK: subtractive (trừ ánh sáng phản xạ) → in ấn.</p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Wide Color Gamut (Display P3, Rec. 2020) — dùng trong smartphone OLED và TV 4K/8K HDR để hiển thị màu chính xác hơn RGB thông thường.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DỮ LIỆU ÂM THANH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Đặc điểm</h3>
+        <p>Âm thanh là <strong>tín hiệu tương tự (analog)</strong> — liên tục về thời gian và biên độ.</p>
+        <ul style="margin-top:8px;">
+          <li>Tiếng động, tiếng nói, nhạc, phim</li>
+          <li>Tín hiệu số hóa: ADC → PCM → lưu trữ</li>
+          <li>Sample rate (Hz), bit depth (bits/sample)</li>
+          <li>Tần số lấy mẫu: 44.1kHz (CD), 48kHz (video)</li>
+        </ul>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            CD Audio: 44.1kHz × 16 bits × 2 channels<br>
+            = 1,411 kbps (1.4 Mbps)
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Định dạng phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>WAV / AIFF</h4><p>Không nén — chất lượng cao, dung lượng lớn</p></div>
+          <div class="card accent-orange"><h4>MP3</h4><p>Nén lossy — phổ biến, tỷ lệ nén 10:1–12:1</p></div>
+          <div class="card accent-green"><h4>AAC / OGG</h4><p>Nén tốt hơn MP3, dùng trong video (MP4)</p></div>
+          <div class="card accent-gold"><h4>FLAC</h4><p>Lossless — nén 50% mà không mất chất lượng</p></div>
+          <div class="card accent-purple"><h4>Opus</h4><p>Tốt cho VoIP và streaming — low latency</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DỮ LIỆU VIDEO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>Video số gồm một <strong>chuỗi các khung hình (frames)</strong> liên tiếp theo thời gian.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            PAL: 25 fps<br>
+            NTSC: 30 fps<br>
+            50/60 fps: slow-motion / high-quality
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Dung lượng video</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Video PAL 720×576, 25fps, 24-bit:<br>
+            720 × 576 × 3 bytes × 25 fps<br>
+            ≈ 31 MB/s ≈ 1.86 GB/phút (chưa nén)
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Nén video</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Intra-frame (I-frame)</h4><p>Nén trong 1 frame — JPEG-like, spatial redundancy</p></div>
+          <div class="card accent-orange"><h4>Inter-frame (P/B frames)</h4><p>Nén giữa các frames — temporal redundancy</p></div>
+          <div class="card accent-green"><h4>H.264/AVC</h4><p>Phổ biến nhất — bluray, streaming, webcam</p></div>
+          <div class="card accent-gold"><h4>H.265/HEVC</h4><p>Nén tốt hơn 50% so với H.264 — 4K/8K</p></div>
+          <div class="card accent-purple"><h4>VP9 / AV1</h4><p>Open-source — YouTube, WebRTC</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐẶC ĐIỂM CHUNG CỦA DỮ LIỆU ĐA PHƯƠNG TIỆN</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Kích thước lớn</h4>
+        <p>Dung lượng rất lớn: 1 phút video HD ≈ 1 GB. Cần cấu trúc dữ liệu đặc biệt, nén, và đánh chỉ mục.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Chiều thời gian</h4>
+        <p>Âm thanh và video có chiều thời gian — cần xử lý đồng bộ (synchronization) giữa các media stream.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Đa dạng định dạng</h4>
+        <p>Nhiều chuẩn: JPEG, PNG, MP3, AAC, H.264, H.265, VP9... Mỗi định dạng có codec riêng.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Yêu cầu thời gian thực</h4>
+        <p>Video playback cần đảm bảo frame rate ổn định (24/25/30/60 fps) — buffer management quan trọng.</p>
+      </div>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Truyền dữ liệu</h3>
+        <p>Streaming vs Download: video cần bandwidth ổn định. 4K streaming ≈ 15-25 Mbps.</p>
+      </div>
+      <div class="col">
+        <h3>Tìm kiếm nội dung</h3>
+        <p>Không đánh chỉ mục bằng từ khóa → cần CBIR (Content-Based Image Retrieval), audio fingerprinting.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>MIRS VÀ MM-DBMS</h1>
+    <p class="section-desc">Multimedia Information Retrieval Systems & Multimedia Database Management Systems</p>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỪ IR ĐẾN MIRS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Information Retrieval (IR)</h3>
+        <p>Tìm kiếm dữ liệu trong tập văn bản lớn — ví dụ: tìm bằng từ khóa trong thư viện số.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-size:13px;">Input: truy vấn (query) — từ khóa, ảnh mẫu<br>Output: danh sách tài liệu được xếp hạng theo độ liên quan</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>MIRS — Mở rộng cho Multimedia</h3>
+        <p>Dữ liệu multimedia ngày càng được thu thập và lưu trữ nhiều (Internet, camera, microphone).</p>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Thách thức mới</h4>
+          <ul style="font-size:13px;">
+            <li>Dữ liệu đa dạng: ảnh, video, audio, text</li>
+            <li>Tìm kiếm bằng nội dung — không chỉ từ khóa</li>
+            <li>Đặc điểm đặc biệt: spatial, temporal, semantic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MM-DBMS LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Multimedia Database Management System (MM-DBMS)</strong>: Framework quản lý các kiểu dữ liệu khác nhau với định dạng phong phú, được lưu trên nhiều nguồn phương tiện.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Yêu cầu cơ bản</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>Tích hợp (Integration)</strong> — không cần sao chép dữ liệu cho các chương trình khác nhau</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>Độc lập dữ liệu (Data Independence)</strong> — tách cấu trúc dữ liệu khỏi ứng dụng</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p><strong>Truy vấn đồng nhất (Uniform Query)</strong> — truy vấn dữ liệu đồng nhất với định dạng khác nhau</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Truy vấn đa nguồn</h3>
+        <p>Truy vấn đồng thời từ nhiều nguồn multimedia → cần <strong>query optimization</strong> và <strong>result fusion</strong>.</p>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>MIRS vs MM-DBMS</h4>
+          <ul style="font-size:13px;">
+            <li><strong>MIRS</strong>: tìm kiếm nội dung (content retrieval)</li>
+            <li><strong>MM-DBMS</strong>: lưu trữ + truy vấn + quản lý toàn bộ vòng đời dữ liệu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MÔ HÌNH MIRS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến trúc tổng thể MIRS</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>Document Collection</strong> — tập tài liệu multimedia đầu vào</li>
+          <li><strong>Text Analysis</strong> — tách từ, đánh chỉ mục</li>
+          <li><strong>Feature Extraction</strong> — trích chọn đặc trưng (màu, texture, shape)</li>
+          <li><strong>Indexing Engine</strong> — inverted file, signature file</li>
+          <li><strong>Query Processor</strong> — xử lý truy vấn người dùng</li>
+          <li><strong>Ranking Module</strong> — xếp hạng kết quả</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Trích chọn đặc trưng</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Ảnh</h4><p>Histogram màu, texture descriptors, shape features, SIFT/ORB keypoints</p></div>
+          <div class="card accent-orange"><h4>Video</h4><p>Frame features, motion vectors, shot boundaries</p></div>
+          <div class="card accent-green"><h4>Âm thanh</h4><p>MFCC, spectral features, zero-crossing rate</p></div>
+          <div class="card accent-gold"><h4>Text</h4><p>TF-IDF, word embeddings, LSI/SVD</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MỘT SỐ VẤN ĐỀ CHÍNH CỦA MM-DBMS</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Mô tả nội dung</h4>
+        <p>Nội dung gì và mô tả bằng gì? Từ khóa hay nội dung tự động? Trích chọn đặc trưng từ ảnh, video, audio như thế nào?</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Đánh chỉ mục (Indexing)</h4>
+        <p>Tổ chức dữ liệu đa chiều để tìm kiếm nhanh — K-D trees, R-trees, inverted files, vector indexes (FAISS, HNSW).</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Đối sánh tương tự</h4>
+        <p>Khoảng cách Euclidean, Cosine similarity, Earth Mover's Distance — đo độ giống nhau giữa multimedia objects.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Truy vấn phức tạp</h4>
+        <p>Truy vấn hỗn tạp liên quan đến nhiều nguồn multimedia khác nhau — cần query optimization và result fusion.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NGÔN NGỮ TRUY VẤN MULTIMEDIA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>SQL-based Extensions</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>SQL/MM (2000)</h4><p>SQL Multimedia — mở rộng SQL cho multimedia: StillImage, Video, Audio</p></div>
+          <div class="card accent-orange"><h4>HM-SQL</h4><p>Hybrid-Multimedia SQL — kết hợp truy vấn có cấu trúc và multimedia</p></div>
+          <div class="card accent-green"><h4>MOQL</h4><p>Multimedia Object Query Language — hỗ trợ temporal/spatial queries</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Query-by-Example</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>QBE (Query By Example)</h4><p>Kéo-thả ảnh mẫu → tìm ảnh tương tự trong CSDL</p></div>
+          <div class="card accent-orange"><h4>QBIC</h4><p>Query By Image Content — IBM — histogram, sketch, texture</p></div>
+          <div class="card accent-green"><h4>Virage / Excalibur</h4><p>CBIR systems thương mại đầu tiên</p></div>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>MQL (Multimedia Query Language)</h4>
+          <p>Ngôn ngữ truy vấn chuyên biệt cho multimedia — mô tả ràng buộc thời gian và không gian.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>VÍ DỤ TÌNH HUỐNG THỰC TẾ</h1>
+    <p class="section-desc">Hệ thống giám sát, truy vấn ảnh, âm thanh, văn bản và video</p>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TÌNH HUỐNG: HỆ THỐNG GIÁM SÁT</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Tình huống điều tra</strong>: Camera giám sát thu thập thông tin tại các địa điểm liên quan đến ma túy. Dữ liệu bao gồm video, hình ảnh và âm thanh.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Các nguồn dữ liệu</h3>
+        <ul>
+          <li><strong>Surveillance video</strong> — camera thu thập hoạt động tại địa điểm</li>
+          <li><strong>Audio data</strong> — băng ghi âm hội thoại</li>
+          <li><strong>Image library</strong> — thư viện ảnh tội phạm</li>
+          <li><strong>Text documents</strong> — hồ sơ giao dịch tài chính</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Thách thức</h3>
+        <ul>
+          <li>Dữ liệu đa phương tiện, đa nguồn</li>
+          <li>Cần đối sánh nội dung (không chỉ từ khóa)</li>
+          <li>Truy vấn phức tạp, liên quan đến nhiều loại media</li>
+          <li>Yêu cầu xử lý thời gian thực</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUY VẤN ẢNH TRONG THƯ VIỆN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Truy vấn bằng ảnh mẫu (QBE)</h3>
+        <p>Cảnh sát có ảnh của 1 đối tượng — muốn định danh từ thư viện ảnh.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p><strong>Q:</strong> Tìm tất cả ảnh từ thư viện giống với ảnh đang có</p>
+        </div>
+        <h3 style="margin-top:10px;">Truy vấn bằng từ khóa</h3>
+        <ul>
+          <li>Tìm ảnh được gắn nhãn từ khóa nhất định</li>
+          <li>Đối tượng ảnh liên kết với metadata → tìm theo từ khóa</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Truy vấn bằng nội dung (CBIR)</h3>
+        <p>Trích chọn đặc trưng từ ảnh → so sánh khoảng cách vector đặc trưng.</p>
+        <div class="steps" style="margin-top:6px;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>Trích chọn features: histogram màu, texture, shape, SIFT descriptors</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p>Tính khoảng cách (Euclidean, Cosine) giữa query image và images trong CSDL</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p>Rank kết quả theo độ tương tự giảm dần</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUY VẤN DỮ LIỆU ÂM THANH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tình huống</h3>
+        <p>Đoạn băng ghi âm chứa đoạn hội thoại của 2 người A và B. A là Nguyễn Văn A.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p><strong>Q:</strong> Xác định tên của người B trong hội thoại?</p>
+        </div>
+        <h3 style="margin-top:10px;">Giải pháp</h3>
+        <ul>
+          <li><strong>Speaker recognition</strong> — nhận dạng người nói</li>
+          <li><strong>Speech-to-text</strong> — chuyển âm thanh thành văn bản</li>
+          <li><strong>Speaker embedding</strong> — vector đặc trưng giọng nói</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Kỹ thuật trích chọn âm thanh</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>MFCC</h4><p>Mel-Frequency Cepstral Coefficients — đặc trưng phổ biến cho speech recognition</p></div>
+          <div class="card accent-orange"><h4>Mel Spectrogram</h4><p>Biểu diễn频谱 theo thang Mel — dùng trong deep learning models</p></div>
+          <div class="card accent-green"><h4>Speaker Embedding</h4><p>x-vectors, d-vectors — biểu diễn giọng nói mỗi người</p></div>
+          <div class="card accent-gold"><h4>Audio Fingerprinting</h4><p>Shazam-like — nhận dạng bài hát từ đoạn ngắn</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUY VẤN DỮ LIỆU VĂN BẢN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tình huống</h3>
+        <p>Tra cứu tài liệu để điều tra vụ việc chưa được giải quyết.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p><strong>Q:</strong> Tìm tất cả tài liệu có giao dịch tài chính với công ty ABC trước ngày X?</p>
+        </div>
+        <h3 style="margin-top:10px;">Vector Space Model</h3>
+        <p>Mỗi tài liệu được biểu diễn bởi vector trọng số từ (TF-IDF).</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            Doc = {w₁, w₂, ..., wₙ} → V = (tfidf₁, tfidf₂, ..., tfidfₙ)<br><br>
+            Similarity = cos(Vq, Vd) = (Vq·Vd) / (|Vq||Vd|)
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Inverted File Index</h3>
+        <p>Index ngược: term → danh sách documents chứa term.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            Term Index:<br>
+            "bank" → {d₁, d₃, d₇}<br>
+            "attack" → {d₁, d₂, d₅}<br>
+            "transfer" → {d₃}
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Truy vấn phức tạp</h4>
+          <p>AND, OR, NOT kết hợp nhiều terms → intersection/union của posting lists.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUY VẤN DỮ LIỆU VIDEO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tình huống</h3>
+        <p>Cảnh sát đang xem đoạn băng theo dõi một vụ tấn công — mặt kẻ tấn công (B) bị che khuất một phần.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p><strong>Q:</strong> Tìm đoạn video liên quan đến đối tượng B trong các camera khác?</p>
+        </div>
+        <h3 style="margin-top:8px;">Face Recognition</h3>
+        <p>Partial face → tìm trong CSDL ảnh tĩnh → định danh đối tượng.</p>
+      </div>
+      <div class="col">
+        <h3>Kỹ thuật trích chọn video</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Shot Detection</h4><p>Chia video thành các shots (cảnh) dựa trên thay đổi pixel</p></div>
+          <div class="card accent-orange"><h4>Keyframe Extraction</h4><p>Trích chọn frame đại diện cho mỗi shot</p></div>
+          <div class="card accent-green"><h4>Motion Features</h4><p>Optical flow, trajectory descriptors — đặc trưng chuyển động</p></div>
+          <div class="card accent-gold"><h4>Scene Understanding</h4><p>Deep learning — scene graph, action recognition</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUY VẤN HỖN TẠP (MULTIMODAL QUERY)</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Truy vấn phức tạp liên quan đến <strong>nhiều nguồn multimedia</strong> khác nhau — ảnh + văn bản + audio + video.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Ví dụ thực tế</h3>
+        <p><strong>HQ2:</strong> Tìm tất cả những kẻ đã bị kết án trong vụ tấn công ở Nam Phi và đã có chuyển khoản vào tài khoản từ công ty ABC.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Truy vấn ảnh tội phạm → tìm ảnh người bị kết án</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>Truy vấn CSDL tài chính → tìm giao dịch với công ty ABC</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>Cross-database join → kết quả giao nhau</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Thách thức</h3>
+        <ul>
+          <li>Mỗi loại media có schema/index khác nhau</li>
+          <li>Semantic gap — khoảng cách ngữ nghĩa giữa query và kết quả</li>
+          <li>Kết quả phải được <strong>fusion</strong> theo thứ tự ưu tiên</li>
+          <li>Chi phí xử lý cao — cần tối ưu hóa</li>
+        </ul>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Giải pháp</h4>
+          <p>Multimodal foundation models (CLIP, GPT-4V) — biểu diễn thống nhất ảnh, text, audio vào cùng embedding space.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ỨNG DỤNG ĐA PHƯƠNG TIỆN</h1>
+    <p class="section-desc">Từ World Wide Web đến Digital Library, Video-on-Demand, và AI</p>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WORLD WIDE WEB VÀ DIGITAL LIBRARY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>World Wide Web</h3>
+        <p>WWW là hệ thống multimedia lớn nhất thế giới — HTML pages + images + audio + video.</p>
+        <div class="card" style="margin-top:8px;">
+          <h4>Thách thức</h4>
+          <ul style="font-size:14px;">
+            <li>Tìm kiếm bằng nội dung multimedia</li>
+            <li>Google Image Search, YouTube Search</li>
+            <li>Deep linking giữa các media types</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Digital Library</h3>
+        <p>Thư viện số lưu trữ tài liệu văn bản + ảnh + audio + video — phục vụ nghiên cứu và giáo dục.</p>
+        <div class="cards" style="flex-direction:column; gap:6px; margin-top:8px;">
+          <div class="card"><h4>Europeana</h4><p>Thư viện số châu Âu — 50+ triệu items</p></div>
+          <div class="card accent-green"><h4>Internet Archive</h4><p>Lưu trữ web, video, audio miễn phí</p></div>
+          <div class="card accent-orange"><h4>Google Books</h4><p>70+ triệu sách số hóa</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VIDEO-ON-DEMAND VÀ STREAMING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Video-on-Demand (VoD)</h3>
+        <p>Người dùng chọn và xem video bất kỳ lúc nào — Netflix, YouTube, Disney+.</p>
+        <div class="cards" style="flex-direction:column; gap:6px; margin-top:8px;">
+          <div class="card"><h4>Adaptive Bitrate Streaming</h4><p>ABR — tự động điều chỉnh chất lượng theo băng thông</p></div>
+          <div class="card accent-orange"><h4>HLS / DASH</h4><p>HTTP Live Streaming, Dynamic Adaptive Streaming</p></div>
+          <div class="card accent-green"><h4>CDN</h4><p>Content Delivery Network — cache edge servers</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bandwidth requirements</h3>
+        <table style="font-size:12px;">
+          <thead><tr><th>Chất lượng</th><th>Resolution</th><th>Bitrate</th></tr></thead>
+          <tbody>
+            <tr><td>SD</td><td>480p</td><td>1.5 - 4 Mbps</td></tr>
+            <tr><td>HD</td><td>720p/1080p</td><td>4 - 8 Mbps</td></tr>
+            <tr><td>4K UHD</td><td>2160p</td><td>15 - 25 Mbps</td></tr>
+            <tr><td>8K UHD</td><td>4320p</td><td>50 - 100 Mbps</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>AV1</strong> codec đang thay thế H.265 — nén tốt hơn 30-50%, miễn phí bản quyền. <strong>Perceptual quality</strong> thay vì bitrate là metric mới.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>IBM MARVEL VÀ CBIR THƯƠNG MẠI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>IBM MARVEL</h3>
+        <p><strong>Multimedia Analysis and Retrieval</strong> — dịch vụ tìm kiếm và phân tích multimedia của IBM.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p>Automatic and semi-automatic description generation — tạo mô tả tự động cho ảnh/video.</p>
+        </div>
+        <h3 style="margin-top:10px;">Khả năng</h3>
+        <ul>
+          <li>Tìm kiếm ảnh bằng nội dung (CBIR)</li>
+          <li>Nhận dạng khuôn mặt, vật thể</li>
+          <li>Phân tích video: shot detection, scene classification</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Hệ thống CBIR thương mại nổi tiếng</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Google Images</h4><p>Tìm ảnh bằng ảnh, từ khóa — 20+ tỷ ảnh được index</p></div>
+          <div class="card accent-orange"><h4>Google Lens</h4><p>CBIR trên mobile — nhận dạng đối tượng, text trong ảnh thực tế</p></div>
+          <div class="card accent-green"><h4>Apple Visual Lookup</h4><p>Nhận dạng địa danh, tác phẩm nghệ thuật, thú cưng</p></div>
+          <div class="card accent-gold"><h4>Pinterest Lens</h4><p>Search by image — tìm sản phẩm tương tự trong Pinterest</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐẶC ĐIỂM DỮ LIỆU ĐA PHƯƠNG TIỆN — TỔNG HỢP</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Tính đa chiều</h4>
+        <p>Không chỉ 1D (text) — mà 2D (image), 3D (video), 4D (spatio-temporal).</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Tính thời gian</h4>
+        <p>Audio và video có chiều thời gian — cần xử lý temporal relationships, synchronization.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Kích thước lớn</h4>
+        <p>1 phút video 4K ≈ 1-2 GB. Cần nén, tổ chức index, và truyền stream hiệu quả.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Tính không cấu trúc</h4>
+        <p>Khó query bằng SQL thông thường — cần semantic indexing và similarity search.</p>
+      </div>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Mối liên hệ giữa các media</h3>
+        <ul>
+          <li><strong>Audio-Text</strong>: speech-to-text transcription</li>
+          <li><strong>Image-Video</strong>: keyframe extraction, scene understanding</li>
+          <li><strong>Cross-modal</strong>: CLIP (image↔text), AudioCLIP (audio↔image)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Yêu cầu xử lý</h3>
+        <ul>
+          <li><strong>Nén</strong>: JPEG, MP3, H.264, AV1 — giảm dung lượng</li>
+          <li><strong>Index</strong>: đánh chỉ mục nội dung</li>
+          <li><strong>Sync</strong>: đồng bộ multi-stream (video + audio + subtitle)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH CÁC HỆ QUẢN TRỊ MULTIMEDIA</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%">Hệ thống</th>
+          <th style="width:26%">Loại DB</th>
+          <th style="width:26%">Kiểu truy vấn</th>
+          <th style="width:26%">Ứng dụng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IR System (Google)</td>
+          <td>Văn bản, HTML</td>
+          <td>Từ khóa, PageRank</td>
+          <td>Tìm kiếm web</td>
+        </tr>
+        <tr>
+          <td>CBIR (QBIC, Virage)</td>
+          <td>Ảnh</td>
+          <td>Màu histogram, texture, shape</td>
+          <td>Thư viện ảnh</td>
+        </tr>
+        <tr>
+          <td>Video DB (MOO)</td>
+          <td>Video, Audio</td>
+          <td>Temporal queries, motion</td>
+          <td>Phim, giám sát</td>
+        </tr>
+        <tr>
+          <td>MMDBMS (Oracle)</td>
+          <td>Tất cả media types</td>
+          <td>SQLMM, multimedia queries</td>
+          <td>Doanh nghiệp</td>
+        </tr>
+        <tr>
+          <td>Vector DB (Pinecone)</td>
+          <td>Embeddings</td>
+          <td>ANN, k-NN search</td>
+          <td>AI applications</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>Vector Databases</strong> (Pinecone, Weaviate, Milvus, ChromaDB) đang trở thành backbone cho AI multimedia retrieval — lưu trữ embeddings từ CLIP, Whisper, Gemini, và tìm kiếm ANN (Approximate Nearest Neighbor) với HNSW, IVF indexes.</p>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — PHÂN LOẠI VÀ ĐẶC ĐIỂM MEDIA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Câu 1: Phân loại Media</h3>
+        <p>Phân biệt các loại media sau vào nhóm tĩnh/động:</p>
+        <ul style="margin-top:6px;">
+          <li>a) Ảnh JPEG của bức tranh Mona Lisa</li>
+          <li>b) File MP3 của bài hát</li>
+          <li>c) Video phim ngắn 2 phút</li>
+          <li>d) File SVG của logo công ty</li>
+          <li>e) Phụ đề phim (subtitle file .srt)</li>
+          <li>f) Animation GIF của biểu tượng cảm xúc</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu 2: Tính dung lượng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            1 ảnh 1920×1080, 24-bit màu = ? bytes<br><br>
+            1 video 30fps, 1920×1080, 24-bit, 5 phút, không nén = ? MB<br><br>
+            1 phút audio CD quality (44.1kHz, 16-bit, stereo) = ? MB
+          </p>
+        </div>
+        <h3 style="margin-top:8px;">Câu 3</h3>
+        <p>Nêu 3 ví dụ ứng dụng MM-DBMS trong thực tế và giải thích tại sao cần hệ thống multimedia database thay vì file system thông thường.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — TRUY VẤN MULTIMEDIA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Câu 1: Thiết kế truy vấn CBIR</h3>
+        <p>Thiết kế hệ thống CBIR cho thư viện ảnh 1 triệu bức ảnh:</p>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Trích chọn đặc trưng: histogram màu (RGB), texture (LBP), shape descriptors</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>Chọn cấu trúc index phù hợp: R-tree hay inverted file?</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>Tính độ tương tự: khoảng cách nào phù hợp với histogram màu?</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Câu 2: Video storage estimation</h3>
+        <p>Một camera giám sát quay 24/7, độ phân giải 720p, 15fps. Tính:</p>
+        <ul style="margin-top:6px;">
+          <li>Dung lượng lưu trữ 1 ngày?</li>
+          <li>Lưu trữ 30 ngày cần bao nhiêu TB?</li>
+          <li>Nếu nén H.264 (tỷ lệ 100:1), dung lượng còn lại?</li>
+        </ul>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Gợi ý</h4>
+          <p style="font-size:13px;">720p = 1280×720 pixels, 3 bytes/pixel, 15fps. Tính uncompressed rồi áp dụng tỷ lệ nén.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CHUẨN BỊ CHO CHƯƠNG TIẾP THEO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Những gì đã học</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Khái niệm Multimedia</h4><p>Media types: text, image, audio, video, graphics</p></div>
+          <div class="card accent-orange"><h4>Phân loại Media</h4><p>Tĩnh (text, image) vs động (audio, video)</p></div>
+          <div class="card accent-green"><h4>MIRS & MM-DBMS</h4><p>Kiến trúc, yêu cầu, ngôn ngữ truy vấn</p></div>
+          <div class="card accent-gold"><h4>Truy vấn đa phương tiện</h4><p>CBIR, speaker recognition, video retrieval</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Chương tiếp theo: Lưu trữ & Truy nhập</h3>
+        <p>Tìm hiểu cách dữ liệu multimedia được <strong>lưu trữ và truy nhập</strong> hiệu quả:</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Cấu trúc đĩa từ (magnetic disk)</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>RAID — Redundant Array of Inexpensive Disks</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>Buffer management và disk scheduling (FCFS, SCAN, SCAN-EDF)</p></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><p>Truy nhập từ CD-ROM — multisegment retrieval</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ MỞ RỘNG: GOOGLE LENS VÀ CLIP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Google Lens</h3>
+        <p>CBIR trong thực tế — nhận dạng đối tượng trong ảnh camera mobile.</p>
+        <div class="cards" style="flex-direction:column; gap:6px; margin-top:8px;">
+          <div class="card"><h4>Tính năng</h4><p>OCR, dịch thuật, nhận dạng thực vật, động vật, địa danh, sản phẩm</p></div>
+          <div class="card accent-orange"><h4>Công nghệ</h4><p>On-device ML (TensorFlow Lite) + Cloud processing</p></div>
+          <div class="card accent-green"><h4>Database</h4><p>Visual global index — ảnh từ web + user photos</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>CLIP — Contrastive Language-Image Pre-Training</h3>
+        <p>OpenAI CLIP học biểu diễn thống nhất từ và ảnh vào cùng vector space.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            // Zero-shot image classification<br>
+            image_embedding = clip.encode_image(img)<br>
+            text_embedding = clip.encode_text("a cat")<br>
+            similarity = cosine(image_embedding, text_embedding)
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Ứng dụng</h4>
+          <p>Image search bằng text, text-to-image (DALL-E, Stable Diffusion), video understanding.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MULTIMEDIA TRONG THỜI ĐẠI AI (2025)</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Multimodal AI</h4>
+        <p>Models xử lý đồng thời text, image, audio, video trong cùng pipeline — GPT-4V, Gemini, Claude Vision, Sora.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Text-to-Media Generation</h4>
+        <p>Tạo ảnh từ text: DALL-E 3, Midjourney, Stable Diffusion. Tạo video: Sora, Runway Gen-3, Kling. Tạo audio: ElevenLabs, Suno.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Vector Database lên ngôi</h4>
+        <p>Pinecone, Weaviate, ChromaDB, Milvus — lưu trữ embeddings từ multimodal models. Tìm kiếm ANN (Approximate Nearest Neighbor) là core operation.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Multimodal RAG</h4>
+        <p>Retrieval Augmented Generation cho text+image+video — truy xuất multimedia context để tăng cường LLM responses.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ÔN TẬP TỰ KIỂM TRA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Câu hỏi</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Sự khác nhau giữa media tĩnh và media động? Cho ví dụ?</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>Tại sao dữ liệu multimedia cần cấu trúc lưu trữ đặc biệt?</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>CBIR là gì? Trình bày các bước trong quy trình CBIR?</p></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><p>So sánh MIRS và MM-DBMS?</p></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-content"><p>Truy vấn hỗn tạp là gì? Tại sao khó xử lý?</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Đáp án mẫu</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>1. Media tĩnh/động</h4><p style="font-size:12px;">Tĩnh: không thay đổi theo thời gian (image, text, graphics). Động: có chiều thời gian (audio, video, animation).</p></div>
+          <div class="card accent-orange"><h4>3. CBIR</h4><p style="font-size:12px;">Feature extraction → Indexing → Similarity matching → Ranking</p></div>
+          <div class="card accent-green"><h4>4. MIRS vs MM-DBMS</h4><p style="font-size:12px;">MIRS: truy xuất nội dung. MM-DBMS: lưu trữ + quản lý + truy xuất toàn bộ vòng đời dữ liệu.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT — BÀI 1</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức đã học</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><p style="font-size:13px;"><strong>Media types</strong>: văn bản, ảnh, đồ họa, âm thanh, video, hoạt hình</p></div>
+          <div class="card accent-orange"><p style="font-size:13px;"><strong>Phân loại</strong>: theo định dạng vật lý, theo chiều thời gian</p></div>
+          <div class="card accent-green"><p style="font-size:13px;"><strong>MIRS/MM-DBMS</strong>: kiến trúc, yêu cầu, ngôn ngữ truy vấn</p></div>
+          <div class="card accent-gold"><p style="font-size:13px;"><strong>Truy vấn MM</strong>: CBIR, speaker recognition, video retrieval</p></div>
+          <div class="card accent-purple"><p style="font-size:13px;"><strong>Ứng dụng</strong>: WWW, Digital Library, VoD, CBIR thương mại</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Từ khóa cần nhớ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Multimedia · Media tĩnh/động<br>
+            MIRS · MM-DBMS · CBIR<br>
+            Feature extraction · TF-IDF · Inverted file<br>
+            Semantic gap · Multimodal · Vector DB<br>
+            H.264 · JPEG · MP3 · Streaming<br>
+            RAID · Disk scheduling · Bandwidth
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; CHƯƠNG TIẾP THEO</div>
+          <p><strong>Bài 2: Lưu trữ và truy nhập dữ liệu đa phương tiện</strong> — RAID, FCFS, SCAN, SCAN-EDF, CD-ROM access.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP THỰC HÀNH LỚN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Project 1: Xây dựng CBIR System</h3>
+        <p>Tự xây dựng hệ thống CBIR đơn giản:</p>
+        <ul style="margin-top:6px;">
+          <li>Dùng Python + OpenCV</li>
+          <li>Trích chọn histogram màu HSV cho 100+ ảnh</li>
+          <li>Tính khoảng cách Euclidean</li>
+          <li>Tìm top-5 ảnh tương tự nhất với ảnh query</li>
+          <li>Đánh giá bằng precision@5</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Project 2: Video Metadata Extractor</h3>
+        <p>Xây dựng ứng dụng trích xuất metadata video:</p>
+        <ul style="margin-top:6px;">
+          <li>Dùng FFmpeg + Python</li>
+          <li>Trích xuất: resolution, fps, codec, duration, audio tracks</li>
+          <li>Tạo thumbnail từ keyframes</li>
+          <li>Lưu trữ metadata vào SQLite</li>
+          <li>Truy vấn: tìm video theo resolution, duration, codec</li>
+        </ul>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Nộp bài</h4>
+          <p style="font-size:13px;">Source code + báo cáo (3-5 trang) + demo ngắn qua video.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>NỘI DUNG NÂNG CAO</h1>
+    <p class="section-desc">Image Processing, Audio Analysis, Video Indexing, MM-DBMS thực tế</p>
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>XỬ LÝ ẢNH SỐ — IMAGE PROCESSING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Các phép toán cơ bản</h3>
+        <ul>
+          <li><strong>Point operations</strong>: điều chỉnh độ sáng, tương phản, gamma correction</li>
+          <li><strong>Spatial filtering</strong>: convolution, blur, sharpen, edge detection</li>
+          <li><strong>Geometric transforms</strong>: rotate, scale, translate, affine</li>
+          <li><strong>Morphological</strong>: erosion, dilation, opening, closing</li>
+        </ul>
+        <div class="card" style="margin-top:8px;">
+          <h4>Histogram Equalization</h4>
+          <p>Cân bằng histogram để tăng độ tương phản tự động.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Phát hiện đặc trưng</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Edge Detection</h4><p>Sobel, Canny — tìm biên của đối tượng trong ảnh</p></div>
+          <div class="card accent-orange"><h4>Corner Detection</h4><p>Harris corner, FAST — điểm đặc trưng cho matching</p></div>
+          <div class="card accent-green"><h4>SIFT/ORB</h4><p>Scale-invariant keypoints — robust matching giữa 2 ảnh</p></div>
+          <div class="card accent-gold"><h4>Deep Features</h4><p>ResNet, EfficientNet — feature vector 512-2048 dims</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PHÂN TÍCH ÂM THANH — AUDIO ANALYSIS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Speech Recognition</h3>
+        <p>Nhận dạng tiếng nói tự động (ASR).</p>
+        <div class="steps" style="margin-top:6px;">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Preprocessing: PCM → Mel spectrogram</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>Feature: MFCC (13 coefficients)</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>Model: Whisper, Wav2Vec2, Conformer</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Speaker Recognition</h3>
+        <p>Xác định ai đang nói — dùng trong forensics, security.</p>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Speaker Verification</h4><p>1:1 — xác minh identity bằng voiceprint</p></div>
+          <div class="card accent-orange"><h4>Speaker Identification</h4><p>1:N — tìm người nói trong N người đã biết</p></div>
+          <div class="card accent-green"><h4>Diarization</h4><p>Ai nói ở thời điểm nào trong cuộc hội thoại</p></div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Whisper</strong> (OpenAI) — transcription accuracy 99%+ trên 100+ ngôn ngữ. <strong>DeepEmbed</strong> — speaker embedding 512-dim.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INDEXING VIDEO — ĐÁNH CHỈ MỤC VIDEO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Video Structure</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p><strong>Scene</strong>: tập các shots liên quan về nội dung</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p><strong>Shot</strong>: chuỗi frames liên tiếp từ 1 camera</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p><strong>Frame</strong>: 1 ảnh đơn lẻ — đơn vị nhỏ nhất</p></div></div>
+        </div>
+        <h3 style="margin-top:8px;">Shot Boundary Detection</h3>
+        <p>Dùng histogram difference hoặc motion vectors để phát hiện transitions (cut, dissolve, fade).</p>
+      </div>
+      <div class="col">
+        <h3>Video Indexing Features</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Color Layout</h4><p>Phân bố màu theo vùng trong frame</p></div>
+          <div class="card accent-orange"><h4>Motion Activity</h4><p>Mức độ chuyển động trong video</p></div>
+          <div class="card accent-green"><h4>Audio Energy</h4><p>Mức năng lượng âm thanh theo thời gian</p></div>
+          <div class="card accent-gold"><h4>Semantic Labels</h4><p>Object detection, scene classification (deep learning)</p></div>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>MPEG-7 Descriptors</h4>
+          <p>Chuẩn quốc tế cho mô tả nội dung multimedia — ColorLayout, EdgeHistogram, MotionLayout, AudioSpectrum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MULTIMEDIA DATABASE THỰC TẾ</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Oracle Multimedia (SQL/MM)</h4>
+        <p>Hỗ trợ BLOB, CLOB, Audio, Video, Image. Truy vấn ORDDATYPE, ORDAUDIO, ORDVIDEO. Tích hợp trong Oracle Database.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>IBM DB2 Multimedia</h4>
+        <p>Extenders for audio, video, image. Rich media retrieval — content-based search trong DB2.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Pinecone / Weaviate</h4>
+        <p>Vector databases cho embeddings — lưu trữ vectors từ CLIP, Whisper, Gemini. ANN indexes (HNSW, IVF).</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Milvus / ChromaDB</h4>
+        <p>Open-source vector DB — tìm kiếm similarity trên embeddings. Thường dùng với LangChain, LlamaIndex.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BẢO MẬT VÀ BẢN QUYỀN MULTIMEDIA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Vấn đề bản quyền</h3>
+        <p>Dữ liệu multimedia dễ sao chép — watermark và fingerprinting bảo vệ nội dung.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p><strong>Watermarking</strong> — nhúng thông tin vào ảnh/video/audio</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p><strong>Fingerprinting</strong> — tạo hash duy nhất cho mỗi file</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p><strong>DRM</strong> — Digital Rights Management (Widevine, FairPlay)</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Watermarking types</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Visible</h4><p>Logo/chữ hiển thị trên ảnh — bảo vệ brand</p></div>
+          <div class="card accent-orange"><h4>Invisible / Robust</h4><p>Watermark không nhìn thấy — chịu được compression, cropping</p></div>
+          <div class="card accent-green"><h4>Fragile</h4><p>Watermark vỡ khi bị chỉnh sửa — phát hiện tampered content</p></div>
+          <div class="card accent-gold"><h4>Neural Watermark</h4><p>StegaStamp, Tree-Ring — watermark nhúng bằng deep learning</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT TOÀN DIỆN — BÀI 1</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core Concepts</h3>
+        <div class="cards" style="flex-direction:column; gap:5px;">
+          <div class="card"><p style="font-size:12px;"><strong>Media types</strong>: text, image, audio, video, graphics, animation</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Static vs Dynamic</strong>: có/không có chiều thời gian</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>MIRS</strong>: Multimedia Information Retrieval Systems</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>MM-DBMS</strong>: lưu trữ + quản lý + truy vấn MM</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>CBIR</strong>: Content-Based Image Retrieval</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Techniques & Applications</h3>
+        <div class="cards" style="flex-direction:column; gap:5px;">
+          <div class="card"><p style="font-size:12px;"><strong>Feature extraction</strong>: histogram, SIFT, MFCC, embeddings</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Indexing</strong>: inverted file, R-tree, vector index (HNSW)</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Similarity</strong>: Euclidean, Cosine, EMD</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Multimodal AI</strong>: CLIP, Whisper, Gemini, GPT-4V</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>Vector DB</strong>: Pinecone, Milvus, Weaviate</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐỊNH HƯỚNG VÀ TÀI LIỆU THAM KHẢO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tài liệu tham khảo</h3>
+        <ul>
+          <li>Ze-Nian Li, Mark S. Drew — <em>Fundamentals of Multimedia</em> (3rd ed., Springer, 2021)</li>
+          <li>K.R. Rao et al. — <em>Multimedia Databases</em></li>
+          <li>Wikipedia — Information Retrieval, CBIR, Multimedia databases</li>
+          <li>OpenAI — CLIP paper (2021)</li>
+          <li>Google Research — MediaPipe documentation</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Định hướng tiếp theo</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p><strong>Bài 2</strong>: Lưu trữ & truy nhập — RAID, disk scheduling, CD-ROM</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p><strong>Bài 3</strong>: Cấu trúc dữ liệu đa chiều — K-D trees, R-trees, Vector DB</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p><strong>Bài 4</strong>: Tìm kiếm văn bản & ảnh — IR models, CBIR</p></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><p><strong>Bài 5</strong>: Trình diễn đa phương tiện — temporal & spatial constraints</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỰ ĐÁNH GIÁ VÀ ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Checklist tự kiểm tra</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><p>Có thể phân biệt media tĩnh và động?</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-content"><p>Hiểu kiến trúc MIRS và MM-DBMS?</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-content"><p>Biết CBIR workflow: feature → index → match → rank?</p></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-content"><p>Tính được dung lượng video/ảnh/audio?</p></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-content"><p>Hiểu sự khác nhau giữa các hệ MM-DBMS thực tế?</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Thực hành</h3>
+        <p>Xây dựng mini-project CBIR hoặc video metadata extractor. Tham khảo:</p>
+        <div class="cards" style="flex-direction:column; gap:6px; margin-top:6px;">
+          <div class="card"><p style="font-size:13px;">OpenCV Python — xử lý ảnh và trích chọn features</p></div>
+          <div class="card accent-orange"><p style="font-size:13px;">librosa — phân tích âm thanh và trích chọn MFCC</p></div>
+          <div class="card accent-green"><p style="font-size:13px;">FAISS — tìm kiếm ANN vector similarity</p></div>
+          <div class="card accent-gold"><p style="font-size:13px;">sentence-transformers (CLIP) — embeddings cho images và text</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;"> justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Lưu trữ và Truy nhập Dữ liệu Đa phương tiện</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">50</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>
