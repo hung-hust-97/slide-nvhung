@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 01 - Agile Scrum in Software Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>AGILE SCRUM IN<br>SOFTWARE DEVELOPMENT</h1>
+    <p class="subtitle">Agile development methodology in the AI era</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image6.jpeg" alt="Agile">
+    <h1>AGILE</h1>
+    <p class="section-desc">A flexible project management methodology and mindset, focused on delivering value quickly through short development iterations</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 3: Agile Manifesto ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AGILE MANIFESTO (2001)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.4;">
+        <p style="margin-bottom:8px;">Signed by 17 top software experts, laying the foundation for modern software development:</p>
+        <div class="cards" style="gap:14px; flex-direction:column;">
+          <div class="card">
+            <h4>Individuals &amp; Interactions</h4>
+            <p>over processes and tools</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">E.g.: Pair programming, direct code review instead of relying solely on approval processes</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Working Software</h4>
+            <p>over comprehensive documentation</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">E.g.: Demo the product every 2 weeks instead of writing 100-page documents before coding</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Customer Collaboration</h4>
+            <p>over contract negotiation</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">E.g.: Customer participates in Sprint Review, provides direct feedback on prototype</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Responding to Change</h4>
+            <p>over following a plan</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">E.g.: Changing priorities mid-sprint when market conditions shift</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px;">
+        <img src="assets/image6.jpeg" alt="Agile Cycle - Plan, Design, Launch, Develop, Test, Deploy, Review" style="max-width:100%; max-height:60%; object-fit:contain; border-radius:10px;">
+        <div class="ai-box" style="margin-top:0;">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>AI (ChatGPT, Copilot) accelerates Agile iterations: rapid prototyping &rarr; earlier feedback. <strong>Spotify, Netflix</strong> use AI + Agile to deploy features <strong>hundreds of times per day</strong>. <a class="ref" href="https://engineering.atspotify.com/2014/03/squad-health-check-model/" target="_blank">[Spotify Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 4: Agile Principles ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AGILE PRINCIPLES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Adaptability</h3>
+        <ul>
+          <li>Prioritize <strong>flexibility</strong> and <strong>adaptability</strong></li>
+          <li>Embrace <strong>change</strong> as an opportunity for improvement, not an obstacle</li>
+          <li>Encourage rapid response to changing requirements and market needs</li>
+          <li><em>Real-world example:</em> When COVID-19 broke out, Agile teams quickly shifted priorities to remote work features within just 1-2 sprints</li>
+        </ul>
+        <h3 style="margin-top:12px;">Continuous Delivery</h3>
+        <ul>
+          <li>Deliver working software <strong>frequently</strong> (every 2-4 weeks)</li>
+          <li>Prioritize features that deliver the <strong>highest value</strong> to customers first</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Customer Focus</h3>
+        <ul>
+          <li>Ensure <strong>customer satisfaction</strong> is the top priority</li>
+          <li><strong>Collaborate</strong> closely with stakeholders</li>
+          <li>Use <strong>feedback</strong> throughout the development process</li>
+        </ul>
+        <h3 style="margin-top:12px;">Self-Organizing Teams</h3>
+        <ul>
+          <li>Teams <strong>self-organize</strong> and make their own decisions</li>
+          <li>Regularly <strong>reflect</strong> and adjust their way of working</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>AI shortens the feedback loop: <strong>GitHub Copilot</strong> boosts coding speed by 40-55% <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub Research]</a>, <strong>AI Testing</strong> automatically detects regressions &rarr; faster releases, earlier feedback.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 5: Agile Frameworks ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>POPULAR AGILE FRAMEWORKS</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>Scrum</h4>
+        <ul>
+          <li>Most popular framework (>70% of Agile projects)</li>
+          <li>Divides projects into 2-4 week Sprints</li>
+          <li>Has 3 clear roles: PO, SM, Dev Team</li>
+          <li>Best for: complex projects with frequently changing requirements</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>Kanban</h4>
+        <ul>
+          <li>Visualizes work through Kanban boards</li>
+          <li>No fixed sprints, continuous flow</li>
+          <li>Limits WIP (Work In Progress)</li>
+          <li>Best for: maintenance, support, DevOps</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>Extreme Programming (XP)</h4>
+        <ul>
+          <li>Focuses on excellent engineering practices</li>
+          <li>Test-Driven Development (TDD)</li>
+          <li>Pair Programming, Continuous Integration</li>
+          <li>Best for: projects requiring high code quality</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>Lean Development</h4>
+        <ul>
+          <li>Waste elimination</li>
+          <li>Optimize the entire value stream</li>
+          <li>Defer decisions as late as possible</li>
+          <li>Best for: startups, MVP development</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Many organizations are adopting <strong>"AI-Augmented Agile"</strong> — combining Scrum/Kanban with AI tools: using AI to estimate story points, auto-generate test cases, analyze velocity, and predict sprint risks. <strong>McKinsey</strong> reports AI increases software development productivity by <strong>20-45%</strong>. <a class="ref" href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai" target="_blank">[McKinsey Digital]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 6: When Agile? ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHEN SHOULD YOU USE AGILE?</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:20%">Criteria</th>
+          <th style="width:40%">Agile</th>
+          <th style="width:40%">Waterfall</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Flexibility</td>
+          <td>High, easy to change and adapt. E.g.: adding an AI chatbot feature mid-project</td>
+          <td>Low, difficult to change after detailed planning</td>
+        </tr>
+        <tr>
+          <td>Requirements Management</td>
+          <td>Continuously updated based on real user feedback</td>
+          <td>Fully defined upfront, rarely changed</td>
+        </tr>
+        <tr>
+          <td>Product Delivery</td>
+          <td>Small increments, continuous (demo product every 2-4 weeks)</td>
+          <td>Single delivery at project end (could be 6-12 months)</td>
+        </tr>
+        <tr>
+          <td>Customer Involvement</td>
+          <td>Frequent: review every sprint, direct feedback</td>
+          <td>Mainly at start (requirements) and end (acceptance)</td>
+        </tr>
+        <tr>
+          <td>Documentation</td>
+          <td>Focused on <strong>results</strong>, "just enough" documentation</td>
+          <td>Comprehensive, detailed documentation at every stage</td>
+        </tr>
+        <tr>
+          <td>Risk</td>
+          <td>Early detection through each sprint, continuously mitigated</td>
+          <td>Late detection, usually during final testing phase</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>According to <strong>State of Agile Report</strong> <a class="ref" href="https://digital.ai/resource-center/analyst-reports/state-of-agile-report/" target="_blank">[Digital.ai]</a>: over 80% of organizations use Agile, with about 87% using Scrum. Waterfall is only suitable for projects with fixed requirements like embedded systems or medical software. With the AI explosion, requirements change faster than ever &rarr; Agile is increasingly important.</p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 8: Section - Scrum ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image8.png" alt="Scrum">
+    <h1>SCRUM</h1>
+    <p class="section-desc">The most popular Agile framework, used by over 87% of Agile organizations worldwide</p>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 9: Scrum History ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM HISTORY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.2;">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="font-size:12px;">1986</div>
+            <div class="step-content">
+              <h4>Origins</h4>
+              <p>Takeuchi &amp; Nonaka introduced the term "Scrum" in <em>Harvard Business Review</em>, inspired by rugby team formations</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31; font-size:12px;">1995</div>
+            <div class="step-content">
+              <h4>Formalization</h4>
+              <p>Jeff Sutherland &amp; Ken Schwaber defined Scrum at the OOPSLA conference, after successfully applying it at Easel Corporation (1993)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47; font-size:12px;">2001</div>
+            <div class="step-content">
+              <h4>Agile Manifesto</h4>
+              <p>Scrum became closely tied to the Agile Manifesto, establishing its leading role in agile software development</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333; font-size:12px;">2020</div>
+            <div class="step-content">
+              <h4>Scrum Guide Update</h4>
+              <p>The latest version emphasizes simplicity, removes rigid rules, and is more suitable for cross-industry application</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image9.png" alt="Scrum History">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 10: Scrum Pillars ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THREE PILLARS OF SCRUM (EMPIRICISM)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Scrum is based on <strong>Empiricism</strong> — knowledge comes from experience and real-world observation:</p>
+    <div class="cards" style="gap:15px;">
+      <div class="card">
+        <h4>&#x1F50D; Transparency</h4>
+        <ul>
+          <li>Information is shared <strong>openly</strong> with all stakeholders</li>
+          <li>Everyone understands the current status and project goals</li>
+          <li><em>E.g.:</em> Scrum/Kanban board displays status of all tasks</li>
+          <li><em>E.g.:</em> Burndown chart shows real-time sprint progress</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F50E; Inspection</h4>
+        <ul>
+          <li>Regularly examine processes, progress, and results</li>
+          <li>Detect <strong>deviations</strong> or areas needing improvement</li>
+          <li><em>E.g.:</em> 15-minute Daily Scrum every day to check progress</li>
+          <li><em>E.g.:</em> Sprint Review to inspect the product every 2 weeks</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F504; Adaptation</h4>
+        <ul>
+          <li>Adjust processes and products when issues are detected</li>
+          <li>Change <strong>immediately</strong>, don't wait until the end of the project</li>
+          <li><em>E.g.:</em> Retrospective finds ways to improve after each sprint</li>
+          <li><em>E.g.:</em> Modify Sprint Backlog when new risks are discovered</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p><strong>Transparency:</strong> AI dashboards automatically aggregate metrics. <strong>Inspection:</strong> AI analyzes code quality, detects technical debt. <strong>Adaptation:</strong> AI suggests improvements based on previous sprint data.</p>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE: Scrum Values ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FIVE SCRUM VALUES</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">The Scrum Guide defines <strong>5 core values</strong> that every Scrum team member should practice to build trust and collaboration:</p>
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F91D; Commitment</h4>
+        <ul>
+          <li>Commit to achieving the <strong>Sprint Goal</strong> and supporting each other</li>
+          <li>Not committing to finish every task, but committing to <strong>give your best effort</strong></li>
+          <li><em>E.g.:</em> Dev commits to completing 3 selected user stories in the sprint</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F3AF; Focus</h4>
+        <ul>
+          <li>Focus on Sprint work and the <strong>Sprint Goal</strong></li>
+          <li>Avoid distractions from work outside the sprint</li>
+          <li><em>E.g.:</em> Declining "urgent" requests unrelated to Sprint Goal</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F4AC; Openness</h4>
+        <ul>
+          <li>Be transparent about progress, <strong>difficulties</strong>, and challenges</li>
+          <li>Willing to share both good and bad news</li>
+          <li><em>E.g.:</em> Reporting "I'm blocked" in Daily instead of hiding problems</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x1F64F; Respect</h4>
+        <ul>
+          <li>Respect each member's abilities and <strong>contributions</strong></li>
+          <li>Trust the team's ability to <strong>self-organize</strong></li>
+          <li><em>E.g.:</em> SM doesn't give orders but trusts the team to divide work themselves</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4AA; Courage</h4>
+        <ul>
+          <li>Dare to say <strong>"no"</strong> to scope creep</li>
+          <li>Dare to admit mistakes and <strong>change</strong> direction</li>
+          <li><em>E.g.:</em> Dev dares to say "this story cannot be completed in this sprint"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 11: Scrum Framework Overview ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM FRAMEWORK - OVERVIEW</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:10px;">The Scrum process works in Sprint iterations (1-4 weeks):</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Product Backlog</h4>
+              <p>A list of all features and requirements to be developed. Managed and prioritized by the PO.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>Sprint Planning</h4>
+              <p>The team selects items from the Product Backlog &rarr; creates the Sprint Backlog. Sets the Sprint Goal.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>Sprint (1-4 weeks)</h4>
+              <p>The team performs the work. 15-minute Daily Scrum every day to synchronize.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333;">4</div>
+            <div class="step-content">
+              <h4>Sprint Review &amp; Retrospective</h4>
+              <p>Demo the product to stakeholders &rarr; gather feedback. Reflect on the process &rarr; improve.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image11.jpeg" alt="Scrum Framework">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 12: Scrum Roles ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM ROLES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:14px;">
+          <div class="card">
+            <h4>Product Owner (PO) — "What to build?"</h4>
+            <ul>
+              <li>Represents the customer, decides feature priorities</li>
+              <li>Manages the Product Backlog</li>
+              <li>Maximizes product value</li>
+              <li><em>Real-world example:</em> PO at Grab decides whether GrabFood or GrabPay has higher priority</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Scrum Master — "How to do it?"</h4>
+            <ul>
+              <li>Supports, facilitates, removes impediments</li>
+              <li>Ensures the team follows Scrum</li>
+              <li>NOT a project manager!</li>
+              <li><em>E.g.:</em> SM resolves conflicts between dev and QA, negotiates server resources</li>
+            </ul>
+          </div>
+          <div class="card accent-green">
+            <h4>Development Team — "Execute!"</h4>
+            <ul>
+              <li>Cross-functional team of 3-9 people</li>
+              <li>Self-organizing, decides how to do the work</li>
+              <li>Responsible for delivering the Increment</li>
+              <li><em>E.g.:</em> Includes developer, QA, designer, DevOps in the same team</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image12.jpeg" alt="Scrum Roles">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 13: Product Owner ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRODUCT OWNER - IN DETAIL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core Role</h3>
+        <ul>
+          <li>Is the <span class="highlight">voice of the customer</span>, responsible for the <strong>Product Backlog</strong></li>
+          <li>Decides <strong>which features</strong> are developed and in <strong>what order</strong></li>
+          <li>Provides feedback and requirements from stakeholders to optimize product value</li>
+        </ul>
+        <h3>Key Responsibilities</h3>
+        <ul>
+          <li>Define the <strong>product vision</strong></li>
+          <li><strong>Manage</strong> and prioritize backlog items</li>
+          <li>Make <strong>quick decisions</strong> to avoid blocking progress</li>
+          <li>Write clear <strong>User Stories</strong> with Acceptance Criteria</li>
+        </ul>
+        <h3>Required Skills</h3>
+        <ul>
+          <li>Excellent communication, market understanding, data analysis</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Modern POs use AI to: analyze thousands of user reviews (NLP), predict features with highest ROI, auto-generate user stories from feedback.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image13.png" alt="Product Owner">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 14: Scrum Master ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM MASTER - IN DETAIL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core Role</h3>
+        <ul>
+          <li>Is a <span class="highlight">facilitator</span> and <span class="highlight">coach</span></li>
+          <li><strong>Removes impediments</strong> affecting team progress</li>
+          <li><strong>Trains</strong> the team on Agile/Scrum, protects the team from external pressure</li>
+        </ul>
+        <h3>Key Responsibilities</h3>
+        <ul>
+          <li>Organize and facilitate <strong>Scrum events</strong> (Planning, Daily, Review, Retro)</li>
+          <li>Help the team <strong>self-manage</strong> and improve processes</li>
+          <li>Create conditions for <strong>collaboration</strong> between members and stakeholders</li>
+          <li>Monitor and improve <strong>velocity</strong>, <strong>burndown chart</strong></li>
+        </ul>
+        <h3>Required Skills</h3>
+        <ul>
+          <li>Servant Leadership, conflict resolution, coaching</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>SM uses AI to: auto-generate sprint reports, detect bottlenecks from Jira data, analyze team mood via retrospective feedback (sentiment analysis).</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image14.png" alt="Scrum Master">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 15: Development Team ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEVELOPMENT TEAM - IN DETAIL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>Role</h3>
+        <ul>
+          <li>A <strong>cross-functional</strong> team of 3-9 people, responsible for creating the <strong>Product Increment</strong> each Sprint</li>
+          <li><strong>Self-organizing</strong>: decides how to complete work, no one assigns tasks to individuals</li>
+          <li>Ensures <strong>product quality</strong> through collaboration and continuous improvement</li>
+        </ul>
+        <h3>Responsibilities</h3>
+        <ul>
+          <li>Manage the <strong>Sprint Backlog</strong> and divide work themselves</li>
+          <li>Build, develop, <strong>test</strong>, and deploy the product</li>
+          <li>Contribute improvements through <strong>Retrospective</strong></li>
+        </ul>
+        <h3>Typical Composition</h3>
+        <ul>
+          <li>Frontend dev, Backend dev, QA, UI/UX Designer, DevOps</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Modern developers use: <strong>Copilot/Cursor</strong> for faster coding, <strong>AI Code Review</strong> for bug detection, <strong>AI Testing</strong> for auto-generating tests. A developer with AI has productivity equivalent to 2-3 traditional developers.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image12.jpeg" alt="Dev Team">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 16: Cross-Functional ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHY CROSS-FUNCTIONAL TEAMS?</h2></div>
+  <div class="slide-body">
+    <table class="table-small">
+      <thead>
+        <tr>
+          <th style="width:16%">Aspect</th>
+          <th style="width:42%">Functional Team</th>
+          <th style="width:42%">Cross-Functional Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Definition</td>
+          <td>Members specialize in 1 function (E.g.: separate QA team, separate Backend team)</td>
+          <td>Members have diverse skills, enough to complete end-to-end</td>
+        </tr>
+        <tr>
+          <td>Collaboration</td>
+          <td>Requires coordination between many teams, prone to "throw over the wall"</td>
+          <td>Collaborate within the same team, fast communication, fewer dependencies</td>
+        </tr>
+        <tr>
+          <td>Speed</td>
+          <td>Slow due to waiting for other teams, bottlenecks when a team is overloaded</td>
+          <td>Fast, team handles everything from code &rarr; test &rarr; deploy</td>
+        </tr>
+        <tr>
+          <td>Accountability</td>
+          <td>Owns one part of the product, easy to blame other teams</td>
+          <td>Owns the entire feature, end-to-end accountability</td>
+        </tr>
+        <tr>
+          <td>Best Fit</td>
+          <td>Traditional projects requiring deep expertise in each area</td>
+          <td>Agile projects requiring fast coordination and high adaptability</td>
+        </tr>
+        <tr>
+          <td>Real Example</td>
+          <td>Separate backend, mobile, QA teams &rarr; 3 teams for 1 feature</td>
+          <td>1 "Squad" at Spotify: 1 backend + 2 frontend + 1 QA + 1 designer = complete 1 feature</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>With AI tools, a small cross-functional team can produce output equivalent to a much larger team. AI helps each member take on more roles (E.g.: dev writes tests with AI assistance, designer creates prototypes using AI). <a class="ref" href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai" target="_blank">[McKinsey Digital]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 17: Section - Artifacts ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image15.jpeg" alt="Scrum Artifacts">
+    <h1>SCRUM ARTIFACTS</h1>
+    <p class="section-desc">Scrum artifacts: transparent information to track the product, actions, and project progress</p>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 18: Product Backlog ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRODUCT BACKLOG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p style="margin-bottom:8px;">The <strong>Product Backlog</strong> is a prioritized list of all features, requirements, and improvements to be developed:</p>
+        <ul>
+          <li>Is the <strong>single source of truth</strong> — only one version for the entire product</li>
+          <li>Always <strong>transparent</strong>, accessible to all stakeholders</li>
+          <li>Higher priority items are <strong>described in more detail</strong> (Product Backlog Refinement)</li>
+          <li>Only the <strong>Product Owner</strong> has the authority to add, remove, or reprioritize</li>
+          <li><strong>Exists permanently</strong> and is continuously updated based on feedback</li>
+        </ul>
+        <h3 style="margin-top:8px;">Common Prioritization Techniques:</h3>
+        <ul>
+          <li><strong>MoSCoW</strong>: Must have, Should have, Could have, Won't have</li>
+          <li><strong>WSJF</strong> (Weighted Shortest Job First): value / effort</li>
+          <li><strong>Kano Model</strong>: classify features by customer satisfaction</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>AI analyzes user data, support tickets, app reviews to <strong>automatically suggest</strong> backlog prioritization. Jira AI can suggest story point estimation.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image16.png" alt="Product Backlog">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 19: Product Backlog Items ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRODUCT BACKLOG ITEM TYPES</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>User Stories</h4>
+        <p>Describe features from the user's perspective</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"As a buyer, I want to filter products by price so I can find items within my budget"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">~60-70% of backlog items</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Bugs</h4>
+        <p>Defects or errors that need to be fixed</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Checkout page crashes when selecting MoMo payment on iOS 17"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Prioritized by severity: Critical > Major > Minor</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Technical Tasks</h4>
+        <p>Technical work not directly user-facing</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Upgrade Spring Boot from 3.1 to 3.3 to fix security vulnerability"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Supports user stories, reduces technical debt</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Spikes (Research)</h4>
+        <p>Research to reduce uncertainty, time-boxed</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Research integrating ChatGPT API into the current chatbot system (2 days)"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Output: knowledge, prototype, PoC</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Use <strong>ChatGPT/Claude</strong> to generate user stories from feature descriptions, auto-write acceptance criteria in Given-When-Then format, and suggest edge cases the PO may not have considered.</p>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 20: User Stories Detail ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USER STORIES - IN DETAIL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>Standard Format:</h3>
+        <div class="quote-box">
+          <p>As a <strong>[user type]</strong>, I want <strong>[feature]</strong>, so that <strong>[benefit]</strong>.</p>
+        </div>
+        <h3>I.N.V.E.S.T. Criteria:</h3>
+        <ul>
+          <li><strong>I</strong>ndependent — Independent, not dependent on other stories</li>
+          <li><strong>N</strong>egotiable — Can be negotiated, not a rigid contract</li>
+          <li><strong>V</strong>aluable — Delivers clear value to the user</li>
+          <li><strong>E</strong>stimable — Can be estimated in story points</li>
+          <li><strong>S</strong>mall — Small enough to complete in 1 sprint</li>
+          <li><strong>T</strong>estable — Can be tested with clear acceptance criteria</li>
+        </ul>
+        <h3>Real-World Examples:</h3>
+        <ul>
+          <li><strong>E-commerce:</strong> "As a buyer, I want to see AI-summarized product reviews so I can make purchase decisions faster" (3 SP)</li>
+          <li><strong>Banking:</strong> "As a user, I want to authenticate with fingerprint so I can log in securely and quickly" (5 SP)</li>
+        </ul>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image18.png" alt="User Stories">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 21: Bugs & Technical Tasks ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BUGS &AMP; TECHNICAL TASKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bugs (Software Defects)</h3>
+        <ul>
+          <li><span class="highlight">Priority:</span> Based on impact severity × number of affected users. Critical production bugs must be fixed immediately.</li>
+          <li><span class="highlight">Standard Description:</span> Steps to reproduce, Expected vs Actual result, Environment, Screenshots/Logs</li>
+          <li><span class="highlight">Acceptance Criteria:</span> Confirm bug is fixed + regression test passes</li>
+          <li><em>E.g.:</em> "App crashes when uploading photos > 10MB on Android 14. Steps: Open app → select photo → crash. Expected: auto resize."</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Technical Tasks</h3>
+        <ul>
+          <li><span class="highlight">Not user-facing:</span> Backend, infrastructure, CI/CD, refactoring</li>
+          <li><span class="highlight">Specific:</span> Clearly describe the work needed, can be estimated</li>
+          <li><span class="highlight">Supportive:</span> Serves larger user stories or reduces technical debt</li>
+          <li><em>E.g.:</em> "Setup Docker Compose for local dev environment", "Migrate database from MySQL to PostgreSQL", "Configure CI/CD pipeline with GitHub Actions"</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Sentry AI</strong> auto-classifies bugs, suggests fixes. <strong>Copilot</strong> suggests code fixes. <strong>AI</strong> auto-generates bug reports from crash logs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 22: DOD ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEFINITION OF DONE (DOD)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">DOD is a set of <strong>mandatory criteria</strong> that all work must meet to be considered "Done". Ensures consistent quality.</p>
+    <div class="cards" style="gap:14px;">
+      <div class="card">
+        <h4>&#x1F4BB; Development</h4>
+        <ul>
+          <li>Code written following coding standards</li>
+          <li>Code reviewed by at least 1 person</li>
+          <li>No lint/compile errors</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F9EA; Testing</h4>
+        <ul>
+          <li>Unit tests pass (coverage ≥ 80%)</li>
+          <li>Integration tests pass</li>
+          <li>Manual QA testing completed</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F680; Deployment</h4>
+        <ul>
+          <li>Successfully deployed to staging</li>
+          <li>Performance test meets requirements</li>
+          <li>Security scan shows no Critical/High issues</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x2705; Acceptance</h4>
+        <ul>
+          <li>PO reviewed and accepted</li>
+          <li>Acceptance criteria 100% met</li>
+          <li>API/user guide documentation updated</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p><strong>SonarQube AI</strong> auto-checks code quality, <strong>GitHub Actions + AI</strong> runs test suites, <strong>Snyk AI</strong> scans security. Many DOD steps can now be <strong>100% automated</strong> with AI &rarr; teams focus on creativity instead of manual checks.</p>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 23: Sprint Backlog ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT BACKLOG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:8px;">Sprint Backlog = selected items from Product Backlog + execution plan for the current Sprint:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Selected PBIs (Selected Items)</h4>
+              <p>User stories, bugs selected during Sprint Planning. Must align with the <strong>Sprint Goal</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>Detailed Tasks</h4>
+              <p>Each PBI is broken into small tasks (2-8h). E.g.: "Design API endpoint", "Write unit tests", "Code review".</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>Sprint Goal</h4>
+              <p>A clear goal for the sprint. E.g.: <em>"Complete login module with two-factor authentication"</em></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333;">4</div>
+            <div class="step-content">
+              <h4>Progress Tracking</h4>
+              <p>Updated daily on Scrum Board (To Do → In Progress → Done) + Burndown Chart.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Key characteristics:</strong> Owned by the Dev Team (not PO), can be adjusted during the Sprint, always transparent. Many teams now manage Sprint Backlog directly on <strong>Jira Board</strong> or <strong>Linear</strong>.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image22.jpeg" alt="Sprint Backlog">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 24: Scrum Increments ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INCREMENT (PRODUCT INCREMENT)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">An Increment is the <strong>sum of all completed work</strong> in the current Sprint + all previous Sprints:</p>
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F4E6; Potentially Releasable</h4>
+        <p>At the end of each Sprint, the Increment must be in a <strong>potentially releasable</strong> state, even if the PO may not release it immediately.</p>
+        <p style="font-size:12px; color:#888; margin-top:3px;"><em>E.g.: Spotify deploys to production daily but only enables features via feature flags when ready</em></p>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F4C8; Cumulative</h4>
+        <p>Each Increment <strong>builds on previous Increments</strong>, continuously adding value. Sprint 1: Login → Sprint 2: Login + Dashboard → Sprint 3: Login + Dashboard + Reports.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x2705; Complies with DOD</h4>
+        <p>Only work meeting the <strong>Definition of Done</strong> counts. Code that hasn't been tested = not an Increment.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x1F4A1; Delivers Value</h4>
+        <p>The Increment must be a <strong>meaningful</strong> improvement to the product, not just "code is done but unusable".</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>With <strong>AI-powered CI/CD</strong> (GitHub Actions, GitLab CI), every commit can auto build, test, deploy &rarr; creating continuous Increments. <strong>Feature flags + AI A/B testing</strong> enable safe releases to specific user groups.</p>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 25: Section - Scrum Events ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image11.jpeg" alt="Scrum Events">
+    <h1>SCRUM EVENTS</h1>
+    <p class="section-desc">5 key events that create the working rhythm of Scrum: Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective</p>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE: What is Sprint ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT — THE HEART OF SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:8px;">A Sprint is a <strong>container event</strong> that contains all other Scrum events. All work happens within a Sprint.</p>
+        <h3>Key Characteristics:</h3>
+        <ul>
+          <li><strong>Fixed duration:</strong> 1-4 weeks (most common: 2 weeks). Not changed mid-sprint.</li>
+          <li><strong>New Sprint starts immediately</strong> after the previous Sprint ends — no gaps.</li>
+          <li><strong>Sprint Goal:</strong> Each Sprint has 1 clear goal, serving as the "guiding star" for the team.</li>
+          <li><strong>No changes</strong> to Sprint Goal mid-sprint, no quality reduction, no duration changes.</li>
+          <li>Scope can be <strong>renegotiated</strong> between PO and Dev Team if needed.</li>
+        </ul>
+        <h3 style="margin-top:10px;">Sprint Cancellation:</h3>
+        <ul>
+          <li>Only the <strong>Product Owner</strong> has the authority to cancel a Sprint</li>
+          <li>Occurs when the Sprint Goal becomes <strong>obsolete</strong> (E.g.: company strategy change, competitor launches similar product)</li>
+          <li>Very rare in practice — costly and disruptive</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>With AI accelerating development, many teams shorten Sprints to <strong>1 week</strong>. AI enables faster coding → shorter feedback loops → earlier value delivery.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image23.png" alt="Sprint">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 26: Sprint Planning ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT PLANNING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.4;">
+        <p style="margin-bottom:8px;">Occurs at the <strong>beginning of each Sprint</strong>, time-boxed to a maximum of <strong>8 hours</strong> for a 1-month Sprint (4 hours for a 2-week Sprint):</p>
+        <h3>3 Questions to Answer:</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Why is this Sprint valuable? (Why)</h4>
+              <p>PO proposes the Sprint Goal. E.g.: <em>"Complete the online payment module to increase conversion rate by 15%"</em></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>What can be done? (What)</h4>
+              <p>The team selects PBIs from the Product Backlog based on <strong>velocity</strong> and <strong>capacity</strong>. E.g.: velocity = 30 SP &rarr; select ~30 SP of items.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>How will it be done? (How)</h4>
+              <p>Dev Team breaks each PBI into specific tasks (design, code, test, deploy). Creates the Sprint Backlog.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Jira AI</strong> analyzes historical data to predict velocity more accurately. <strong>AI</strong> suggests task breakdowns based on similar past stories.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 35%;">
+        <img src="assets/image23.png" alt="Sprint Planning">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 30: Estimation ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ESTIMATION IN SCRUM (STORY POINTS)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>What are Story Points?</h3>
+        <p>A unit measuring <strong>complexity</strong> (not time) of work. Combines 3 factors:</p>
+        <ul>
+          <li><strong>Complexity:</strong> Technical complexity</li>
+          <li><strong>Effort:</strong> Required effort</li>
+          <li><strong>Uncertainty:</strong> Level of uncertainty</li>
+        </ul>
+        <h3 style="margin-top:10px;">Planning Poker</h3>
+        <p>The most popular estimation method:</p>
+        <ul>
+          <li>Uses Fibonacci sequence: <strong>1, 2, 3, 5, 8, 13, 21</strong></li>
+          <li>Each member picks a number independently, then discusses</li>
+          <li>If there's a large difference &rarr; discuss and vote again</li>
+        </ul>
+        <h3 style="margin-top:10px;">Velocity</h3>
+        <ul>
+          <li>Average total story points completed per sprint</li>
+          <li>E.g.: Sprint 1=25, Sprint 2=30, Sprint 3=28 &rarr; Velocity ≈ 28 SP</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Real-World Examples:</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr><th>SP</th><th>Level</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:700; text-align:center;">1</td><td>Very simple</td><td>Change button text, fix typo</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">3</td><td>Simple</td><td>Add form validation</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">5</td><td>Medium</td><td>Create basic CRUD API</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">8</td><td>Complex</td><td>Integrate payment gateway</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">13</td><td>Very complex</td><td>Integrate AI recommendation</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Jira AI / LinearB</strong> analyzes historical data to automatically suggest story points. AI also predicts <strong>sprint completion probability</strong> based on velocity patterns. <a class="ref" href="https://www.atlassian.com/platform/artificial-intelligence" target="_blank">[Atlassian AI]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 27: Daily Scrum ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DAILY SCRUM (DAILY STANDUP)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p style="margin-bottom:8px;">A <span class="accent">maximum 15-minute</span> meeting every day, at the same time and place:</p>
+        <h3>Each member shares:</h3>
+        <ul>
+          <li>What did I do <strong>yesterday</strong>? (to sync progress)</li>
+          <li>What will I do <strong>today</strong>? (so the team knows the plan)</li>
+          <li>Are there any <strong>impediments</strong>? (for SM to resolve)</li>
+        </ul>
+        <h3 style="margin-top:8px;">Important Rules:</h3>
+        <ul>
+          <li><strong>Stand up</strong> to keep it brief</li>
+          <li>Don't solve problems in the meeting — only <strong>identify</strong> them</li>
+          <li>Only Dev Team is <strong>required</strong>, SM/PO attendance is optional</li>
+          <li>Update Scrum Board / Burndown Chart</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Slack bot AI</strong> collects async standups, auto-summarizes progress. <strong>Geekbot, Standuply</strong> replace synchronous meetings for remote teams. AI detects <strong>blocker patterns</strong> and provides early warnings.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex-direction:column; gap:14px;">
+        <img src="assets/image24.png" alt="Daily Scrum 1" style="max-height:30%; width:auto;">
+        <img src="assets/image25.png" alt="Daily Scrum 2" style="max-height:30%; width:auto;">
+        <img src="assets/image26.png" alt="Daily Scrum 3" style="max-height:30%; width:auto;">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 31: Scrum Board & Burndown ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM BOARD &AMP; BURNDOWN CHART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Scrum Board</h3>
+        <p style="margin-bottom:6px;">Visualizes work in the Sprint:</p>
+        <table style="font-size:13px; text-align:center;">
+          <thead>
+            <tr><th>To Do</th><th>In Progress</th><th>In Review</th><th>Done</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Login API<br><span style="font-size:11px; color:#888;">(5 SP)</span></td>
+              <td>Payment UI<br><span style="font-size:11px; color:#888;">(8 SP - An)</span></td>
+              <td>Dashboard<br><span style="font-size:11px; color:#888;">(5 SP - Binh)</span></td>
+              <td>User Profile<br><span style="font-size:11px; color:#888;">(3 SP ✅)</span></td>
+            </tr>
+            <tr>
+              <td>Email notif<br><span style="font-size:11px; color:#888;">(3 SP)</span></td>
+              <td>Search API<br><span style="font-size:11px; color:#888;">(5 SP - Cuc)</span></td>
+              <td></td>
+              <td>Registration<br><span style="font-size:11px; color:#888;">(5 SP ✅)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Burndown Chart</h3>
+        <p style="margin-bottom:6px;">A chart tracking Sprint progress over time:</p>
+        <ul>
+          <li><strong>X-axis:</strong> Days in Sprint (Day 1 → Day 10)</li>
+          <li><strong>Y-axis:</strong> Remaining Story Points</li>
+          <li><strong>Ideal line:</strong> Decreases steadily from total SP &rarr; 0</li>
+          <li><strong>Actual line:</strong> Reflects real progress</li>
+          <li>If actual line is <strong>above</strong> ideal line &rarr; team is behind schedule</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Jira, Azure DevOps</strong> auto-generate real-time burndown charts. AI analyzes patterns to provide <strong>early warnings</strong> when a sprint is at risk, suggesting actions (E.g.: "Consider removing 1 story of 5SP to hit Sprint Goal").</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 28: Sprint Review ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT REVIEW</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">Occurs at the <strong>end of each Sprint</strong>, time-boxed to a maximum of <strong>4 hours</strong>. Participants: Scrum Team + Stakeholders (customers, managers, partners).</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Product Demo</h4>
+          <p>The team <strong>demos working software</strong> (not slides!) to stakeholders. Only features meeting DOD are demoed.</p>
+          <p style="font-size:13px; color:#888;"><em>E.g.: Demo QR payment feature directly on the app, stakeholders try it in real-time</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#ED7D31;">2</div>
+        <div class="step-content">
+          <h4>Gather Feedback</h4>
+          <p>Stakeholders provide <strong>direct feedback</strong>: "Great!", "Need more filters", "UX isn't intuitive". Feedback is recorded for the PO.</p>
+          <p style="font-size:13px; color:#888;"><em>E.g.: Customer requests an AI chatbot support feature → PO adds to backlog</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#70AD47;">3</div>
+        <div class="step-content">
+          <h4>Adapt the Product Backlog</h4>
+          <p>Based on feedback, the PO <strong>updates the priority order</strong> of the Product Backlog for the next Sprint. Items can be added/removed.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:4px;">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Use AI to analyze stakeholder feedback (sentiment analysis), auto-generate meeting notes, suggest backlog prioritization based on feedback patterns.</p>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 29: Sprint Retrospective ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT RETROSPECTIVE</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">The <strong>last event</strong> of the Sprint, time-boxed to <strong>3 hours</strong>. Only the Scrum Team participates (no stakeholders).</p>
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>3 Core Questions:</h3>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:6px;">
+          <div class="card">
+            <h4>&#x1F44D; What went well?</h4>
+            <p>E.g.: "Pair programming sped up reviews", "CI/CD pipeline was stable"</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>&#x1F914; What could be improved?</h4>
+            <p>E.g.: "Sprint Planning took too long", "Testing was crammed at the end of sprint"</p>
+          </div>
+          <div class="card accent-green">
+            <h4>&#x1F3AF; Specific actions for the next Sprint?</h4>
+            <p>E.g.: "Apply TDD to test in parallel with coding", "Limit WIP = 2 tasks/person"</p>
+          </div>
+        </div>
+        <h3 style="margin-top:8px;">Popular Retro Techniques:</h3>
+        <ul>
+          <li><strong>Start-Stop-Continue:</strong> Start / Stop / Continue doing what</li>
+          <li><strong>4Ls:</strong> Liked, Learned, Lacked, Longed for</li>
+          <li><strong>Sailboat:</strong> Wind (helps), Anchor (hinders), Rocks (risks)</li>
+        </ul>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image30.jpeg" alt="Retrospective">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 7: Agile in AI Era ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AGILE IN THE AI ERA</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card accent-purple">
+        <h4>&#x1F916; AI-Assisted Coding</h4>
+        <ul>
+          <li><strong>GitHub Copilot / Cursor AI</strong>: Real-time code suggestions, significantly boosting productivity <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub Research]</a></li>
+          <li><strong>Claude / ChatGPT</strong>: Explain code, debug, auto-write unit tests</li>
+          <li>Impact: Sprint velocity increases, fewer developers needed for the same workload</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4CA; AI-Powered Project Management</h4>
+        <ul>
+          <li><strong>Jira AI</strong>: Auto-classify, estimate story points</li>
+          <li><strong>LinearB / Jellyfish</strong>: AI-powered engineering metrics analysis</li>
+          <li>Impact: More accurate Sprint Planning, fewer missed deadlines</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F9EA; AI Testing &amp; QA</h4>
+        <ul>
+          <li><strong>Testim / Mabl</strong>: Auto-create and maintain test cases</li>
+          <li><strong>AI Code Review</strong>: Automatically detect bugs, security issues</li>
+          <li>Impact: Definition of Done achieved faster</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F504; Process Changes</h4>
+        <ul>
+          <li>Shorter Sprints (1 week) as AI accelerates development</li>
+          <li>New role: <strong>"AI Prompt Engineer"</strong> in the Scrum team</li>
+          <li>PO uses AI to analyze user feedback from thousands of reviews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 33: AI Tools for Development ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AI TOOLS IN SOFTWARE DEVELOPMENT</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:14px;">
+      <div class="card accent-purple">
+        <h4>&#x1F4BB; AI Code Assistant</h4>
+        <ul>
+          <li><strong>GitHub Copilot</strong> — Real-time code suggestions, significantly boosts productivity <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub]</a></li>
+          <li><strong>Cursor AI</strong> — AI-integrated IDE, edits large codebases</li>
+          <li><strong>Claude Code</strong> — AI agent that codes, tests, and deploys</li>
+          <li><strong>Amazon Q Developer</strong> — Optimized for AWS</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F9EA; AI Testing &amp; QA</h4>
+        <ul>
+          <li><strong>Testim / Mabl</strong> — Auto-create and maintain test cases</li>
+          <li><strong>Codium AI</strong> — Generate unit tests from code</li>
+          <li><strong>Applitools</strong> — Visual AI testing for UI</li>
+          <li><strong>Snyk AI</strong> — Detect security vulnerabilities</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4CA; AI Analytics &amp; DevOps</h4>
+        <ul>
+          <li><strong>LinearB / Jellyfish</strong> — Engineering metrics, measure developer productivity</li>
+          <li><strong>Datadog AI</strong> — Monitoring, anomaly detection</li>
+          <li><strong>PagerDuty AI</strong> — Automated incident management</li>
+          <li><strong>Vercel v0</strong> — AI creates UI from text descriptions</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4DD; AI Documentation</h4>
+        <ul>
+          <li><strong>Notion AI</strong> — Write PRD, auto meeting notes</li>
+          <li><strong>Mintlify</strong> — Auto-generate API docs from code</li>
+          <li><strong>Loom AI</strong> — Summarize video meetings</li>
+          <li><strong>Confluence AI</strong> — Search, summarize wiki</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 34: Case Study ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CASE STUDY: AGILE + AI IN PRACTICE</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F3B5; Spotify</h4>
+        <ul>
+          <li><strong>"Spotify Model"</strong>: Squads, Tribes, Chapters, Guilds</li>
+          <li>Each Squad = 1 cross-functional Scrum team (6-12 people)</li>
+          <li><strong>Continuous daily deployment</strong> via automated CI/CD <a class="ref" href="https://engineering.atspotify.com/" target="_blank">[Spotify Engineering]</a></li>
+          <li>Uses AI for Discover Weekly, personalized playlists</li>
+          <li><strong>Lesson:</strong> Autonomous teams + AI = innovation speed</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F4F1; Grab (Southeast Asia)</h4>
+        <ul>
+          <li>Hundreds of Scrum teams developing GrabFood, GrabPay, GrabCar</li>
+          <li>2-week sprints, daily standups via Slack</li>
+          <li>AI pricing, AI fraud detection, AI driver matching</li>
+          <li>Microservices architecture allows each team to deploy independently</li>
+          <li><strong>Lesson:</strong> Scrum at scale + AI = dominant market position</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F3AE; VNG (Vietnam)</h4>
+        <ul>
+          <li>Applies Scrum for ZaloPay, Zalo, game development</li>
+          <li>Teams of 5-9 people, 2-week sprints</li>
+          <li>Zalo AI: chatbot, language translation, image recognition</li>
+          <li>Uses Jira + Confluence for project management</li>
+          <li><strong>Lesson:</strong> Vietnamese companies also successfully apply Agile + AI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 35: Challenges & Mistakes ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMMON CHALLENGES &AMP; MISTAKES WHEN APPLYING SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x26A0;&#xFE0F; Common Mistakes:</h3>
+        <ul>
+          <li><strong>"Scrum but..."</strong> (ScrumBut): Half-hearted adoption, skipping Retro, no clear DOD</li>
+          <li><strong>SM = Project Manager:</strong> SM gives orders instead of supporting, violating self-management principles</li>
+          <li><strong>Sprint = Mini Waterfall:</strong> Design week 1, code week 2, test week 3 → not Agile</li>
+          <li><strong>No Sprint Goal:</strong> Sprint is just "finish the task list" without a clear objective</li>
+          <li><strong>Skipping Retrospective:</strong> No improvement = no Agile</li>
+          <li><strong>Backlog too large:</strong> Hundreds of items not groomed → chaos</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>&#x1F3AF; How to Fix:</h3>
+        <ul>
+          <li>Follow the <strong>Scrum Guide</strong>, start correctly then customize</li>
+          <li>SM focuses on <strong>coaching</strong> and removing impediments</li>
+          <li>Each story must be <strong>cross-functional</strong>: design + code + test within the same sprint</li>
+          <li>Sprint Goal must be <strong>SMART</strong>: specific, measurable, achievable</li>
+          <li>Retro is <strong>mandatory</strong>, create 1-2 action items and follow up</li>
+          <li>Backlog Refinement <strong>every week</strong>, keep max 2-3 sprint items detailed</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>AI analyzes sprint data to detect bad patterns: continuously declining velocity, increasing blockers, scope creep. <strong>Proactive alerts</strong> help SM act before issues become severe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE: Tools & Certs ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TOOLS, CERTIFICATIONS &AMP; SOFTWARE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Popular Tools:</h3>
+        <table style="font-size:12.5px;">
+          <thead><tr><th>Purpose</th><th>Tools</th></tr></thead>
+          <tbody>
+            <tr><td>Scrum Management</td><td><strong>Jira</strong>, Azure DevOps, Linear, Trello</td></tr>
+            <tr><td>Communication</td><td>Slack, MS Teams, Discord</td></tr>
+            <tr><td>Source Code</td><td>GitHub, GitLab, Bitbucket</td></tr>
+            <tr><td>CI/CD</td><td>GitHub Actions, Jenkins, GitLab CI</td></tr>
+            <tr><td>Documentation</td><td>Confluence, Notion, Google Docs</td></tr>
+            <tr><td>Design</td><td>Figma, Adobe XD</td></tr>
+            <tr><td>Testing</td><td>Selenium, Cypress, Postman</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:6px;">Tools used in this course:</h3>
+        <ul>
+          <li><strong>Jira</strong> — Scrum project management</li>
+          <li><strong>GitHub</strong> — Source code + CI/CD</li>
+          <li><strong>Spring Boot + Angular</strong> — Full-stack development</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Scrum Certifications:</h3>
+        <table style="font-size:12.5px;">
+          <thead><tr><th>Certification</th><th>Organization</th><th>Target</th></tr></thead>
+          <tbody>
+            <tr><td>PSM I, II, III</td><td>Scrum.org</td><td>Scrum Master</td></tr>
+            <tr><td>PSPO I, II</td><td>Scrum.org</td><td>Product Owner</td></tr>
+            <tr><td>CSM / CSPO</td><td>Scrum Alliance</td><td>SM / PO</td></tr>
+            <tr><td>PMI-ACP</td><td>PMI</td><td>Agile Practitioner</td></tr>
+            <tr><td>SAFe Agilist</td><td>Scaled Agile</td><td>Enterprise Agile</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:6px;">Certification Value:</h3>
+        <ul>
+          <li>PSM I: fee $150, online exam, 80 questions/60 minutes, requires 85% correct</li>
+          <li>Increases career opportunities and competitive salary <a class="ref" href="https://www.scrum.org/assessments/professional-scrum-master-i-certification" target="_blank">[Scrum.org]</a></li>
+          <li>Required at: FPT, Samsung, Bosch Vietnam</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE: Summary ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUMMARY &AMP; REVIEW QUESTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core Knowledge:</h3>
+        <ul>
+          <li><strong>Agile</strong> = flexible mindset, iterative, customer-focused</li>
+          <li><strong>Scrum</strong> = most popular framework of Agile</li>
+          <li><strong>3 roles:</strong> PO (what), SM (how), Dev Team (execute)</li>
+          <li><strong>3 artifacts:</strong> Product Backlog, Sprint Backlog, Increment</li>
+          <li><strong>5 events:</strong> Sprint, Planning, Daily, Review, Retrospective</li>
+          <li><strong>3 pillars:</strong> Transparency, Inspection, Adaptation</li>
+          <li><strong>5 values:</strong> Commitment, Focus, Openness, Respect, Courage</li>
+          <li><strong>AI</strong> is changing Agile practices: accelerating coding, estimation, testing, project management</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Review Questions:</h3>
+        <ul>
+          <li>1. State the 4 values in the Agile Manifesto. Why are they important?</li>
+          <li>2. Differentiate the roles of PO, SM, and Dev Team. Is SM a Project Manager?</li>
+          <li>3. What is the difference between Product Backlog and Sprint Backlog?</li>
+          <li>4. Explain the 3 pillars of Scrum (Empiricism) with specific examples.</li>
+          <li>5. Why is Sprint Retrospective important? What happens if it's skipped?</li>
+          <li>6. Write 1 User Story in standard format for an online food ordering app.</li>
+          <li>7. How is AI changing Agile/Scrum? Give 3 specific examples.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ==================== SLIDE 38: End ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Raleway',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Next lesson: Software Design Document (SDD)</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">39</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+</body>
+</html>

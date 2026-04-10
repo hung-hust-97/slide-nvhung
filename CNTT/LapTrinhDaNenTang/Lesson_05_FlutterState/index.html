@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 05 - Flutter Framework và Quản lý Trạng thái</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>FLUTTER FRAMEWORK VÀ<br>QUẢN LÝ TRẠNG THÁI</h1>
+    <p class="subtitle">Widgets, State Management, Provider, Riverpod, GetX, Redux</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/flutter-framework.png" alt="Flutter">
+    <h1>FLUTTER FRAMEWORK</h1>
+    <p class="section-desc">Giới thiệu Flutter SDK, widget tree, và các phương pháp quản lý trạng thái hiện đại</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GIỚI THIỆU FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Flutter là <strong>SDK phát triển ứng dụng đa nền tảng</strong> do Google phát triển — cho phép xây dựng app đẹp, hiệu năng cao từ <strong>một codebase duy nhất</strong>.</p>
+        <h3 style="margin-top:12px;">Đặc điểm nổi bật</h3>
+        <ul>
+          <li>Hiệu năng cao, UI đẹp và linh hoạt</li>
+          <li>Hot Reload — giữ nguyên trạng thái khi reload</li>
+          <li>Hỗ trợ 6 nền tảng: <span class="highlight">Android, iOS, Web, Desktop, Fuchsia, Embedded</span></li>
+          <li>Rich widget catalog phong phú</li>
+          <li>Open source, cộng đồng lớn, tài liệu đầy đủ</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/flutter-intro.png" alt="Flutter Introduction">
+        <p class="img-caption">Flutter — Google's cross-platform SDK<br>Nguồn: flutter.dev</p>
+      </div>
+    </div>
+    <div class="cards" style="margin-top:10px;">
+      <div class="card">
+        <h4>Dart Language</h4>
+        <p>Ngôn ngữ đơn giản, dễ học, hệ sinh thái package mạnh mẽ, hỗ trợ async/await mạnh</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Custom Rendering Engine</h4>
+        <p>Dùng Skia engine vẽ trực tiếp lên canvas — không cần native widgets</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER WIDGETS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Widget là gì?</h3>
+        <p>Widget là <strong>khối xây dựng cơ bản</strong> của giao diện Flutter — mọi thứ trên màn hình đều là widget.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:10px;">
+          <div class="card">
+            <h4>Structural elements</h4>
+            <p>Buttons, menus, dialogs</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Styling elements</h4>
+            <p>Themes, styles, fonts, colors</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Layout elements</h4>
+            <p>Padding, Center, Row, Column, Grid</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Widget Tree</h3>
+        <p>Flutter tổ chức UI theo cấu trúc <strong> cây widget (widget tree)</strong>. Mỗi widget có thể chứa các widget con, tạo thành hệ thống phân cấp.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            MaterialApp<br>
+            &nbsp;&nbsp;Scaffold<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;AppBar<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Body<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('Hello World!')
+          </p>
+        </div>
+        <p style="margin-top:6px; font-size:14px; color:#555;">Mỗi widget có thể chứa nhiều widget con, tạo cấu trúc phân cấp phức tạp.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DECLARATIVE UI TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Flutter tiếp cận rendering UI theo cách <strong>declarative (khai báo)</strong>. Widgets khai báo appearance dựa trên input configuration (properties) và internal state.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Ưu điểm của Declarative UI</h3>
+        <ul>
+          <li>UI được <span class="highlight">rebuild khi state thay đổi</span> — đảm bảo hiển thị nhất quán</li>
+          <li>Developer chỉ cần mô tả <strong>UI nên trông như thế nào</strong> ở một state cụ thể</li>
+          <li>Framework tự động xử lý việc cập nhật DOM/virtual tree</li>
+          <li>Dễ dàng debug, predict và test</li>
+        </ul>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Declarative UI đang là xu hướng: <strong>SwiftUI</strong>, <strong>Jetpack Compose</strong>, <strong>Flutter</strong> đều dùng cách tiếp cận này — thay thế cho Android XML layouts truyền thống.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/declarative-ui.png" alt="Declarative UI">
+        <p class="img-caption">Widget Tree = build() Method Call<br>Nguồn: flutter.dev</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATELESS WIDGET</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>StatelessWidget là widget <strong>hoàn toàn bất biến</strong> — state không bao giờ thay đổi sau khi widget được tạo.</p>
+        <p style="margin-top:8px;">Phù hợp cho: biểu tượng, text tĩnh, hình ảnh tĩnh, giao diện không thay đổi.</p>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Nên ưu tiên dùng!</h4>
+          <p>Cải thiện hiệu năng — Flutter khuyến khích dùng StatelessWidget cho phần lớn UI.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ mã nguồn</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class MyStaticText extends StatelessWidget {<br>
+            &nbsp;&nbsp;final String text;<br>
+            &nbsp;&nbsp;MyStaticText({Key key, @required this.text})<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: super(key: key);<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Text(text, style: TextStyle(fontSize: 20.0));<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <p style="margin-top:6px; font-size:14px; color:#555;">Không có biến state (thường nằm trong State class riêng).</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATEFUL WIDGET</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>StatefulWidget là widget giữ <strong>state data có thể thay đổi</strong> trong vòng đời widget.</p>
+        <h3 style="margin-top:10px;">3 lý do dùng StatefulWidget</h3>
+        <ul>
+          <li>Widget cần <span class="highlight">thay đổi data</span> trong vòng đời</li>
+          <li>Widget cần <span class="highlight">khởi tạo</span> khi được tạo</li>
+          <li>Widget cần <span class="highlight">giải phóng tài nguyên</span> khi kết thúc</li>
+        </ul>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Vì sao cần tách?</h4>
+          <p>StatefulWidget class <strong>immutable</strong> nhưng State object <strong>mutable</strong> — tách riêng để quản lý lifecycle.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ: Counter Widget</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class MyCounter extends StatefulWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;_MyCounterState createState() =&gt; _MyCounterState();<br>
+            }<br><br>
+            class _MyCounterState extends State&lt;MyCounter&gt; {<br>
+            &nbsp;&nbsp;int _counter = 0;<br><br>
+            &nbsp;&nbsp;void _increment() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;setState(() { _counter++; });<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Column(children: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('Count: $_counter'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ElevatedButton(onPressed: _increment, child: Text('+'))<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INHERITED WIDGET</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Vai trò của InheritedWidget</h3>
+        <p>InheritedWidget là widget đặc biệt trong Flutter, cho phép <strong>truyền data hiệu quả xuống widget tree</strong>.</p>
+        <ul style="margin-top:8px;">
+          <li>Có thể cung cấp <strong>mọi loại data</strong> cho tất cả descendants trong widget tree</li>
+          <li>Data truyền <strong>ngầm định</strong>, không cần pass qua constructor</li>
+          <li>Khi data thay đổi, <strong>chỉ descendant widgets đang lắng nghe</strong> mới rebuild — tối ưu hiệu năng</li>
+        </ul>
+        <h3 style="margin-top:10px;">Khi nào dùng?</h3>
+        <p>InheritedWidget đặc biệt hữu ích cho quản lý và chia sẻ state/data qua một phần lớn của widget tree.</p>
+      </div>
+      <div class="col">
+        <h3>Ví dụ sử dụng phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>App Themes</h4>
+            <p>ThemeData được truyền qua InheritedTheme</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Provider / BLoC</h4>
+            <p>State management libraries dựa trên InheritedWidget</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Authentication State</h4>
+            <p>Truyền trạng thái đăng nhập xuống toàn bộ app</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Locale / Localization</h4>
+            <p>Ngôn ngữ ứng dụng được truyền ngầm</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>State</strong> là bất kỳ dữ liệu nào có thể thay đổi trong vòng đời ứng dụng.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Ví dụ về State</h3>
+        <ul>
+          <li><span class="highlight">User input</span> — từ form, text field</li>
+          <li><span class="highlight">Login state</span> — đã đăng nhập / chưa</li>
+          <li><span class="highlight">Counter value</span> — số lần nhấn nút</li>
+          <li><span class="highlight">Data fetched</span> — danh sách bài viết từ API</li>
+          <li><span class="highlight">Cart items</span> — sản phẩm trong giỏ hàng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Phân loại State</h3>
+        <div class="cards" style="flex-direction:column; gap:10px;">
+          <div class="card">
+            <h4>Local State</h4>
+            <p>Gắn với một widget cụ thể. VD: tab hiện tại trong tab selector, trạng thái checkbox.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Application State</h4>
+            <p>Toàn cục, chia sẻ giữa nhiều widgets. VD: trạng thái đăng nhập, giỏ hàng, tin nhắn chat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE MANAGEMENT LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>State management là <strong>cách theo dõi và xử lý thay đổi dữ liệu</strong> trong ứng dụng, đảm bảo UI phản ánh đúng trạng thái hiện tại của dữ liệu.</p>
+    </div>
+    <h3 style="margin-top:10px;">Các câu hỏi State Management trả lời</h3>
+    <div class="steps" style="margin-top:6px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Khi user nhấn refresh?</h4>
+          <p>Server data thay đổi → state cập nhật → UI rebuild</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Khi server cập nhật data?</h4>
+          <p>Real-time update → state thay đổi → tất cả widgets liên quan rebuild</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Làm sao components biết state hiện tại?</h4>
+          <p>Centralized state store → các widgets subscribe → nhận notification khi state thay đổi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC PHƯƠNG PHÁP QUẢN LÝ STATE PHỔ BIẾN</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Provider</h4>
+        <p>Phổ biến nhất, dễ dùng, tích hợp tốt với Flutter. Dùng ChangeNotifier + Consumer.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Riverpod</h4>
+        <p>Cải tiến từ Provider, compile-time safety, không phụ thuộc BuildContext.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>GetX</h4>
+        <p>Nhẹ, dễ dùng, tích hợp navigation + dependency injection. Phù hợp MVP.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>BLoC</h4>
+        <p>Business Logic Component — tách biệt rõ ràng UI và logic, dễ test.</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>Redux</h4>
+        <p>Mô hình unidirectional data flow, clear separation, overkill cho app nhỏ.</p>
+      </div>
+      <div class="card">
+        <h4>StatefulWidget</h4>
+        <p>Native Flutter — đủ cho local state đơn giản, không cần thư viện ngoài.</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>Riverpod</strong> và <strong>freezed + Riverpod</strong> đang là lựa chọn hàng đầu cho Flutter 2025 — type-safe, compile-time error detection, dễ refactor. <a class="ref" href="https://riverpod.dev/" target="_blank">[riverpod.dev]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROVIDER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>Provider là giải pháp quản lý state <strong>rất phổ biến</strong> trong Flutter. Cho phép tạo và quản lý providers để lưu trữ state, giúp widgets lắng nghe thay đổi.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card">
+            <h4>Ưu điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Dễ sử dụng, được áp dụng rộng rãi</li>
+              <li>Hỗ trợ chia sẻ state giữa các widgets</li>
+              <li>Tích hợp tốt với Flutter, dễ test</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Nhược điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Cần hiểu ChangeNotifier và Consumer</li>
+              <li>Có thể phức tạp với app lớn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ cơ bản</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // 1. ChangeNotifier<br>
+            class CartModel extends ChangeNotifier {<br>
+            &nbsp;&nbsp;final List&lt;Item&gt; _items = [];<br>
+            &nbsp;&nbsp;List&lt;Item&gt; get items =&gt; List.unmodifiable(_items);<br>
+            &nbsp;&nbsp;void add(Item item) { _items.add(item); notifyListeners(); }<br>
+            }<br><br>
+            // 2. Cung cấp provider<br>
+            ChangeNotifierProvider(<br>
+            &nbsp;&nbsp;create: (context) =&gt; CartModel(),<br>
+            &nbsp;&nbsp;child: MyApp(),<br>
+            );<br><br>
+            // 3. Sử dụng<br>
+            Consumer&lt;CartModel&gt;(<br>
+            &nbsp;&nbsp;builder: (context, cart, child) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Text('Items: ${cart.items.length}'),<br>
+            );
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GETX</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>GetX là thư viện quản lý state <strong>mạnh mẽ và nhẹ</strong> cho Flutter. Cung cấp cách đơn giản và hiệu quả để xử lý navigation, state và dependency injection.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card accent-green">
+            <h4>Ưu điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Hiệu năng cao, nhẹ, dễ dùng</li>
+              <li>Xử lý state và routing với code tối thiểu</li>
+              <li>Hỗ trợ dependency injection rõ ràng</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Nhược điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Khó bảo trì trong app lớn</li>
+              <li>Cộng đồng nhỏ hơn Provider và Riverpod</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Controller<br>
+            class CounterController extends GetxController {<br>
+            &nbsp;&nbsp;var count = 0.obs; // Observable<br>
+            &nbsp;&nbsp;void increment() =&gt; count++;<br>
+            }<br><br>
+            // Sử dụng trong Widget<br>
+            GetBuilder&lt;CounterController&gt;(<br>
+            &nbsp;&nbsp;init: CounterController(),<br>
+            &nbsp;&nbsp;builder: (controller) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Text('Count: ${controller.count}'),<br>
+            );<br><br>
+            // Gọi từ bất kỳ đâu<br>
+            Get.find&lt;CounterController&gt;().increment();
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:6px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>GetX phổ biến ở <strong>Việt Nam và Trung Quốc</strong> — nhiều template trên GitHub dùng GetX. Nhưng enterprise app quốc tế ưa Riverpod hơn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RIVERPOD</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>Riverpod là thư viện quản lý state <strong>giống Provider nhưng cải tiến hơn</strong>. Sử dụng unidirectional data flow, giảm vấn đề về readability, testability và performance.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card accent-green">
+            <h4>Ưu điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Giảm runtime errors — phát hiện lỗi at compile time</li>
+              <li>Không phụ thuộc BuildContext, dễ test</li>
+              <li>Hiệu năng và code clarity tốt hơn</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Nhược điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Mới hơn Provider, cần học syntax</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Provider đơn giản<br>
+            final counterProvider = StateProvider((ref) =&gt; 0);<br><br>
+            // ConsumerWidget<br>
+            class CounterWidget extends ConsumerWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context, WidgetRef ref) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final count = ref.watch(counterProvider);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Column(children: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('Count: $count'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ElevatedButton(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onPressed: () =&gt; ref.read(counterProvider.notifier).state++,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: Text('+'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REDUX</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>Redux là mô hình quản lý state dựa trên nguyên tắc <strong>unidirectional data flow</strong>. Cung cấp sự phân tách rõ ràng giữa UI và business logic.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card accent-green">
+            <h4>Ưu điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Quản lý state rõ ràng, phân tách UI/logic</li>
+              <li>Dễ test và debug — identify bugs hiệu quả</li>
+              <li>Time-travel debugging</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Nhược điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Phức tạp hơn Provider/Riverpod</li>
+              <li>Overkill cho app nhỏ</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Redux Flow</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Action</h4>
+              <p>Intent gửi đến store (VD: ADD_ITEM, REMOVE_ITEM)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Reducer</h4>
+              <p>Function nhận action + current state → trả về new state</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Store</h4>
+              <p>Chứa state tree của ứng dụng. Thông báo cho subscribers khi state thay đổi.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ STATEFUL WIDGET — COUNTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cấu trúc Counter Widget</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class MyHomePage extends StatefulWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;_MyHomePageState createState() =&gt; _MyHomePageState();<br>
+            }<br><br>
+            class _MyHomePageState extends State&lt;MyHomePage&gt; {<br>
+            &nbsp;&nbsp;int _counter = 0; // State property<br><br>
+            &nbsp;&nbsp;void _incrementCounter() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;setState(() { _counter++; });<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Scaffold(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: Center(child: Text('$_counter')),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;floatingActionButton: FloatingActionButton(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onPressed: _incrementCounter,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: Icon(Icons.add),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cách hoạt động</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>MyHomePage là StatefulWidget</h4>
+              <p>Phải trả về State object hợp lệ từ createState()</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>_MyHomePageState chứa _counter</h4>
+              <p>Property _counter lưu số lần nhấn nút</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>onPressed gọi _incrementCounter()</h4>
+              <p>Function gọi setState() → thông báo framework</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Framework rebuild widgets</h4>
+              <p>Các child widgets bị ảnh hưởng được rebuild với state mới</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER ARCHITECTURE — FRAMEWORK LAYER</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Foundation</h4>
+          <p>Core library — các class và functions cơ bản của Flutter: animations, gestures, painting.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Animation / Painting / Gesture</h4>
+          <p>Xử lý animation, vẽ UI lên canvas, nhận diện gestures (tap, swipe, pinch).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Rendering</h4>
+          <p>UI components được tổ chức thành cây RenderObjects. Xử lý layout và painting của mỗi widget.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Widgets</h4>
+          <p>Được xây dựng theo cấu trúc cây. Mỗi widget inherit từ RenderObject. Widget giữ UI state và rebuild khi state thay đổi.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Material / Cupertino</h4>
+          <p>Được xây dựng từ widget library để implement Material Design (Android) hoặc Cupertino (iOS) design.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER ARCHITECTURE — ENGINE VÀ EMBEDDER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Engine Layer (C/C++)</h3>
+        <ul>
+          <li>Implement các Flutter core APIs bao gồm graphics (qua <strong>Skia</strong>)</li>
+          <li>Text layout, file và network I/O</li>
+          <li>Accessibility, plugin architecture</li>
+          <li>Dart runtime — JIT và AOT</li>
+          <li>Garbage collector, core libraries</li>
+        </ul>
+        <h3 style="margin-top:12px;">Embedder Layer</h3>
+        <p>Cung cấp quyền truy cập đến các dịch vụ platform-specific: Android, iOS, Windows, macOS, Linux, Web.</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/flutter-architecture.png" alt="Flutter Architecture">
+        <p class="img-caption">Flutter Architecture Layers<br>Nguồn: flutter.dev</p>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Flutter đang mở rộng sang <strong>Web</strong> với WASM compiler và <strong>Desktop</strong>. Google tích hợp <strong>Firebase Genkit</strong> để phát triển AI-powered apps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CẤU TRÚC DỰ ÁN FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Thư mục chính</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>android/</h4>
+            <p>Code tự động sinh cho Android platform</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>ios/</h4>
+            <p>Code tự động sinh cho iOS platform</p>
+          </div>
+          <div class="card accent-green">
+            <h4>lib/</h4>
+            <p>Thư mục chính chứa Dart code sử dụng Flutter framework. Đây là nơi developer VIẾT CODE.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>test/</h4>
+            <p>Thư mục chứa test code cho ứng dụng</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>lib/main.dart</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            import 'package:flutter/material.dart';<br><br>
+            void main() =&gt; runApp(MyApp());<br><br>
+            class MyApp extends StatelessWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return MaterialApp(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: 'Flutter Demo',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home: MyHomePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <p style="margin-top:8px; font-size:14px; color:#555;">Hàm <code>main()</code> là entry point của mọi ứng dụng Flutter. <code>runApp()</code> nhận root widget.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Navigation và Routing trong Flutter</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">20</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ADVANCED STATE MANAGEMENT</h1>
+    <p class="section-desc">BLoC Pattern, Dependency Injection, và Clean Architecture trong Flutter</p>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BLoC — BUSINESS LOGIC COMPONENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>BLoC viết tắt của <strong>Business Logic Component</strong> — pattern do Google giới thiệu, tách biệt hoàn toàn business logic khỏi UI.</p>
+        <div class="quote-box" style="margin-top:10px;">
+          <p>"BLoC connects <strong>Events</strong> (từ UI) to <strong>States</strong> (cho UI)" — Brian Egan, 2018</p>
+        </div>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card accent-green">
+            <h4>Ưu điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Tách biệt UI hoàn toàn với logic</li>
+              <li>Dễ test — business logic không phụ thuộc widget</li>
+              <li>Code có thể reuse ở nhiều UI</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Nhược điểm</h4>
+            <ul style="font-size:14px;">
+              <li>Boilerplate code nhiều hơn Provider</li>
+              <li>Cần học thêm khái niệm Streams</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cấu trúc BLoC</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Events</h4>
+              <p>Trigger từ UI: LoadData, AddItem, DeleteItem, UpdateQuantity</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>BLoC</h4>
+              <p>Nhận event → xử lý logic → phát state mới</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>States</h4>
+              <p>Trạng thái kết quả: Initial, Loading, Loaded, Error</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>UI</h4>
+              <p>BlocBuilder lắng nghe state → rebuild UI tương ứng</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BLoC — EVENTS, STATES, STREAMS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Events (Sự kiện)</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            abstract class CartEvent {}<br><br>
+            class AddItemEvent extends CartEvent {<br>
+            &nbsp;&nbsp;final Item item;<br>
+            &nbsp;&nbsp;AddItemEvent(this.item);<br>
+            }<br><br>
+            class RemoveItemEvent extends CartEvent {<br>
+            &nbsp;&nbsp;final int itemId;<br>
+            &nbsp;&nbsp;RemoveItemEvent(this.itemId);<br>
+            }<br><br>
+            class ClearCartEvent extends CartEvent {}
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>States (Trạng thái)</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            abstract class CartState {}<br><br>
+            class CartInitial extends CartState {}<br><br>
+            class CartLoading extends CartState {}<br><br>
+            class CartLoaded extends CartState {<br>
+            &nbsp;&nbsp;final List&lt;Item&gt; items;<br>
+            &nbsp;&nbsp;final double total;<br>
+            &nbsp;&nbsp;CartLoaded(this.items, this.total);<br>
+            }<br><br>
+            class CartError extends CartState {<br>
+            &nbsp;&nbsp;final String message;<br>
+            &nbsp;&nbsp;CartError(this.message);<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Streams trong BLoC</h4>
+          <p>BLoC dùng <strong>Stream</strong> để phát state mới — UI tự động nhận thông qua BlocBuilder/BlocListener.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>flutter_bloc ^9.0</strong> hỗ trợ Cubit (đơn giản hơn BLoC), Equatable cho state comparison, và BlocListener cho side effects. <a class="ref" href="https://bloclibrary.dev/" target="_blank">[bloclibrary.dev]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH CÁC PHƯƠNG PHÁP QUẢN LÝ STATE</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%">Tiêu chí</th>
+          <th style="width:16%">Provider</th>
+          <th style="width:16%">Riverpod</th>
+          <th style="width:16%">GetX</th>
+          <th style="width:16%">BLoC</th>
+          <th style="width:18%">Redux</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Độ phức tạp</strong></td>
+          <td>Thấp</td>
+          <td>Trung bình</td>
+          <td>Thấp</td>
+          <td>Cao</td>
+          <td>Rất cao</td>
+        </tr>
+        <tr>
+          <td><strong>Boilerplate</strong></td>
+          <td>Ít</td>
+          <td>Ít</td>
+          <td>Rất ít</td>
+          <td>Nhiều</td>
+          <td>Rất nhiều</td>
+        </tr>
+        <tr>
+          <td><strong>Testability</strong></td>
+          <td>Khá</td>
+          <td>Tốt</td>
+          <td>Trung bình</td>
+          <td>Xuất sắc</td>
+          <td>Xuất sắc</td>
+        </tr>
+        <tr>
+          <td><strong>Compile-time safety</strong></td>
+          <td>Không</td>
+          <td>Có</td>
+          <td>Không</td>
+          <td>Không</td>
+          <td>Không</td>
+        </tr>
+        <tr>
+          <td><strong>Không phụ thuộc Context</strong></td>
+          <td>Không</td>
+          <td>Có</td>
+          <td>Có</td>
+          <td>Có</td>
+          <td>Có</td>
+        </tr>
+        <tr>
+          <td><strong>Phù hợp</strong></td>
+          <td>App vừa</td>
+          <td>App lớn</td>
+          <td>MVP, rapid dev</td>
+          <td>Enterprise</td>
+          <td>Enterprise lớn</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="cards" style="margin-top:10px;">
+      <div class="card">
+        <h4>Khuyến nghị 2025</h4>
+        <p>App nhỏ: <strong>StatefulWidget</strong> đủ. App vừa: <strong>Riverpod</strong>. App enterprise: <strong>BLoC</strong>. Rapid prototype: <strong>GetX</strong>.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Lưu ý</h4>
+        <p>Đừng để state management trở thành <strong>over-engineering</strong> — bắt đầu đơn giản, mở rộng khi cần.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THỰC HÀNH — SHOPPING CART VỚI PROVIDER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu app</h3>
+        <ul>
+          <li>Danh sách sản phẩm (tên, giá, hình)</li>
+          <li>Nhấn <span class="highlight">"Thêm vào giỏ"</span> → cập nhật giỏ hàng</li>
+          <li>Hiển thị tổng số lượng và tổng tiền</li>
+          <li>Nhấn <span class="accent">"Xóa"</span> → bỏ sản phẩm khỏi giỏ</li>
+        </ul>
+        <h3 style="margin-top:10px;">Các bước thực hiện</h3>
+        <div class="steps" style="margin-top:6px;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Tạo class <code>Item</code> (id, name, price, image)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Tạo <code>CartModel extends ChangeNotifier</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Bọc <code>ChangeNotifierProvider</code> ở root</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>CartModel — Code đầy đủ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class CartModel extends ChangeNotifier {<br>
+            &nbsp;&nbsp;final List&lt;Item&gt; _items = [];<br><br>
+            &nbsp;&nbsp;List&lt;Item&gt; get items => _items.toList();<br>
+            &nbsp;&nbsp;int get totalItems => _items.length;<br>
+            &nbsp;&nbsp;double get totalPrice =><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_items.fold(0, (sum, item) => sum + item.price);<br><br>
+            &nbsp;&nbsp;void addItem(Item item) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_items.add(item);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;notifyListeners();<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;void removeItem(int index) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_items.removeAt(index);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;notifyListeners();<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THỰC HÀNH — SHOPPING CART VỚI RIVERPOD</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Provider Definitions</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Item model<br>
+            class Item {<br>
+            &nbsp;&nbsp;final int id; final String name;<br>
+            &nbsp;&nbsp;final double price;<br>
+            &nbsp;&nbsp;const Item(this.id, this.name, this.price);<br>
+            }<br><br>
+            // StateNotifier<br>
+            class CartNotifier extends StateNotifier&lt;List&lt;Item&gt;&gt; {<br>
+            &nbsp;&nbsp;CartNotifier() : super([]);<br><br>
+            &nbsp;&nbsp;void add(Item item) { state = [...state, item]; }<br>
+            &nbsp;&nbsp;void remove(int id) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;state = state.where((i) => i.id != id).toList();<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            // Provider<br>
+            final cartProvider = StateNotifierProvider&lt;<br>
+            &nbsp;&nbsp;CartNotifier, List&lt;Item&gt;&gt;((ref) => CartNotifier());
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng trong Widget</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class ProductListPage extends ConsumerWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context, WidgetRef ref) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final cart = ref.watch(cartProvider);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final total = cart.fold&lt;double&gt;(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0, (sum, item) => sum + item.price);<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Scaffold(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appBar: AppBar(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: Text('Cart (${cart.length})'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actions: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center(child: Text('\$$total'))],<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: ListView.builder(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemCount: products.length,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemBuilder: (ctx, i) => ListTile(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: Text(products[i].name),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trailing: IconButton(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon: Icon(Icons.add_shopping_cart),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onPressed: () => ref<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.read(cartProvider.notifier).add(products[i]),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:6px;">
+          <h4>Lưu ý Riverpod</h4>
+          <p><code>ref.watch()</code> → auto-rebuild khi state thay đổi. <code>ref.read()</code> → đọc một lần (dùng trong callback).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROVIDER — context.watch vs context.read vs Consumer</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Provider.of + listen</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Đọc state + lắng nghe thay đổi<br>
+            var cart = Provider.of&lt;CartModel&gt;(<br>
+            &nbsp;&nbsp;context, listen: true);<br>
+            // Widget rebuild khi cart thay đổi<br><br>
+            // Đọc state NHƯNG KHÔNG rebuild<br>
+            var cart = Provider.of&lt;CartModel&gt;(<br>
+            &nbsp;&nbsp;context, listen: false);<br>
+            // Dùng khi cần đọc trong callback
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Khi nào listen:false?</h4>
+          <p>Dùng trong <code>onPressed</code>, <code>onTap</code>, hoặc lifecycle methods — khi chỉ cần gọi action, không cần rebuild widget.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Consumer — Tái sử dụng Widget</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Chỉ rebuild phần cần thiết<br>
+            Consumer&lt;CartModel&gt;(<br>
+            &nbsp;&nbsp;builder: (context, cart, child) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Column(children: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('Items: ${cart.totalItems}'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('Total: \$${cart.totalPrice}'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;// child không bị rebuild<br>
+            &nbsp;&nbsp;child: ExpensiveWidget(),<br>
+            );
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">So sánh nhanh</h3>
+        <table>
+          <thead>
+            <tr><th>Cách</th><th>Rebuild</th><th>Dùng khi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Provider.of listen:true</td><td>Toàn bộ widget</td><td>Đơn giản</td></tr>
+            <tr><td>Consumer</td><td>Chỉ builder</td><td>Tối ưu hơn</td></tr>
+            <tr><td>Selector</td><td>Chỉ khi đúng field thay đổi</td><td>Tối ưu tối đa</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEPENDENCY INJECTION TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Dependency Injection (DI)</strong> là kỹ thuật cung cấp các object (dependencies) mà một class cần, thay vì class tự tạo. Giúp <strong>loose coupling</strong>, dễ test và maintain.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Các cách triển khai DI</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>1. Constructor Injection (Khuyến nghị)</h4>
+            <p style="font-family:monospace; font-size:12px;">class MyService {<br>&nbsp;&nbsp;final ApiClient api;<br>&nbsp;&nbsp;MyService(this.api);<br>}</p>
+          </div>
+          <div class="card accent-green">
+            <h4>2. Provider / Riverpod DI</h4>
+            <p style="font-family:monospace; font-size:12px;">Provider&lt;ApiClient&gt;(<br>&nbsp;&nbsp;create: (_) => ApiClient());<br>final api = ref.watch(apiProvider);</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>3. GetX Dependency Injection</h4>
+            <p style="font-family:monospace; font-size:12px;">Get.put(ApiClient());<br>final api = Get.find&lt;ApiClient&gt;();</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>4. Service Locator (Anti-pattern)</h4>
+            <p>Tránh dùng global locator — khó test, hidden dependencies.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ: API + Repository + BLoC</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>ApiClient</h4>
+              <p style="font-size:13px;">Gửi HTTP request đến server</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>UserRepository</h4>
+              <p style="font-size:13px;">Dùng ApiClient, xử lý data trước khi trả về</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>UserBloc</h4>
+              <p style="font-size:13px;">Nhận UserRepository qua constructor, gọi methods</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>UI Widget</h4>
+              <p style="font-size:13px;">Dùng BlocProvider tạo UserBloc</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLEAN ARCHITECTURE TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3 Layers</h3>
+        <div class="cards" style="flex-direction:column; gap:10px;">
+          <div class="card">
+            <h4>Presentation Layer</h4>
+            <p>Widgets, Pages, BLoC/Provider/Riverpod. Chỉ lo UI — không chứa business logic.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Domain Layer</h4>
+            <p>Entities (User, Product, Order), Use Cases, Repository interfaces. KHÔNG phụ thuộc Flutter.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Data Layer</h4>
+            <p>Repository implementations, Data sources (API, Local DB), Models (JSON serialization).</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>flutter_riverpod + freezed + go_router</strong> là bộ công cụ Clean Architecture phổ biến nhất 2025. <a class="ref" href="https://codewithandrea.com/articles/flutter-architecture-guide/" target="_blank">[codewithandrea.com]</a></p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Thư mục theo Clean Architecture</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            lib/<br>
+            ├── main.dart<br>
+            ├── core/<br>
+            │&nbsp;&nbsp;├── error/<br>
+            │&nbsp;&nbsp;└── constants/<br>
+            ├── features/<br>
+            │&nbsp;&nbsp;└── products/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── domain/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── entities/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── product.dart<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── repositories/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── product_repository.dart<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── usecases/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── data/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── models/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── datasources/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── repositories/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── presentation/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── bloc/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── pages/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── widgets/
+          </p>
+        </div>
+        <div class="card" style="margin-top:8px;">
+          <h4>Nguyên tắc</h4>
+          <p>Presentation → Domain ← Data. Domain là <strong>core không đổi</strong> — thay đổi data source không ảnh hưởng UI.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>FLUTTER PERFORMANCE VÀ TESTING</h1>
+    <p class="section-desc">Tối ưu hiệu năng, widget rebuild, và viết unit test</p>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER PERFORMANCE — TỐI ƯU WIDGET REBUILD</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Widget rebuild là <strong>nguyên nhân phổ biến nhất</strong> gây chậm ứng dụng Flutter. Hiểu rõ khi nào và ở đâu rebuild xảy ra là chìa khóa tối ưu hiệu năng.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Nguyên tắc tối ưu</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Dùng const Constructor</h4>
+            <p style="font-family:monospace; font-size:13px;">const Text('Hello',<br>&nbsp;&nbsp;style: TextStyle(fontSize: 20));<br><strong>Tránh</strong>: Text('Hello')</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Tách Widget ra Stateless</h4>
+            <p>Widget con dùng const → không rebuild khi cha rebuild</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Dùng RepaintBoundary</h4>
+            <p>Tách phần UI không thay đổi → không bị repaint không cần thiết</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Selector thay vì Consumer</h4>
+            <p>Chỉ rebuild khi đúng field thay đổi, không phải toàn bộ state</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ: const vs non-const</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // ❌ KHÔNG DÙNG — mỗi build() tạo mới<br>
+            class BadWidget extends StatelessWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Container(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding: EdgeInsets.all(16.0),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: Text('Title'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            // ✅ DÙNG const — rebuild nhanh<br>
+            class GoodWidget extends StatelessWidget {<br>
+            &nbsp;&nbsp;const GoodWidget();<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Container(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding: const EdgeInsets.all(16.0),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: const Text('Title'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card" style="margin-top:6px;">
+          <h4>DevTools — Performance Tab</h4>
+          <p>Dùng Flutter DevTools → Performance để xem widget rebuild timeline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER PERFORMANCE — LISTVIEW VÀ KEYS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao ListView quan trọng?</h3>
+        <p>Danh sách dài có thể chứa hàng nghìn items. Nếu mỗi thao tác rebuild toàn bộ list → <span class="accent">UI lag nghiêm trọng</span>.</p>
+        <h3 style="margin-top:10px;">ListView.builder</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            ListView.builder(<br>
+            &nbsp;&nbsp;itemCount: items.length,<br>
+            &nbsp;&nbsp;// lazy loading — chỉ render item<br>
+            &nbsp;&nbsp;// trong viewport<br>
+            &nbsp;&nbsp;itemBuilder: (context, index) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ListTile(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title: Text(items[index].name),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;},<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>CacheExtent</h4>
+          <p>Tăng <code>cacheExtent</code> nếu list scroll không mượt — giữ sẵn items ngoài viewport.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Keys — Widget Identity</h3>
+        <p>Keys giúp Flutter xác định widget nào thay đổi trong list, tránh rebuild không cần thiết.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card">
+            <h4>ValueKey(id)</h4>
+            <p>Dùng khi items có ID duy nhất. <code>key: ValueKey(item.id)</code></p>
+          </div>
+          <div class="card accent-green">
+            <h4>UniqueKey()</h4>
+            <p>Tạo key mới mỗi lần — dùng khi items không có stable ID.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>ObjectKey(item)</h4>
+            <p>Dùng object làm key — Flutter so sánh bằng identity.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>PageStorageKey</h4>
+            <p>Lưu scroll position khi quay lại trang — UX tốt hơn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANIMATIONS TRONG FLUTTER — ANIMATIONCONTROLLER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Mô tả</h3>
+        <p>AnimationController quản lý animation timeline — xác định giá trị (value) thay đổi theo thời gian.</p>
+        <h3 style="margin-top:10px;">Các thuộc tính quan trọng</h3>
+        <ul>
+          <li><strong>duration</strong> — thời gian animation (VD: 1 giây)</li>
+          <li><strong>vsync</strong> — đồng bộ với refresh rate màn hình (dùng TickerProviderStateMixin)</li>
+          <li><strong>value</strong> — giá trị hiện tại (0.0 → 1.0)</li>
+          <li><strong>repeat()</strong>, <strong>forward()</strong>, <strong>reverse()</strong></li>
+        </ul>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>SingleTickerProviderStateMixin</h4>
+          <p>Dùng cho 1 animation controller. <code>TickerProviderStateMixin</code> khi cần nhiều controllers.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ: Fade In Animation</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class FadeInWidget extends StatefulWidget {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;_FadeInWidgetState createState() =><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_FadeInWidgetState();<br>
+            }<br><br>
+            class _FadeInWidgetState<br>
+            &nbsp;&nbsp;extends State&lt;FadeInWidget&gt;<br>
+            &nbsp;&nbsp;with SingleTickerProviderStateMixin {<br>
+            &nbsp;&nbsp;late AnimationController _controller;<br>
+            &nbsp;&nbsp;late Animation&lt;double&gt; _fadeAnimation;<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void initState() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;super.initState();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_controller = AnimationController(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;duration: Duration(seconds: 1),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vsync: this,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_fadeAnimation =<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tween(begin: 0.0, end: 1.0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.animate(_controller);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_controller.forward();<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;Widget build(BuildContext context) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return FadeTransition(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opacity: _fadeAnimation,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: MyContent(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANIMATIONS — HERO TRANSITIONS VÀ IMPLICIT ANIMATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Implicit Animations</h3>
+        <p>Flutter cung cấp widgets animation tự động — chỉ cần thay đổi property, widget tự animate.</p>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:8px;">
+          <div class="card">
+            <h4>AnimatedContainer</h4>
+            <p>Tự động animate size, color, margin khi properties thay đổi.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>AnimatedOpacity</h4>
+            <p>Fade in/out với opacity animation.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>AnimatedCrossFade</h4>
+            <p>Cross-fade giữa 2 widgets khi switch.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>TweenAnimationBuilder</h4>
+            <p>Generic builder cho mọi loại Tween (color, size, border...).</p>
+          </div>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            AnimatedContainer(<br>
+            &nbsp;&nbsp;duration: Duration(milliseconds: 300),<br>
+            &nbsp;&nbsp;width: isExpanded ? 200 : 100,<br>
+            &nbsp;&nbsp;height: isExpanded ? 200 : 100,<br>
+            &nbsp;&nbsp;color: Colors.blue,<br>
+            &nbsp;&nbsp;child: Text('Tap me'),<br>
+            );
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Hero Animation</h3>
+        <p>Hero transition tạo hiệu ứng <strong>chuyển đổi mượt</strong> khi widget di chuyển giữa 2 routes — dùng trong gallery, product detail.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Bọc Widget bằng Hero</h4>
+              <p style="font-size:13px;"><code>Hero(tag: 'product-$id', child: Image.network(url))</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Destination cùng Hero tag</h4>
+              <p style="font-size:13px;">Hero(tag: 'product-$id', child: ProductDetailPage(image: url))</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Flutter tự động animate</h4>
+              <p style="font-size:13px;">Di chuyển từ vị trí này sang vị trí kia — mượt mà.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Rive</strong> và <strong>Lottie</strong> dùng cho complex animations — designer tạo, developer nhúng. Không cần code animation tay.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Flutter cung cấp <strong>3 loại test</strong>: Unit test (logic), Widget test (UI), Integration test (toàn bộ app). Test giúp đảm bảo chất lượng và refactor tự tin.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>1. Unit Test</h3>
+        <p>Test các function, class riêng lẻ — không phụ thuộc Flutter framework.</p>
+        <div class="quote-box" style="margin-top:6px;">
+          <p style="font-family:monospace; font-size:12px;">
+            test('Cart total calculation', () {<br>
+            &nbsp;&nbsp;final cart = CartModel();<br>
+            &nbsp;&nbsp;cart.add(Item('Apple', 5.0));<br>
+            &nbsp;&nbsp;cart.add(Item('Banana', 3.0));<br>
+            &nbsp;&nbsp;expect(cart.totalPrice, 8.0);<br>
+            });
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">2. Widget Test</h3>
+        <p>Test widget render đúng UI, tương tác đúng.</p>
+        <div class="quote-box" style="margin-top:6px;">
+          <p style="font-family:monospace; font-size:12px;">
+            testWidgets('Button tap works',<br>
+            &nbsp;&nbsp;(tester) async {<br>
+            &nbsp;&nbsp;await tester.pumpWidget(MyButton());<br>
+            &nbsp;&nbsp;await tester.tap(find.byType(Button));<br>
+            &nbsp;&nbsp;expect(find.text('Tapped!'), findsOneWidget);<br>
+            });
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>3. Integration Test</h3>
+        <p>Test toàn bộ app flow — từ launch đến hoàn thành user story.</p>
+        <div class="quote-box" style="margin-top:6px;">
+          <p style="font-family:monospace; font-size:12px;">
+            testWidgets('Full cart flow',<br>
+            &nbsp;&nbsp;(tester) async {<br>
+            &nbsp;&nbsp;await tester.pumpWidget(MyApp());<br>
+            &nbsp;&nbsp;// Navigate to product list<br>
+            &nbsp;&nbsp;await tester.tap(find.byIcon(Icons.shopping_cart));<br>
+            &nbsp;&nbsp;await tester.pumpAndSettle();<br>
+            &nbsp;&nbsp;// Add item<br>
+            &nbsp;&nbsp;await tester.tap(find.text('Add to Cart').first);<br>
+            &nbsp;&nbsp;await tester.pumpAndSettle();<br>
+            &nbsp;&nbsp;// Verify cart updated<br>
+            &nbsp;&nbsp;expect(find.text('1 item'), findsOneWidget);<br>
+            });
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Code coverage</h4>
+          <p>Chạy <code>flutter test --coverage</code> → xem % code được test. Target: >70% cho production.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING — VIẾT TEST CHO PROVIDER VÀ RIVERPOD</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Test Provider (ChangeNotifier)</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            test('CartModel adds item', () {<br>
+            &nbsp;&nbsp;final cart = CartModel();<br><br>
+            &nbsp;&nbsp;// addItem thay đổi state<br>
+            &nbsp;&nbsp;cart.addItem(Item(1, 'Apple', 5.0));<br>
+            &nbsp;&nbsp;expect(cart.items.length, 1);<br>
+            &nbsp;&nbsp;expect(cart.totalPrice, 5.0);<br><br>
+            &nbsp;&nbsp;// removeItem thay đổi state<br>
+            &nbsp;&nbsp;cart.removeItem(0);<br>
+            &nbsp;&nbsp;expect(cart.items.length, 0);<br>
+            });
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Test ChangeNotifierProvider</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            testWidgets('Cart displays item count',<br>
+            &nbsp;&nbsp;(tester) async {<br>
+            &nbsp;&nbsp;await tester.pumpWidget(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ChangeNotifierProvider(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create: (_) => CartModel()..addItem(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item(1, 'Apple', 5.0)),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: MaterialApp(home: CartPage()),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;expect(find.text('1'), findsOneWidget);<br>
+            });
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Test Riverpod</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Override provider trong test<br>
+            test('counter increments', () async {<br>
+            &nbsp;&nbsp;final container = ProviderContainer(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;overrides: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counterProvider.overrideWith(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(_) => CounterNotifier(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;);<br><br>
+            &nbsp;&nbsp;// Đọc state hiện tại<br>
+            &nbsp;&nbsp;expect(container.read(counterProvider), 0);<br><br>
+            &nbsp;&nbsp;// Gọi increment<br>
+            &nbsp;&nbsp;container.read(counterProvider.notifier).increment();<br>
+            &nbsp;&nbsp;expect(container.read(counterProvider), 1);<br><br>
+            &nbsp;&nbsp;// Cleanup<br>
+            &nbsp;&nbsp;container.dispose();<br>
+            });
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Tại sao Riverpod test dễ hơn?</h4>
+          <p>ProviderContainer tạo scope test riêng — <strong>không cần BuildContext</strong>, có thể override providers, và <code>container.dispose()</code> cleanup hoàn toàn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FORMS VÀ VALIDATION TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Form Widget</h3>
+        <p><code>Form</code> là widget container quản lý nhiều <code>TextFormField</code>. Cung cấp <strong>FormState</strong> để validate và save toàn bộ form.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            final _formKey = GlobalKey&lt;FormState&gt;();<br><br>
+            Form(<br>
+            &nbsp;&nbsp;key: _formKey,<br>
+            &nbsp;&nbsp;child: Column(children: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;TextFormField(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validator: (value) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (value == null || value.isEmpty)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'Bắt buộc nhập';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ElevatedButton(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onPressed: () {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (_formKey.currentState!.validate()) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Process form<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;]),<br>
+            );
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Các loại Validation phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Required Field</h4>
+            <p style="font-family:monospace; font-size:12px;">if (value.isEmpty) return 'Bắt buộc';</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Email Format</h4>
+            <p style="font-family:monospace; font-size:12px;">if (!value.contains('@'))<br>&nbsp;&nbsp;return 'Email không hợp lệ';</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Password Strength</h4>
+            <p style="font-family:monospace; font-size:12px;">if (value.length &lt; 8)<br>&nbsp;&nbsp;return 'Ít nhất 8 ký tự';</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Phone Number</h4>
+            <p style="font-family:monospace; font-size:12px;">RegExp(r'^[0-9]{10}$')</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Confirm Password</h4>
+            <p style="font-family:monospace; font-size:12px;">if (value != _passwordController.text)<br>&nbsp;&nbsp;return 'Mật khẩu không khớp';</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top:8px;">
+          <h4>Reactive Validation</h4>
+          <p>Dùng <code>onChanged</code> để validate real-time khi user gõ — nhưng tránh validate quá sớm (debounce 300-500ms).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FIREBASE INTEGRATION TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Firebase</strong> là Backend-as-a-Service (BaaS) của Google — cung cấp Auth, Database, Storage, Hosting, Analytics... tích hợp liền mạch với Flutter.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Firebase Authentication</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Đăng nhập email/password<br>
+            final credential = await FirebaseAuth.instance<br>
+            &nbsp;&nbsp;.signInWithEmailAndPassword(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;email: emailController.text,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;password: passwordController.text,<br>
+            &nbsp;&nbsp;);<br><br>
+            // Đăng ký<br>
+            await FirebaseAuth.instance<br>
+            &nbsp;&nbsp;.createUserWithEmailAndPassword(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;email: email, password: password,<br>
+            &nbsp;&nbsp;);<br><br>
+            // Đăng xuất<br>
+            await FirebaseAuth.instance.signOut();<br><br>
+            // Lắng nghe auth state<br>
+            FirebaseAuth.instance.authStateChanges().listen((user) {<br>
+            &nbsp;&nbsp;// user == null → chưa login<br>
+            &nbsp;&nbsp;// user != null → đã login<br>
+            });
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cloud Firestore</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Đọc dữ liệu real-time<br>
+            CollectionReference users =<br>
+            &nbsp;&nbsp;FirebaseFirestore.instance.collection('users');<br><br>
+            users.doc(uid).snapshots().listen((snapshot) {<br>
+            &nbsp;&nbsp;final data = snapshot.data();<br>
+            &nbsp;&nbsp;// Update UI khi data thay đổi<br>
+            });<br><br>
+            // Thêm document<br>
+            await users.doc(uid).set({<br>
+            &nbsp;&nbsp;'name': 'Nguyen Viet Hung',<br>
+            &nbsp;&nbsp;'email': email,<br>
+            &nbsp;&nbsp;'createdAt': FieldValue.serverTimestamp(),<br>
+            });<br><br>
+            // Query<br>
+            users.where('role', isEqualTo: 'admin').get();
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Firebase Genkit</strong> (2024) tích hợp AI/ML vào Firebase — generative AI, vector search, và AI agents ngay trong backend. <a class="ref" href="https://firebase.google.com/docs/genkit" target="_blank">[firebase.google.com]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAVIGATION VỚI GOROUTER (GO_ROUTER)</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>GoRouter</strong> là thư viện navigation chính thức được Google khuyến nghị cho Flutter — declarative routing, deep links, redirect, và route guards.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Thiết lập GoRouter</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // main.dart<br>
+            final router = GoRouter(<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: '/',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) => HomePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: '/product/:id',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final id = state.pathParameters['id']!;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ProductPage(id: id);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Nested routes<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ShellRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state, child) =><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scaffold(body: child),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routes: [...],<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;],<br>
+            );
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Điều hướng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Điều hướng cơ bản<br>
+            context.go('/product/123');<br><br>
+            // Push (stack mới)<br>
+            context.push('/product/123');<br><br>
+            // Với query params<br>
+            context.push('/search?q=flutter');<br>
+            // Đọc: state.uri.queryParameters['q']<br><br>
+            // Pop<br>
+            context.pop();<br><br>
+            // Redirect (route guard)<br>
+            redirect: (context, state) {<br>
+            &nbsp;&nbsp;final isLoggedIn = ...;<br>
+            &nbsp;&nbsp;if (!isLoggedIn && state.matchedLocation != '/login') {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return '/login';<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;return null;<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>GoRouter vs Navigator 2.0</h4>
+          <p>GoRouter là wrapper trên Navigator 2.0 API — đơn giản hơn, hỗ trợ deep links và web URL tốt hơn native Navigator.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEST PRACTICES VÀ PITFALLS THƯỜNG GẶP</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>setState trong build()</h4>
+        <p>❌ Gọi setState bên trong build() → infinite loop. ✅ Dùng didChangeDependencies() hoặc callback từ parent.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Dispose resources</h4>
+        <p>❌ Quên dispose AnimationController, StreamSubscription, TextEditingController → memory leak. ✅ Luôn override dispose().</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Async operations trong build()</h4>
+        <p>❌ Gọi async trong build() → widget chưa ready. ✅ Dùng FutureBuilder hoặc state management.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>MediaQuery.of(context) trong initState</h4>
+        <p>❌ Dùng MediaQuery trước build() → null. ✅ Dùng sau widget mounted (inside build() or didChangeDependencies()).</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>Keys không cần thiết</h4>
+        <p>❌ Thêm Key() cho mọi widget → performance giảm. ✅ Chỉ dùng Key khi cần preserve widget state trong list.</p>
+      </div>
+      <div class="card">
+        <h4>Hardcoded strings</h4>
+        <p>❌ Hardcoded text everywhere → khó i18n. ✅ Dùng flutter_localizations + ARB files.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:10px;">5 nguyên tắc vàng</h3>
+    <div class="steps" style="margin-top:6px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>StatelessWidget trước</h4>
+          <p>Luôn bắt đầu với StatelessWidget. Chỉ dùng StatefulWidget khi thực sự cần thay đổi state.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Container queries thay vì MediaQuery</h4>
+          <p>Dùng LayoutBuilder cho responsive layout thay vì hardcoded breakpoints.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Null safety từ đầu</h4>
+          <p>Luôn bật null safety, tránh null check rườm rà ở production.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PERSISTENT STATE — SHAREDPREFERENCES VÀ HIVE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>SharedPreferences</h3>
+        <p>Lưu trữ key-value pairs đơn giản — phù hợp cho settings, theme, language preference.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            // Lưu<br>
+            final prefs = await SharedPreferences.getInstance();<br>
+            await prefs.setString('username', 'hungnv');<br>
+            await prefs.setInt('age', 25);<br>
+            await prefs.setBool('darkMode', true);<br><br>
+            // Đọc<br>
+            final name = prefs.getString('username');<br>
+            final dark = prefs.getBool('darkMode') ?? false;<br><br>
+            // Xóa<br>
+            await prefs.remove('username');
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Khi nào dùng SharedPreferences?</h4>
+          <p>Settings nhỏ, user preferences. <span class="accent">Không dùng</span> cho data lớn — dùng SQLite hoặc Hive.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Hive — Local Database</h3>
+        <p>Hive là NoSQL database nhẹ, nhanh, <strong>không cần native dependencies</strong> — phù hợp offline-first apps.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            // Định nghĩa Model với HiveTypeAdapter<br>
+            @HiveType(typeId: 0)<br>
+            class Task extends HiveObject {<br>
+            &nbsp;&nbsp;@HiveField(0)<br>
+            &nbsp;&nbsp;String title;<br>
+            &nbsp;&nbsp;@HiveField(1)<br>
+            &nbsp;&nbsp;bool isDone;<br>
+            }<br><br>
+            // Mở box<br>
+            final box = await Hive.openBox&lt;Task&gt;('tasks');<br><br>
+            // CRUD<br>
+            await box.add(Task()..title='Learn Riverpod'..isDone=false);<br>
+            final tasks = box.values.toList();<br>
+            box.deleteAt(0);
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:6px;">
+          <h4>Flutter Secure Storage</h4>
+          <p>Dùng <code>flutter_secure_storage</code> cho sensitive data: API keys, tokens, passwords.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ASYNC / AWAIT VÀ XỬ LÝ LỖI</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Mọi network call, database operation đều là <strong>asynchronous</strong>. Dart dùng <code>Future</code> (kết quả tương lai) và <code>async/await</code> để xử lý bất đồng bộ.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Future + Async/Await</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Async function trả về Future&lt;T&gt;<br>
+            Future&lt;User&gt; fetchUser(int id) async {<br>
+            &nbsp;&nbsp;// Gọi API — tạm dừng cho đến khi xong<br>
+            &nbsp;&nbsp;final response = await api.get('/users/$id');<br>
+            &nbsp;&nbsp;// Parse JSON<br>
+            &nbsp;&nbsp;return User.fromJson(response.data);<br>
+            }<br><br>
+            // Gọi từ UI<br>
+            void loadUser() async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;setState(() => _isLoading = true);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final user = await fetchUser(1);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;setState(() => _user = user);<br>
+            &nbsp;&nbsp;} finally {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;setState(() => _isLoading = false);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Xử lý lỗi với try/catch/finally</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            Future&lt;List&lt;Product&gt;&gt; fetchProducts() async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final response = await api.get('/products');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (response.data as List)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map((j) => Product.fromJson(j)).toList();<br><br>
+            &nbsp;&nbsp;} on SocketException {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Không có internet<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw NetworkException('Không có kết nối mạng');<br><br>
+            &nbsp;&nbsp;} on TimeoutException {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw NetworkException('Server quá chậm');<br><br>
+            &nbsp;&nbsp;} catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Lỗi không xác định<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw NetworkException('Lỗi: $e');<br><br>
+            &nbsp;&nbsp;} finally {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Luôn chạy — cleanup<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_isLoading = false;<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>FutureBuilder</h4>
+          <p>Dùng <code>FutureBuilder</code> để render UI dựa trên Future state (loading, data, error).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STREAMS — DỮ LIỆU THỜI GIAN THỰC</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p><strong>Stream</strong> là chuỗi các sự kiện async được phát theo thời gian — khác Future (1 kết quả), Stream có thể phát <strong>nhiều giá trị</strong> liên tục. Dùng cho: chat, live data, audio/video.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Stream cơ bản</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Tạo StreamController<br>
+            final _counterController = StreamController&lt;int&gt;();<br><br>
+            // Phát dữ liệu<br>
+            _counterController.add(1);<br>
+            _counterController.add(2);<br>
+            _counterController.add(3);<br><br>
+            // Lắng nghe<br>
+            _counterController.stream.listen((value) {<br>
+            &nbsp;&nbsp;print('Giá trị mới: $value');<br>
+            });<br><br>
+            // Cleanup<br>
+            _counterController.close();
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">StreamBuilder trong Widget</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            StreamBuilder&lt;int&gt;(<br>
+            &nbsp;&nbsp;stream: _counterController.stream,<br>
+            &nbsp;&nbsp;builder: (context, snapshot) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (snapshot.hasData)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Text('Count: ${snapshot.data}');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (snapshot.hasError)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Text('Error!');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return CircularProgressIndicator();<br>
+            &nbsp;&nbsp;},<br>
+            );
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ứng dụng thực tế: Chat real-time</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Firestore snapshots</h4>
+              <p style="font-size:13px;">Firestore.collection('chats').snapshots() → Stream → tự động cập nhật khi có tin nhắn mới.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Geolocation tracking</h4>
+              <p style="font-size:13px;">Stream từ GPS sensor → cập nhật vị trí real-time trên bản đồ.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>WebSocket</h4>
+              <p style="font-size:13px;">Kết nối persistent → server push events → Stream → UI update.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>BroadcastStream</h4>
+          <p>Dùng <code>StreamController.broadcast()</code> khi nhiều widgets cùng lắng nghe 1 stream — VD: theme changes, authentication state.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THỰC HÀNH TỔNG HỢP — APP QUẢN LÝ CÔNG VIỆC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tính năng yêu cầu</h3>
+        <ul>
+          <li>Đăng nhập / Đăng ký với <strong>Firebase Auth</strong></li>
+          <li>Tạo, sửa, xóa công việc (CRUD)</li>
+          <li>Đánh dấu hoàn thành</li>
+          <li>Lưu local với <strong>Hive</strong> (offline)</li>
+          <li>Sync lên <strong>Firestore</strong> (online)</li>
+          <li>Đổi theme (sáng/tối)</li>
+          <li>Lọc: Tất cả / Đang làm / Hoàn thành</li>
+        </ul>
+        <h3 style="margin-top:10px;">Cấu trúc thư mục</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:11px;">
+            lib/<br>
+            ├── features/<br>
+            │&nbsp;&nbsp;├── auth/<br>
+            │&nbsp;&nbsp;│&nbsp;&nbsp;├── presentation/ (pages, widgets)<br>
+            │&nbsp;&nbsp;│&nbsp;&nbsp;├── application/ (auth_cubit.dart)<br>
+            │&nbsp;&nbsp;│&nbsp;&nbsp;└── domain/ (auth_repository.dart)<br>
+            │&nbsp;&nbsp;└── todos/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── presentation/<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── application/ (todos_cubit.dart)<br>
+            │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── data/ (hive_datasource.dart)<br>
+            └── main.dart
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>State Management: Cubit</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Cubit — đơn giản hơn BLoC<br>
+            class TodosCubit extends Cubit&lt;TodosState&gt; {<br>
+            &nbsp;&nbsp;final TodosRepository _repository;<br><br>
+            &nbsp;&nbsp;TodosCubit(this._repository)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: super(TodosInitial());<br><br>
+            &nbsp;&nbsp;Future&lt;void&gt; loadTodos() async {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;emit(TodosLoading());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final todos = await _repository.getTodos();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emit(TodosLoaded(todos));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emit(TodosError(e.toString()));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;Future&lt;void&gt; addTodo(String title) async {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;await _repository.addTodo(Todo(title));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;await loadTodos();<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card" style="margin-top:8px;">
+          <h4>Tại sao dùng Cubit thay vì BLoC?</h4>
+          <p>Cubit đơn giản hơn — không cần Events, chỉ gọi methods trực tiếp trên Cubit. Phù hợp cho app có state logic không quá phức tạp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>KẾT THÚC BÀI HỌC</h1>
+    <p class="section-desc">Tổng kết, câu hỏi ôn tập và định hướng học tập</p>
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT BÀI 5 — FLUTTER FRAMEWORK VÀ STATE MANAGEMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức đã học</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Flutter Widgets</h4>
+            <p>StatelessWidget, StatefulWidget, InheritedWidget, Widget Tree, Declarative UI.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>State Management</h4>
+            <p>Provider, Riverpod, GetX, BLoC, Redux — mỗi cái phù hợp với quy mô dự án khác nhau.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Flutter Architecture</h4>
+            <p>Framework Layer, Engine, Embedder. Clean Architecture: Presentation → Domain ← Data.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Performance</h4>
+            <p>const constructors, RepaintBoundary, ListView.builder, Keys, DevTools profiling.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Thực hành đã làm</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Shopping Cart</h4>
+            <p>Xây dựng app giỏ hàng với Provider và Riverpod — CRUD, tính tổng.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Animations</h4>
+            <p>AnimationController, Tween, Hero transition, Implicit animations.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Forms & Validation</h4>
+            <p>Form, TextFormField, validator, real-time validation.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Firebase Integration</h4>
+            <p>Firebase Auth, Cloud Firestore, real-time data, GoRouter.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Todo App tổng hợp</h4>
+            <p>Kết hợp Cubit + Firebase + Hive + Clean Architecture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Flutter 2025: <strong>Material 3</strong> là default, <strong>Impeller</strong> renderer thay Skia, <strong>Dart 3.4</strong> với macros, và <strong>AI-assisted development</strong> với Gemini trong Android Studio.</p>
+    </div>
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BẢNG TỔNG HỢP CÁC KỸ NĂNG FLUTTER</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%">Chủ đề</th>
+          <th style="width:48%">Nội dung cần nhớ</th>
+          <th style="width:30%">Resource / Thực hành</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Widgets</strong></td>
+          <td>Stateless vs Stateful, const, Widget Tree, InheritedWidget</td>
+          <td>Flutter Widget Catalog</td>
+        </tr>
+        <tr>
+          <td><strong>State Management</strong></td>
+          <td>Provider, Riverpod, GetX, BLoC — khi nào dùng cái nào</td>
+          <td>Shop Cart Provider/Riverpod</td>
+        </tr>
+        <tr>
+          <td><strong>Architecture</strong></td>
+          <td>Clean Architecture, DI, Repository pattern</td>
+          <td>Todo App (Cubit + Clean)</td>
+        </tr>
+        <tr>
+          <td><strong>Performance</strong></td>
+          <td>Rebuild tối thiểu, ListView.builder, const, RepaintBoundary</td>
+          <td>DevTools Performance tab</td>
+        </tr>
+        <tr>
+          <td><strong>Animation</strong></td>
+          <td>AnimationController, Tween, Hero, AnimatedContainer</td>
+          <td>Flutter Animation codelab</td>
+        </tr>
+        <tr>
+          <td><strong>Networking</strong></td>
+          <td>http/Dio, Future/async-await, try-catch, JSON parsing</td>
+          <td>API call thực tế</td>
+        </tr>
+        <tr>
+          <td><strong>Firebase</strong></td>
+          <td>Auth, Firestore, real-time snapshots, rules</td>
+          <td>Firebase + Riverpod</td>
+        </tr>
+        <tr>
+          <td><strong>Navigation</strong></td>
+          <td>GoRouter, deep links, redirect, nested routes</td>
+          <td>Multi-page app</td>
+        </tr>
+        <tr>
+          <td><strong>Testing</strong></td>
+          <td>Unit test, widget test, ProviderContainer override</td>
+          <td>flutter_test</td>
+        </tr>
+        <tr>
+          <td><strong>Storage</strong></td>
+          <td>SharedPreferences (settings), Hive (NoSQL), Secure Storage</td>
+          <td>Offline-first app</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="flex-direction:column; gap:10px;">
+      <div class="card">
+        <h4>Câu 1: StatelessWidget vs StatefulWidget</h4>
+        <p>Khi nào dùng StatelessWidget? Khi nào cần StatefulWidget? Cho ví dụ cụ thể.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Câu 2: Provider vs Riverpod</h4>
+        <p>Nêu 3 ưu điểm của Riverpod so với Provider. Khi nào nên chọn Riverpod thay Provider?</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Câu 3: BLoC Pattern</h4>
+        <p>Mô tả luồng hoạt động của BLoC: Event → ? → State. Tại sao BLoC giúp tách biệt UI và business logic?</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Câu 4: Performance Optimization</h4>
+        <p>ListView có 10,000 items. Bạn cần làm gì để scroll mượt? Trình bày ít nhất 3 cách tối ưu.</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>Câu 5: Clean Architecture</h4>
+        <p>Vẽ sơ đồ 3 layers (Presentation, Domain, Data) và giải thích luồng data giữa các layers. Tại sao Domain layer không phụ thuộc Flutter?</p>
+      </div>
+      <div class="card">
+        <h4>Câu 6: Async/Await và Error Handling</h4>
+        <p>Viết code fetch data từ API với try/catch/finally. Xử lý 3 loại lỗi: network, timeout, server error.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ỨNG DỤNG THỰC TẾ — TỪ STARTER ĐẾN PRODUCTION</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Google Ads, Alibaba (X20), BMW, eBay Motors, SpaceX Dragon — tất cả đều dùng Flutter. Hơn <strong>1 triệu apps</strong> trên App Store và Play Store được xây dựng bằng Flutter.</p>
+    </div>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <h3>Lộ trình học Flutter</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Foundation (Week 1–2)</h4>
+              <p>Dart cơ bản → Widgets → State → Layouts → Navigation</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Core Skills (Week 3–4)</h4>
+              <p>State Management (Riverpod) → Firebase → HTTP → Forms → Validation</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Advanced (Week 5–6)</h4>
+              <p>Animations → Performance → Testing → CI/CD → App Store deployment</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Portfolio (Week 7–8)</h4>
+              <p>Xây app hoàn chỉnh → deploy → viết blog → tìm việc freelance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Resources học tập</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>docs.flutter.dev</h4>
+            <p>Tài liệu chính thức — Flutter codelabs, samples</p>
+          </div>
+          <div class="card accent-green">
+            <h4>dart.dev</h4>
+            <p>Tài liệu ngôn ngữ Dart, tour, language samples</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Riverpod docs</h4>
+            <p>riverpod.dev — hướng dẫn chính thức Riverpod 2.0</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Code With Andrea</h4>
+            <p>codewithandrea.com — Clean Architecture, advanced patterns</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Flutter Community</h4>
+            <p>pub.dev — packages, community packages</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Dart Frog</strong>, <strong>Serverpod</strong> — backend frameworks mới cho Flutter. <strong>FFI</strong> cho native integrations. <strong>Wasm</strong> web deployment sắp production-ready.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Navigation và Routing trong Flutter</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">50</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

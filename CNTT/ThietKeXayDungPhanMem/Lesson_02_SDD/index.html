@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 02 - Software Design Document (SDD)</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ========== PHẦN 1: TỔNG QUAN SDD (từ PPTX gốc) ========== -->
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>SOFTWARE DESIGN<br>DOCUMENT (SDD)</h1>
+    <p class="subtitle">Tài liệu Thiết kế Phần mềm</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 2: SDD là gì -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SDD LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>SDD là tài liệu mô tả toàn diện về <strong>kiến trúc, thiết kế và chức năng</strong> của một hệ thống phần mềm. <a class="ref" href="https://standards.ieee.org/ieee/1016/4502/" target="_blank">[IEEE 1016]</a></p>
+        <h3>Mục đích</h3>
+        <ul>
+          <li>Là <strong>bản hướng dẫn</strong> cho lập trình viên, tester và các bên liên quan</li>
+          <li>Cung cấp hiểu biết rõ ràng về <strong>cấu trúc phần mềm</strong> và cách hoạt động</li>
+          <li>Cầu nối giữa <strong>yêu cầu (SRS)</strong> và <strong>mã nguồn</strong></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Vai trò trong SDLC (Software Development Life Cycle)</h3>
+        <p><strong>SDLC</strong> — Vòng đời phát triển phần mềm — là quy trình từ ý tưởng đến sản phẩm hoàn chỉnh:</p>
+        <div class="steps" style="margin-top:10px;">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Requirements (SRS)</h4><p>Thu thập và phân tích yêu cầu</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4 style="color:#ED7D31;">Design (SDD) ← Chúng ta ở đây</h4><p>Thiết kế kiến trúc, module, CSDL, giao diện</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Implementation → Testing → Deployment</h4><p>Viết code, kiểm thử, triển khai</p></div></div>
+        </div>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Trong Agile, SDD được <strong>cập nhật liên tục</strong> qua mỗi Sprint. Nhiều đội dùng Confluence, Notion hoặc wiki thay cho Word. <a class="ref" href="https://www.atlassian.com/work-management/knowledge-sharing/documentation/software-design-document" target="_blank">[Atlassian]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 3: Lịch sử -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỊCH SỬ PHÁT TRIỂN SDD</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:18%">Thời kỳ</th><th style="width:22%">Trọng tâm</th><th style="width:30%">Kỹ thuật thiết kế</th><th>Tài liệu</th></tr></thead>
+      <tbody>
+        <tr><td>1940s–1960s</td><td>Hướng phần cứng</td><td>Lập trình tùy ý</td><td>Không có hoặc flowchart cơ bản</td></tr>
+        <tr><td>1970s–1980s</td><td>Lập trình cấu trúc</td><td>Module, Waterfall</td><td>Flowchart, Data Flow Diagram</td></tr>
+        <tr><td>1990s</td><td>Hướng đối tượng</td><td>UML, Design Patterns</td><td>Class Diagram, Sequence Diagram</td></tr>
+        <tr><td>2000s</td><td>Agile & Iterative</td><td>Lightweight, continuous integration</td><td>Wiki, Confluence, "just enough" docs <a class="ref" href="https://agilemanifesto.org/" target="_blank">[Agile Manifesto, 2001]</a></td></tr>
+        <tr><td>2010s–nay</td><td>Cloud, Microservices & DevOps</td><td>API-first, CI/CD, IaC</td><td>OpenAPI, ADRs, living docs <a class="ref" href="https://martinfowler.com/articles/designDead.html" target="_blank">[Fowler]</a></td></tr>
+      </tbody>
+    </table>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>SDD không còn là file Word dài hàng trăm trang. Các đội hiện đại dùng <strong>"living documentation"</strong> — tài liệu tự sinh từ code (OpenAPI từ annotations, ERD từ schema). <a class="ref" href="https://www.atlassian.com/work-management/knowledge-sharing/documentation/software-design-document" target="_blank">[Atlassian]</a> <a class="ref" href="https://martinfowler.com/articles/designDead.html" target="_blank">[Fowler]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 4: Section Lợi ích -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>LỢI ÍCH CỦA SDD</h1>
+    <p class="section-desc">Tại sao mọi dự án phần mềm nghiêm túc đều cần Software Design Document?</p>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 5: Lợi ích 1 - Nền tảng hệ thống -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 1: NỀN TẢNG & CẤU TRÚC HỆ THỐNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>SDD = Bản vẽ kỹ thuật của phần mềm</h3>
+        <div class="cards" style="flex-direction:column; gap:12px;">
+          <div class="card"><h4>&#x1F3D7; Nền tảng (Foundation)</h4><p>Xác định <strong>kiến trúc tổng thể</strong> và các thành phần chính — như bản vẽ kiến trúc trước khi xây nhà</p></div>
+          <div class="card accent-orange"><h4>&#x1F9F1; Cấu trúc (Structure)</h4><p>Mô tả <strong>mối quan hệ</strong> giữa các thành phần, chức năng và cách tương tác</p></div>
+          <div class="card accent-green"><h4>&#x1F9E9; Khối xây dựng (Building Blocks)</h4><p>Chi tiết từng thành phần: <strong>chức năng, input/output, dependencies</strong></p></div>
+        </div>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Kiến trúc hiện đại dùng <strong>C4 Model</strong> (Context → Container → Component → Code) để mô tả hệ thống ở nhiều mức chi tiết. <a class="ref" href="https://c4model.com/" target="_blank">[c4model.com]</a></p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ thực tế</h3>
+        <div class="quote-box">
+          <p><strong>Amazon (2002):</strong> CEO Jeff Bezos gửi email nội bộ nổi tiếng yêu cầu mọi đội phải giao tiếp qua <strong>API có tài liệu thiết kế rõ ràng</strong>. Mỗi service phải có SDD mô tả input/output/dependencies — nền tảng giúp Amazon phát triển thành <strong>AWS</strong>, nền tảng cloud lớn nhất thế giới. <a class="ref" href="https://nordicapis.com/the-bezos-api-mandate-amazons-manifesto-for-externalization/" target="_blank">[The Bezos API Mandate]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Spotify:</strong> Mỗi "Squad" (đội 6-12 người) sở hữu 1 microservice với SDD riêng mô tả API contracts, data ownership, dependencies. Cho phép hơn 200 đội phát triển độc lập mà hệ thống vẫn hoạt động thống nhất. <a class="ref" href="https://engineering.atspotify.com/" target="_blank">[Spotify Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 6: Lợi ích 2 - Giao tiếp -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 2: GIAO TIẾP RÕ RÀNG & HIỂU CHUNG</h2></div>
+  <div class="slide-body">
+    <h3>&#x1F4AC; Đảm bảo mọi người hiểu hệ thống như nhau</h3>
+    <ul>
+      <li>Code nhất quán giữa các thành viên, ít hiểu lầm</li>
+      <li>Stakeholders (khách hàng, quản lý) hiểu hệ thống mà <strong>không cần đọc code</strong></li>
+      <li>Thành viên mới <strong>onboard nhanh</strong> nhờ đọc SDD thay vì hỏi đồng nghiệp</li>
+      <li>Giảm phụ thuộc vào "kiến thức trong đầu" của 1 người — tránh <strong>bus factor = 1</strong></li>
+    </ul>
+    <div class="quote-box">
+      <p><strong>Ví dụ thực tế — Google:</strong> Google duy trì hệ thống tài liệu thiết kế nội bộ gọi là <strong>"Design Docs"</strong>. Mọi dự án lớn bắt buộc viết design doc trước khi code. Theo Titus Winters (Software Engineering at Google), design docs giúp kỹ sư mới onboard vào codebase hàng tỷ dòng code trong vài tuần thay vì vài tháng. <a class="ref" href="https://abseil.io/resources/swe-book/html/ch10.html" target="_blank">[Software Engineering at Google, Ch.10]</a></p>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Nhiều đội dùng <strong>Architecture Decision Records (ADR)</strong> để ghi lại lý do đằng sau mỗi quyết định thiết kế — giúp người sau hiểu "tại sao" chứ không chỉ "cái gì". <a class="ref" href="https://adr.github.io/" target="_blank">[adr.github.io]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 7: Lợi ích 3 - Phát hiện lỗi sớm -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 3: PHÁT HIỆN LỖI SỚM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x1F50D; Phát hiện ở thiết kế — trước khi viết code</h3>
+        <ul>
+          <li>Review thiết kế (design review) giúp tránh <strong>"đập đi xây lại"</strong></li>
+          <li>Phát hiện <strong>xung đột giữa các module</strong> trước khi code</li>
+          <li>Đánh giá <strong>tính khả thi</strong> của giải pháp kỹ thuật sớm</li>
+        </ul>
+        <h3 style="margin-top:10px;">&#x1F4B0; Chi phí sửa lỗi theo giai đoạn</h3>
+        <table class="table-small">
+          <thead><tr><th>Giai đoạn phát hiện</th><th>Chi phí tương đối</th></tr></thead>
+          <tbody>
+            <tr><td>Thiết kế (Design)</td><td><strong>1x</strong></td></tr>
+            <tr><td>Lập trình (Coding)</td><td><strong>6.5x</strong></td></tr>
+            <tr><td>Kiểm thử (Testing)</td><td><strong>15x</strong></td></tr>
+            <tr><td>Vận hành (Production)</td><td><strong>100x</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#888; margin-top:4px;"><a class="ref" href="https://en.wikipedia.org/wiki/Cost_of_poor_quality" target="_blank">[IBM Systems Sciences Institute]</a> <a class="ref" href="https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf" target="_blank">[NIST]</a></p>
+      </div>
+      <div class="col">
+        <h3>Ví dụ thất bại do thiếu SDD</h3>
+        <div class="quote-box">
+          <p><strong>Healthcare.gov (Mỹ, 2013):</strong> Website bảo hiểm y tế — chỉ <strong>6 người</strong> đăng ký thành công ngày đầu tiên (mục tiêu: 250.000). Nguyên nhân: <strong>55 nhà thầu</strong> xây module không tương thích, không có SDD kiến trúc tổng thể. Chi phí sửa chữa: <strong>hơn $2 tỷ USD</strong>. <a class="ref" href="https://en.wikipedia.org/wiki/HealthCare.gov" target="_blank">[Wikipedia]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Ariane 5 (ESA, 1996):</strong> Tên lửa trị giá <strong>$370 triệu</strong> nổ sau 37 giây phóng. Nguyên nhân: module phần mềm tái sử dụng từ Ariane 4 <strong>không được thiết kế lại</strong> cho thông số mới (64-bit → 16-bit overflow). Lỗi có thể phát hiện ở design review. <a class="ref" href="https://en.wikipedia.org/wiki/Ariane_flight_V88" target="_blank">[Wikipedia]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 8: Lợi ích 4 - Bảo trì & Mở rộng -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 4: DỄ BẢO TRÌ & MỞ RỘNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x1F527; Bảo trì (Maintenance)</h3>
+        <ul>
+          <li><strong>Debug nhanh:</strong> SDD là bản đồ giúp tìm nguồn gốc lỗi — biết module nào chịu trách nhiệm</li>
+          <li><strong>Thay đổi an toàn:</strong> Biết rõ thành phần nào bị ảnh hưởng khi sửa code (impact analysis)</li>
+          <li><strong>Giảm "spaghetti code":</strong> Thiết kế rõ ràng ngăn code phình to không kiểm soát</li>
+        </ul>
+        <h3>&#x1F4C8; Mở rộng (Scalability)</h3>
+        <ul>
+          <li>Thiết kế modular cho phép <strong>thêm module mới</strong> mà không phá module cũ</li>
+          <li>Kiến trúc tốt giúp <strong>scale ngang</strong> khi người dùng tăng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="quote-box">
+          <p><strong>Ví dụ — Netflix:</strong> Ban đầu Netflix là 1 ứng dụng monolithic. Khi người dùng tăng lên hàng trăm triệu, họ dùng SDD để chuyển đổi sang <strong>microservices</strong> (hơn 1.000 services). Nhờ tài liệu thiết kế rõ ràng, mỗi đội có thể deploy <strong>hàng nghìn lần/ngày</strong> mà không ảnh hưởng đội khác. <a class="ref" href="https://medium.com/netflix-techblog" target="_blank">[Netflix Tech Blog]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Ví dụ — Grab:</strong> Kiến trúc SDD giúp Grab mở rộng từ taxi sang food, payment, logistics — mỗi "vertical" là module riêng, phát triển độc lập nhờ API contracts rõ ràng trong SDD. <a class="ref" href="https://engineering.grab.com/" target="_blank">[Grab Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 9: Lợi ích 5 - Giảm rủi ro & Tiết kiệm chi phí -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 5: GIẢM RỦI RO & TIẾT KIỆM CHI PHÍ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x26A0;&#xFE0F; Giảm rủi ro (Risk Mitigation)</h3>
+        <ul>
+          <li>SDD buộc đội phải <strong>đánh giá rủi ro kỹ thuật</strong> trước khi code: dependencies, bottleneck, single point of failure</li>
+          <li>Phân tích <strong>tính khả thi</strong> (feasibility) của kiến trúc trước khi đầu tư thời gian code</li>
+          <li>Theo <strong>Standish Group CHAOS Report</strong>, thiếu thiết kế/tài liệu là nguyên nhân hàng đầu khiến ~30% dự án CNTT thất bại <a class="ref" href="https://en.wikipedia.org/wiki/Standish_Group#CHAOS_Report" target="_blank">[Standish Group]</a></li>
+        </ul>
+        <h3 style="margin-top:10px;">&#x1F4B0; Tiết kiệm chi phí</h3>
+        <ul>
+          <li>Sửa lỗi ở thiết kế tốn <strong>1x</strong>, ở code <strong>6.5x</strong>, ở testing <strong>15x</strong>, ở production <strong>100x</strong> <a class="ref" href="https://en.wikipedia.org/wiki/Cost_of_poor_quality" target="_blank">[IBM Systems Sciences]</a></li>
+          <li><strong>Giảm rework:</strong> thiết kế đúng từ đầu → ít làm lại</li>
+          <li><strong>Tái sử dụng:</strong> thiết kế tốt dùng lại cho dự án khác</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="quote-box">
+          <p><strong>Ví dụ — Healthcare.gov:</strong> Thất bại $2 tỷ USD do 55 nhà thầu xây module không tương thích — thiếu SDD kiến trúc tổng thể. <a class="ref" href="https://en.wikipedia.org/wiki/HealthCare.gov" target="_blank">[Wikipedia]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Ví dụ — Twitter/X (2023):</strong> Khi sa thải 80% nhân sự, nhiều hệ thống gặp lỗi do đội mới không hiểu code cũ. Các service có tài liệu thiết kế tốt được khôi phục nhanh hơn nhiều lần so với service chỉ có code không tài liệu. <a class="ref" href="https://en.wikipedia.org/wiki/Twitter_layoffs" target="_blank">[Wikipedia — Twitter layoffs]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Thống kê NIST:</strong> Lỗi phần mềm gây thiệt hại <strong>$59.5 tỷ USD/năm</strong> cho kinh tế Mỹ, phần lớn phòng tránh được bằng thiết kế tốt hơn. <a class="ref" href="https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf" target="_blank">[NIST]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: Lợi ích 6 - Onboarding & Chuyển giao -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 6: ONBOARDING & CHUYỂN GIAO KIẾN THỨC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x1F393; Thành viên mới hòa nhập nhanh</h3>
+        <ul>
+          <li>Đọc SDD thay vì "đọc toàn bộ code" hoặc hỏi đồng nghiệp liên tục</li>
+          <li>Giảm <strong>bus factor risk</strong> — khi người duy nhất hiểu hệ thống nghỉ việc, SDD giúp đội tiếp tục</li>
+          <li>Đặc biệt quan trọng cho <strong>outsourcing</strong> — khi chuyển giao dự án giữa các vendor</li>
+        </ul>
+        <h3 style="margin-top:10px;">&#x1F4E6; Chuyển giao dự án</h3>
+        <ul>
+          <li>Đội mới tiếp nhận dự án <strong>không cần gặp đội cũ</strong> nếu SDD đầy đủ</li>
+          <li>Giảm "tribal knowledge" — kiến thức chỉ tồn tại trong đầu 1 người</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="quote-box">
+          <p><strong>Ví dụ — Google:</strong> Kỹ sư mới tại Google onboard vào codebase hàng tỷ dòng code nhờ hệ thống "Design Docs" nội bộ — mọi dự án bắt buộc có tài liệu thiết kế trước khi code. <a class="ref" href="https://abseil.io/resources/swe-book/html/ch10.html" target="_blank">[Software Engineering at Google]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Ví dụ — Atlassian:</strong> Atlassian công bố quy trình nội bộ: mọi feature mới bắt buộc có <strong>Design Document</strong> trên Confluence trước khi code. Giúp hơn 10.000 kỹ sư toàn cầu onboard nhanh và chuyển giao dự án hiệu quả. <a class="ref" href="https://www.atlassian.com/work-management/knowledge-sharing/documentation/software-design-document" target="_blank">[Atlassian SDD Guide]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: Lợi ích 7 - Tuân thủ & Kiểm soát phạm vi -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỢI ÍCH 7: TUÂN THỦ PHÁP LÝ & KIỂM SOÁT PHẠM VI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x1F4DC; Tuân thủ (Compliance)</h3>
+        <ul>
+          <li>Nhiều ngành <strong>bắt buộc</strong> có SDD: y tế (FDA), tài chính (PCI-DSS), hàng không (DO-178C), quốc phòng</li>
+          <li>SDD cung cấp <strong>audit trail</strong> — bằng chứng rằng hệ thống được thiết kế đúng quy chuẩn</li>
+          <li>Chuẩn quốc tế: <strong>IEEE 1016</strong>, <strong>ISO/IEC 25010</strong> (chất lượng PM) <a class="ref" href="https://standards.ieee.org/ieee/1016/4502/" target="_blank">[IEEE]</a></li>
+        </ul>
+        <h3 style="margin-top:10px;">&#x1F3AF; Kiểm soát phạm vi (Scope Control)</h3>
+        <ul>
+          <li>SDD là <strong>"hợp đồng kỹ thuật"</strong> giữa các bên — thống nhất phạm vi trước khi code</li>
+          <li>Giảm <strong>scope creep</strong> — khi khách hàng yêu cầu thêm, đối chiếu với SDD để đánh giá impact</li>
+          <li>Cơ sở để <strong>ước lượng</strong> thời gian và chi phí chính xác hơn</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="quote-box">
+          <p><strong>Ví dụ — Ngân hàng VPBank:</strong> Khi phát triển hệ thống core banking, SDD là tài liệu bắt buộc để Ngân hàng Nhà nước phê duyệt trước khi triển khai. Không có SDD đạt chuẩn = không được phép vận hành. <a class="ref" href="https://www.sbv.gov.vn/" target="_blank">[Ngân hàng Nhà nước VN]</a></p>
+        </div>
+        <div class="quote-box">
+          <p><strong>Ví dụ — Viettel:</strong> Các dự án phần mềm quốc phòng và viễn thông của Viettel yêu cầu SDD tuân thủ chuẩn ISO/IEC 12207 (quy trình vòng đời phần mềm) trước mỗi giai đoạn phát triển. <a class="ref" href="https://viettel.com.vn/" target="_blank">[Viettel]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 2: 9 LOẠI SDD (từ PPTX gốc) ========== -->
+
+<!-- SLIDE 8: Section 9 loại -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>9 KHÍA CẠNH THIẾT KẾ</h1>
+    <p class="section-desc">Mỗi loại tập trung vào một khía cạnh khác nhau của thiết kế phần mềm</p>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 9: Bảng tổng quan -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG QUAN 9 KHÍA CẠNH THIẾT KẾ</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:5%">#</th><th style="width:32%">Khía cạnh</th><th>Tập trung vào</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>High-Level Design (HLD)</td><td>Kiến trúc tổng thể, thành phần chính — "what" không phải "how"</td></tr>
+        <tr><td>2</td><td>Low-Level Design (LLD)</td><td>Chi tiết triển khai từng module, class, method — cho developers</td></tr>
+        <tr><td>3</td><td>Architectural Design</td><td>Patterns kiến trúc (microservices, layered, event-driven)</td></tr>
+        <tr><td>4</td><td>Data Design</td><td>Mô hình dữ liệu, ERD, database schema, tối ưu lưu trữ</td></tr>
+        <tr><td>5</td><td>Component Design</td><td>Thiết kế từng module/component riêng lẻ</td></tr>
+        <tr><td>6</td><td>UI/UX Design</td><td>Wireframe, mockup, user flow, design guidelines</td></tr>
+        <tr><td>7</td><td>API Design</td><td>Endpoints, request/response, authentication, error handling</td></tr>
+        <tr><td>8</td><td>Security Design</td><td>Xác thực, mã hóa, phân quyền, compliance</td></tr>
+        <tr><td>9</td><td>Deployment & Maintenance</td><td>Triển khai, CI/CD, monitoring, backup, bảo trì</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 10: HLD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>1. HIGH-LEVEL DESIGN DOCUMENT (HLD)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả tổng quan kiến trúc và thành phần chính. Tập trung vào <strong>"cái gì"</strong> chứ không phải chi tiết triển khai.</p>
+        <h3>Nội dung bao gồm:</h3>
+        <ul>
+          <li>Sơ đồ <strong>kiến trúc hệ thống</strong> (System Architecture Diagram)</li>
+          <li>Các <strong>module/component</strong> chính và vai trò</li>
+          <li><strong>Tích hợp</strong> hệ thống bên ngoài (API, 3rd party)</li>
+          <li>Sơ đồ <strong>luồng dữ liệu</strong> cấp cao (High-level Data Flow)</li>
+        </ul>
+        <div class="quote-box">
+          <p><strong>Ví dụ (Online Banking):</strong> 4 module: Authentication, Account Management, Transaction Processing, Notification. Frontend ↔ Backend qua RESTful API, Backend ↔ MySQL + Redis Cache.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/hld-network-diagram.png" alt="HLD Network Diagram Example">
+        <p class="img-caption">Sơ đồ mạng (Network Diagram) — thành phần cốt lõi trong HLD, thể hiện tất cả các thành phần mạng và giao tiếp giữa chúng<br><a href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">Nguồn: Software Dominos</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: HLD - Các thành phần chi tiết -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HLD — CÁC THÀNH PHẦN CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Nội dung bắt buộc trong HLD:</h3>
+        <div class="cards" style="flex-direction:column; gap:10px;">
+          <div class="card"><h4>1. Tổng quan hệ thống (System Overview)</h4><p>Mục đích, phạm vi, các chức năng chính của hệ thống</p></div>
+          <div class="card accent-orange"><h4>2. Kiến trúc hệ thống (Architecture Diagram)</h4><p>Sơ đồ tổng thể: phần cứng, CSDL, ứng dụng, bảo mật, công nghệ</p></div>
+          <div class="card accent-green"><h4>3. Thành phần & Module (Component Architecture)</h4><p>Các subsystem, quan hệ, phụ thuộc, tương tác giữa các module</p></div>
+          <div class="card accent-gold"><h4>4. Luồng dữ liệu (Data Flow)</h4><p>Flowchart, DFD — dữ liệu di chuyển giữa các thành phần như thế nào</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:10px;">
+          <div class="card accent-purple"><h4>5. Công nghệ sử dụng (Technology Stack)</h4><p>Danh sách framework, ngôn ngữ, CSDL, cloud, tools</p></div>
+          <div class="card"><h4>6. Người dùng & Use Cases</h4><p>User profiles (admin, user, guest) và cách họ tương tác với hệ thống</p></div>
+          <div class="card accent-orange"><h4>7. Thiết kế API & Giao diện</h4><p>API endpoints chính, giao tiếp giữa các module, UI tổng quan</p></div>
+          <div class="card accent-green"><h4>8. Triển khai (Deployment Architecture)</h4><p>Server, cloud, network, CI/CD pipeline</p></div>
+        </div>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>HLD hiện đại thường bao gồm cả <strong>Architecture Decision Records (ADR)</strong> — ghi lý do chọn từng công nghệ/pattern. <a class="ref" href="https://adr.github.io/" target="_blank">[adr.github.io]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: HLD - Khi nào cần & Quy trình tạo -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HLD — KHI NÀO CẦN & QUY TRÌNH TẠO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khi nào cần viết HLD?</h3>
+        <ul>
+          <li>Dự án có <strong>nhiều team</strong> hoặc nhiều nhà thầu phát triển đồng thời</li>
+          <li>Hệ thống <strong>tích hợp nhiều service</strong> (microservices, 3rd party APIs)</li>
+          <li>Cần <strong>phê duyệt từ stakeholders</strong> trước khi code (khách hàng, quản lý, kiến trúc sư)</li>
+          <li>Dự án có yêu cầu <strong>tuân thủ pháp lý</strong> (tài chính, y tế, quốc phòng)</li>
+          <li>Hệ thống cần <strong>mở rộng</strong> trong tương lai (scalability planning)</li>
+        </ul>
+        <h3 style="margin-top:10px;">Ai tạo HLD?</h3>
+        <ul>
+          <li><strong>Solution Architect</strong> hoặc <strong>Tech Lead</strong> — không phải developer</li>
+          <li>Review bởi: PM, CTO, stakeholders, security team</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Quy trình tạo HLD (5 bước):</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Thu thập yêu cầu</h4><p>Đọc SRS, họp với stakeholders, xác định scope</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Xác định kiến trúc</h4><p>Chọn pattern (layered, microservices...), vẽ architecture diagram</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Xác định thành phần</h4><p>Liệt kê modules, APIs, databases, 3rd party integrations</p></div></div>
+          <div class="step"><div class="step-num" style="background:#FFC000; color:#333;">4</div><div class="step-content"><h4>Vẽ sơ đồ</h4><p>Architecture diagram, data flow, deployment diagram</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7C4DFF;">5</div><div class="step-content"><h4>Review & phê duyệt</h4><p>Stakeholders review, feedback, cập nhật, sign-off</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 11: HLD Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HLD EXAMPLE: SƠ ĐỒ MẠNG (NETWORK DIAGRAM)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Sơ đồ mạng là thành phần cốt lõi trong HLD — thể hiện <strong>tất cả thành phần mạng</strong> và giao tiếp giữa chúng. <a class="ref" href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">[Software Dominos]</a></p>
+        <h3>Các thành phần trong sơ đồ:</h3>
+        <table class="table-small">
+          <thead><tr><th>Thành phần</th><th>Vai trò</th></tr></thead>
+          <tbody>
+            <tr><td><strong>App Service Plan</strong></td><td>Hosting Web App (Dev → Staging → Production)</td></tr>
+            <tr><td><strong>SQL Database</strong></td><td>On-Premises datacenter + SQL Elastic Pool</td></tr>
+            <tr><td><strong>Redis Cache</strong></td><td>Cache dữ liệu, giảm tải database</td></tr>
+            <tr><td><strong>Azure Backup</strong></td><td>Sao lưu dữ liệu tự động</td></tr>
+            <tr><td><strong>App Insights</strong></td><td>Monitoring, logging, performance</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:8px;">CI/CD Pipeline (Visual Studio Team Services):</h3>
+        <p><strong>Work → Code → Build → Test → Release</strong> — tự động hóa từ lập kế hoạch đến triển khai production</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/hld-network-diagram.png" alt="HLD Network Diagram - Azure Architecture">
+        <p class="img-caption">Sơ đồ mạng Azure — App Service, SQL, Redis, CI/CD pipeline<br><a href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">Nguồn: Software Dominos</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: LLD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>2. LOW-LEVEL DESIGN DOCUMENT (LLD)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>LLD mô tả <strong>chi tiết yêu cầu cấp thấp</strong> của các subcomponent và submodule — dành cho developers và testers. <a class="ref" href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">[Software Dominos]</a></p>
+        <h3>Nội dung LLD bao gồm:</h3>
+        <ul>
+          <li>Chi tiết qua <strong>flowcharts, pseudocode, sơ đồ luồng</strong></li>
+          <li>Xác định cụ thể <strong>source code files, bảng data model, functions</strong> cần sửa đổi</li>
+          <li>Giúp testers nắm <strong>phạm vi thay đổi</strong> → định hướng testing effort</li>
+          <li>Bao gồm <strong>xử lý ngoại lệ</strong> (exception handling) và <strong>kịch bản tiêu cực</strong> (negative scenarios)</li>
+          <li><strong>Class diagrams</strong> chi tiết với attributes & methods</li>
+          <li><strong>Sequence diagrams</strong> cho từng luồng xử lý</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ví dụ LLD: Authentication Module</h3>
+        <table class="table-small">
+          <thead><tr><th>Chức năng</th><th>Inputs</th><th>Outputs</th></tr></thead>
+          <tbody>
+            <tr><td>User Login</td><td>Username, Password</td><td>JWT Token (RS256, 24h)</td></tr>
+            <tr><td>Password Reset</td><td>Email Address</td><td>Reset Link (expire 1h)</td></tr>
+            <tr><td>MFA Verify</td><td>OTP, Session ID</td><td>Success/Failure</td></tr>
+            <tr><td>Token Refresh</td><td>Refresh Token</td><td>New Access Token</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: LLD Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>2. LLD EXAMPLE: MODULE XÁC THỰC NGƯỜI DÙNG</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">Ví dụ LLD chi tiết cho module Authentication — mô tả <strong>pseudocode, luồng xử lý, và xử lý ngoại lệ</strong> ở mức triển khai. <a class="ref" href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">[Software Dominos]</a></p>
+    <div class="two-columns">
+      <div class="col">
+        <h3>Class: AuthService (Pseudocode)</h3>
+        <div style="background:rgba(0,0,0,0.04); padding:12px 16px; border-radius:8px; font-family:monospace; font-size:13px; line-height:1.6;">
+          <strong>class AuthService:</strong><br>
+          &nbsp;&nbsp;- userRepo: UserRepository<br>
+          &nbsp;&nbsp;- jwtService: JWTService<br>
+          &nbsp;&nbsp;- emailService: EmailService<br>
+          &nbsp;&nbsp;- bcrypt: BCryptEncoder<br><br>
+          &nbsp;&nbsp;+ <strong>login</strong>(email, password): JWT<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;1. Tìm user theo email<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;2. So sánh password (BCrypt)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;3. Tạo JWT token (RS256, 24h)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;4. Return token<br><br>
+          &nbsp;&nbsp;+ <strong>resetPassword</strong>(email): void<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;1. Generate reset token (UUID)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;2. Lưu token + expiry (1h)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;3. Gửi email chứa link reset
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sequence: Login Flow</h3>
+        <div style="background:rgba(0,0,0,0.04); padding:12px 16px; border-radius:8px; font-family:monospace; font-size:13px; line-height:1.6;">
+          User → UI: Nhập email + password<br>
+          UI → <strong>AuthController</strong>: POST /api/auth/login<br>
+          AuthController → <strong>AuthService</strong>: login(email, pwd)<br>
+          AuthService → <strong>UserRepo</strong>: findByEmail(email)<br>
+          UserRepo → DB: SELECT * WHERE email=?<br>
+          AuthService → <strong>BCrypt</strong>: matches(pwd, hash)?<br>
+          &nbsp;&nbsp;<em>Nếu sai → throw 401 Unauthorized</em><br>
+          AuthService → <strong>JWTService</strong>: generateToken(user)<br>
+          AuthController → UI: 200 OK + {token, user}<br>
+          UI → User: Chuyển đến Dashboard
+        </div>
+        <h3 style="margin-top:10px;">Exception Handling:</h3>
+        <ul style="font-size:15px;">
+          <li><strong>Email không tồn tại</strong> → 404 "User not found"</li>
+          <li><strong>Sai mật khẩu</strong> → 401 "Invalid credentials"</li>
+          <li><strong>Tài khoản bị khóa</strong> → 403 "Account locked"</li>
+          <li><strong>Quá 5 lần sai</strong> → Lock 30 phút</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: HLD vs LLD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH HLD VS LLD</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Tiêu chí</th><th style="width:40%">High-Level Design (HLD)</th><th style="width:40%">Low-Level Design (LLD)</th></tr></thead>
+      <tbody>
+        <tr><td>Bắt buộc?</td><td>Có</td><td>Có</td></tr>
+        <tr><td>Giai đoạn SDLC</td><td>Analysis</td><td>Design</td></tr>
+        <tr><td>Nội dung</td><td>Tương đối kỹ thuật</td><td>Rất kỹ thuật (highly technical)</td></tr>
+        <tr><td>Đối tượng</td><td>PM, sponsors, senior leadership</td><td>Business analysts, developers, testers, DevOps</td></tr>
+        <tr><td>Người tạo</td><td>Architect / Tech Lead</td><td>Principal/Senior Developer, Tech Lead</td></tr>
+        <tr><td>Stakeholders</td><td>Business people, senior management</td><td>Technical staff</td></tr>
+        <tr><td>Mục đích</td><td>Phê duyệt giải pháp (SOW sign-off)</td><td>Định hướng design decisions, development, testing</td></tr>
+        <tr><td>Nội dung chi tiết</td><td>Kiến trúc hệ thống, use cases, data flow, interfaces</td><td>Feature design, impact analysis, pseudocode, algorithms, interface specs</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px; font-size:14px; color:#666;"><a class="ref" href="https://softwaredominos.com/home/software-design-development-articles/high-level-solution-design-documents-what-is-it-and-when-do-you-need-one/" target="_blank">[Software Dominos]</a></p>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 13: Architectural Design — Tổng quan -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>3. ARCHITECTURAL DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả <strong>cấu trúc tổng thể</strong> của hệ thống phần mềm — cách các thành phần được tổ chức, giao tiếp và triển khai. Đây là tài liệu quan trọng nhất giúp đội ngũ hiểu "bức tranh lớn" trước khi code. <a class="ref" href="https://en.wikipedia.org/wiki/Software_architecture_description" target="_blank">[Wikipedia]</a></p>
+        <h3>Nội dung chính của ADD:</h3>
+        <ul>
+          <li><strong>Architectural Views</strong> — mô tả hệ thống từ nhiều góc nhìn (mô hình 4+1 của Kruchten) <a class="ref" href="https://en.wikipedia.org/wiki/4%2B1_architectural_view_model" target="_blank">[4+1 View]</a></li>
+          <li><strong>Quality Attributes</strong> — yêu cầu phi chức năng: scalability, availability, performance, security</li>
+          <li><strong>Architectural Decisions (ADRs)</strong> — ghi lại quyết định + lý do + trade-offs <a class="ref" href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank">[Michael Nygard]</a></li>
+          <li><strong>Technology Stack</strong> — ngôn ngữ, framework, database, cloud services</li>
+          <li><strong>Constraints</strong> — ràng buộc về công nghệ, ngân sách, pháp lý, kỹ năng team</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Mô hình 4+1 View (Kruchten):</h3>
+        <table class="table-small">
+          <thead><tr><th>View</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>Logical</td><td>Modules, classes, packages — cấu trúc logic</td></tr>
+            <tr><td>Process</td><td>Concurrency, threads, communication</td></tr>
+            <tr><td>Development</td><td>Tổ chức source code, layers, libraries</td></tr>
+            <tr><td>Physical</td><td>Deployment: servers, containers, network</td></tr>
+            <tr><td>+1 Scenarios</td><td>Use cases kiểm chứng kiến trúc</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Architecture Decision Records (ADRs)</strong> đang được áp dụng rộng rãi — mỗi quyết định kiến trúc được ghi thành 1 file ngắn gọn trong repo, giúp người mới hiểu "tại sao" hệ thống được thiết kế như vậy. <a class="ref" href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank">[Cognitect]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 14: Architectural Patterns -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC ARCHITECTURAL PATTERNS PHỔ BIẾN</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:18%">Pattern</th><th style="width:35%">Đặc điểm</th><th style="width:25%">Ví dụ thực tế</th><th>Khi nào dùng</th></tr></thead>
+      <tbody>
+        <tr><td>Monolithic</td><td>1 codebase, deploy cùng nhau, tất cả module chung process</td><td>WordPress, Shopify giai đoạn đầu <a class="ref" href="https://shopify.engineering/deconstructing-monolith-designing-software-maximizes-developer-productivity" target="_blank">[Shopify]</a></td><td>Startup, MVP, team nhỏ</td></tr>
+        <tr><td>Layered (N-Tier)</td><td>Tách thành các tầng: Presentation → Business → Data. Mỗi tầng chỉ gọi tầng dưới</td><td>Hầu hết ứng dụng web truyền thống (Spring MVC, .NET) <a class="ref" href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">[Wikipedia]</a></td><td>Web app CRUD, hệ thống enterprise</td></tr>
+        <tr><td>Microservices</td><td>Nhiều service nhỏ, deploy độc lập, mỗi service sở hữu database riêng</td><td>Netflix (~1000+ services), Uber (DOMA) <a class="ref" href="https://www.uber.com/blog/microservice-architecture/" target="_blank">[Uber]</a></td><td>Hệ thống lớn, nhiều team, cần scale độc lập</td></tr>
+        <tr><td>Event-Driven</td><td>Giao tiếp bất đồng bộ qua events (Kafka, RabbitMQ). Loose coupling</td><td>LinkedIn real-time feed, hệ thống IoT <a class="ref" href="https://engineering.linkedin.com/blog" target="_blank">[LinkedIn]</a></td><td>Real-time, data pipeline, IoT</td></tr>
+        <tr><td>Serverless</td><td>Logic chạy trong stateless functions, cloud quản lý infrastructure</td><td>AWS Lambda, Azure Functions <a class="ref" href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/introduction.html" target="_blank">[AWS]</a></td><td>API nhẹ, event triggers, chi phí thấp ban đầu</td></tr>
+        <tr><td>Clean / Hexagonal</td><td>Business logic ở trung tâm, cô lập khỏi DB/UI/API qua ports &amp; adapters</td><td>Nhiều dự án DDD, banking systems <a class="ref" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">[Uncle Bob]</a></td><td>Domain phức tạp, cần testability cao</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 15: Architectural Example — 3-Tier + Quality Attributes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: 3-TIER ARCHITECTURE & QUALITY ATTRIBUTES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3-Tier Architecture:</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Presentation Layer</h4><p>Angular SPA → gửi HTTP requests → hiển thị dữ liệu cho người dùng</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Business Logic Layer</h4><p>Java Spring Boot: Controller → Service → Repository. Xử lý nghiệp vụ, validation, authorization</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Data Access Layer</h4><p>MySQL/PostgreSQL via JPA/Hibernate. Quản lý persistence, transactions, caching</p></div></div>
+        </div>
+        <h3 style="margin-top:10px;">Quality Attributes cần quan tâm:</h3>
+        <ul>
+          <li><strong class="highlight">Scalability:</strong> horizontal scaling, load balancer, caching (Redis)</li>
+          <li><strong class="accent">Availability:</strong> redundancy, health checks, failover (99.9%+ uptime)</li>
+          <li><strong>Security:</strong> OAuth2/JWT, HTTPS, API Gateway, OWASP compliance</li>
+          <li><strong>Maintainability:</strong> modular code, CI/CD pipeline, automated testing</li>
+        </ul>
+      </div>
+      <div class="col-img"><img src="assets/three-tier.svg" alt="3-Tier Architecture Example"><p class="img-caption">Ví dụ triển khai kiến trúc 3 tầng (Presentation → Logic → Data)<br><a href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">Nguồn: Wikipedia</a></p></div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 15: Data Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>4. DATA DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Tập trung vào cách dữ liệu được <strong>mô hình hóa, lưu trữ và quản lý</strong>.</p>
+        <h3>Nội dung:</h3>
+        <ul>
+          <li><strong>ERD</strong> (Entity-Relationship Diagram)</li>
+          <li><strong>Database Schema:</strong> bảng, quan hệ, indexes, constraints</li>
+          <li><strong>Data Flow Diagrams</strong></li>
+          <li>Chiến lược tối ưu (indexing, partitioning, caching)</li>
+        </ul>
+        <h3>Ví dụ bảng Users:</h3>
+        <table class="table-small">
+          <thead><tr><th>Cột</th><th>Kiểu</th><th>Ràng buộc</th></tr></thead>
+          <tbody>
+            <tr><td>user_id</td><td>BIGINT</td><td>PK, AUTO_INCREMENT</td></tr>
+            <tr><td>email</td><td>VARCHAR(100)</td><td>NOT NULL, UNIQUE</td></tr>
+            <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL (BCrypt)</td></tr>
+            <tr><td>role</td><td>ENUM</td><td>STUDENT/INSTRUCTOR/ADMIN</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-img"><img src="assets/erd-example.png" alt="ERD Example"><p class="img-caption">Sơ đồ thực thể quan hệ (ERD)<br><a href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model" target="_blank">Nguồn: Wikimedia Commons</a></p></div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 16: Component Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>5. COMPONENT DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả thiết kế từng <strong>module/component riêng lẻ</strong> trong hệ thống — trách nhiệm, giao diện, và cách các component phụ thuộc lẫn nhau. <a class="ref" href="https://en.wikipedia.org/wiki/Component_diagram" target="_blank">[Wikipedia]</a></p>
+        <h3>Nội dung chính:</h3>
+        <ul>
+          <li><strong>Tên & mục đích</strong> — component làm gì, thuộc layer nào</li>
+          <li><strong>Interfaces (Provided/Required)</strong> — API mà component cung cấp và sử dụng</li>
+          <li><strong>Dependencies</strong> — phụ thuộc vào component nào, qua giao thức gì (REST, gRPC, message queue)</li>
+          <li><strong>Internal structure</strong> — class diagram, sequence diagram bên trong</li>
+          <li><strong>Error handling</strong> — xử lý lỗi, retry, fallback</li>
+        </ul>
+        <h3>Ví dụ: Authentication Module</h3>
+        <table class="table-small">
+          <thead><tr><th>Chức năng</th><th>Inputs</th><th>Outputs</th></tr></thead>
+          <tbody>
+            <tr><td>Login</td><td>email, password</td><td>JWT Token / Error</td></tr>
+            <tr><td>Password Reset</td><td>email</td><td>Reset link via email</td></tr>
+            <tr><td>MFA Verify</td><td>OTP, sessionId</td><td>Success / Failure</td></tr>
+            <tr><td>Token Refresh</td><td>refreshToken</td><td>New accessToken</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-img">
+        <img src="assets/component-diagram.png" alt="UML Component Diagram Example">
+        <p class="img-caption">UML Component Diagram — thể hiện các component và dependencies<br><a href="https://commons.wikimedia.org/wiki/File:Policy_Admin_Component_Diagram.PNG" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 17: UI/UX Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>6. UI/UX DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả các khía cạnh <strong>trực quan và tương tác</strong> của phần mềm.</p>
+        <h3>Nội dung:</h3>
+        <ul>
+          <li><strong>Wireframes</strong> (low-fidelity) và <strong>Mockups</strong> (high-fidelity)</li>
+          <li>User flows, cấu trúc điều hướng</li>
+          <li>UI components: buttons, forms, navigation</li>
+          <li>Design guidelines: typography, colors, spacing</li>
+          <li>Accessibility (WCAG)</li>
+        </ul>
+        <div class="cards" style="gap:12px; margin-top:8px;">
+          <div class="card"><h4>Wireframe</h4><p>Phác thảo layout. Balsamiq.</p></div>
+          <div class="card accent-orange"><h4>Mockup</h4><p>Chi tiết màu sắc. Figma.</p></div>
+          <div class="card accent-green"><h4>Prototype</h4><p>Click được. Figma Proto.</p></div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/wireframe.png" alt="Wireframe Example">
+        <p class="img-caption">Ví dụ Wireframe trang Profile<br><a href="https://en.wikipedia.org/wiki/Website_wireframe" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 18: API Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>7. API DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <p>Mô tả thiết kế API cho <strong>nội bộ hoặc bên ngoài</strong>.</p>
+    <h3>Nội dung:</h3>
+    <ul>
+      <li>Endpoints với HTTP methods (GET, POST, PUT, DELETE)</li>
+      <li>Request/Response payloads (JSON)</li>
+      <li>Authentication (OAuth 2.0, JWT, API keys)</li>
+      <li>Error handling, status codes, rate limiting</li>
+    </ul>
+    <h3>Ví dụ:</h3>
+    <table class="table-small">
+      <thead><tr><th>Method</th><th>URL</th><th>Mô tả</th><th>Auth</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#70AD47"><strong>POST</strong></td><td>/api/auth/register</td><td>Đăng ký tài khoản</td><td>Không</td></tr>
+        <tr><td style="color:#70AD47"><strong>POST</strong></td><td>/api/auth/login</td><td>Đăng nhập, trả JWT</td><td>Không</td></tr>
+        <tr><td style="color:#4472C4"><strong>GET</strong></td><td>/api/courses</td><td>Danh sách khóa học</td><td>Optional</td></tr>
+        <tr><td style="color:#ED7D31"><strong>PUT</strong></td><td>/api/courses/{id}</td><td>Cập nhật khóa học</td><td>Instructor</td></tr>
+        <tr><td style="color:#FF0000"><strong>DELETE</strong></td><td>/api/users/{id}</td><td>Xóa người dùng</td><td>Admin</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 19: Security Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>8. SECURITY DESIGN DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả chiến lược đảm bảo <strong>an ninh hệ thống</strong>.</p>
+        <h3>Nội dung:</h3>
+        <ul>
+          <li>Authentication & Authorization</li>
+          <li>Data encryption (HTTPS/TLS, AES-256)</li>
+          <li>Input validation (chống SQL Injection, XSS, CSRF)</li>
+          <li>Compliance: GDPR, PCI-DSS, HIPAA</li>
+          <li>Threat modeling & mitigation</li>
+        </ul>
+        <div class="cards" style="gap:12px; margin-top:8px;">
+          <div class="card"><h4>Authentication</h4><p>JWT, OAuth 2.0, MFA</p></div>
+          <div class="card accent-orange"><h4>RBAC</h4><p>STUDENT / INSTRUCTOR / ADMIN</p></div>
+          <div class="card accent-green"><h4>OWASP Top 10</h4><p>Injection, XSS, CSRF... <a class="ref" href="https://owasp.org/www-project-top-ten/" target="_blank">[owasp.org]</a></p></div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image10.png" alt="Secure Architecture">
+        <p class="img-caption">Kiến trúc bảo mật ứng dụng web<br><a href="https://owasp.org/www-project-web-security-testing-guide/" target="_blank">Nguồn: OWASP</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 20: Deployment & Maintenance -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>9. DEPLOYMENT & MAINTENANCE DOCUMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô tả cách phần mềm được <strong>triển khai, vận hành và bảo trì</strong> trong môi trường thực tế. <a class="ref" href="https://en.wikipedia.org/wiki/Software_deployment" target="_blank">[Wikipedia]</a></p>
+        <h3>Deployment — Nội dung chính:</h3>
+        <ul>
+          <li><strong>Môi trường:</strong> Dev → Staging → Production (tách biệt cấu hình)</li>
+          <li><strong>CI/CD Pipeline:</strong> Build → Test → Deploy tự động (GitHub Actions, Jenkins, GitLab CI) <a class="ref" href="https://www.atlassian.com/continuous-delivery/principles/pipeline" target="_blank">[Atlassian]</a></li>
+          <li><strong>Chiến lược deploy:</strong> Blue-Green (chuyển traffic), Canary (deploy dần %), Rolling Update</li>
+          <li><strong>Infrastructure as Code:</strong> Docker, Kubernetes, Terraform — hạ tầng được quản lý bằng code, version control</li>
+          <li><strong>Monitoring & Alerting:</strong> Grafana, Datadog, ELK Stack — theo dõi health, latency, error rate</li>
+        </ul>
+        <h3>Maintenance — Lịch bảo trì:</h3>
+        <table class="table-small">
+          <thead><tr><th>Tần suất</th><th>Nhiệm vụ</th></tr></thead>
+          <tbody>
+            <tr><td>Hàng ngày</td><td>Log monitoring, health checks, alert triage</td></tr>
+            <tr><td>Hàng tuần</td><td>DB optimization, security patches, backup</td></tr>
+            <tr><td>Hàng tháng</td><td>Performance review, capacity planning</td></tr>
+            <tr><td>Hàng quý</td><td>Security audit, dependency updates, disaster recovery test</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-img">
+        <img src="assets/cd-pipeline.svg" alt="Continuous Delivery Pipeline Diagram">
+        <p class="img-caption">Continuous Delivery Pipeline — quy trình từ code đến production<br><a href="https://commons.wikimedia.org/wiki/File:Continuous_Delivery_process_diagram.svg" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 21: Bảng khi nào dùng loại nào -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KHI NÀO DÙNG LOẠI SDD NÀO?</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">Một dự án thường <strong>kết hợp nhiều khía cạnh</strong> thiết kế. Bảng dưới giúp chọn khía cạnh phù hợp theo ngữ cảnh:</p>
+    <table>
+      <thead><tr><th style="width:15%">Khía cạnh</th><th style="width:38%">Dùng khi nào</th><th style="width:27%">Ví dụ cụ thể</th><th>Đối tượng</th></tr></thead>
+      <tbody>
+        <tr><td>HLD</td><td>Trình bày tổng quan hệ thống cho stakeholders, giai đoạn đầu dự án</td><td>Network diagram, system context cho ban giám đốc</td><td>PM, Architects</td></tr>
+        <tr><td>LLD</td><td>Hướng dẫn chi tiết implementation cho developers trước khi code</td><td>Class diagram, pseudocode, sequence diagram</td><td>Developers, Tech Leads</td></tr>
+        <tr><td>Architectural</td><td>Hệ thống lớn cần quyết định patterns, scalability, cloud</td><td>Microservices cho e-commerce, event-driven cho IoT</td><td>Architects, DevOps</td></tr>
+        <tr><td>Data Design</td><td>Ứng dụng data-driven, cần thiết kế DB phức tạp</td><td>ERD, schema design, indexing strategy</td><td>DB Admins, Backend</td></tr>
+        <tr><td>Component</td><td>Hệ thống modular, nhiều team phát triển song song</td><td>Auth module, Payment module, Notification service</td><td>Developers, Team Leads</td></tr>
+        <tr><td>UI/UX</td><td>Sản phẩm B2C, trải nghiệm người dùng là ưu tiên</td><td>Wireframes, mockups, user flow, design system</td><td>Designers, Frontend</td></tr>
+        <tr><td>API</td><td>Có API public hoặc nhiều team tích hợp nội bộ</td><td>REST/GraphQL spec, Swagger/OpenAPI docs</td><td>Backend/Frontend</td></tr>
+        <tr><td>Security</td><td>Dữ liệu nhạy cảm, cần compliance (GDPR, PCI-DSS)</td><td>Threat model, encryption strategy, access control</td><td>Security Engineers</td></tr>
+        <tr><td>Deployment</td><td>Cần quy trình triển khai rõ ràng, CI/CD, multi-env</td><td>Docker, K8s config, Blue-Green deploy plan</td><td>DevOps, SysAdmins</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 22: Chuẩn IEEE 1016 & Design Rationale -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CHUẨN IEEE 1016 & DESIGN RATIONALE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>IEEE 1016-2009 — Chuẩn quốc tế cho SDD</h3>
+        <p>Định nghĩa cách tổ chức tài liệu thiết kế theo <strong>12 design viewpoints</strong> (góc nhìn thiết kế), mỗi viewpoint mô tả hệ thống từ một khía cạnh khác nhau: <a class="ref" href="https://standards.ieee.org/ieee/1016/4502/" target="_blank">[IEEE 1016]</a></p>
+        <table class="table-small">
+          <thead><tr><th>Viewpoint</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>Context</td><td>Bối cảnh hệ thống, actors, external systems</td></tr>
+            <tr><td>Composition</td><td>Cấu trúc thành phần và quan hệ giữa chúng</td></tr>
+            <tr><td>Logical</td><td>Logic nghiệp vụ, class diagrams, business rules</td></tr>
+            <tr><td>Interface</td><td>Giao diện giữa các module (APIs, contracts)</td></tr>
+            <tr><td>Interaction</td><td>Sequence diagrams, luồng tương tác giữa thành phần</td></tr>
+            <tr><td>Information</td><td>Mô hình dữ liệu (ERD, data flow)</td></tr>
+            <tr><td>+6 khác</td><td>Algorithm, State, Dependency, Structure, Resource, Physical</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:6px;">9 khía cạnh thiết kế trong slide này <strong>bao phủ</strong> hầu hết viewpoints của IEEE 1016, được nhóm lại cho dễ hiểu trong thực hành.</p>
+      </div>
+      <div class="col">
+        <h3>Design Rationale (Lý do thiết kế)</h3>
+        <p><strong>Bắt buộc</strong> theo IEEE 1016 và NASA — mỗi quyết định thiết kế phải ghi lại <strong>tại sao</strong> chọn giải pháp đó, không chỉ mô tả "cái gì": <a class="ref" href="https://swehb.nasa.gov/display/SWEHBVD/SwDD+-+Software+Design+Description" target="_blank">[NASA SwDD]</a></p>
+        <ul>
+          <li><strong>Alternatives:</strong> các phương án đã xem xét (ít nhất 2-3 options)</li>
+          <li><strong>Decision:</strong> lý do chọn phương án hiện tại — dựa trên tiêu chí gì (cost, performance, complexity)</li>
+          <li><strong>Constraints:</strong> ràng buộc về công nghệ, ngân sách, timeline, kỹ năng team</li>
+          <li><strong>Assumptions:</strong> giả định đang đúng tại thời điểm quyết định</li>
+          <li><strong>Trade-offs:</strong> rủi ro và hạn chế đã chấp nhận, cách giảm thiểu</li>
+        </ul>
+        <div class="quote-box">
+          <p><strong>VD:</strong> "Chọn JWT thay vì Session vì cần stateless cho microservices, dễ scale ngang. Trade-off: token không thể revoke ngay — giảm thiểu bằng short expiry (15 phút) + refresh token."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 23: Quy tắc SDD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>QUY TẮC VIẾT SDD</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:14px;">
+      <div class="card"><h4>&#x1F4DD; Lịch sử thay đổi (Change Log)</h4><p>Ghi lại mỗi lần cập nhật: ngày, người, nội dung, phiên bản.</p></div>
+      <div class="card accent-orange"><h4>&#x1F504; Kết hợp nhiều khía cạnh</h4><p>Một tài liệu chứa cả HLD + Data + API Design. Không bắt buộc tách riêng.</p></div>
+      <div class="card accent-green"><h4>&#x1F4CB; Template thống nhất</h4><p>Cùng format giữa các dự án trong tổ chức.</p></div>
+      <div class="card accent-purple"><h4>&#x1F517; Truy vết yêu cầu (Traceability)</h4><p>Ánh xạ <strong>SRS → SDD → Code</strong>: mỗi yêu cầu được thiết kế ở đâu, triển khai ở đâu. <a class="ref" href="https://swehb.nasa.gov/display/SWEHBVD/SwDD+-+Software+Design+Description" target="_blank">[NASA]</a></p></div>
+      <div class="card accent-gold"><h4>&#x1F4A1; Design Rationale</h4><p>Ghi lại <strong>lý do</strong> đằng sau mỗi quyết định thiết kế — không chỉ "cái gì" mà còn "tại sao". <a class="ref" href="https://standards.ieee.org/ieee/1016/4502/" target="_blank">[IEEE 1016]</a></p></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Trong bài tập lớn, SDD sẽ <strong>kết hợp nhiều khía cạnh</strong>: HLD (kiến trúc), LLD (class/sequence), Data Design (ERD), UI Design (screenshots), Deployment (Docker). Xem phần tham khảo tiếp theo.</p>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 3: THAM KHẢO BÁO CÁO BTL (từ PDF) ========== -->
+
+<!-- SLIDE 23: Section Tham khảo -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>THAM KHẢO</h1>
+    <p class="section-desc">Mẫu tài liệu thiết kế kiến trúc SDD — Cấu trúc báo cáo bài tập lớn</p>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 24: Mục lục BTL — 5 chương -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CẤU TRÚC BÁO CÁO BÀI TẬP LỚN (4 CHƯƠNG)</h2></div>
+  <div class="slide-body">
+    <p style="font-size:15px; color:#555; margin-bottom:10px; font-style:italic;">* Tài liệu BTL kết hợp cả <strong>SRS</strong> (Phân tích yêu cầu — IEEE 830) và <strong>SDD</strong> (Thiết kế — IEEE 1016) trong cùng một báo cáo, phù hợp cho mục đích học tập.</p>
+    <div class="two-columns">
+      <div class="col">
+        <h3>Ch.1: Giới thiệu</h3>
+        <ul>
+          <li>1.1 Mô tả bài toán</li>
+          <li>1.2 Mục đích tài liệu</li>
+          <li>1.3 Phạm vi hệ thống</li>
+          <li>1.4 Quy ước tài liệu</li>
+          <li>1.5 Công nghệ áp dụng</li>
+        </ul>
+        <h3>Ch.2: Phân tích yêu cầu <span style="font-size:13px; color:#888; font-weight:400;">(SRS)</span></h3>
+        <ul>
+          <li>2.1 Stakeholders & Actors</li>
+          <li>2.2 Lớp người dùng hệ thống</li>
+          <li>2.3 Yêu cầu chức năng (8+ nhóm)</li>
+          <li>2.4 Yêu cầu phi chức năng (10 loại)</li>
+          <li>2.5 Quy trình nghiệp vụ (8-12 quy trình)</li>
+          <li>2.6 Biểu đồ Use Case</li>
+          <li>2.7 Đặc tả Use Case (tùy bài toán)</li>
+          <li>2.8 Biểu đồ hoạt động</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ch.3: Thiết kế hệ thống <span style="font-size:13px; color:#888; font-weight:400;">(SDD)</span></h3>
+        <ul>
+          <li>3.1 Kiến trúc (logic + mã nguồn + triển khai)</li>
+          <li>3.2 Thiết kế chi tiết (Activity, Sequence, Class)</li>
+          <li>3.3 Thiết kế CSDL (ERD + bảng)</li>
+          <li>3.4 Thiết kế API</li>
+          <li>3.5 Thiết kế giao diện (UI/UX)</li>
+          <li>3.6 Thiết kế bảo mật</li>
+          <li>3.7 Thiết kế triển khai (Deployment)</li>
+          <li style="color:#888; font-style:italic;">3.8 Design Rationale (tùy chọn)</li>
+        </ul>
+        <h3>Ch.4: Kết luận</h3>
+        <ul>
+          <li>4.1 Tổng kết kết quả</li>
+          <li>4.2 Hạn chế & Hướng phát triển</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 25: Ch1 tham khảo -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THAM KHẢO CH.1: GIỚI THIỆU</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>1.1 Mô tả bài toán:</h3>
+        <p>Trình bày bối cảnh, vấn đề cần giải quyết, lý do xây dựng hệ thống. Nêu rõ đối tượng sử dụng và giá trị mang lại.</p>
+        <h3>1.2 Mục đích tài liệu:</h3>
+        <p>Tài liệu thiết kế dùng cho ai (dev, QA, PM), phiên bản nào, cập nhật khi nào.</p>
+        <h3>1.3 Phạm vi hệ thống:</h3>
+        <p>Hệ thống bao gồm những gì, <strong>không</strong> bao gồm gì (ranh giới rõ ràng).</p>
+      </div>
+      <div class="col">
+        <h3>1.4 Quy ước tài liệu:</h3>
+        <p>Viết tắt, thuật ngữ, quy ước đặt tên, format sơ đồ (UML, PlantUML, draw.io).</p>
+        <h3>1.5 Công nghệ áp dụng:</h3>
+        <table class="table-small">
+          <thead><tr><th>Tầng</th><th>Công nghệ</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend</td><td>Angular</td></tr>
+            <tr><td>Backend</td><td>Java Spring Boot</td></tr>
+            <tr><td>Database</td><td>MySQL / PostgreSQL</td></tr>
+            <tr><td>Deployment</td><td>Docker, Nginx, CI/CD</td></tr>
+            <tr><td>Security</td><td>JWT, BCrypt, HTTPS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 26: Ch2 tham khảo -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THAM KHẢO CH.2: PHÂN TÍCH YÊU CẦU (SRS)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>2.1 Stakeholders & Actors:</h3>
+        <table class="table-small">
+          <thead><tr><th>Actor</th><th>Mô tả</th><th>Tính năng chính</th></tr></thead>
+          <tbody>
+            <tr><td>Khách</td><td>Chưa đăng ký</td><td>Xem, tìm kiếm, đăng ký TK</td></tr>
+            <tr><td>Người dùng</td><td>Đã đăng nhập</td><td>Sử dụng tính năng chính</td></tr>
+            <tr><td>Quản trị</td><td>Quản lý HT</td><td>CRUD, thống kê, cấu hình</td></tr>
+          </tbody>
+        </table>
+        <h3>2.2 Lớp người dùng hệ thống:</h3>
+        <p>Phân loại chi tiết hơn Actors — đặc điểm, quyền hạn, hành vi từng nhóm.</p>
+        <h3>2.3 Yêu cầu chức năng (8+ nhóm):</h3>
+        <p>Phân nhóm theo module: Xác thực, Quản lý nội dung, Tìm kiếm, Thanh toán, Thống kê, Thông báo...</p>
+        <h3>2.4 Yêu cầu phi chức năng (10 loại):</h3>
+        <p>Hiệu năng, Sẵn sàng, Bảo mật, Mở rộng, Bảo trì, Tương thích, Dễ dùng, Backup, Logging, Pháp lý.</p>
+      </div>
+      <div class="col">
+        <h3>2.5 Quy trình nghiệp vụ (8-12 QT):</h3>
+        <p>Mỗi quy trình viết dạng bảng: STT | Người thực hiện | Nội dung (8-18 bước).</p>
+        <h3>2.6 Biểu đồ Use Case:</h3>
+        <ul>
+          <li>Tổng quan hệ thống (1 biểu đồ)</li>
+          <li>Phân rã theo Actor (3-4 biểu đồ)</li>
+        </ul>
+        <h3>2.7 Đặc tả Use Case (tùy bài toán):</h3>
+        <p>Mỗi UC gồm: Tên, Actor, Mô tả, Trigger, Tiền/Hậu điều kiện, Luồng chính, Luồng thay thế, Ngoại lệ.</p>
+        <h3>2.8 Biểu đồ hoạt động:</h3>
+        <p>Swim lane (Người dùng | Hệ thống) cho mỗi quy trình chính.</p>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Vẽ UML bằng <strong>PlantUML</strong> (code-based, version control trên Git) hoặc <strong>draw.io</strong> (kéo thả, miễn phí).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 27: Ch3 tham khảo -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THAM KHẢO CH.3: THIẾT KẾ HỆ THỐNG (SDD)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3.1 Kiến trúc hệ thống:</h3>
+        <ul>
+          <li><strong>Logic:</strong> 3 tầng (Presentation → Business → Data)</li>
+          <li><strong>Mã nguồn:</strong> Cấu trúc thư mục BE + FE</li>
+          <li><strong>Triển khai:</strong> Docker Compose, Nginx, CI/CD</li>
+        </ul>
+        <h3>3.2 Thiết kế chi tiết (Activity, Sequence, Class):</h3>
+        <p>Dựa trên các UC đã phân tích ở Ch.2, vẽ <strong>Activity Diagram</strong>, <strong>Sequence Diagram</strong>, <strong>Class Diagram</strong> cho từng UC.</p>
+        <h3>3.3 Thiết kế CSDL:</h3>
+        <p><strong>ERD</strong> + <strong>bảng đặc tả</strong> (tên cột, kiểu dữ liệu, ràng buộc).</p>
+        <h3>3.4 Thiết kế API:</h3>
+        <table class="table-small">
+          <thead><tr><th>Method</th><th>Endpoint</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>POST</td><td>/api/auth/login</td><td>Đăng nhập</td></tr>
+            <tr><td>GET</td><td>/api/users/{id}</td><td>Lấy thông tin user</td></tr>
+            <tr><td>PUT</td><td>/api/users/{id}</td><td>Cập nhật user</td></tr>
+            <tr><td>DELETE</td><td>/api/users/{id}</td><td>Xóa user</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>3.5 Thiết kế giao diện (UI/UX):</h3>
+        <p>Wireframes hoặc screenshots: 6-10 trang chính.</p>
+        <h3>3.6 Thiết kế bảo mật:</h3>
+        <p>Authentication (JWT/OAuth2), Authorization (RBAC), Encryption (HTTPS, BCrypt), Input validation.</p>
+        <h3>3.7 Thiết kế triển khai:</h3>
+        <p>Deployment diagram, Docker config, môi trường (Dev/Staging/Prod), CI/CD pipeline.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 29: Checklist -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CHECKLIST HOÀN THIỆN BÀI TẬP LỚN SDD</h2></div>
+  <div class="slide-body">
+    <table class="table-small">
+      <thead><tr><th style="width:5%">&#x2713;</th><th style="width:12%">Chương</th><th style="width:40%">Mục cần có</th><th>Yêu cầu tối thiểu</th></tr></thead>
+      <tbody>
+        <tr><td></td><td></td><td>Mục lục + Danh sách hình vẽ</td><td>Đầy đủ, có số trang</td></tr>
+        <tr><td></td><td>Ch.1</td><td>Bài toán, phạm vi, quy ước, công nghệ</td><td>Mô tả rõ ràng, bảng công nghệ</td></tr>
+        <tr><td></td><td>Ch.2</td><td>Yêu cầu chức năng + phi chức năng</td><td>8+ nhóm CN, 10 loại phi CN</td></tr>
+        <tr><td></td><td>Ch.2</td><td>Lớp người dùng + Quy trình nghiệp vụ</td><td>3-4 lớp, 8-12 quy trình</td></tr>
+        <tr><td></td><td>Ch.2</td><td>Use Case Diagram + Đặc tả UC</td><td>4+ biểu đồ, đặc tả tùy bài toán</td></tr>
+        <tr><td></td><td>Ch.2</td><td>Biểu đồ hoạt động</td><td>Tùy bài toán</td></tr>
+        <tr><td></td><td>Ch.3</td><td>Kiến trúc (logic + mã nguồn + triển khai)</td><td>3 sơ đồ + mô tả</td></tr>
+        <tr><td></td><td>Ch.3</td><td>Thiết kế chi tiết (Activity, Sequence, Class)</td><td>15-25 bộ sơ đồ</td></tr>
+        <tr><td></td><td>Ch.3</td><td>Thiết kế UI + CSDL (ERD)</td><td>6-10 screens, ERD + đặc tả bảng</td></tr>
+        <tr><td></td><td>Ch.3</td><td>API + Security + Deployment</td><td>Bảng API, sơ đồ bảo mật, Docker config</td></tr>
+        <tr><td></td><td>Ch.4</td><td>Kết luận, hạn chế, hướng phát triển</td><td>Tổng kết ngắn gọn</td></tr>
+        <tr><td></td><td></td><td>Phân công (Jira screenshots)</td><td>Task board, sprint backlog</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 30: Tổng kết -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>SDD</strong> = tài liệu thiết kế, cầu nối SRS → Code</li>
+          <li><strong>9 khía cạnh thiết kế:</strong> HLD, LLD, Architecture, Data, Component, UI/UX, API, Security, Deployment</li>
+          <li>SDD giúp: giao tiếp rõ, phát hiện lỗi sớm, bảo trì, tiết kiệm chi phí</li>
+          <li>Báo cáo BTL: <strong>4 chương</strong> — Giới thiệu → Phân tích yêu cầu (SRS) → Thiết kế hệ thống (SDD) → Kết luận</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. SDD là gì? Vai trò trong SDLC?</li>
+          <li>2. Nêu 9 khía cạnh thiết kế và khi nào dùng.</li>
+          <li>3. HLD khác LLD thế nào?</li>
+          <li>4. Data Design Document cần gì?</li>
+          <li>5. Cho ví dụ API endpoint RESTful.</li>
+          <li>6. Cấu trúc 4 chương báo cáo BTL?</li>
+          <li>7. Design Rationale là gì? Tại sao cần?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 31: Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Raleway',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Architecture Design</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

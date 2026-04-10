@@ -1,0 +1,209 @@
+/*
+ * Template slide chung - Trường Đại học CMC
+ * Tác giả: ThS. Nguyễn Việt Hưng
+ * Dùng cho tất cả bài giảng môn Thiết kế & Xây dựng phần mềm
+ *
+ * Cách dùng trong HTML:
+ *   <link rel="stylesheet" href="../template.css">
+ *   Background images: đặt image1.png (bìa), image3.jpeg (nội dung), image4.png (logo trắng) trong assets/
+ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@page { size: 297mm 210mm; margin: 0; }
+body { font-family: 'Open Sans', sans-serif; background: #333; color: #222; }
+
+/* ===== SLIDE CONTAINER ===== */
+.slide {
+  width: 297mm; height: 210mm; position: relative; overflow: hidden;
+  page-break-after: always; page-break-inside: avoid;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+
+/* ===== TITLE SLIDE (trang bìa + trang kết thúc) ===== */
+/* Background image: set inline trong HTML: style="background-image:url('assets/image1.png')" */
+.slide-title-page {
+  display: flex; align-items: center; justify-content: flex-start;
+}
+.slide-title-page .title-content { padding-left: 10%; color: white; max-width: 70%; }
+.slide-title-page .title-content h1 {
+  font-family: 'Open Sans', sans-serif; font-size: 56px; font-weight: 700; line-height: 1.15;
+  text-shadow: 2px 3px 10px rgba(0,0,0,0.4);
+}
+.slide-title-page .title-content .subtitle {
+  font-size: 26px; margin-top: 16px; opacity: 0.9; font-weight: 300;
+}
+
+/* ===== SECTION DIVIDER (trang phân đoạn) ===== */
+/* Background image: set inline trong HTML: style="background-image:url('assets/image3.jpeg')" */
+.slide-section {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+}
+.slide-section .section-content {
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  width: 85%; height: 85%; justify-content: center;
+}
+.slide-section .section-content img {
+  max-height: 55%; max-width: 70%; object-fit: contain; border-radius: 12px;
+}
+.slide-section .section-content h1 {
+  font-family: 'Open Sans', sans-serif; font-size: 58px; font-weight: 700; color: #0070C0;
+}
+.slide-section .section-content .section-desc {
+  font-size: 22px; color: #555; max-width: 80%; line-height: 1.5;
+}
+
+/* ===== CONTENT SLIDE (trang nội dung) ===== */
+/* Background image: set inline trong HTML: style="background-image:url('assets/image3.jpeg')" */
+.slide-content {
+  display: flex; flex-direction: column;
+}
+.slide-content .slide-header {
+  padding: 12px 4% 10px 4%; padding-right: 200px; min-height: 55px; max-height: 60px;
+  display: flex; align-items: center; overflow: hidden;
+}
+.slide-content .slide-header h2 {
+  font-family: 'Open Sans', sans-serif; font-size: clamp(18px, 2.5vw, 28px); font-weight: 700; color: white;
+  letter-spacing: 0.5px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.slide-content .slide-body {
+  flex: 1; padding: 1.5% 4% 5% 4%;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* ===== TWO COLUMNS ===== */
+.two-columns { display: flex; gap: 3%; flex: 1; align-items: stretch; }
+.two-columns .col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.two-columns .col-img {
+  flex: 0 0 38%; display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+/* ===== IMAGE CAPTION ===== */
+.img-caption {
+  font-size: 11px; color: #888; text-align: center; margin-top: 6px;
+  font-style: italic; line-height: 1.4;
+}
+.img-caption a { color: #aaa; text-decoration: none; font-weight: 400; font-size: 10px; }
+.two-columns .col-img img {
+  max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px;
+}
+
+/* ===== TEXT ===== */
+.slide-body h3 { font-size: 23px; font-weight: 700; color: #0070C0; margin-bottom: 8px; margin-top: 10px; }
+.slide-body p, .slide-body li { font-size: 18px; line-height: 1.6; color: #333; }
+.slide-body ul { padding-left: 28px; margin-bottom: 6px; }
+.slide-body ul li { margin-bottom: 4px; }
+.slide-body ul ul { margin-top: 3px; padding-left: 22px; }
+.slide-body .highlight { font-weight: 700; color: #0070C0; }
+.slide-body .accent { font-weight: 700; color: #ED7D31; }
+
+/* ===== TREND CALLOUT (xu hướng hiện đại) ===== */
+.ai-box {
+  background: linear-gradient(135deg, #E3F2FD 0%, #E1F5FE 100%);
+  border-left: 5px solid #1E88E5;
+  border-radius: 8px; padding: 10px 16px; margin-top: 12px;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.ai-box .ai-label {
+  font-size: 12px; font-weight: 700; color: #1565C0; text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 4px;
+}
+.ai-box p, .ai-box li { font-size: 15px; color: #444; line-height: 1.5; }
+.ai-box ul { padding-left: 18px; margin: 4px 0 0 0; }
+
+/* ===== TABLE ===== */
+.slide-body table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 10px; }
+.slide-body table th {
+  background-color: #4472C4; color: white; padding: 10px 14px; text-align: center;
+  font-weight: 600; border: 1px solid #3a62a8;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.slide-body table td { padding: 8px 14px; border: 1px solid #ccc; vertical-align: middle; font-size: 16px; }
+.slide-body table tr:nth-child(even) td {
+  background-color: rgba(68,114,196,0.06);
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.slide-body table td:first-child {
+  font-weight: 600; color: #0070C0; background-color: rgba(68,114,196,0.1);
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.table-small { font-size: 14.5px; }
+.table-small td, .table-small th { padding: 6px 10px; }
+
+/* ===== CARDS ===== */
+.cards { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+.card {
+  flex: 1 1 0; min-width: 200px; background: rgba(255,255,255,0.9);
+  border-radius: 10px; padding: 18px 22px; border-left: 5px solid #4472C4;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.card h4 { font-size: 21px; color: #4472C4; margin-bottom: 6px; }
+.card p, .card li { font-size: 17px; color: #444; line-height: 1.55; }
+.card ul { padding-left: 20px; margin: 5px 0 0 0; }
+.card.accent-orange { border-left-color: #ED7D31; }
+.card.accent-orange h4 { color: #ED7D31; }
+.card.accent-green { border-left-color: #70AD47; }
+.card.accent-green h4 { color: #70AD47; }
+.card.accent-gold { border-left-color: #FFC000; }
+.card.accent-gold h4 { color: #b38600; }
+.card.accent-purple { border-left-color: #7C4DFF; }
+.card.accent-purple h4 { color: #7C4DFF; }
+
+/* ===== STEPS ===== */
+.steps { margin-top: 10px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.step { display: flex; gap: 18px; margin-bottom: 14px; align-items: flex-start; }
+.step-num {
+  width: 42px; height: 42px; border-radius: 50%; background: #4472C4;
+  color: white; font-size: 20px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.step-content h4 { font-size: 20px; font-weight: 700; color: #0070C0; margin-bottom: 3px; }
+.step-content p { font-size: 17px; color: #444; }
+
+/* ===== LOGO ===== */
+.slide-logo {
+  position: absolute; top: 12px; right: 20px; z-index: 10;
+  height: 30px; width: auto;
+}
+.slide-title-page .slide-logo { top: 18px; right: 28px; height: 34px; }
+
+/* ===== AUTHOR ===== */
+.slide-author {
+  position: absolute; bottom: 14px; left: 30px;
+  font-size: 13px; font-weight: 400; color: #888;
+  font-family: 'Open Sans', sans-serif;
+}
+.slide-title-page .slide-author { color: rgba(255,255,255,0.7); }
+
+/* ===== SLIDE NUMBER ===== */
+.slide-num {
+  position: absolute; bottom: 14px; right: 30px;
+  font-size: 16px; font-weight: 700; color: #00B0F0;
+}
+
+/* ===== REFERENCE LINK ===== */
+.ref { font-size: 11px; color: #888; font-weight: 400; text-decoration: none; }
+.ref:hover { color: #0D47A1; }
+
+/* ===== QUOTE BOX ===== */
+.quote-box {
+  background: rgba(0,112,192,0.08); border-left: 5px solid #0070C0;
+  padding: 14px 20px; border-radius: 6px; margin: 10px 0; font-style: italic;
+  print-color-adjust: exact; -webkit-print-color-adjust: exact;
+}
+.quote-box p { font-size: 18px; color: #333; }
+
+/* ===== PRINT ===== */
+@media print {
+  body { background: white; }
+  .slide { page-break-after: always; page-break-inside: avoid; box-shadow: none; }
+  .slide:last-child { page-break-after: auto; }
+}
+
+/* ===== SCREEN PREVIEW ===== */
+@media screen {
+  .slide { margin: 20px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+}

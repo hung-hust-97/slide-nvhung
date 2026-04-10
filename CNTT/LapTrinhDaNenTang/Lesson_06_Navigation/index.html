@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 06 - Navigation và Routing trong Flutter</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>NAVIGATION VÀ ROUTING<br>TRONG FLUTTER</h1>
+    <p class="subtitle">Navigator, Routes, Named Routes, Dynamic Routing</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/navigation.png" alt="Navigation">
+    <h1>NAVIGATION VÀ ROUTING</h1>
+    <p class="section-desc">Chuyển đổi giữa các màn hình, quản lý stack và truyền dữ liệu trong Flutter</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAVIGATION LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Navigation là quá trình <strong>chuyển đổi giữa các màn hình</strong> (pages/screens) trong một ứng dụng.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Navigator trong Flutter</h3>
+        <p>Flutter sử dụng <strong>Navigator</strong> để quản lý navigation — hoạt động như một <span class="highlight">stack</span>.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step">
+            <div class="step-num">push</div>
+            <div class="step-content">
+              <h4>Mở trang mới</h4>
+              <p>Page mới được đẩy lên trên stack</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">pop</div>
+            <div class="step-content">
+              <h4>Quay lại</h4>
+              <p>Page hiện tại được bật ra khỏi stack</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Navigator Methods phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>push()</h4>
+            <p>Mở trang mới, thêm vào stack</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>pop()</h4>
+            <p>Quay lại trang trước</p>
+          </div>
+          <div class="card accent-green">
+            <h4>pushReplacement()</h4>
+            <p>Thay thế trang hiện tại bằng trang mới</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>pushNamed()</h4>
+            <p>Mở trang theo tên đã đăng ký</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROUTING LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>Routing là quá trình <strong>ánh xạ route name (string)</strong> đến một Widget cụ thể.</p>
+        <p style="margin-top:8px;">Giúp quản lý rõ ràng các màn hình, đặc biệt trong ứng dụng có nhiều trang.</p>
+        <div class="card accent-green" style="margin-top:12px;">
+          <h4>Lợi ích</h4>
+          <ul>
+            <li>Quản lý navigation tập trung</li>
+            <li>Hỗ trợ deep linking</li>
+            <li>Đặt tên rõ ràng cho mỗi route</li>
+            <li>Dễ dàng navigate từ bất kỳ đâu</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>MaterialPageRoute</h3>
+        <p>Loại route mặc định trong Flutter, cung cấp Material Design transition.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            MaterialPageRoute(<br>
+            &nbsp;&nbsp;builder: (context) =&gt; MyPage(),<br>
+            );
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>GoRouter</strong> (Google's official routing package) đang thay thế Navigator 1.0 truyền thống — declarative routing, deep linking tự động, web URL support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANONYMOUS ROUTES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>Anonymous route là route <strong>không được khai báo trước</strong> trong <code>MaterialApp.routes</code>, mà được tạo theo yêu cầu.</p>
+        <ul style="margin-top:8px;">
+          <li>Không có route name (như <code>/login</code>, <code>/home</code>)</li>
+          <li>Không dùng với <code>pushNamed()</code></li>
+          <li>Phù hợp cho <span class="highlight">app nhỏ</span>, ít màn hình</li>
+          <li>Không cần cấu hình tập trung</li>
+        </ul>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Khi nào dùng?</h4>
+          <p>App đơn giản, 2-3 màn hình, hoặc khi centralized routing không cần thiết.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Mở trang mới<br>
+            Navigator.push(<br>
+            &nbsp;&nbsp;context,<br>
+            &nbsp;&nbsp;MaterialPageRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;builder: (context) =&gt; SecondPage(),<br>
+            &nbsp;&nbsp;),<br>
+            );
+          </p>
+        </div>
+        <p style="margin-top:8px; font-size:14px; color:#555;">Không cần khai báo route trong MaterialApp. SecondPage được tạo trực tiếp khi cần.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            // Quay lại<br>
+            Navigator.pop(context);
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAMED ROUTES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Định nghĩa</h3>
+        <p>Thay vì tạo route mới trong mỗi <code>push()</code>, khai báo routes bằng tên. Quản lý dễ dàng hơn trong ứng dụng lớn.</p>
+        <h3 style="margin-top:12px;">Cấu hình</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            MaterialApp(<br>
+            &nbsp;&nbsp;initialRoute: '/',<br>
+            &nbsp;&nbsp;routes: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;'/': (context) =&gt; HomePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;'/login': (context) =&gt; LoginPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;'/profile': (context) =&gt; ProfilePage(),<br>
+            &nbsp;&nbsp;},<br>
+            );
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Điều hướng đến Login<br>
+            Navigator.pushNamed(context, '/login');<br><br>
+            // Quay lại<br>
+            Navigator.pop(context);<br><br>
+            // Thay thế trang hiện tại<br>
+            Navigator.pushReplacementNamed(<br>
+            &nbsp;&nbsp;context, '/home');<br><br>
+            // Xóa stack và đi đến trang mới<br>
+            Navigator.pushNamedAndRemoveUntil(<br>
+            &nbsp;&nbsp;context, '/dashboard', (route) =&gt; false);
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAMED VS ANONYMOUS ROUTES</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:30%">Tiêu chí</th>
+          <th style="width:35%">Named Routes</th>
+          <th style="width:35%">Anonymous Routes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tổ chức</td>
+          <td>Dễ quản lý, cấu hình tập trung</td>
+          <td>Không cần cấu hình trước</td>
+        </tr>
+        <tr>
+          <td>Tốc độ</td>
+          <td>Cần khai báo route trước</td>
+          <td>Nhanh, không cần thông báo trước</td>
+        </tr>
+        <tr>
+          <td>Quy mô app</td>
+          <td>Tốt cho app lớn, nhiều màn hình</td>
+          <td>Tốt cho app đơn giản, ít màn hình</td>
+        </tr>
+        <tr>
+          <td>Logic điều hướng</td>
+          <td>Phức tạp hơn, cần cấu hình nhiều</td>
+          <td>Đơn giản, trực tiếp</td>
+        </tr>
+        <tr>
+          <td>Deep linking</td>
+          <td>Hỗ trợ URL/deep linking</td>
+          <td>Không hỗ trợ</td>
+        </tr>
+        <tr>
+          <td>Debug</td>
+          <td>Dễ debug với tên route rõ ràng</td>
+          <td>Khó debug hơn trong app lớn</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DYNAMIC ROUTE — onGenerateRoute</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Giới thiệu</h3>
+        <p><code>onGenerateRoute</code> hữu ích khi cần <strong>truyền data</strong> hoặc thực hiện <strong>logic kiểm tra phức tạp</strong>.</p>
+        <p style="margin-top:8px;">Được gọi khi route không được tìm thấy trong <code>routes</code> map.</p>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Khi nào dùng?</h4>
+          <ul>
+            <li>Truyền tham số qua route (VD: product ID)</li>
+            <li>Kiểm tra authentication trước navigation</li>
+            <li>Tạo routes động dựa trên user role</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            MaterialApp(<br>
+            &nbsp;&nbsp;onGenerateRoute: (settings) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (settings.name == '/product') {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final id = settings.arguments as int;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return MaterialPageRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProductPage(id: id),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
+            &nbsp;&nbsp;},<br>
+            );
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TRUYỀN DATA QUA ROUTE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cách 1: Constructor</h3>
+        <p>Truyền data trực tiếp qua constructor của Widget đích.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Navigator.push(<br>
+            &nbsp;&nbsp;context,<br>
+            &nbsp;&nbsp;MaterialPageRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;builder: (context) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetailPage(product: myProduct),<br>
+            &nbsp;&nbsp;),<br>
+            );
+          </p>
+        </div>
+        <p style="margin-top:6px; font-size:14px; color:#555;">Đơn giản, trực tiếp — phù hợp cho data đơn giản.</p>
+      </div>
+      <div class="col">
+        <h3>Cách 2: settings.arguments</h3>
+        <p>Truyền data qua arguments object, nhận qua <code>ModalRoute.of(context).settings.arguments</code>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Gửi<br>
+            Navigator.pushNamed(<br>
+            &nbsp;&nbsp;context,<br>
+            &nbsp;&nbsp;'/detail',<br>
+            &nbsp;&nbsp;arguments: product,<br>
+            );<br><br>
+            // Nhận<br>
+            final product =<br>
+            &nbsp;&nbsp;ModalRoute.of(context)!.settings.arguments<br>
+            &nbsp;&nbsp;as Product;
+          </p>
+        </div>
+        <p style="margin-top:6px; font-size:14px; color:#555;">Phù hợp cho Named Routes và Dynamic Routing.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATIC ROUTE CONFIGURATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cấu hình tĩnh</h3>
+        <p>Khai báo tất cả routes trong <code>MaterialApp.routes</code> — gọi là "Static" vì các routes được xác định sẵn tại thời điểm khởi tạo app.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            void main() {<br>
+            &nbsp;&nbsp;runApp(MaterialApp(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;initialRoute: '/',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;routes: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/': (context) =&gt; HomePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/about': (context) =&gt; AboutPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/contact': (context) =&gt; ContactPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;));<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Điều hướng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            // Từ bất kỳ đâu trong app<br>
+            Navigator.pushNamed(context, '/about');<br><br>
+            // Từ another screen<br>
+            Navigator.pushNamed(<br>
+            &nbsp;&nbsp;context,<br>
+            &nbsp;&nbsp;RouteNames.about, // Enum approach<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Enum cho route names</h4>
+          <p>Dùng Enum thay vì string literals để tránh typo và dễ refactor.</p>
+          <div class="quote-box" style="margin-top:6px;">
+            <p style="font-family:monospace; font-size:12px;">
+              enum RouteNames { home, about, contact }<br><br>
+              Navigator.pushNamed(<br>
+              &nbsp;&nbsp;context,<br>
+              &nbsp;&nbsp;RouteNames.about.name,<br>
+              );
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ROUTING VÀ DEEP LINKING</h1>
+    <p class="section-desc">GoRouter, path parameters, query strings, redirect, guards</p>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GIỚI THIỆU GOROUTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao cần GoRouter?</h3>
+        <p>Navigator 1.0 có nhiều hạn chế trong ứng dụng lớn. <strong>GoRouter</strong> là routing package chính thức từ Flutter team.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            flutter pub add go_router
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Ưu điểm</h4>
+          <ul>
+            <li>Declarative routing — route là data, không phải widget</li>
+            <li>Hỗ trợ <strong>deep linking</strong> tự động (web URL)</li>
+            <li>Redirect/guards dễ dàng</li>
+            <li>Nested routes — route tree có thứ bậc</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ cơ bản</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            final router = GoRouter(<br>
+            &nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: '/',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HomePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: '/login',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LoginPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;],<br>
+            );
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GOROUTER — NAVIGATE VÀ BUILDCONTEXT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Navigate với GoRouter</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Điều hướng đơn giản<br>
+            context.go('/home');<br><br>
+            // Đẩy route mới lên stack<br>
+            context.push('/product/42');<br><br>
+            // Quay lại<br>
+            context.pop();<br><br>
+            // Thay thế route hiện tại<br>
+            context.replace('/fallback');
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>go() vs push() vs context.go()</h4>
+          <ul style="font-size:13px;">
+            <li><code>go()</code>: thay thế toàn bộ stack (như Navigator.pushReplacement)</li>
+            <li><code>push()</code>: thêm route mới lên stack</li>
+            <li><code>context.go()</code>: điều hướng từ BuildContext</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Tích hợp MaterialApp</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            void main() {<br>
+            &nbsp;&nbsp;runApp(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;MaterialApp.router(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routerConfig: router,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;);<br>
+            }<br><br>
+            // Hoặc dùng GoRouter builder<br>
+            MaterialApp.router(<br>
+            &nbsp;&nbsp;title: 'My App',<br>
+            &nbsp;&nbsp;routerConfig: GoRouter(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;routes: [...],<br>
+            &nbsp;&nbsp;),<br>
+            );
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>go_router ^14.x</strong> tích hợp <strong>ShellRoute</strong> cho layout pattern phổ biến (bottom nav giữ nguyên khi chuyển tab).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PATH PARAMETERS — ROUTE ĐỘNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khai báo path parameter</h3>
+        <p>Dùng <code>:paramName</code> trong path để truyền giá trị động — ví dụ: ID sản phẩm, username...</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/product/:id',<br>
+            &nbsp;&nbsp;builder: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Đọc path param<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final id = state.pathParameters['id'];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ProductPage(id: id!);<br>
+            &nbsp;&nbsp;},<br>
+            ),
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Lưu ý</h4>
+          <p>Path parameter luôn là String. Chuyển đổi kiểu (int, double) bằng <code>int.tryParse(id!)</code>.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Navigate với tham số</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Truyền path param<br>
+            context.push('/product/42');<br>
+            // Đọc param<br>
+            // URL: /product/42 → id='42'<br><br>
+            // Nhiều params<br>
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/users/:userId/posts/:postId',<br>
+            &nbsp;&nbsp;builder: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final userId = state<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pathParameters['userId'];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final postId = state<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pathParameters['postId'];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return PostPage(userId!, postId!);<br>
+            &nbsp;&nbsp;},<br>
+            ),
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>QUERY PARAMETERS — EXTRA DATA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Query string</h3>
+        <p>Thêm query parameters vào URL: <code>/search?q=flutter&amp;page=1</code>. Dùng cho filters, pagination, search.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Navigate với query<br>
+            context.push(<br>
+            &nbsp;&nbsp;Uri(path: '/search',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;queryParameters: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'q': 'flutter',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'sort': 'price',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}).toString()<br>
+            );
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Đọc Query Parameters</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Trong GoRoute builder<br>
+            final q = state<br>
+            &nbsp;&nbsp;.uri.queryParameters['q'];<br>
+            final page = state<br>
+            &nbsp;&nbsp;.uri.queryParameters['page'] ?? '1';
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Extra state object</h3>
+        <p>Dùng <code>extra</code> để truyền object phức tạp qua route (không serialize được).</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Gửi object<br>
+            context.push(<br>
+            &nbsp;&nbsp;'/detail',<br>
+            &nbsp;&nbsp;extra: myProduct,<br>
+            );
+          </p>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            // Nhận object<br>
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/detail',<br>
+            &nbsp;&nbsp;builder: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final product = state.extra<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as Product?;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return DetailPage(product: product);<br>
+            &nbsp;&nbsp;},<br>
+            ),
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:6px;">
+          <h4>Lưu ý</h4>
+          <p><code>extra</code> không serialize → không dùng được với deep link trên web. Dùng path/query params thay thế.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NESTED ROUTES — ROUTE CÓ THỨ BẬC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Nested routes cho phép route con nằm trong route cha — parent widget giữ nguyên khi child route thay đổi. Rất phù hợp cho bottom navigation.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/shop',<br>
+            &nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ShopLayout(), // Giữ nguyên<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Nested route<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: 'products',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProductsPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: 'cart',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CartPage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;],<br>
+            ),
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>ShellRoute</h3>
+        <p><code>ShellRoute</code> tự động bọc child routes trong parent widget — layout wrapper đơn giản hơn.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            ShellRoute(<br>
+            &nbsp;&nbsp;builder: (context, state, child) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// child là route hiện tại<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return AppShell(child: child);<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;routes: [...],<br>
+            )
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Ứng dụng phổ biến</h4>
+          <p>Bottom navigation: 4 tabs (Home, Search, Cart, Profile). Mỗi tab có nhiều screens con — ShellRoute giữ bottom nav cố định.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REDIRECT VÀ AUTHENTICATION GUARDS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao cần Redirect?</h3>
+        <p>Chặn truy cập routes không được phép — ví dụ: redirect về login nếu chưa đăng nhập.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/profile',<br>
+            &nbsp;&nbsp;redirect: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final isLoggedIn =<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UserService().isAuthenticated;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!isLoggedIn) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return '/login';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return null; // Cho phép truy cập<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ProfilePage(),<br>
+            ),
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Redirect toàn app</h3>
+        <p>Đặt redirect ở <code>GoRouter</code> root — tất cả routes đều bị kiểm tra.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            final router = GoRouter(<br>
+            &nbsp;&nbsp;redirect: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final isAuth = authProvider.isAuth;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final isLogin = state.matchedLocation<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;== '/login';<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Chưa login, không phải trang login<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!isAuth &amp;&amp; !isLogin) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return '/login';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Đã login, ở trang login → về home<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (isAuth &amp;&amp; isLogin) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return '/dashboard';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;routes: [...],<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:6px;">
+          <h4>Kết hợp Riverpod</h4>
+          <p>Dùng <code>ref.read(authProvider)</code> bên trong redirect để truy cập trạng thái auth từ Riverpod.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GO ROUTER — ERROR HANDLING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>404 Not Found Page</h3>
+        <p>Dùng <code>errorBuilder</code> hoặc route có <code>path: '*'</code> để bắt route không tồn tại.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '*',<br>
+            &nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ErrorPage(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error: state.error,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            ),
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">ErrorBuilder toàn app</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            GoRouter(<br>
+            &nbsp;&nbsp;errorBuilder: (ctx, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Scaffold(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: Center(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text('404: ${state.uri}')),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;routes: [...],<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>PopException Handling</h3>
+        <p>Khi <code>Navigator.pop()</code> được gọi ở root — app sẽ crash. Xử lý bằng <code>Router.navigatorKey</code>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Bắt pop ở root level<br>
+            final rootNavigatorKey =<br>
+            &nbsp;&nbsp;GlobalKey&lt;NavigatorState&gt;();<br>
+            final _router = GoRouter(<br>
+            &nbsp;&nbsp;navigatorKey: rootNavigatorKey,<br>
+            &nbsp;&nbsp;routes: [...],<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Lưu ý</h4>
+          <p>Trong ShellRoute, dùng <code>parentNavigatorKey</code> thay vì <code>navigatorKey</code> để pop đúng stack.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEEP LINKING — LIÊN KẾT TRÊN WEB</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm Deep Link</h3>
+        <p>Deep link là URL có thể mở trực tiếp ứng dụng: <code>myapp://shop/products/42</code> hoặc web URL.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Android — intent-filter</h4>
+              <p>Cấu hình trong <code>AndroidManifest.xml</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>iOS — URL Schemes / Universal Links</h4>
+              <p>Cấu hình trong Xcode — Association File</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Web — App Link / link handling</h4>
+              <p><code>&lt;meta&gt;</code> tags hoặc <code>go_router</code> Web</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cấu hình GoRouter cho Web</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // URL đầy đủ từ web host<br>
+            GoRouter(<br>
+            &nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/shop/:id', ...),<br>
+            &nbsp;&nbsp;],<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>URL trên web</h4>
+          <ul style="font-size:13px;">
+            <li><code>example.com/</code> → HomePage</li>
+            <li><code>example.com/product/42</code> → ProductPage(id=42)</li>
+            <li><code>example.com/search?q=flutter</code> → SearchPage</li>
+          </ul>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>App Links</strong> (Android) và <strong>Universal Links</strong> (iOS) — khi user click link, app mở thẳng thay vì browser prompt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>THỰC HÀNH ROUTING</h1>
+    <p class="section-desc">Bài tập xây dựng E-commerce app với GoRouter đầy đủ</p>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — E-COMMERCE ROUTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cấu trúc Route E-commerce</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRouter(<br>
+            &nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;redirect: authRedirect,<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Public routes<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/login', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/register', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/product/:id', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/search', ...),<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Protected routes<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path: '/account',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redirect: authGuard,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routes: [...],<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;],<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Yêu cầu chi tiết</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Xây dựng route tree: Home → Product list → Product detail → Cart → Checkout</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Thêm authentication guard: /account, /orders, /checkout chỉ khi đã login</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Truyền Product object qua route (dùng extra hoặc path param)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p>Thêm 404 error page với link về Home</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BOTTOM NAVIGATION VỚI GOROUTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>ShellRoute cho Bottom Nav</h3>
+        <p>ShellRoute giữ bottom navigation cố định khi tab con thay đổi.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/app',<br>
+            &nbsp;&nbsp;builder: (context, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;MainShell(), // Chứa BottomNav<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'home', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'search', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'cart', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'profile', ...),<br>
+            &nbsp;&nbsp;],<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>StatefulShellRoute (GoRouter 14+)</h3>
+        <p><code>StatefulShellRoute.indexedStack</code> — giữ state của mỗi tab khi chuyển.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            StatefulShellRoute.indexedStack(<br>
+            &nbsp;&nbsp;builder: (ctx, state, navigationShell) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// navigationShell.index = tab hiện tại<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return MainShell(navigationShell);<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;branches: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;StatefulShellBranch(routes: [homeRoute]),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;StatefulShellBranch(routes: [searchRoute]),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;StatefulShellBranch(routes: [cartRoute]),<br>
+            &nbsp;&nbsp;],<br>
+            )
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:6px;">
+          <h4>Lưu ý</h4>
+          <p><code>StatefulShellRoute</code> yêu cầu GoRouter ^14.0.0. Cập nhật pubspec.yaml trước khi dùng.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PAGE TRANSITIONS — ANIMATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Custom Page Translations</h3>
+        <p>GoRouter hỗ trợ <code>CustomTransitionPage</code> để tùy chỉnh animation khi chuyển trang.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/slide',<br>
+            &nbsp;&nbsp;pageBuilder: (ctx, state) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;CustomTransitionPage(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key: state.pageKey,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child: SlidePage(),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transitionsBuilder: (<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx, animation, second, child) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return SlideTransition(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Các loại Animation phổ biến</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>SlideTransition</h4><p style="font-size:13px;">Trượt từ phải sang — Material navigation mặc định</p></div>
+          <div class="card accent-green"><h4>FadeTransition</h4><p style="font-size:13px;">Mờ dần — tốt cho modal, dialog transitions</p></div>
+          <div class="card accent-orange"><h4>ScaleTransition</h4><p style="font-size:13px;">Phóng to/thu nhỏ — dùng cho detail pages</p></div>
+          <div class="card accent-gold"><h4>RotationTransition</h4><p style="font-size:13px;">Xoay — hiệu ứng đặc biệt, ít dùng</p></div>
+        </div>
+        <div class="card accent-purple" style="margin-top:6px;">
+          <h4>GoRouter 14+</h4>
+          <p>Dùng <code>VerticalDragCancel</code> gesture để back — thay thế iOS swipe gesture mặc định.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAVIGATOR 1.0 VS GOROUTER — SO SÁNH</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:28%">Tiêu chí</th>
+          <th style="width:36%">Navigator 1.0</th>
+          <th style="width:36%">GoRouter</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Kiểu routing</td>
+          <td>Imperative — gọi method trực tiếp</td>
+          <td>Declarative — route là data</td>
+        </tr>
+        <tr>
+          <td>Deep linking</td>
+          <td>Thủ công, phức tạp</td>
+          <td>Tự động hỗ trợ web URL</td>
+        </tr>
+        <tr>
+          <td>Redirect/Guard</td>
+          <td>Tự viết logic kiểm tra</td>
+          <td>Hỗ trợ native với redirect()</td>
+        </tr>
+        <tr>
+          <td>Nested routes</td>
+          <td>Không hỗ trợ</td>
+          <td>Hỗ trợ qua GoRoute.routes[]</td>
+        </tr>
+        <tr>
+          <td>Bottom Navigation</td>
+          <td>StatefulWidget + IndexedStack</td>
+          <td>ShellRoute / StatefulShellRoute</td>
+        </tr>
+        <tr>
+          <td>Web support</td>
+          <td>Hạn chế</td>
+          <td>First-class citizen — URL ↔ app sync</td>
+        </tr>
+        <tr>
+          <td>Khuyến nghị</td>
+          <td colspan="2">✅ <strong>Khuyên dùng GoRouter</strong> cho mọi ứng dụng mới (2024+)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAMED ROUTES VÀ URL HELPERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Route Constants</h3>
+        <p>Tránh magic strings — dùng constants hoặc extension để define route names.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // routes.dart<br>
+            abstract class AppRoutes {<br>
+            &nbsp;&nbsp;static const home = '/';\br>
+            &nbsp;&nbsp;static const login = '/login';\br>
+            &nbsp;&nbsp;static const product = '/product/:id';\br>
+            &nbsp;&nbsp;static const cart = '/cart';\br>
+            &nbsp;&nbsp;static const profile = '/profile';\br>
+            }<br><br>
+            // Sử dụng<br>
+            context.go(AppRoutes.home);
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>URL Builder Helpers</h3>
+        <p>Tạo URL với params một cách an toàn — tránh typo và refactor dễ dàng.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Extension<br>
+            extension GoRouteX on String {<br>
+            &nbsp;&nbsp;Uri toGoUrl({Map&lt;String, String&gt;?<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;params,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, String&gt;? query}) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var path = this;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;params?.forEach((k, v) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path = path.replaceAll(':$k', v);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Uri(path: path,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queryParameters: query);<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            // Sử dụng<br>
+            '/product/:id'.toGoUrl(<br>
+            &nbsp;&nbsp;params: {'id': '42'},<br>
+            &nbsp;&nbsp;query: {'color': 'red'},<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:6px;">
+          <h4>Lưu ý</h4>
+          <p>GoRouter ^14 có <code>named routes</code> built-in — dùng <code>router.namedLocation('product', pathParameters: {'id': '42'})</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROUTING VỚI GETX — ALTERNATIVE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Giới thiệu GetX Routing</h3>
+        <p><strong>GetX</strong> là package đa năng — quản lý State, DI và Routing trong 1 thư viện. Phổ biến trong cộng đồng Flutter Việt Nam.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            flutter pub add get
+          </p>
+        </div>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>State Management</h4><p style="font-size:13px;">GetxController, Obx reactive widget</p></div>
+          <div class="card accent-green"><h4>Dependency Injection</h4><p style="font-size:13px;">Get.put(), Get.lazyPut(), Get.find()</p></div>
+          <div class="card accent-orange"><h4>Routing</h4><p style="font-size:13px;">Get.to(), Get.off(), Get.back()</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ GetX Routing</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Cấu hình routes<br>
+            GetMaterialApp(<br>
+            &nbsp;&nbsp;initialRoute: '/',<br>
+            &nbsp;&nbsp;getPages: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GetPage(name: '/', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GetPage(name: '/login', ...),<br>
+            &nbsp;&nbsp;],<br>
+            );<br><br>
+            // Navigate<br>
+            Get.toNamed('/login');<br>
+            Get.off(NextPage());<br>
+            Get.offAll(LoginPage());<br>
+            Get.back();<br><br>
+            // Truyền data<br>
+            Get.toNamed('/product',<br>
+            &nbsp;&nbsp;arguments: product);
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAMED ROUTE — ROUTE NAME VÀ ENUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Enum thay vì String</h3>
+        <p>Dùng Enum cho route names — tránh typo, IDE autocomplete, dễ refactor.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            enum AppRoute {<br>
+            &nbsp;&nbsp;home('/'),<br>
+            &nbsp;&nbsp;login('/login'),<br>
+            &nbsp;&nbsp;product('/product/:id'),<br>
+            &nbsp;&nbsp;cart('/cart'),<br>
+            &nbsp;&nbsp;profile('/profile');<br><br>
+            &nbsp;&nbsp;const AppRoute(this.path);<br>
+            &nbsp;&nbsp;final String path;<br>
+            }<br><br>
+            // Sử dụng<br>
+            context.go(AppRoute.home.path);
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Route với Params</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            extension AppRouteX on AppRoute {<br>
+            &nbsp;&nbsp;String url({String? id,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, String&gt;? query}) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var p = path;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (id != null) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p = p.replaceAll(':id', id);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return Uri.encodeFull(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uri(path: p,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queryParameters: query)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.toString());<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            context.go(<br>
+            &nbsp;&nbsp;AppRoute.product.url(id: '42'));
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:6px;">
+          <h4>GoRouter 14+</h4>
+          <p>Hỗ trợ <code>GoRouterState.uri</code> — đọc path params và query từ state dễ dàng, không cần extension.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>POP SCOPE — KIỂM SOÁT BACK BUTTON</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>PopScope Widget</h3>
+        <p><code>PopScope</code> (Flutter 3.16+) kiểm soát hành vi của nút Back — xác nhận trước khi thoát, ngăn back không mong muốn.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            PopScope(<br>
+            &nbsp;&nbsp;canPop: false, // Chặn back tự động<br>
+            &nbsp;&nbsp;onPopInvokedWithResult: (didPop, result) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (didPop) return;<br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Hiện dialog xác nhận<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final shouldPop = await showDialog&lt;bool&gt;(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;context: context,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (_) =&gt; AlertDialog(...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (shouldPop == true &amp;&amp; context.mounted) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Navigator.of(context).pop();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;child: MyPage(),<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ứng dụng thực tế</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Form chưa lưu</h4><p style="font-size:13px;">Cảnh báo "Bạn có muốn rời khỏi trang? Dữ liệu chưa lưu sẽ mất."</p></div>
+          <div class="card accent-green"><h4>Checkout flow</h4><p style="font-size:13px;">Ngăn back về trang thanh toán sau khi đã bấm "Đặt hàng"</p></div>
+          <div class="card accent-orange"><h4>Multi-step wizard</h4><p style="font-size:13px;">Yêu cầu hoàn thành step hiện tại trước khi back</p></div>
+        </div>
+        <div class="card accent-gold" style="margin-top:6px;">
+          <h4>GoRouter tích hợp</h4>
+          <p><code>GoRoute.canPop()</code> kiểm tra stack có thể pop được không. Kết hợp <code>PopScope</code> để xử lý phức tạp hơn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>API INTEGRATION — REST VÀ GRAPHQL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>REST API với http/dio</h3>
+        <p>Kết hợp routing với API calls — pattern phổ biến nhất trong Flutter.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // GoRouter → Product Detail<br>
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/product/:id',<br>
+            &nbsp;&nbsp;builder: (context, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final id = state.pathParameters['id']!;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return FutureBuilder&lt;Product&gt;(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;future: api.get('/products/$id'),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (ctx, snap) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (snap.hasData)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ProductPage(snap.data!);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return LoadingIndicator();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;},<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>GraphQL với graphql_flutter</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Query GraphQL<br>
+            const productQuery = '''<br>
+            &nbsp;&nbsp;query GetProduct(\$id: ID!) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;product(id: \$id) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id name price description<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}''';<br><br>
+            // Fetch<br>
+            final result = await client.query(<br>
+            &nbsp;&nbsp;QueryOptions(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;document: productQuery,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;variables: {'id': productId},<br>
+            &nbsp;&nbsp;),<br>
+            );
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:6px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>dio ^5</strong> với interceptors cho auth token tự động refresh, retry logic, caching. Kết hợp <strong>Riverpod</strong> cho data fetching layer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>TỔNG KẾT VÀ ÔN TẬP</h1>
+    <p class="section-desc">Navigator 1.0, GoRouter, Deep Linking, GetX, REST/GraphQL Integration</p>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT — ROUTING TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Navigator 1.0</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Anonymous Routes</strong> — Navigator.push/pop trực tiếp, không cấu hình</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Named Routes</strong> — MaterialApp.routes, pushNamed()</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>onGenerateRoute</strong> — Dynamic routing, truyền params</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>onUnknownRoute</strong> — Xử lý 404 error</p></div>
+        </div>
+        <h3 style="margin-top:10px;">Truyền Data</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Constructor</strong> — Widget(data: obj)</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>settings.arguments</strong> — Object qua route</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Extra</strong> — GoRouter: state.extra</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>GoRouter (Khuyến nghị)</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Declarative routing</strong> — Route là data, khai báo trước</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Path params</strong> — /product/:id</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Query params</strong> — ?q=flutter&amp;page=1</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Redirect/Guard</strong> — redirect() kiểm tra auth</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>Nested routes</strong> — ShellRoute, StatefulShellRoute</p></div>
+          <div class="card"><p style="font-size:12px;"><strong>Deep linking</strong> — Web URL tự động sync</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ÔN TẬP — TỰ KIỂM TRA KIẾN THỨC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Câu hỏi</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Sự khác biệt giữa <code>push()</code> và <code>go()</code> trong GoRouter là gì?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Khi nào dùng <code>redirect</code> thay vì kiểm tra auth trong Widget?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><code>ShellRoute</code> giải quyết vấn đề gì trong bottom navigation?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p>Deep link trên web hoạt động như thế nào với GoRouter?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <p>Tại sao nên dùng Enum thay vì string literals cho route names?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Đáp án</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>1. push() vs go()</h4><p style="font-size:12px;"><code>push()</code> thêm route mới lên stack. <code>go()</code> thay thế toàn bộ stack.</p></div>
+          <div class="card accent-green"><h4>2. redirect vs Widget check</h4><p style="font-size:12px;">Redirect chạy TRƯỚC navigation — ngăn truy cập trước khi UI render. Widget check chạy SAU — vẫn thấy trang rồi mới redirect.</p></div>
+          <div class="card accent-orange"><h4>3. ShellRoute</h4><p style="font-size:12px;">Giữ parent layout (bottom nav) cố định khi child route thay đổi — không re-build nav bar.</p></div>
+          <div class="card accent-gold"><h4>4. Deep link web</h4><p style="font-size:12px;">URL tương ứng với GoRoute path — /product/42 mở ProductPage(id=42) trên cả web và mobile.</p></div>
+          <div class="card accent-purple"><h4>5. Enum benefits</h4><p style="font-size:12px;">Tránh typo, IDE autocomplete, refactor an toàn, compile-time checking.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP LỚN — SOCIAL MEDIA APP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu</h3>
+        <p>Xây dựng Social Media App với đầy đủ routing và auth.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Auth Flow</strong>: Splash → Login/Register → Home. Dùng GoRouter redirect guard.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Bottom Nav</strong>: 4 tabs — Feed, Search, Notifications, Profile. Mỗi tab có nested routes.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>Post Detail</strong>: /post/:postId — đọc từ path param, fetch từ API.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>User Profile</strong>: /user/:username — hiển thị posts của user đó.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Route Structure</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;redirect: authGuard,<br>
+            &nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Bottom nav shell<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ShellRoute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: (_, __, child) =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scaffold(body: child),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'feed', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'search', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'notifications', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: 'profile', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Outside shell<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/post/:id', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/user/:username', ...),<br>
+            &nbsp;&nbsp;],<br>
+            )
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CROSS-PLATFORM ROUTING — MOBILE + WEB + DESKTOP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Đa nền tảng với GoRouter</h3>
+        <p>GoRouter hoạt động đồng nhất trên iOS, Android, Web và Desktop — cùng code, cùng routing logic.</p>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Mobile</h4><p style="font-size:12px;">Native transitions, deep links qua URL schemes</p></div>
+          <div class="card accent-green"><h4>Web</h4><p style="font-size:12px;">URL trên address bar, browser back/forward, SSR support</p></div>
+          <div class="card accent-orange"><h4>Desktop</h4><p style="font-size:12px;">Keyboard shortcuts (Alt+←), window history</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Platform-specific behavior</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Kiểm tra platform<br>
+            import 'package:flutter/foundation.dart'<br>
+            &nbsp;&nbsp;show kIsWeb;<br><br>
+            // Platform-specific navigation<br>
+            if (kIsWeb) {<br>
+            &nbsp;&nbsp;context.go('/product/$id');<br>
+            } else {<br>
+            &nbsp;&nbsp;context.push('/product/$id');<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Defer initial load</h4>
+          <p>Trên web, dùng <code>router.go('/')</code> sau khi init xong — tránh render trước khi auth checked.</p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter Web 3.x</strong> hỗ trợ URL routing tự nhiên — address bar luôn sync với GoRouter state. <strong>hash vs path routing</strong> tùy server config.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROUTING VÀ CLEAN ARCHITECTURE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phân tách Router</h3>
+        <p>Tách router configuration ra file riêng — dễ quản lý, test được.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // lib/router/app_router.dart<br>
+            GoRouter createRouter(<br>
+            &nbsp;&nbsp;Ref ref, // Riverpod ref<br>
+            ) {<br>
+            &nbsp;&nbsp;return GoRouter(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return _redirectHandler(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref, state);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;routes: _routes,<br>
+            &nbsp;&nbsp;);<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Clean Architecture Layers</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>Router Layer</strong>: GoRouter config, route definitions</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Presentation Layer</strong>: Widgets, Pages, Controllers (BLoC/Provider)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>Domain Layer</strong>: Entities, Use Cases, Repository interfaces</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>Data Layer</strong>: Repository implementations, API data sources</p>
+            </div>
+          </div>
+        </div>
+        <div class="card accent-green" style="margin-top:6px;">
+          <h4>Nguyên tắc</h4>
+          <p>Router chỉ chuyển hướng — KHÔNG chứa business logic. Logic nằm trong BLoC/Provider/UseCase.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>URL MANAGEMENT — BASE URL VÀ LINKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Base URL và Environment</h3>
+        <p>Quản lý base URL theo môi trường — dev, staging, production.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class EnvConfig {<br>
+            &nbsp;&nbsp;static const baseUrl = kReleaseMode<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;? 'https://api.myapp.com'<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: 'http://localhost:3000';<br><br>
+            &nbsp;&nbsp;static const webBase = kIsWeb<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;? 'https://myapp.com'<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: 'myapp://';<br>
+            }
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Universal Links</h3>
+        <p>Liên kết mở app: <code>https://myapp.com/product/42</code></p>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Android</strong>: intent-filter trong AndroidManifest</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>iOS</strong>: Associated Domains (apple-app-site-association)</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sharing URLs</h3>
+        <p>Chia sẻ link sản phẩm trên mạng xã hội — deep link mở thẳng app hoặc web fallback.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Share product link<br>
+            final url = Uri.parse(<br>
+            &nbsp;&nbsp;'https://myapp.com/product/$productId');<br><br>
+            await Share.share(<br>
+            &nbsp;&nbsp;'Xem sản phẩm này: $url',<br>
+            &nbsp;&nbsp;subject: product.name,<br>
+            &nbsp;&nbsp;sharePositionOrigin: box.localBounds,<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Link handling flow</h4>
+          <p style="font-size:13px;">User click link → OS kiểm tra app registered → mở app → GoRouter parse URL → navigate đến đúng page.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROUTING VÀ SEO — FLUTTER WEB</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>SEO Challenges</h3>
+        <p>Flutter web render bằng canvas — không có DOM. Googlebot không index được nội dung động như SPA.</p>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Giải pháp</h4>
+          <ul style="font-size:13px;">
+            <li><strong>SSR</strong> (Server-Side Rendering): dùng Flutter for Web với custom server render</li>
+            <li><strong>Pre-rendering</strong>: build tĩnh từng page tại build time</li>
+            <li><strong>Meta tags</strong>: inject title, description vào head qua JS interop</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Hash vs Path routing</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Hash routing (không cần server config)<br>
+            GoRouter(routes: [...])<br>
+            // URL: myapp.com/#/product/42<br><br>
+            // Path routing (cần server redirect tất cả 404 về index.html)<br>
+            GoRouter(routes: [...])<br>
+            // URL: myapp.com/product/42
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Recommendation</h4>
+          <p>Development: Hash routing (đơn giản). Production: Path routing + server config (URL đẹp hơn, SEO tốt hơn).</p>
+        </div>
+        <div class="ai-box" style="margin-top:6px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter Web 3.x</strong> hỗ trợ <strong> Webbervice</strong> — hybrid rendering với HTML/CSS native thay vì canvas. Tốt cho SEO.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — ADVANCED ROUTING SCENARIOS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài 1: Role-based routing</h3>
+        <p>Xây dựng routing dựa trên user role: admin, editor, viewer.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/admin',<br>
+            &nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final role = ref.read(authProvider).role;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (role != 'admin') return '/unauthorized';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;builder: (_, __) =&gt; AdminPage(),<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài 2: Onboarding flow</h3>
+        <p>Onboarding 3 bước — chỉ hiện khi user chưa complete.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/onboard',<br>
+            &nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final completed = ref<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.read(prefsProvider).onboardComplete;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (completed) return '/home';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;builder: (_, __) =&gt; OnboardPage(),<br>
+            )<br><br>
+            // Lưu state khi complete<br>
+            onComplete() async {<br>
+            &nbsp;&nbsp;await prefs.setOnboardComplete(true);<br>
+            &nbsp;&nbsp;context.go('/home');<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — ROUTE OBSERVER VÀ ANALYTICS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>RouteObserver</h3>
+        <p>Theo dõi route changes để gửi analytics events, log navigation history.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class MyRouteObserver extends RouteObserver&lt;ModalRoute&lt;dynamic&gt;&gt; {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void didPush(Route&lt;dynamic&gt; route, Route&lt;dynamic&gt;? prev) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Gửi analytics<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;AnalyticsService.trackPageView(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;route.settings.name ?? '/');<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void didPop(Route&lt;dynamic&gt; route, Route&lt;dynamic&gt;? prev) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;AnalyticsService.trackEvent('page_back');<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>GoRouter Events (GoRouter 14+)</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRouter(<br>
+            &nbsp;&nbsp;routes: [...],<br>
+            &nbsp;&nbsp;routerDelegateBuilder: (_, router) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Lắng nghe route changes<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;// Hoặc dùng listener<br>
+            &nbsp;&nbsp;refreshListenable: authNotifier,<br>
+            &nbsp;&nbsp;redirect: (ctx, state) =&gt; _redirect,<br>
+            );
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Ứng dụng</h4>
+          <ul style="font-size:13px;">
+            <li>Google Analytics / Firebase Analytics page_view events</li>
+            <li>Hotjar / Mixpanel session recording</li>
+            <li>Navigation history stack</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE MANAGEMENT TÍCH HỢP VỚI ROUTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Provider + GoRouter</h3>
+        <p>Inject Provider vào GoRouter redirect — truy cập auth state từ routing layer.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            final _router = GoRouter(<br>
+            &nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;refreshListenable:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ref.watch(authProvider.notifier),<br>
+            &nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final auth = ref.read(authProvider);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final isLogin = state.matchedLocation<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;== '/login';</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Riverpod + GoRouter (Recommended)</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Router provider<br>
+            @riverpod<br>
+            GoRouter appRouter(ref) {<br>
+            &nbsp;&nbsp;return GoRouter(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;initialLocation: '/',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;refreshListenable:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref.watch(authProvider.notifier),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Truy cập auth state<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final isAuth = ref<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.read(authProvider).isAuth;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return isAuth ? null : '/login';</p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Lưu ý</h4>
+          <p><code>refreshListenable</code> trigger redirect khi authNotifier.notify() được gọi — dùng kết hợp logout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BLoC + ROUTING — NAVIGATOR OBSERVER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>BLoC Pattern</h3>
+        <p><strong>BLoC</strong> (Business Logic Component) tách biệt UI và business logic — sự kiện vào, state ra.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Event<br>
+            sealed class NavEvent {<br>
+            &nbsp;&nbsp;final String route;<br>
+            &nbsp;&nbsp;NavEvent(this.route);<br>
+            }<br><br>
+            // State<br>
+            class NavState {<br>
+            &nbsp;&nbsp;final String currentRoute;<br>
+            &nbsp;&nbsp;NavState(this.currentRoute);<br>
+            }<br><br>
+            // BLoC<br>
+            class NavBloc extends Bloc&lt;NavEvent, NavState&gt; {<br>
+            &nbsp;&nbsp;NavBloc() : super(NavState('/')) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;on&lt;NavEvent&gt;((event, emit) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emit(NavState(event.route));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>NavigatorObserver với BLoC</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class RouteObserver extends NavigatorObserver {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void didPush(Route route, Route? prev) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;navBloc.add(NavEvent(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;route.settings.name ?? route.toString()));<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void didPop(Route route, Route? prev) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;navBloc.add(NavEvent(prev?.settings.name ?? '/'));</p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Ứng dụng</h4>
+          <p>Track navigation history, analytics, back button handling. Dùng với GoRouter qua custom RouteInformationParser.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DI VÀ SERVICE LOCATOR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Dependency Injection</h3>
+        <p>DI tách biệt dependencies — class không tự tạo object mà nhận từ bên ngoài.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Service interface<br>
+            abstract class ApiService {<br>
+            &nbsp;&nbsp;Future&lt;List&lt;Product&gt;&gt; getProducts();<br>
+            }<br><br>
+            // Inject vào class<br>
+            class ProductRepository {<br>
+            &nbsp;&nbsp;final ApiService _api;<br>
+            &nbsp;&nbsp;ProductRepository(this._api);<br><br>
+            &nbsp;&nbsp;Future&lt;List&lt;Product&gt;&gt; fetchAll() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return _api.getProducts();<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Service Locator Pattern</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // get_it package<br>
+            final getIt = GetIt.instance;<br><br>
+            void setupLocator() {<br>
+            &nbsp;&nbsp;getIt.registerLazySingleton&lt;ApiService&gt;(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;() =&gt; DioApiService());<br>
+            &nbsp;&nbsp;getIt.registerFactory&lt;ProductBloc&gt;(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;() =&gt; ProductBloc(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getIt&lt;ApiService&gt;()))<br>
+            }<br><br>
+            // Dùng<br>
+            final bloc = getIt&lt;ProductBloc&gt;();
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>DI vs Service Locator</h4>
+          <p>DI: dependencies được inject vào constructor. Service Locator: lấy instance từ registry khi cần. Riverpod là DI framework tốt nhất cho Flutter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WEB ROUTING — DEPLOYMENT VÀ CẤU HÌNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Firebase Hosting</h3>
+        <p>Deploy Flutter web lên Firebase Hosting — cấu hình rewrite để hỗ trợ path routing.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // firebase.json<br>
+            {<br>
+            &nbsp;&nbsp;"hosting": {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"public": "build/web",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"ignore": [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"firebase.json",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"**/.*",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"**/node_modules/**"<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"rewrites": [{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"source": "**",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"destination": "/index.html"<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}]<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cloudflare Pages / Vercel</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            # Vercel: vercel.json<br>
+            {<br>
+            &nbsp;&nbsp;"rewrites": [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{"source": "/(.*)",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"destination": "/index.html"}<br>
+            &nbsp;&nbsp;]<br>
+            }<br><br>
+            # Cloudflare Pages: _redirects<br>
+            /*  /index.html  200
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Quy trình deploy</h4>
+          <p><code>flutter build web</code> → upload build/web/ → rewrite config → domain setup → test deep links.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING — ROUTING VÀ NAVIGATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Unit Test Router</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            test('should redirect to login when not auth', () {<br>
+            &nbsp;&nbsp;final router = GoRouter(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;initialLocation: '/profile',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;redirect: (ctx, state) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return isAuth ? null : '/login';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;routes: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/login', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoRoute(path: '/profile', ...),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;expect(router.routerDelegate.currentConfiguration<br>
+            &nbsp;&nbsp;.uri.path, '/login');<br>
+            });
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Widget Test Navigation</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            testWidgets('navigates to detail on tap',<br>
+            &nbsp;&nbsp;(tester) async {<br>
+            &nbsp;&nbsp;await tester.pumpWidget(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;MaterialApp.router(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routerConfig: testRouter,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;),<br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;await tester.tap(find.byType(ProductCard));<br>
+            &nbsp;&nbsp;await tester.pumpAndSettle();<br>
+            &nbsp;&nbsp;expect(currentUrl, '/product/42');<br>
+            });
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>GoRouter testing utilities</h4>
+          <p><code>GoRouter.routeInformationParser</code> và <code>GoRouter.routerDelegate</code> — dùng để test routing logic độc lập với widget tree.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TREE-SHAKING VÀ PERFORMANCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Lazy Loading Routes</h3>
+        <p>Tách page ra file riêng — Flutter chỉ load khi route được navigate. Giảm thời gian khởi tạo app.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            GoRoute(<br>
+            &nbsp;&nbsp;path: '/product/:id',<br>
+            &nbsp;&nbsp;lazyBuilder: (ctx, state, child) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Load khi cần<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ProductPage(id: state<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pathParameters['id']!);<br>
+            &nbsp;&nbsp;},<br>
+            )
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Preloading và Caching</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Image Caching</h4><p style="font-size:13px;">Dùng cached_network_image — tránh load lại ảnh khi back/forward</p></div>
+          <div class="card accent-green"><h4>State Caching</h4><p style="font-size:13px;">Provider/Riverpod cache state — data giữ nguyên khi chuyển route</p></div>
+          <div class="card accent-orange"><h4>Code Splitting</h4><p style="font-size:13px;">Tách feature ra separate bundle — dùng <code>deferred as</code></p></div>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>GoRouter lazyBuilder</h4>
+          <p>Tương đương React.lazy() trong React — chỉ compile và load page khi user navigate đến nó lần đầu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMMON ROUTING PATTERNS</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>1. Master-Detail</h4>
+        <p>List → tap → Detail. Mobile: push page mới. Web: split view (master left, detail right).</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>2. Tab-based</h4>
+        <p>Bottom nav hoặc tab bar — mỗi tab giữ state riêng. Dùng StatefulShellRoute.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>3. Modal / Sheet</h4>
+        <p>showModalBottomSheet / showDialog — hiện overlay trên current page, không thay đổi URL (web: có thể dùng query param).</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>4. Wizard / Stepper</h4>
+        <p>Multi-step form — validate step trước khi next. Dùng PopScope để kiểm soát back.</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>5. Drawer / Sidebar</h4>
+        <p>NavigationDrawer trên tablet/web — chuyển route khi chọn item. Responsive layout.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MIGRATION — NAVIGATOR 1.0 SANG GOROUTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Chiến lược Migration</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Thêm GoRouter song song với Navigator 1.0 — không xóa code cũ</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Di chuyển từng route một sang GoRouter — public routes trước</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Thêm redirect guards — auth, role-based access</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p>Xóa Navigator 1.0 code — sau khi tất cả routes đã migrate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Code mapping</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr>
+              <th>Navigator 1.0</th>
+              <th>GoRouter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>push()</td>
+              <td>context.push()</td>
+            </tr>
+            <tr>
+              <td>pop()</td>
+              <td>context.pop()</td>
+            </tr>
+            <tr>
+              <td>pushReplacement()</td>
+              <td>context.go()</td>
+            </tr>
+            <tr>
+              <td>pushNamed()</td>
+              <td>context.pushNamed() / context.push()</td>
+            </tr>
+            <tr>
+              <td>MaterialApp.routes</td>
+              <td>GoRouter.routes[]</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Lưu ý</h4>
+          <p>Navigator 1.0 vẫn hoạt động bên trong GoRouter. Có thể dùng <code>Navigator.of(context)</code> cho trường hợp đặc biệt (modal, dialog).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT TOÀN DIỆN — BÀI 6</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Navigator 1.0</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Anonymous Routes</strong> — push/pop trực tiếp</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Named Routes</strong> — MaterialApp.routes</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>onGenerateRoute</strong> — dynamic routing</p></div>
+        </div>
+        <h3 style="margin-top:8px;">Truyền Data</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Constructor</strong> — Widget(data: obj)</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>settings.arguments</strong> — Object</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Extra</strong> — GoRouter state.extra</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>GoRouter (Khuyến nghị)</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Declarative</strong> — Route là data</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Path params</strong> — /product/:id</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Redirect/Guard</strong> — auth redirect</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Nested routes</strong> — ShellRoute</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>Deep linking</strong> — web URL tự động</p></div>
+          <div class="card"><p style="font-size:12px;"><strong>StatefulShellRoute</strong> — bottom nav stateful</p></div>
+        </div>
+        <h3 style="margin-top:8px;">Thực hành</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>E-commerce app</strong> — full routing</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Social media</strong> — auth + tabs</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Clean Architecture</strong> — tách router layer</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐỊNH HƯỚNG VÀ BÀI TẬP MỞ RỘNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài tập mở rộng</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><p style="font-size:13px;">Viết app Todo với GoRouter: /, /todo/:id, /archive. Auth guard, local storage persistence.</p></div>
+          <div class="card accent-green"><p style="font-size:13px;">Xây dựng app du lịch: danh sách địa điểm, bản đồ, booking flow với multi-step wizard.</p></div>
+          <div class="card accent-orange"><p style="font-size:13px;">Viết E-commerce app hoàn chỉnh: auth, product listing, cart, checkout, orders — kết hợp Riverpod + GoRouter.</p></div>
+          <div class="card accent-gold"><p style="font-size:13px;">Flutter Web: triển khai blog cá nhân với GoRouter + deep linking + SEO meta tags.</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Định hướng tiếp theo</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>State Management nâng cao</strong>: Riverpod 2.0, code generation, testing providers</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>Firebase</strong>: Authentication, Firestore, Cloud Functions, Push Notifications</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>CI/CD</strong>: GitHub Actions, Fastlane, automated testing và deployment</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; KẾT THÚC KHÓA HỌC</div>
+          <p>Hoàn tất <strong>Lập trình đa nền tảng với Flutter</strong>: Dart, OOP, Flutter Framework, State Management, Routing. Sẵn sàng xây dựng ứng dụng thực tế.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Hoàn tất môn Lập trình đa nền tảng với Flutter</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">50</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

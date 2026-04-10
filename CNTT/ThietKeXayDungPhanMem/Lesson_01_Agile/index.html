@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 01 - Agile Scrum trong Phát triển Phần mềm</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>AGILE SCRUM TRONG<br>PHÁT TRIỂN PHẦN MỀM</h1>
+    <p class="subtitle">Phương pháp phát triển linh hoạt trong thời đại AI</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image6.jpeg" alt="Agile">
+    <h1>AGILE</h1>
+    <p class="section-desc">Phương pháp và tư duy quản lý dự án linh hoạt, tập trung vào việc tạo ra giá trị nhanh chóng thông qua các vòng lặp phát triển ngắn (iterations)</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3: Agile Manifesto ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TUYÊN NGÔN AGILE (AGILE MANIFESTO - 2001)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.4;">
+        <p style="margin-bottom:8px;">Được ký bởi 17 chuyên gia phần mềm hàng đầu, đặt nền móng cho cách phát triển phần mềm hiện đại:</p>
+        <div class="cards" style="gap:14px; flex-direction:column;">
+          <div class="card">
+            <h4>Con người &amp; Tương tác</h4>
+            <p>hơn quy trình và công cụ</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">VD: Pair programming, code review trực tiếp thay vì chỉ dựa vào quy trình phê duyệt</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Phần mềm hoạt động</h4>
+            <p>hơn tài liệu đầy đủ</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">VD: Demo sản phẩm mỗi 2 tuần thay vì viết tài liệu 100 trang rồi mới code</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Hợp tác với khách hàng</h4>
+            <p>hơn đàm phán hợp đồng</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">VD: Khách hàng tham gia Sprint Review, phản hồi trực tiếp trên prototype</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Phản hồi với thay đổi</h4>
+            <p>hơn tuân theo kế hoạch</p>
+            <p style="margin-top:3px; font-size:12px; color:#888;">VD: Thay đổi ưu tiên giữa sprint khi thị trường biến động</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px;">
+        <img src="assets/image6.jpeg" alt="Agile Cycle - Plan, Design, Launch, Develop, Test, Deploy, Review" style="max-width:100%; max-height:60%; object-fit:contain; border-radius:10px;">
+        <div class="ai-box" style="margin-top:0;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>AI (ChatGPT, Copilot) tăng tốc vòng lặp Agile: tạo prototype nhanh &rarr; phản hồi sớm hơn. <strong>Spotify, Netflix</strong> dùng AI + Agile để triển khai tính năng <strong>hàng trăm lần/ngày</strong>. <a class="ref" href="https://engineering.atspotify.com/2014/03/squad-health-check-model/" target="_blank">[Spotify Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4: Agile Principles ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC NGUYÊN TẮC AGILE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tính thích ứng (Adaptability)</h3>
+        <ul>
+          <li>Ưu tiên <strong>sự linh hoạt</strong> và <strong>khả năng thích ứng</strong></li>
+          <li>Chấp nhận <strong>thay đổi</strong> như cơ hội cải thiện, không phải trở ngại</li>
+          <li>Khuyến khích phản hồi nhanh với yêu cầu thay đổi và nhu cầu thị trường</li>
+          <li><em>VD thực tế:</em> Khi COVID-19 bùng phát, các đội Agile nhanh chóng chuyển ưu tiên sang tính năng làm việc từ xa chỉ trong 1-2 sprint</li>
+        </ul>
+        <h3 style="margin-top:12px;">Chuyển giao liên tục</h3>
+        <ul>
+          <li>Giao phần mềm hoạt động <strong>thường xuyên</strong> (2-4 tuần/lần)</li>
+          <li>Ưu tiên các phần mang lại <strong>giá trị cao nhất</strong> cho khách hàng trước</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Tập trung vào khách hàng</h3>
+        <ul>
+          <li>Đảm bảo <strong>sự hài lòng</strong> là ưu tiên hàng đầu</li>
+          <li><strong>Hợp tác</strong> chặt chẽ với các bên liên quan</li>
+          <li>Sử dụng <strong>phản hồi</strong> xuyên suốt quá trình phát triển</li>
+        </ul>
+        <h3 style="margin-top:12px;">Đội nhóm tự quản</h3>
+        <ul>
+          <li>Đội nhóm <strong>tự tổ chức</strong> và ra quyết định</li>
+          <li>Thường xuyên <strong>nhìn lại</strong> và điều chỉnh cách làm việc</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>AI giúp rút ngắn vòng lặp feedback: <strong>GitHub Copilot</strong> tăng tốc code 40-55% <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub Research]</a>, <strong>AI Testing</strong> tự động phát hiện regression &rarr; release nhanh hơn, phản hồi sớm hơn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5: Agile Frameworks ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC FRAMEWORK AGILE PHỔ BIẾN</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>Scrum</h4>
+        <ul>
+          <li>Framework phổ biến nhất (>70% dự án Agile)</li>
+          <li>Chia dự án thành Sprint 2-4 tuần</li>
+          <li>Có 3 vai trò rõ ràng: PO, SM, Dev Team</li>
+          <li>Phù hợp: dự án phức tạp, yêu cầu thay đổi nhiều</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>Kanban</h4>
+        <ul>
+          <li>Trực quan hóa công việc qua bảng Kanban</li>
+          <li>Không có sprint cố định, dòng chảy liên tục</li>
+          <li>Giới hạn WIP (Work In Progress)</li>
+          <li>Phù hợp: bảo trì, support, DevOps</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>Extreme Programming (XP)</h4>
+        <ul>
+          <li>Tập trung vào thực hành kỹ thuật xuất sắc</li>
+          <li>Test-Driven Development (TDD)</li>
+          <li>Pair Programming, Continuous Integration</li>
+          <li>Phù hợp: dự án cần chất lượng code cao</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>Lean Development</h4>
+        <ul>
+          <li>Loại bỏ lãng phí (waste elimination)</li>
+          <li>Tối ưu hóa toàn bộ chuỗi giá trị</li>
+          <li>Ra quyết định muộn nhất có thể</li>
+          <li>Phù hợp: startup, MVP development</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Nhiều tổ chức đang áp dụng <strong>"AI-Augmented Agile"</strong> — kết hợp Scrum/Kanban với AI tools: dùng AI để ước lượng story points, tự động tạo test cases, phân tích velocity, và dự đoán rủi ro sprint. <strong>McKinsey</strong> báo cáo AI giúp tăng năng suất phát triển phần mềm <strong>20-45%</strong>. <a class="ref" href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai" target="_blank">[McKinsey Digital]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6: When Agile? ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KHI NÀO NÊN DÙNG AGILE?</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:20%">Tiêu chí</th>
+          <th style="width:40%">Agile</th>
+          <th style="width:40%">Waterfall</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tính linh hoạt</td>
+          <td>Cao, dễ thay đổi và thích nghi. VD: thêm tính năng AI chatbot giữa dự án</td>
+          <td>Thấp, khó thay đổi sau khi đã lập kế hoạch chi tiết</td>
+        </tr>
+        <tr>
+          <td>Quản lý yêu cầu</td>
+          <td>Cập nhật liên tục dựa trên phản hồi người dùng thực</td>
+          <td>Xác định đầy đủ từ đầu, ít thay đổi</td>
+        </tr>
+        <tr>
+          <td>Chuyển giao sản phẩm</td>
+          <td>Từng phần nhỏ, liên tục (mỗi 2-4 tuần có sản phẩm demo)</td>
+          <td>Một lần duy nhất khi kết thúc dự án (có thể 6-12 tháng)</td>
+        </tr>
+        <tr>
+          <td>Khách hàng tham gia</td>
+          <td>Thường xuyên: review mỗi sprint, feedback trực tiếp</td>
+          <td>Chủ yếu ở đầu (yêu cầu) và cuối (nghiệm thu)</td>
+        </tr>
+        <tr>
+          <td>Tài liệu</td>
+          <td>Tập trung vào <strong>kết quả</strong>, tài liệu "vừa đủ"</td>
+          <td>Tài liệu đầy đủ, chi tiết ở mọi giai đoạn</td>
+        </tr>
+        <tr>
+          <td>Rủi ro</td>
+          <td>Phát hiện sớm qua mỗi sprint, giảm thiểu liên tục</td>
+          <td>Phát hiện muộn, thường ở giai đoạn testing cuối</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Theo <strong>State of Agile Report</strong> <a class="ref" href="https://digital.ai/resource-center/analyst-reports/state-of-agile-report/" target="_blank">[Digital.ai]</a>: hơn 80% tổ chức sử dụng Agile, trong đó khoảng 87% dùng Scrum. Waterfall chỉ còn phù hợp cho dự án có yêu cầu cố định như hệ thống nhúng, phần mềm y tế. Với sự bùng nổ AI, yêu cầu thay đổi nhanh hơn bao giờ hết &rarr; Agile ngày càng quan trọng.</p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8: Section - Scrum ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image8.png" alt="Scrum">
+    <h1>SCRUM</h1>
+    <p class="section-desc">Framework Agile phổ biến nhất, được sử dụng bởi hơn 87% tổ chức Agile trên thế giới</p>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9: Scrum History ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỊCH SỬ SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.2;">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="font-size:12px;">1986</div>
+            <div class="step-content">
+              <h4>Khởi nguồn</h4>
+              <p>Takeuchi &amp; Nonaka giới thiệu thuật ngữ "Scrum" trên <em>Harvard Business Review</em>, lấy cảm hứng từ đội hình rugby</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31; font-size:12px;">1995</div>
+            <div class="step-content">
+              <h4>Chính thức hóa</h4>
+              <p>Jeff Sutherland &amp; Ken Schwaber định nghĩa Scrum tại hội nghị OOPSLA, sau khi áp dụng thành công tại Easel Corporation (1993)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47; font-size:12px;">2001</div>
+            <div class="step-content">
+              <h4>Tuyên ngôn Agile</h4>
+              <p>Scrum gắn liền với Agile Manifesto, khẳng định vai trò hàng đầu trong phát triển phần mềm linh hoạt</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333; font-size:12px;">2020</div>
+            <div class="step-content">
+              <h4>Scrum Guide cập nhật</h4>
+              <p>Phiên bản mới nhất nhấn mạnh tính đơn giản, bỏ bớt quy tắc cứng nhắc, phù hợp hơn với đa ngành nghề</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image9.png" alt="Scrum History">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10: Scrum Pillars ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BA TRỤ CỘT SCRUM (EMPIRICISM)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Scrum dựa trên <strong>chủ nghĩa kinh nghiệm (Empiricism)</strong> — kiến thức đến từ trải nghiệm và quan sát thực tế:</p>
+    <div class="cards" style="gap:15px;">
+      <div class="card">
+        <h4>&#x1F50D; Tính minh bạch (Transparency)</h4>
+        <ul>
+          <li>Thông tin được chia sẻ <strong>công khai</strong> cho tất cả bên liên quan</li>
+          <li>Mọi người hiểu tình hình hiện tại và mục tiêu dự án</li>
+          <li><em>VD:</em> Bảng Scrum/Kanban board hiển thị trạng thái tất cả tasks</li>
+          <li><em>VD:</em> Burndown chart cho thấy tiến độ sprint real-time</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F50E; Kiểm tra (Inspection)</h4>
+        <ul>
+          <li>Thường xuyên xem xét quy trình, tiến độ và kết quả</li>
+          <li>Phát hiện <strong>sai lệch</strong> hoặc khu vực cần cải thiện</li>
+          <li><em>VD:</em> Daily Scrum 15 phút mỗi ngày để kiểm tra tiến độ</li>
+          <li><em>VD:</em> Sprint Review kiểm tra sản phẩm mỗi 2 tuần</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F504; Thích nghi (Adaptation)</h4>
+        <ul>
+          <li>Điều chỉnh quy trình và sản phẩm khi phát hiện vấn đề</li>
+          <li>Thay đổi <strong>ngay lập tức</strong>, không chờ đến cuối dự án</li>
+          <li><em>VD:</em> Retrospective tìm cách cải thiện sau mỗi sprint</li>
+          <li><em>VD:</em> Thay đổi Sprint Backlog khi phát hiện rủi ro mới</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>Transparency:</strong> AI dashboard tự động tổng hợp metrics. <strong>Inspection:</strong> AI phân tích code quality, phát hiện technical debt. <strong>Adaptation:</strong> AI đề xuất cải tiến dựa trên dữ liệu sprint trước.</p>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE: Scrum Values ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NĂM GIÁ TRỊ SCRUM</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Scrum Guide định nghĩa <strong>5 giá trị cốt lõi</strong> mà mọi thành viên đội Scrum cần thực hành để xây dựng niềm tin và sự hợp tác:</p>
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F91D; Cam kết (Commitment)</h4>
+        <ul>
+          <li>Cam kết đạt được <strong>Sprint Goal</strong> và hỗ trợ lẫn nhau</li>
+          <li>Không phải cam kết hoàn thành mọi task, mà là cam kết <strong>nỗ lực hết mình</strong></li>
+          <li><em>VD:</em> Dev cam kết sẽ hoàn thành 3 user stories đã chọn trong sprint</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F3AF; Tập trung (Focus)</h4>
+        <ul>
+          <li>Tập trung vào công việc của Sprint và <strong>Sprint Goal</strong></li>
+          <li>Tránh bị phân tán bởi công việc ngoài sprint</li>
+          <li><em>VD:</em> Từ chối yêu cầu "khẩn cấp" không liên quan Sprint Goal</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F4AC; Cởi mở (Openness)</h4>
+        <ul>
+          <li>Minh bạch về tiến độ, <strong>khó khăn</strong> và thách thức</li>
+          <li>Sẵn sàng chia sẻ cả tin tốt lẫn xấu</li>
+          <li><em>VD:</em> Báo cáo "tôi bị blocked" trong Daily thay vì giấu vấn đề</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x1F64F; Tôn trọng (Respect)</h4>
+        <ul>
+          <li>Tôn trọng năng lực và <strong>đóng góp</strong> của mỗi thành viên</li>
+          <li>Tin tưởng đội có khả năng <strong>tự tổ chức</strong></li>
+          <li><em>VD:</em> SM không ra lệnh mà tin tưởng đội tự phân chia công việc</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4AA; Dũng cảm (Courage)</h4>
+        <ul>
+          <li>Dám nói <strong>"không"</strong> với scope creep</li>
+          <li>Dám thừa nhận sai lầm và <strong>thay đổi</strong> hướng đi</li>
+          <li><em>VD:</em> Dev dám nói "story này không thể hoàn thành trong sprint"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11: Scrum Framework Overview ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KHUNG LÀM VIỆC SCRUM - TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:10px;">Quy trình Scrum hoạt động theo vòng lặp Sprint (1-4 tuần):</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Product Backlog</h4>
+              <p>Danh sách tất cả tính năng, yêu cầu cần phát triển. PO quản lý và sắp xếp ưu tiên.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>Sprint Planning</h4>
+              <p>Đội nhóm chọn các mục từ Product Backlog &rarr; tạo Sprint Backlog. Đặt Sprint Goal.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>Sprint (1-4 tuần)</h4>
+              <p>Đội nhóm thực hiện công việc. Daily Scrum 15 phút mỗi ngày để đồng bộ.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333;">4</div>
+            <div class="step-content">
+              <h4>Sprint Review &amp; Retrospective</h4>
+              <p>Demo sản phẩm cho stakeholders &rarr; nhận phản hồi. Nhìn lại quy trình &rarr; cải tiến.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image11.jpeg" alt="Scrum Framework">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12: Scrum Roles ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC VAI TRÒ TRONG SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:14px;">
+          <div class="card">
+            <h4>Product Owner (PO) — "Làm cái gì?"</h4>
+            <ul>
+              <li>Đại diện khách hàng, quyết định tính năng ưu tiên</li>
+              <li>Quản lý Product Backlog</li>
+              <li>Tối đa hóa giá trị sản phẩm</li>
+              <li><em>VD thực tế:</em> PO tại Grab quyết định tính năng GrabFood hay GrabPay ưu tiên hơn</li>
+            </ul>
+          </div>
+          <div class="card accent-orange">
+            <h4>Scrum Master — "Làm thế nào?"</h4>
+            <ul>
+              <li>Hỗ trợ, điều phối, loại bỏ rào cản</li>
+              <li>Đảm bảo đội tuân thủ Scrum</li>
+              <li>KHÔNG phải project manager!</li>
+              <li><em>VD:</em> SM giải quyết xung đột giữa dev và QA, đàm phán tài nguyên server</li>
+            </ul>
+          </div>
+          <div class="card accent-green">
+            <h4>Nhóm Phát Triển — "Thực hiện!"</h4>
+            <ul>
+              <li>Đội đa chức năng 3-9 người</li>
+              <li>Tự tổ chức, tự quyết định cách làm</li>
+              <li>Chịu trách nhiệm chuyển giao Increment</li>
+              <li><em>VD:</em> Gồm developer, QA, designer, DevOps trong cùng một team</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image12.jpeg" alt="Scrum Roles">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13: Product Owner ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRODUCT OWNER - CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Vai trò cốt lõi</h3>
+        <ul>
+          <li>Là <span class="highlight">tiếng nói của khách hàng</span>, chịu trách nhiệm về <strong>Product Backlog</strong></li>
+          <li>Quyết định <strong>tính năng nào</strong> được phát triển và theo <strong>thứ tự nào</strong></li>
+          <li>Cung cấp phản hồi và yêu cầu từ stakeholders để tối ưu giá trị sản phẩm</li>
+        </ul>
+        <h3>Nhiệm vụ chính</h3>
+        <ul>
+          <li>Xác định <strong>tầm nhìn sản phẩm</strong> (product vision)</li>
+          <li><strong>Quản lý</strong> và sắp xếp thứ tự ưu tiên backlog items</li>
+          <li>Đưa ra <strong>quyết định nhanh</strong> để không chặn tiến độ</li>
+          <li>Viết <strong>User Stories</strong> rõ ràng với Acceptance Criteria</li>
+        </ul>
+        <h3>Kỹ năng cần có</h3>
+        <ul>
+          <li>Giao tiếp xuất sắc, hiểu biết thị trường, phân tích dữ liệu</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>PO hiện đại dùng AI để: phân tích hàng ngàn user reviews (NLP), dự đoán tính năng có ROI cao nhất, tự động tạo user stories từ feedback.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image13.png" alt="Product Owner">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14: Scrum Master ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM MASTER - CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Vai trò cốt lõi</h3>
+        <ul>
+          <li>Là <span class="highlight">người hỗ trợ</span> (facilitator) và <span class="highlight">huấn luyện viên</span> (coach)</li>
+          <li><strong>Xóa bỏ rào cản</strong> ảnh hưởng đến tiến độ đội nhóm</li>
+          <li><strong>Đào tạo</strong> đội về Agile/Scrum, bảo vệ đội khỏi áp lực bên ngoài</li>
+        </ul>
+        <h3>Nhiệm vụ chính</h3>
+        <ul>
+          <li>Tổ chức và dẫn dắt <strong>các sự kiện Scrum</strong> (Planning, Daily, Review, Retro)</li>
+          <li>Hỗ trợ đội <strong>tự quản lý</strong> và cải tiến quy trình</li>
+          <li>Tạo điều kiện <strong>hợp tác</strong> giữa các thành viên và stakeholders</li>
+          <li>Theo dõi và cải thiện <strong>velocity</strong>, <strong>burndown chart</strong></li>
+        </ul>
+        <h3>Kỹ năng cần có</h3>
+        <ul>
+          <li>Lãnh đạo phục vụ (Servant Leadership), giải quyết xung đột, coaching</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>SM dùng AI để: tự động tạo sprint reports, phát hiện bottleneck từ Jira data, phân tích team mood qua retrospective feedback (sentiment analysis).</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image14.png" alt="Scrum Master">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15: Development Team ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NHÓM PHÁT TRIỂN - CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>Vai trò</h3>
+        <ul>
+          <li>Đội ngũ <strong>đa chức năng (cross-functional)</strong> 3-9 người, chịu trách nhiệm tạo <strong>Product Increment</strong> mỗi Sprint</li>
+          <li><strong>Tự tổ chức</strong>: quyết định cách hoàn thành công việc, không ai giao task cho từng người</li>
+          <li>Đảm bảo <strong>chất lượng sản phẩm</strong> qua hợp tác và cải tiến liên tục</li>
+        </ul>
+        <h3>Nhiệm vụ</h3>
+        <ul>
+          <li>Quản lý <strong>Sprint Backlog</strong> và tự chia công việc</li>
+          <li>Xây dựng, phát triển, <strong>kiểm thử</strong> và triển khai sản phẩm</li>
+          <li>Đóng góp cải tiến qua <strong>Retrospective</strong></li>
+        </ul>
+        <h3>Thành phần điển hình</h3>
+        <ul>
+          <li>Frontend dev, Backend dev, QA, UI/UX Designer, DevOps</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Developer hiện đại sử dụng: <strong>Copilot/Cursor</strong> để code nhanh hơn, <strong>AI Code Review</strong> để phát hiện lỗi, <strong>AI Testing</strong> để tự động tạo test. Một developer với AI có năng suất tương đương 2-3 developer truyền thống.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image12.jpeg" alt="Dev Team">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16: Cross-Functional ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TẠI SAO CẦN ĐỘI ĐA CHỨC NĂNG?</h2></div>
+  <div class="slide-body">
+    <table class="table-small">
+      <thead>
+        <tr>
+          <th style="width:16%">Khía cạnh</th>
+          <th style="width:42%">Đội Chức Năng (Functional)</th>
+          <th style="width:42%">Đội Đa Chức Năng (Cross-Functional)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Định nghĩa</td>
+          <td>Thành viên chuyên 1 chức năng (VD: đội QA riêng, đội Backend riêng)</td>
+          <td>Thành viên có kỹ năng đa dạng, đủ để hoàn thành end-to-end</td>
+        </tr>
+        <tr>
+          <td>Hợp tác</td>
+          <td>Cần phối hợp nhiều đội, dễ bị "ném qua tường" (throw over the wall)</td>
+          <td>Hợp tác trong cùng đội, giao tiếp nhanh, ít phụ thuộc</td>
+        </tr>
+        <tr>
+          <td>Tốc độ</td>
+          <td>Chậm do chờ đội khác, bottleneck khi đội nào đó quá tải</td>
+          <td>Nhanh, đội tự xử lý mọi thứ từ code &rarr; test &rarr; deploy</td>
+        </tr>
+        <tr>
+          <td>Trách nhiệm</td>
+          <td>Sở hữu 1 phần sản phẩm, dễ đổ lỗi cho đội khác</td>
+          <td>Sở hữu toàn bộ tính năng, chịu trách nhiệm end-to-end</td>
+        </tr>
+        <tr>
+          <td>Phù hợp</td>
+          <td>Dự án truyền thống, cần chuyên môn sâu từng lĩnh vực</td>
+          <td>Dự án Agile, cần phối hợp nhanh và thích nghi cao</td>
+        </tr>
+        <tr>
+          <td>VD thực tế</td>
+          <td>Đội backend riêng, đội mobile riêng, đội QA riêng &rarr; 3 đội cho 1 feature</td>
+          <td>1 "Squad" tại Spotify: 1 backend + 2 frontend + 1 QA + 1 designer = làm xong 1 feature</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Với AI tools, một đội cross-functional nhỏ có thể sản xuất output tương đương đội lớn hơn nhiều. AI giúp mỗi thành viên làm được nhiều vai trò hơn (VD: dev viết test với AI assistance, designer tạo prototype bằng AI). <a class="ref" href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/unleashing-developer-productivity-with-generative-ai" target="_blank">[McKinsey Digital]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17: Section - Artifacts ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image15.jpeg" alt="Scrum Artifacts">
+    <h1>SCRUM ARTIFACTS</h1>
+    <p class="section-desc">Các tạo tác Scrum: thông tin minh bạch giúp theo dõi sản phẩm, hành động và tiến độ dự án</p>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18: Product Backlog ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRODUCT BACKLOG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p style="margin-bottom:8px;"><strong>Product Backlog</strong> là danh sách sắp xếp theo ưu tiên tất cả tính năng, yêu cầu, cải tiến cần phát triển:</p>
+        <ul>
+          <li>Là <strong>kho lưu trữ duy nhất</strong> — chỉ có 1 phiên bản cho toàn bộ sản phẩm</li>
+          <li>Luôn <strong>minh bạch</strong>, mọi bên liên quan đều truy cập được</li>
+          <li>Mục ưu tiên cao được <strong>mô tả chi tiết hơn</strong> (Product Backlog Refinement)</li>
+          <li>Chỉ <strong>Product Owner</strong> mới có quyền thêm, xóa, sắp xếp ưu tiên</li>
+          <li><strong>Tồn tại vĩnh viễn</strong> và được cập nhật liên tục theo phản hồi</li>
+        </ul>
+        <h3 style="margin-top:8px;">Kỹ thuật ưu tiên phổ biến:</h3>
+        <ul>
+          <li><strong>MoSCoW</strong>: Must have, Should have, Could have, Won't have</li>
+          <li><strong>WSJF</strong> (Weighted Shortest Job First): giá trị / công sức</li>
+          <li><strong>Kano Model</strong>: phân loại tính năng theo sự hài lòng khách hàng</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>AI phân tích user data, support tickets, app reviews để <strong>tự động đề xuất</strong> thứ tự ưu tiên backlog. Jira AI có thể gợi ý story point estimation.</p>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/image16.png" alt="Product Backlog">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19: Product Backlog Items ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC LOẠI MỤC TRONG PRODUCT BACKLOG</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>User Stories</h4>
+        <p>Mô tả tính năng từ góc nhìn người dùng</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Là người mua, tôi muốn lọc sản phẩm theo giá để tìm hàng phù hợp ngân sách"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Chiếm ~60-70% backlog</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Bugs (Lỗi)</h4>
+        <p>Lỗi hoặc sai sót cần sửa chữa</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Trang thanh toán bị crash khi chọn thanh toán bằng MoMo trên iOS 17"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Ưu tiên theo severity: Critical > Major > Minor</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Technical Tasks</h4>
+        <p>Công việc kỹ thuật không trực tiếp hướng đến người dùng</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Nâng cấp Spring Boot từ 3.1 lên 3.3 để fix security vulnerability"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Hỗ trợ user stories, giảm technical debt</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Spikes (Nghiên cứu)</h4>
+        <p>Nghiên cứu để giảm sự không chắc chắn, có time-box</p>
+        <p style="font-size:12.5px; color:#666; margin-top:4px;"><em>"Nghiên cứu tích hợp ChatGPT API vào hệ thống chatbot hiện tại (2 ngày)"</em></p>
+        <p style="font-size:12px; color:#888; margin-top:2px;">Kết quả: kiến thức, prototype, PoC</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:8px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Dùng <strong>ChatGPT/Claude</strong> để generate user stories từ mô tả tính năng, tự động viết acceptance criteria theo format Given-When-Then, và suggest edge cases mà PO có thể chưa nghĩ đến.</p>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20: User Stories Detail ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USER STORIES - CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>Định dạng chuẩn:</h3>
+        <div class="quote-box">
+          <p>Với tư cách là <strong>[loại người dùng]</strong>, tôi muốn <strong>[tính năng]</strong>, để <strong>[lợi ích]</strong>.</p>
+        </div>
+        <h3>Tiêu chí I.N.V.E.S.T:</h3>
+        <ul>
+          <li><strong>I</strong>ndependent — Độc lập, không phụ thuộc story khác</li>
+          <li><strong>N</strong>egotiable — Có thể thương lượng, không phải hợp đồng cứng</li>
+          <li><strong>V</strong>aluable — Mang lại giá trị rõ ràng cho người dùng</li>
+          <li><strong>E</strong>stimable — Có thể ước lượng được story point</li>
+          <li><strong>S</strong>mall — Đủ nhỏ để hoàn thành trong 1 sprint</li>
+          <li><strong>T</strong>estable — Có thể kiểm thử được với acceptance criteria rõ ràng</li>
+        </ul>
+        <h3>Ví dụ thực tế:</h3>
+        <ul>
+          <li><strong>E-commerce:</strong> "Là người mua, tôi muốn xem đánh giá sản phẩm bằng AI tóm tắt, để quyết định mua nhanh hơn" (3 SP)</li>
+          <li><strong>Banking:</strong> "Là người dùng, tôi muốn xác thực bằng vân tay, để đăng nhập an toàn và nhanh" (5 SP)</li>
+        </ul>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image18.png" alt="User Stories">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21: Bugs & Technical Tasks ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BUGS &AMP; TECHNICAL TASKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bugs (Lỗi phần mềm)</h3>
+        <ul>
+          <li><span class="highlight">Ưu tiên:</span> Dựa trên mức độ ảnh hưởng × số người dùng bị tác động. Bug critical ảnh hưởng production phải fix ngay.</li>
+          <li><span class="highlight">Mô tả chuẩn:</span> Steps to reproduce, Expected vs Actual result, Environment, Screenshots/Logs</li>
+          <li><span class="highlight">Acceptance Criteria:</span> Xác nhận bug đã fix + regression test pass</li>
+          <li><em>VD:</em> "Ứng dụng crash khi upload ảnh > 10MB trên Android 14. Steps: Mở app &rarr; chọn ảnh &rarr; crash. Expected: resize tự động."</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Technical Tasks (Nhiệm vụ kỹ thuật)</h3>
+        <ul>
+          <li><span class="highlight">Không hướng đến người dùng:</span> Backend, hạ tầng, CI/CD, refactoring</li>
+          <li><span class="highlight">Cụ thể:</span> Mô tả rõ công việc cần làm, có thể ước lượng</li>
+          <li><span class="highlight">Hỗ trợ:</span> Phục vụ user stories lớn hơn hoặc giảm technical debt</li>
+          <li><em>VD:</em> "Setup Docker Compose cho môi trường dev local", "Migrate database từ MySQL sang PostgreSQL", "Cấu hình CI/CD pipeline với GitHub Actions"</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Sentry AI</strong> tự phân loại bug, đề xuất fix. <strong>Copilot</strong> gợi ý code fix. <strong>AI</strong> tự tạo bug report từ crash logs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22: DOD ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEFINITION OF DONE (ĐỊNH NGHĨA HOÀN THÀNH)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">DOD là tập hợp <strong>tiêu chí bắt buộc</strong> mà mọi công việc phải đáp ứng để được coi là "Done". Đảm bảo chất lượng nhất quán.</p>
+    <div class="cards" style="gap:14px;">
+      <div class="card">
+        <h4>&#x1F4BB; Phát triển</h4>
+        <ul>
+          <li>Code được viết theo coding standards</li>
+          <li>Code review bởi ít nhất 1 người</li>
+          <li>Không có lỗi lint/compile</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F9EA; Kiểm thử</h4>
+        <ul>
+          <li>Unit tests pass (coverage ≥ 80%)</li>
+          <li>Integration tests pass</li>
+          <li>Manual QA testing completed</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F680; Triển khai</h4>
+        <ul>
+          <li>Deploy lên staging thành công</li>
+          <li>Performance test đạt yêu cầu</li>
+          <li>Security scan không có Critical/High</li>
+        </ul>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x2705; Nghiệm thu</h4>
+        <ul>
+          <li>PO review và chấp nhận</li>
+          <li>Acceptance criteria đạt 100%</li>
+          <li>Tài liệu API/user guide cập nhật</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>SonarQube AI</strong> kiểm tra code quality tự động, <strong>GitHub Actions + AI</strong> chạy test suite, <strong>Snyk AI</strong> scan security. Nhiều bước trong DOD giờ có thể <strong>tự động 100%</strong> nhờ AI &rarr; đội tập trung vào sáng tạo thay vì kiểm tra thủ công.</p>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23: Sprint Backlog ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT BACKLOG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:8px;">Sprint Backlog = các mục được chọn từ Product Backlog + kế hoạch thực hiện cho Sprint hiện tại:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>PBIs đã chọn (Selected Items)</h4>
+              <p>User stories, bugs được chọn trong Sprint Planning. Phải phù hợp với <strong>Sprint Goal</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>Các nhiệm vụ chi tiết (Tasks)</h4>
+              <p>Mỗi PBI được chia thành tasks nhỏ (2-8h). VD: "Design API endpoint", "Write unit tests", "Code review".</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>Sprint Goal</h4>
+              <p>Mục tiêu rõ ràng cho sprint. VD: <em>"Hoàn thành module đăng nhập với xác thực 2 lớp"</em></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#FFC000; color:#333;">4</div>
+            <div class="step-content">
+              <h4>Theo dõi tiến độ</h4>
+              <p>Cập nhật hàng ngày trên Scrum Board (To Do → In Progress → Done) + Burndown Chart.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Đặc điểm:</strong> Thuộc sở hữu của Dev Team (không phải PO), có thể điều chỉnh trong Sprint, luôn minh bạch. Nhiều đội hiện nay quản lý Sprint Backlog trực tiếp trên <strong>Jira Board</strong> hoặc <strong>Linear</strong>.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image22.jpeg" alt="Sprint Backlog">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24: Scrum Increments ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INCREMENT (PHẦN GIA TĂNG SẢN PHẨM)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Increment là <strong>tổng hợp tất cả công việc đã hoàn thành</strong> trong Sprint hiện tại + tất cả Sprint trước đó:</p>
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F4E6; Có khả năng phát hành</h4>
+        <p>Cuối mỗi Sprint, Increment phải ở trạng thái <strong>sẵn sàng phát hành</strong> (Potentially Releasable), dù PO có thể chưa phát hành ngay.</p>
+        <p style="font-size:12px; color:#888; margin-top:3px;"><em>VD: Spotify deploy lên production mỗi ngày nhưng chỉ bật feature flag khi sẵn sàng</em></p>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F4C8; Tính tích lũy</h4>
+        <p>Mỗi Increment <strong>xây dựng trên các Increment trước</strong>, liên tục gia tăng giá trị. Sprint 1: Login → Sprint 2: Login + Dashboard → Sprint 3: Login + Dashboard + Reports.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x2705; Tuân thủ DOD</h4>
+        <p>Chỉ công việc đáp ứng <strong>Definition of Done</strong> mới được tính. Code chưa test xong = chưa phải Increment.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>&#x1F4A1; Mang lại giá trị</h4>
+        <p>Increment phải là cải tiến <strong>có ý nghĩa</strong> cho sản phẩm, không chỉ là "code xong nhưng không dùng được".</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:6px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Với <strong>AI-powered CI/CD</strong> (GitHub Actions, GitLab CI), mỗi commit có thể tự động build, test, deploy &rarr; tạo Increment liên tục. <strong>Feature flags + AI A/B testing</strong> giúp phát hành an toàn cho từng nhóm người dùng.</p>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25: Section - Scrum Events ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/image11.jpeg" alt="Scrum Events">
+    <h1>CÁC SỰ KIỆN SCRUM</h1>
+    <p class="section-desc">5 sự kiện chính tạo nên nhịp điệu làm việc của Scrum: Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective</p>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE: What is Sprint ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT — TRÁI TIM CỦA SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <p style="margin-bottom:8px;">Sprint là <strong>sự kiện bao trùm</strong> (container event) chứa tất cả các sự kiện Scrum khác. Mọi công việc đều diễn ra trong Sprint.</p>
+        <h3>Đặc điểm chính:</h3>
+        <ul>
+          <li><strong>Thời lượng cố định:</strong> 1-4 tuần (phổ biến nhất: 2 tuần). Không thay đổi giữa chừng.</li>
+          <li><strong>Sprint mới bắt đầu ngay</strong> sau khi Sprint trước kết thúc — không có khoảng trống.</li>
+          <li><strong>Sprint Goal:</strong> Mỗi Sprint có 1 mục tiêu rõ ràng, là "ngôi sao dẫn đường" cho đội.</li>
+          <li><strong>Không thay đổi</strong> Sprint Goal giữa chừng, không giảm chất lượng, không thay đổi thời lượng.</li>
+          <li>Scope có thể được <strong>đàm phán lại</strong> giữa PO và Dev Team nếu cần.</li>
+        </ul>
+        <h3 style="margin-top:10px;">Hủy Sprint (Sprint Cancellation):</h3>
+        <ul>
+          <li>Chỉ <strong>Product Owner</strong> có quyền hủy Sprint</li>
+          <li>Xảy ra khi Sprint Goal trở nên <strong>lỗi thời</strong> (VD: thay đổi chiến lược công ty, đối thủ ra sản phẩm tương tự)</li>
+          <li>Rất hiếm trong thực tế — tốn kém và gây xáo trộn</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Với AI tăng tốc phát triển, nhiều đội rút Sprint xuống <strong>1 tuần</strong>. AI giúp code nhanh hơn → feedback loop ngắn hơn → giá trị chuyển giao sớm hơn.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image23.png" alt="Sprint">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26: Sprint Planning ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT PLANNING (LẬP KẾ HOẠCH SPRINT)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col" style="flex:1.4;">
+        <p style="margin-bottom:8px;">Diễn ra <strong>đầu mỗi Sprint</strong>, time-box tối đa <strong>8 giờ</strong> cho Sprint 1 tháng (4 giờ cho Sprint 2 tuần):</p>
+        <h3>3 câu hỏi cần trả lời:</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Tại sao Sprint này có giá trị? (Why)</h4>
+              <p>PO đề xuất Sprint Goal. VD: <em>"Hoàn thành module thanh toán online để tăng conversion rate 15%"</em></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ED7D31;">2</div>
+            <div class="step-content">
+              <h4>Có thể hoàn thành gì? (What)</h4>
+              <p>Đội chọn PBIs từ Product Backlog dựa trên <strong>velocity</strong> và <strong>capacity</strong>. VD: velocity = 30 SP &rarr; chọn ~30 SP items.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#70AD47;">3</div>
+            <div class="step-content">
+              <h4>Làm thế nào? (How)</h4>
+              <p>Dev Team chia mỗi PBI thành tasks cụ thể (design, code, test, deploy). Tạo Sprint Backlog.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Jira AI</strong> phân tích historical data để dự đoán velocity chính xác hơn. <strong>AI</strong> gợi ý task breakdown dựa trên stories tương tự trong quá khứ.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex:0 0 35%;">
+        <img src="assets/image23.png" alt="Sprint Planning">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30: Estimation ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ƯỚC LƯỢNG TRONG SCRUM (STORY POINTS)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Story Points là gì?</h3>
+        <p>Đơn vị đo <strong>độ phức tạp</strong> (không phải thời gian) của công việc. Kết hợp 3 yếu tố:</p>
+        <ul>
+          <li><strong>Complexity:</strong> Độ phức tạp kỹ thuật</li>
+          <li><strong>Effort:</strong> Công sức cần thiết</li>
+          <li><strong>Uncertainty:</strong> Mức độ không chắc chắn</li>
+        </ul>
+        <h3 style="margin-top:10px;">Planning Poker</h3>
+        <p>Phương pháp ước lượng phổ biến nhất:</p>
+        <ul>
+          <li>Sử dụng dãy Fibonacci: <strong>1, 2, 3, 5, 8, 13, 21</strong></li>
+          <li>Mỗi thành viên chọn số độc lập, sau đó thảo luận</li>
+          <li>Nếu chênh lệch lớn &rarr; thảo luận và vote lại</li>
+        </ul>
+        <h3 style="margin-top:10px;">Velocity</h3>
+        <ul>
+          <li>Tổng story points hoàn thành trung bình mỗi sprint</li>
+          <li>VD: Sprint 1=25, Sprint 2=30, Sprint 3=28 &rarr; Velocity ≈ 28 SP</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ví dụ thực tế:</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr><th>SP</th><th>Mức độ</th><th>Ví dụ</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:700; text-align:center;">1</td><td>Rất đơn giản</td><td>Đổi text button, fix typo</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">3</td><td>Đơn giản</td><td>Thêm validation form</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">5</td><td>Trung bình</td><td>Tạo API CRUD cơ bản</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">8</td><td>Phức tạp</td><td>Tích hợp payment gateway</td></tr>
+            <tr><td style="font-weight:700; text-align:center;">13</td><td>Rất phức tạp</td><td>Tích hợp AI recommendation</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Jira AI / LinearB</strong> phân tích historical data để gợi ý story points tự động. AI cũng dự đoán <strong>sprint completion probability</strong> dựa trên velocity patterns. <a class="ref" href="https://www.atlassian.com/platform/artificial-intelligence" target="_blank">[Atlassian AI]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27: Daily Scrum ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DAILY SCRUM (HỌP HÀNG NGÀY)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p style="margin-bottom:8px;">Cuộc họp <span class="accent">tối đa 15 phút</span> mỗi ngày, cùng thời gian và địa điểm:</p>
+        <h3>Mỗi thành viên chia sẻ:</h3>
+        <ul>
+          <li><strong>Hôm qua</strong> đã làm gì? (để đồng bộ tiến độ)</li>
+          <li><strong>Hôm nay</strong> sẽ làm gì? (để team biết kế hoạch)</li>
+          <li>Có <strong>trở ngại</strong> gì không? (để SM giải quyết)</li>
+        </ul>
+        <h3 style="margin-top:8px;">Quy tắc quan trọng:</h3>
+        <ul>
+          <li><strong>Đứng</strong> (stand-up) để giữ ngắn gọn</li>
+          <li>Không giải quyết vấn đề trong meeting — chỉ <strong>xác định</strong></li>
+          <li>Chỉ Dev Team <strong>bắt buộc</strong>, SM/PO tham dự không bắt buộc</li>
+          <li>Cập nhật Scrum Board / Burndown Chart</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Slack bot AI</strong> thu thập async standup, tóm tắt tiến độ tự động. <strong>Geekbot, Standuply</strong> thay thế meeting đồng bộ cho remote teams. AI phát hiện <strong>blocker patterns</strong> và cảnh báo sớm.</p>
+        </div>
+      </div>
+      <div class="col-img" style="flex-direction:column; gap:14px;">
+        <img src="assets/image24.png" alt="Daily Scrum 1" style="max-height:30%; width:auto;">
+        <img src="assets/image25.png" alt="Daily Scrum 2" style="max-height:30%; width:auto;">
+        <img src="assets/image26.png" alt="Daily Scrum 3" style="max-height:30%; width:auto;">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31: Scrum Board & Burndown ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCRUM BOARD &AMP; BURNDOWN CHART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Scrum Board (Bảng Scrum)</h3>
+        <p style="margin-bottom:6px;">Trực quan hóa công việc trong Sprint:</p>
+        <table style="font-size:13px; text-align:center;">
+          <thead>
+            <tr><th>To Do</th><th>In Progress</th><th>In Review</th><th>Done</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Login API<br><span style="font-size:11px; color:#888;">(5 SP)</span></td>
+              <td>Payment UI<br><span style="font-size:11px; color:#888;">(8 SP - An)</span></td>
+              <td>Dashboard<br><span style="font-size:11px; color:#888;">(5 SP - Bình)</span></td>
+              <td>User Profile<br><span style="font-size:11px; color:#888;">(3 SP ✅)</span></td>
+            </tr>
+            <tr>
+              <td>Email notif<br><span style="font-size:11px; color:#888;">(3 SP)</span></td>
+              <td>Search API<br><span style="font-size:11px; color:#888;">(5 SP - Cúc)</span></td>
+              <td></td>
+              <td>Registration<br><span style="font-size:11px; color:#888;">(5 SP ✅)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Burndown Chart</h3>
+        <p style="margin-bottom:6px;">Biểu đồ theo dõi tiến độ Sprint theo thời gian:</p>
+        <ul>
+          <li><strong>Trục X:</strong> Ngày trong Sprint (Day 1 → Day 10)</li>
+          <li><strong>Trục Y:</strong> Story Points còn lại</li>
+          <li><strong>Đường lý tưởng:</strong> Giảm đều từ tổng SP &rarr; 0</li>
+          <li><strong>Đường thực tế:</strong> Phản ánh tiến độ thực</li>
+          <li>Nếu đường thực tế <strong>trên</strong> đường lý tưởng &rarr; đội đang chậm tiến độ</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Jira, Azure DevOps</strong> tự động tạo burndown chart real-time. AI phân tích pattern để <strong>cảnh báo sớm</strong> khi sprint có nguy cơ trễ, đề xuất action (VD: "Nên loại bỏ 1 story 5SP để đạt Sprint Goal").</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28: Sprint Review ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT REVIEW (ĐÁNH GIÁ SPRINT)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">Diễn ra <strong>cuối mỗi Sprint</strong>, time-box tối đa <strong>4 giờ</strong>. Thành phần: Scrum Team + Stakeholders (khách hàng, quản lý, đối tác).</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Trình diễn sản phẩm (Demo)</h4>
+          <p>Đội <strong>demo phần mềm hoạt động thực</strong> (không phải slide!) cho stakeholders. Chỉ demo những tính năng đạt DOD.</p>
+          <p style="font-size:13px; color:#888;"><em>VD: Demo tính năng thanh toán QR trực tiếp trên app, stakeholders thử dùng real-time</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#ED7D31;">2</div>
+        <div class="step-content">
+          <h4>Thu thập phản hồi (Feedback)</h4>
+          <p>Stakeholders đưa ra <strong>phản hồi trực tiếp</strong>: "Tốt lắm!", "Cần thêm filter", "UX chưa trực quan". Phản hồi được ghi lại cho PO.</p>
+          <p style="font-size:13px; color:#888;"><em>VD: Khách hàng yêu cầu thêm tính năng chatbot AI hỗ trợ &rarr; PO thêm vào backlog</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#70AD47;">3</div>
+        <div class="step-content">
+          <h4>Điều chỉnh Product Backlog (Adaptation)</h4>
+          <p>Dựa trên phản hồi, PO <strong>cập nhật thứ tự ưu tiên</strong> Product Backlog cho Sprint tiếp theo. Có thể thêm/bỏ items.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:4px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Dùng AI phân tích stakeholder feedback (sentiment analysis), tự động tạo meeting notes, suggest backlog prioritization dựa trên feedback patterns.</p>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29: Sprint Retrospective ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRINT RETROSPECTIVE (NHÌN LẠI SPRINT)</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:8px;">Sự kiện <strong>cuối cùng</strong> của Sprint, time-box <strong>3 giờ</strong>. Chỉ có Scrum Team tham gia (không có stakeholders).</p>
+    <div class="two-columns">
+      <div class="col" style="flex:1.3;">
+        <h3>3 câu hỏi cốt lõi:</h3>
+        <div class="cards" style="flex-direction:column; gap:8px; margin-top:6px;">
+          <div class="card">
+            <h4>&#x1F44D; Điều gì đã làm tốt?</h4>
+            <p>VD: "Pair programming giúp review nhanh hơn", "CI/CD pipeline ổn định"</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>&#x1F914; Điều gì có thể cải thiện?</h4>
+            <p>VD: "Sprint Planning mất quá nhiều thời gian", "Testing bị dồn cuối sprint"</p>
+          </div>
+          <div class="card accent-green">
+            <h4>&#x1F3AF; Hành động cụ thể cho Sprint tiếp theo?</h4>
+            <p>VD: "Áp dụng TDD để test song song với code", "Giới hạn WIP = 2 tasks/người"</p>
+          </div>
+        </div>
+        <h3 style="margin-top:8px;">Kỹ thuật Retro phổ biến:</h3>
+        <ul>
+          <li><strong>Start-Stop-Continue:</strong> Bắt đầu / Ngừng / Tiếp tục làm gì</li>
+          <li><strong>4Ls:</strong> Liked, Learned, Lacked, Longed for</li>
+          <li><strong>Sailboat:</strong> Gió (giúp), Neo (cản), Đá ngầm (rủi ro)</li>
+        </ul>
+      </div>
+      <div class="col-img" style="flex:0 0 38%;">
+        <img src="assets/image30.jpeg" alt="Retrospective">
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7: Agile in AI Era ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AGILE TRONG THỜI ĐẠI AI</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card accent-purple">
+        <h4>&#x1F916; AI-Assisted Coding</h4>
+        <ul>
+          <li><strong>GitHub Copilot / Cursor AI</strong>: Gợi ý code real-time, tăng năng suất đáng kể <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub Research]</a></li>
+          <li><strong>Claude / ChatGPT</strong>: Giải thích code, debug, viết unit test tự động</li>
+          <li>Tác động: Sprint velocity tăng, cần ít developer hơn cho cùng khối lượng</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4CA; AI-Powered Project Management</h4>
+        <ul>
+          <li><strong>Jira AI</strong>: Tự động phân loại, ước lượng story points</li>
+          <li><strong>LinearB / Jellyfish</strong>: Phân tích engineering metrics bằng AI</li>
+          <li>Tác động: Sprint Planning chính xác hơn, ít lệch deadline hơn</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F9EA; AI Testing &amp; QA</h4>
+        <ul>
+          <li><strong>Testim / Mabl</strong>: Tự động tạo và bảo trì test cases</li>
+          <li><strong>AI Code Review</strong>: Phát hiện bug, security issues tự động</li>
+          <li>Tác động: Definition of Done được đảm bảo nhanh hơn</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F504; Thay đổi quy trình</h4>
+        <ul>
+          <li>Sprint ngắn hơn (1 tuần) vì AI tăng tốc phát triển</li>
+          <li>Vai trò mới: <strong>"AI Prompt Engineer"</strong> trong đội Scrum</li>
+          <li>PO dùng AI phân tích user feedback từ hàng ngàn review</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33: AI Tools for Development ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÔNG CỤ AI TRONG PHÁT TRIỂN PHẦN MỀM</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:14px;">
+      <div class="card accent-purple">
+        <h4>&#x1F4BB; AI Code Assistant</h4>
+        <ul>
+          <li><strong>GitHub Copilot</strong> — Gợi ý code real-time, tăng năng suất đáng kể <a class="ref" href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">[GitHub]</a></li>
+          <li><strong>Cursor AI</strong> — IDE tích hợp AI, edit codebase lớn</li>
+          <li><strong>Claude Code</strong> — Agent AI tự viết, test, deploy code</li>
+          <li><strong>Amazon Q Developer</strong> — Tối ưu cho AWS</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F9EA; AI Testing &amp; QA</h4>
+        <ul>
+          <li><strong>Testim / Mabl</strong> — Tự tạo và bảo trì test cases</li>
+          <li><strong>Codium AI</strong> — Generate unit tests từ code</li>
+          <li><strong>Applitools</strong> — Visual AI testing cho UI</li>
+          <li><strong>Snyk AI</strong> — Phát hiện security vulnerabilities</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4CA; AI Analytics &amp; DevOps</h4>
+        <ul>
+          <li><strong>LinearB / Jellyfish</strong> — Engineering metrics, đo developer productivity</li>
+          <li><strong>Datadog AI</strong> — Monitoring, anomaly detection</li>
+          <li><strong>PagerDuty AI</strong> — Incident management tự động</li>
+          <li><strong>Vercel v0</strong> — AI tạo UI từ mô tả text</li>
+        </ul>
+      </div>
+      <div class="card accent-purple">
+        <h4>&#x1F4DD; AI Documentation</h4>
+        <ul>
+          <li><strong>Notion AI</strong> — Viết PRD, meeting notes tự động</li>
+          <li><strong>Mintlify</strong> — Auto-generate API docs từ code</li>
+          <li><strong>Loom AI</strong> — Tóm tắt video meeting</li>
+          <li><strong>Confluence AI</strong> — Tìm kiếm, tóm tắt wiki</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34: Case Study ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CASE STUDY: AGILE + AI TRONG THỰC TẾ</h2></div>
+  <div class="slide-body">
+    <div class="cards" style="gap:12px;">
+      <div class="card">
+        <h4>&#x1F3B5; Spotify</h4>
+        <ul>
+          <li>Mô hình <strong>"Spotify Model"</strong>: Squads, Tribes, Chapters, Guilds</li>
+          <li>Mỗi Squad = 1 đội Scrum đa chức năng (6-12 người)</li>
+          <li>Deploy <strong>liên tục hàng ngày</strong> nhờ CI/CD tự động <a class="ref" href="https://engineering.atspotify.com/" target="_blank">[Spotify Engineering]</a></li>
+          <li>Dùng AI cho Discover Weekly, personalized playlists</li>
+          <li><strong>Bài học:</strong> Autonomous teams + AI = innovation speed</li>
+        </ul>
+      </div>
+      <div class="card accent-orange">
+        <h4>&#x1F4F1; Grab (Đông Nam Á)</h4>
+        <ul>
+          <li>Hàng trăm đội Scrum phát triển GrabFood, GrabPay, GrabCar</li>
+          <li>2-week sprints, daily standups qua Slack</li>
+          <li>AI pricing, AI fraud detection, AI driver matching</li>
+          <li>Microservices architecture cho phép mỗi team deploy độc lập</li>
+          <li><strong>Bài học:</strong> Scrum at scale + AI = dominant market position</li>
+        </ul>
+      </div>
+      <div class="card accent-green">
+        <h4>&#x1F3AE; VNG (Việt Nam)</h4>
+        <ul>
+          <li>Áp dụng Scrum cho ZaloPay, Zalo, game development</li>
+          <li>Các đội 5-9 người, sprint 2 tuần</li>
+          <li>Zalo AI: chatbot, dịch ngôn ngữ, nhận diện hình ảnh</li>
+          <li>Sử dụng Jira + Confluence cho quản lý dự án</li>
+          <li><strong>Bài học:</strong> Công ty VN cũng áp dụng Agile + AI thành công</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35: Thách thức & Sai lầm ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THÁCH THỨC &AMP; SAI LẦM THƯỜNG GẶP KHI ÁP DỤNG SCRUM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&#x26A0;&#xFE0F; Sai lầm phổ biến:</h3>
+        <ul>
+          <li><strong>"Scrum nhưng..."</strong> (ScrumBut): Áp dụng nửa vời, bỏ qua Retro, không có DOD rõ ràng</li>
+          <li><strong>SM = Project Manager:</strong> SM ra lệnh thay vì hỗ trợ, vi phạm nguyên tắc tự quản</li>
+          <li><strong>Sprint = Mini Waterfall:</strong> Design tuần 1, code tuần 2, test tuần 3 → không phải Agile</li>
+          <li><strong>Không có Sprint Goal:</strong> Sprint chỉ là "làm hết danh sách tasks" không có mục tiêu rõ ràng</li>
+          <li><strong>Bỏ qua Retrospective:</strong> Không cải tiến = không Agile</li>
+          <li><strong>Backlog quá lớn:</strong> Hàng trăm items không được grooming → hỗn loạn</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>&#x1F3AF; Cách khắc phục:</h3>
+        <ul>
+          <li>Tuân thủ <strong>Scrum Guide</strong>, bắt đầu đúng rồi mới customize</li>
+          <li>SM tập trung <strong>coaching</strong> và loại bỏ rào cản</li>
+          <li>Mỗi story phải <strong>cross-functional</strong>: design + code + test trong cùng sprint</li>
+          <li>Sprint Goal phải <strong>SMART</strong>: cụ thể, đo được, khả thi</li>
+          <li>Retro <strong>bắt buộc</strong>, tạo 1-2 action items và theo dõi</li>
+          <li>Backlog Refinement <strong>mỗi tuần</strong>, giữ tối đa 2-3 sprint items chi tiết</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>AI phân tích sprint data để phát hiện pattern xấu: velocity giảm liên tục, blocker tăng, scope creep. <strong>Proactive alerts</strong> giúp SM hành động trước khi vấn đề trở nên nghiêm trọng.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE: Tools & Certs ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÔNG CỤ, CHỨNG CHỈ &AMP; PHẦN MỀM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Công cụ phổ biến:</h3>
+        <table style="font-size:12.5px;">
+          <thead><tr><th>Mục đích</th><th>Công cụ</th></tr></thead>
+          <tbody>
+            <tr><td>Quản lý Scrum</td><td><strong>Jira</strong>, Azure DevOps, Linear, Trello</td></tr>
+            <tr><td>Communication</td><td>Slack, MS Teams, Discord</td></tr>
+            <tr><td>Source Code</td><td>GitHub, GitLab, Bitbucket</td></tr>
+            <tr><td>CI/CD</td><td>GitHub Actions, Jenkins, GitLab CI</td></tr>
+            <tr><td>Documentation</td><td>Confluence, Notion, Google Docs</td></tr>
+            <tr><td>Design</td><td>Figma, Adobe XD</td></tr>
+            <tr><td>Testing</td><td>Selenium, Cypress, Postman</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:6px;">Trong môn học này sẽ dùng:</h3>
+        <ul>
+          <li><strong>Jira</strong> — Quản lý Scrum project</li>
+          <li><strong>GitHub</strong> — Source code + CI/CD</li>
+          <li><strong>Spring Boot + Angular</strong> — Full-stack development</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Chứng chỉ Scrum:</h3>
+        <table style="font-size:12.5px;">
+          <thead><tr><th>Chứng chỉ</th><th>Tổ chức</th><th>Đối tượng</th></tr></thead>
+          <tbody>
+            <tr><td>PSM I, II, III</td><td>Scrum.org</td><td>Scrum Master</td></tr>
+            <tr><td>PSPO I, II</td><td>Scrum.org</td><td>Product Owner</td></tr>
+            <tr><td>CSM / CSPO</td><td>Scrum Alliance</td><td>SM / PO</td></tr>
+            <tr><td>PMI-ACP</td><td>PMI</td><td>Agile Practitioner</td></tr>
+            <tr><td>SAFe Agilist</td><td>Scaled Agile</td><td>Enterprise Agile</td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:6px;">Giá trị chứng chỉ:</h3>
+        <ul>
+          <li>PSM I: phí $150, thi online, 80 câu/60 phút, cần 85% đúng</li>
+          <li>Tăng cơ hội nghề nghiệp và mức lương cạnh tranh hơn <a class="ref" href="https://www.scrum.org/assessments/professional-scrum-master-i-certification" target="_blank">[Scrum.org]</a></li>
+          <li>Yêu cầu bắt buộc tại: FPT, Samsung, Bosch VN</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE: Summary ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT &AMP; CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi bài học:</h3>
+        <ul>
+          <li><strong>Agile</strong> = tư duy linh hoạt, lặp lại, tập trung khách hàng</li>
+          <li><strong>Scrum</strong> = framework phổ biến nhất của Agile</li>
+          <li><strong>3 vai trò:</strong> PO (cái gì), SM (thế nào), Dev Team (thực hiện)</li>
+          <li><strong>3 artifacts:</strong> Product Backlog, Sprint Backlog, Increment</li>
+          <li><strong>5 events:</strong> Sprint, Planning, Daily, Review, Retrospective</li>
+          <li><strong>3 trụ cột:</strong> Transparency, Inspection, Adaptation</li>
+          <li><strong>5 giá trị:</strong> Commitment, Focus, Openness, Respect, Courage</li>
+          <li><strong>AI</strong> đang thay đổi cách thực hành Agile: tăng tốc code, ước lượng, testing, quản lý dự án</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. Nêu 4 giá trị trong Agile Manifesto. Tại sao chúng quan trọng?</li>
+          <li>2. Phân biệt vai trò của PO, SM và Dev Team. SM có phải Project Manager không?</li>
+          <li>3. Sự khác biệt giữa Product Backlog và Sprint Backlog?</li>
+          <li>4. Giải thích 3 trụ cột của Scrum (Empiricism) với ví dụ cụ thể.</li>
+          <li>5. Tại sao Sprint Retrospective quan trọng? Điều gì xảy ra nếu bỏ qua?</li>
+          <li>6. Viết 1 User Story theo format chuẩn cho ứng dụng đặt đồ ăn online.</li>
+          <li>7. AI đang thay đổi Agile/Scrum như thế nào? Nêu 3 ví dụ cụ thể.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38: End ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Raleway',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Software Design Document (SDD)</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">39</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

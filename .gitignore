@@ -1,0 +1,4 @@
+# Exclude .git folders from copied source
+**/.git/
+# Exclude Windows Zone.Identifier files
+**/:Zone.Identifier

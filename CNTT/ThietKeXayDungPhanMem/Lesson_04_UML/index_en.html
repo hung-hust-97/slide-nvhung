@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 04 - UML & Database Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>UML & DATABASE<br>DESIGN</h1>
+    <p class="subtitle">UML Diagram & Database Design</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 2: Contents -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LESSON CONTENTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Part 1: UML — Modeling Language</h3>
+        <ul>
+          <li>History & overview of UML</li>
+          <li>UML extension mechanisms</li>
+          <li>Types of UML diagrams</li>
+        </ul>
+        <h3>Part 2: Structure Diagrams</h3>
+        <ul>
+          <li>Class & Object Diagram</li>
+          <li>Component & Deployment Diagram</li>
+          <li>Package Diagram</li>
+        </ul>
+        <h3>Part 3: Behavior Diagrams</h3>
+        <ul>
+          <li>Use Case, Sequence, Activity Diagram</li>
+          <li>State Machine, Communication Diagram</li>
+          <li>Data Flow Diagram (DFD)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Part 4: Database Design</h3>
+        <ul>
+          <li>ERD — Entity Relationship Diagram</li>
+          <li>Entities, Attributes, Relationships</li>
+          <li>Cardinality</li>
+        </ul>
+        <h3>Part 5: Logical & Physical Design</h3>
+        <ul>
+          <li>Normalization (1NF → BCNF)</li>
+          <li>Constraints & Relationships</li>
+          <li>Physical Design & Indexing</li>
+          <li>Security & Backup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 1: UML OVERVIEW ========== -->
+
+<!-- SLIDE 3: Section UML -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>UNIFIED MODELING LANGUAGE (UML)</h1>
+    <p class="section-desc">A unified modeling language for object-oriented design</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 4: UML Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>UML — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>UML (Unified Modeling Language) is a <strong>standard graphical language</strong> for describing, visualizing, constructing, and documenting object-oriented systems. <a class="ref" href="https://en.wikipedia.org/wiki/Unified_Modeling_Language" target="_blank">[Wikipedia]</a></p>
+        <h3>3 types of modeling:</h3>
+        <ul>
+          <li><strong>UC Modeling</strong> — functional requirements (Use Case Diagrams)</li>
+          <li><strong>Static Modeling</strong> — system structure (Class, Component, Package)</li>
+          <li><strong>Dynamic Modeling</strong> — system behavior (Sequence, Activity, State)</li>
+        </ul>
+        <h3>UML drawing tools:</h3>
+        <ul>
+          <li><strong>draw.io</strong> — free, drag & drop, export PNG/SVG</li>
+          <li><strong>PlantUML</strong> — code-based, version control on Git</li>
+          <li><strong>StarUML, Visual Paradigm</strong> — professional tools</li>
+          <li><strong>Mermaid</strong> — write in Markdown</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/uml-diagrams-overview.svg" alt="UML Diagrams Overview">
+        <p class="img-caption">Overview of UML diagram types<br><a href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg" target="_blank">Source: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 5: History -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>UML DEVELOPMENT HISTORY</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Period</th><th style="width:40%">Event</th><th>Significance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1970s-1980s</strong></td><td>Pre-UML era: separate methods (Booch, OMT, OOSE)</td><td>Each group used its own notation → difficult to communicate</td></tr>
+        <tr><td><strong>1994-1995</strong></td><td>"Three Amigos" — Grady Booch, James Rumbaugh, Ivar Jacobson unified their methods</td><td>UML 0.9, 0.91 drafts were born</td></tr>
+        <tr><td><strong>1997</strong></td><td>UML 1.0 was accepted by OMG (Object Management Group) as a standard</td><td>Became an industry standard</td></tr>
+        <tr><td><strong>1997-2003</strong></td><td>UML 1.x — gradual improvements</td><td>Added more diagram types</td></tr>
+        <tr><td><strong>2005+</strong></td><td>UML 2.x — major revision</td><td>Added Composite Structure, Interaction Overview</td></tr>
+        <tr><td><strong>2017</strong></td><td>UML 2.5.1 — latest version</td><td>ISO/IEC 19505 standard</td></tr>
+      </tbody>
+    </table>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>UML remains the standard for design documentation, but many teams now use <strong>lightweight diagrams</strong> (Mermaid, PlantUML) instead of formal UML tools — easier to maintain, version controllable.</p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 6: UML Extension -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>UML EXTENSION MECHANISMS</h2></div>
+  <div class="slide-body">
+    <p>UML provides 3 mechanisms to extend the language to fit specific domains:</p>
+    <div class="cards" style="gap:14px;">
+      <div class="card"><h4>Tagged Value</h4><p>Extend properties, add new information. Placed in curly braces: <code>{tag = value}</code>. E.g.: <code>{version = "2.0"}</code>, <code>{author = "Hung"}</code></p></div>
+      <div class="card accent-orange"><h4>Constraint</h4><p>Conditions that must be true — add new rules or modify existing rules. E.g.: <code>{ordered}</code>, <code>{readonly}</code>, <code>{balance >= 0}</code></p></div>
+      <div class="card accent-green"><h4>Stereotype</h4><p>Define new building blocks from existing UML elements, customized for the domain. Placed in guillemets: <code>&laquo;entity&raquo;</code>, <code>&laquo;service&raquo;</code>, <code>&laquo;controller&raquo;</code></p></div>
+    </div>
+    <div class="quote-box" style="margin-top:12px;">
+      <p><strong>E.g. in Spring Boot:</strong> <code>&laquo;entity&raquo; User</code>, <code>&laquo;repository&raquo; UserRepository</code>, <code>&laquo;service&raquo; UserService</code>, <code>&laquo;controller&raquo; UserController</code></p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 7: UML Types Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TYPES OF UML DIAGRAMS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Structure Diagrams:</h3>
+        <table class="table-small">
+          <thead><tr><th>Diagram</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Class</strong></td><td>Classes, attributes, methods, relationships</td></tr>
+            <tr><td><strong>Object</strong></td><td>Object instances at runtime</td></tr>
+            <tr><td><strong>Component</strong></td><td>Software components & dependencies</td></tr>
+            <tr><td><strong>Deployment</strong></td><td>Physical deployment (hardware, software)</td></tr>
+            <tr><td><strong>Package</strong></td><td>Organization & dependencies between packages</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Behavior Diagrams:</h3>
+        <table class="table-small">
+          <thead><tr><th>Diagram</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Use Case</strong></td><td>Actor ↔ system interaction</td></tr>
+            <tr><td><strong>Sequence</strong></td><td>Message flow over time</td></tr>
+            <tr><td><strong>Activity</strong></td><td>Workflow, control flow</td></tr>
+            <tr><td><strong>State Machine</strong></td><td>Object states & transitions</td></tr>
+            <tr><td><strong>Communication</strong></td><td>Object interaction in scenarios</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">In the course project: focus on <strong>Use Case, Activity, Sequence, Class</strong> and <strong>ERD</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 2: STRUCTURE DIAGRAMS ========== -->
+
+<!-- SLIDE 8: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>STRUCTURE DIAGRAMS</h1>
+    <p class="section-desc">Class — Object — Component — Deployment — Package</p>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 9: Class Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS DIAGRAM & OBJECT DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Class Diagram:</h3>
+        <p>A structure diagram representing the <strong>blueprint</strong> of a system — classes, attributes, methods, and relationships.</p>
+        <ul>
+          <li><strong>Class:</strong> name, attributes (-private, +public), methods</li>
+          <li><strong>Association:</strong> relationships between classes (1:1, 1:N, M:N)</li>
+          <li><strong>Inheritance:</strong> inheritance (extends)</li>
+          <li><strong>Interface:</strong> implements</li>
+          <li><strong>Composition/Aggregation:</strong> contains/belongs to</li>
+        </ul>
+        <h3>Object Diagram:</h3>
+        <p>A snapshot of the system at a <strong>specific point in time</strong> — showing instances and their actual states.</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/class-diagram.svg" alt="Class Diagram Example">
+        <p class="img-caption">Class Diagram Example — BankAccount<br><a href="https://commons.wikimedia.org/wiki/File:BankAccount1.svg" target="_blank">Source: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 10: Component & Deployment -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPONENT & DEPLOYMENT DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Component Diagram:</h3>
+        <p>Visualizes the high-level structure of <strong>software components</strong>:</p>
+        <ul>
+          <li>Models physical aspects</li>
+          <li>Components, interfaces, dependencies</li>
+          <li>Component-Based Development (CBD)</li>
+        </ul>
+        <h3>E.g. Spring Boot Components:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&laquo;component&raquo; AuthModule
+  ├── AuthController
+  ├── AuthService
+  ├── JwtProvider
+  └── UserRepository</pre>
+      </div>
+      <div class="col">
+        <h3>Deployment Diagram:</h3>
+        <p><strong>Runtime deployment</strong> configuration — hardware, software, middleware:</p>
+        <ul>
+          <li>Physical architecture of the system</li>
+          <li>Deploying artifacts on hardware</li>
+          <li>Distributed systems, cloud, multi-tier</li>
+        </ul>
+        <h3>E.g. Deployment:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&laquo;device&raquo; Client Browser
+  └── Angular SPA
+&laquo;server&raquo; App Server (Docker)
+  └── Spring Boot .jar
+&laquo;server&raquo; DB Server
+  └── MySQL 8.0</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 11: Package Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PACKAGE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Illustrates the <strong>organization and dependencies</strong> between packages in a system:</p>
+        <ul>
+          <li>Logically organizes system structure</li>
+          <li>Manages large systems by grouping related elements</li>
+          <li>Visualizes dependencies → reduces coupling</li>
+          <li>Represents namespace hierarchies</li>
+        </ul>
+        <h3>E.g. Package Structure Spring Boot:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+com.example.app
+  ├── controller    → Presentation
+  ├── service       → Business Logic
+  ├── repository    → Data Access
+  ├── model         → Domain Entities
+  ├── dto           → Data Transfer
+  ├── config        → Configuration
+  └── exception     → Error Handling</pre>
+      </div>
+      <div class="col">
+        <h3>Package Diagram Notation:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Rectangle with tab</td><td>Package</td></tr>
+            <tr><td>Dashed arrow</td><td>Dependency</td></tr>
+            <tr><td>&laquo;import&raquo;</td><td>Import package</td></tr>
+            <tr><td>&laquo;access&raquo;</td><td>Access package</td></tr>
+            <tr><td>&laquo;merge&raquo;</td><td>Merge package</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>In Java, package structure directly reflects architecture layers. Spring Boot convention: each package = 1 layer in Layered Architecture.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 3: BEHAVIOR DIAGRAMS ========== -->
+
+<!-- SLIDE 12: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>BEHAVIOR DIAGRAMS</h1>
+    <p class="section-desc">Use Case — Sequence — Activity — State Machine — DFD</p>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 13: Use Case Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USE CASE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Represents interactions between <strong>actors and the system</strong>: <a class="ref" href="https://en.wikipedia.org/wiki/Use_case_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Identifies system functionalities</li>
+          <li>Defines actor ↔ system interactions</li>
+          <li>Clarifies requirements for stakeholders</li>
+          <li>Foundation for design and testing</li>
+        </ul>
+        <h3>Components:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Stick figure</td><td>Actor</td></tr>
+            <tr><td>Ellipse</td><td>Use Case</td></tr>
+            <tr><td>Rectangle</td><td>System boundary</td></tr>
+            <tr><td>&laquo;include&raquo;</td><td>UC must call another UC</td></tr>
+            <tr><td>&laquo;extend&raquo;</td><td>Optional UC extension</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>E.g.: E-learning system</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+       ┌─────────────────────┐
+       │   E-Learning System │
+       │                     │
+Student─┤  (Login)            │
+       │  (View courses)     │─Admin
+       │  (Take exam)        │
+       │  (Payment)          │
+Teacher─┤  (Create course)   │
+       │  (Grade)            │
+       └─────────────────────┘
+
+  Login ──include──▷ Authentication
+  Payment ──extend──▷ Apply discount code</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 14: Sequence Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SEQUENCE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Models how objects <strong>interact over time</strong> in a specific scenario:</p>
+        <ul>
+          <li>Message flow between objects along a timeline</li>
+          <li>Documents how UCs are implemented</li>
+          <li>Detects design issues (tight coupling)</li>
+          <li>Used in design, debugging, documentation</li>
+        </ul>
+        <h3>Components:</h3>
+        <ul>
+          <li><strong>Lifeline</strong> — object lifeline (vertical)</li>
+          <li><strong>Message</strong> — arrow calling a method</li>
+          <li><strong>Return</strong> — dashed arrow (return value)</li>
+          <li><strong>Activation bar</strong> — processing time</li>
+          <li><strong>Alt/Loop/Opt</strong> — conditional fragments</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>E.g.: Login (Spring Boot)</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+User    →  Angular     →  AuthController  →  AuthService  →  UserRepo  →  DB
+ │          │              │                │              │           │
+ │──login──▷│              │                │              │           │
+ │          │──POST /login▷│                │              │           │
+ │          │              │──authenticate─▷│              │           │
+ │          │              │                │──findByEmail▷│           │
+ │          │              │                │              │──SELECT──▷│
+ │          │              │                │              │◁──user────│
+ │          │              │                │◁──User───────│           │
+ │          │              │                │──generateJWT │           │
+ │          │              │◁──JWT Token────│              │           │
+ │          │◁──200 + JWT──│                │              │           │
+ │◁──store──│              │                │              │           │</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 15: Activity Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ACTIVITY DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Represents <strong>control flow</strong> and activities in a system: <a class="ref" href="https://en.wikipedia.org/wiki/Activity_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Models workflows, business processes</li>
+          <li>Describes the logic behind a UC or operation</li>
+          <li>Visualizes parallel flows and conditions</li>
+          <li>Analyzes and optimizes processes</li>
+        </ul>
+        <h3>Key notation:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>● (filled circle)</td><td>Start node</td></tr>
+            <tr><td>◉ (bullseye)</td><td>End node</td></tr>
+            <tr><td>Rounded rectangle</td><td>Activity/Action</td></tr>
+            <tr><td>Diamond ◇</td><td>Decision/Merge</td></tr>
+            <tr><td>Thick bar ═</td><td>Fork/Join (parallel)</td></tr>
+            <tr><td>Swim lanes</td><td>Divided by actor/role</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>E.g.: Order process</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+  ●
+  ↓
+[Select product]
+  ↓
+[Add to cart]
+  ↓
+◇──Continue shopping?──▷ [Select product]
+  ↓ No
+[Enter shipping info]
+  ↓
+═══ Fork ═══
+↓           ↓
+[Process    [Send confirmation
+payment]    email]
+↓           ↓
+═══ Join ═══
+  ↓
+◇──Payment OK?
+  ↓ Yes        ↓ No
+[Create order] [Show error]
+  ↓             ↓
+  ◉             ◉</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 16: State Machine -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE MACHINE & COMMUNICATION DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>State Machine Diagram:</h3>
+        <p>Models the <strong>states</strong> an object goes through and the <strong>transitions</strong> between them:</p>
+        <ul>
+          <li>Object behavior throughout its lifecycle</li>
+          <li>State-dependent logic</li>
+          <li>Event-driven / reactive systems</li>
+        </ul>
+        <h3>E.g.: Order states</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+● → [Pending] ──pay──▷ [Processing]
+                         ↓ ship
+                      [Shipped]
+                         ↓ deliver
+                      [Delivered] → ◉
+     [Pending] ──cancel──▷ [Cancelled] → ◉</pre>
+      </div>
+      <div class="col">
+        <h3>Communication Diagram:</h3>
+        <p>Shows how objects <strong>interact in a specific scenario</strong> — similar to Sequence but focuses on <strong>relationships</strong> instead of time.</p>
+        <ul>
+          <li>Visualizes object interactions</li>
+          <li>Analyzes relationships between objects</li>
+          <li>Understands how system parts collaborate</li>
+        </ul>
+        <h3>When to use?</h3>
+        <table class="table-small">
+          <thead><tr><th>Sequence</th><th>Communication</th></tr></thead>
+          <tbody>
+            <tr><td>Focus on time</td><td>Focus on relationships</td></tr>
+            <tr><td>Complex flows</td><td>Interaction overview</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 17: DFD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATA FLOW DIAGRAM (DFD)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>A high-level graphical representation of <strong>data flow</strong> in a system: <a class="ref" href="https://en.wikipedia.org/wiki/Data-flow_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Data flow between modules, components</li>
+          <li>Data storage/cached</li>
+        </ul>
+        <h3>DFD levels:</h3>
+        <ul>
+          <li><strong>Level 0 (Context Diagram):</strong> system overview + external entities</li>
+          <li><strong>Level 1:</strong> decompose main process into sub-processes</li>
+          <li><strong>Level 2+:</strong> more detail for each sub-process</li>
+        </ul>
+        <h3>Steps to create DFD:</h3>
+        <ul>
+          <li>Identify Processes (main functions)</li>
+          <li>Identify Data Flows (how data moves)</li>
+          <li>Identify Data Stores (where data is stored)</li>
+          <li>Identify External Entities (who interacts)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>DFD Notation:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Circle / rounded</td><td>Process</td></tr>
+            <tr><td>Arrow</td><td>Data flow</td></tr>
+            <tr><td>Two parallel lines</td><td>Data store</td></tr>
+            <tr><td>Rectangle</td><td>External entity</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>DFD is not part of UML but is still very useful for system analysis. In the course project, combine DFD Level 0 with Use Case Diagram for a comprehensive view.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 4: ERD ========== -->
+
+<!-- SLIDE 18: Section ERD -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ENTITY RELATIONSHIP DIAGRAM (ERD)</h1>
+    <p class="section-desc">Data model design — Entities, Attributes, Relationships</p>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 19: ERD Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERD — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>ERD is a visual representation of <strong>data and relationships</strong> in a database. <a class="ref" href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model" target="_blank">[Wikipedia]</a></p>
+        <h3>Main components:</h3>
+        <table class="table-small">
+          <thead><tr><th>Component</th><th>Notation</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Entity</strong></td><td>Rectangle</td><td>Object with data (User, Course)</td></tr>
+            <tr><td><strong>Attribute</strong></td><td>Ellipse</td><td>Property (name, email, price)</td></tr>
+            <tr><td><strong>Relationship</strong></td><td>Diamond</td><td>Relationship between entities</td></tr>
+            <tr><td><strong>Primary Key</strong></td><td>Underline</td><td>Unique identifier</td></tr>
+          </tbody>
+        </table>
+        <h3>Purpose of ERD:</h3>
+        <ul>
+          <li>Ensure data integrity</li>
+          <li>Minimize redundancy</li>
+          <li>Optimize performance</li>
+          <li>Support future scalability</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/erd-example.png" alt="ERD Example">
+        <p class="img-caption">ERD Example — MMORPG Database<br><a href="https://commons.wikimedia.org/wiki/File:ER_Diagram_MMORPG.png" target="_blank">Source: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 20: Entities & Attributes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENTITIES & ATTRIBUTES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Entity:</h3>
+        <p>An object or concept in the system whose <strong>data is stored</strong>.</p>
+        <ul>
+          <li>Represented by a rectangle</li>
+          <li>Named with singular nouns: User, Course, Order</li>
+          <li><strong>Strong Entity:</strong> exists independently (has its own PK)</li>
+          <li><strong>Weak Entity:</strong> depends on another entity</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Attribute:</h3>
+        <table class="table-small">
+          <thead><tr><th>Type</th><th>Description</th><th>E.g.</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Simple</strong></td><td>Cannot be subdivided</td><td>age, price</td></tr>
+            <tr><td><strong>Composite</strong></td><td>Can be split into sub-attributes</td><td>address → street, city, zip</td></tr>
+            <tr><td><strong>Derived</strong></td><td>Calculated from another attribute</td><td>age (from birthdate)</td></tr>
+            <tr><td><strong>Multi-valued</strong></td><td>Multiple values</td><td>phone numbers</td></tr>
+            <tr><td><strong>Key</strong></td><td>Unique identifier (PK)</td><td>user_id, course_id</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 21: Relationships & Cardinality -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RELATIONSHIPS & CARDINALITY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Relationships:</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th><th>E.g.</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1:1</strong></td><td>One entity is linked to exactly 1 other entity</td><td>User ↔ Profile</td></tr>
+            <tr><td><strong>1:N</strong></td><td>One entity is linked to many other entities</td><td>Customer → Orders</td></tr>
+            <tr><td><strong>M:N</strong></td><td>Many ↔ Many (requires junction table)</td><td>Students ↔ Courses</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Cardinality:</h3>
+        <p>Specifies the <strong>number of instances</strong> of an entity that can/must be linked:</p>
+        <ul>
+          <li><strong>Relationship 1:N</strong> → 1 customer <em>can</em> have many orders</li>
+          <li><strong>Cardinality 1:N</strong> → 1 customer <em>must</em> have at least 1 order</li>
+        </ul>
+        <h3>Notation:</h3>
+        <ul>
+          <li><code>1</code> — exactly 1</li>
+          <li><code>0..1</code> — 0 or 1 (optional)</li>
+          <li><code>1..*</code> — 1 or many (required)</li>
+          <li><code>0..*</code> or <code>*</code> — 0 or many</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 5: LOGICAL & PHYSICAL DESIGN ========== -->
+
+<!-- SLIDE 22: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>LOGICAL & PHYSICAL DESIGN</h1>
+    <p class="section-desc">Normalization — Constraints — Indexing — Security</p>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 23: Logical Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOGICAL DESIGN</h2></div>
+  <div class="slide-body">
+    <p>Transform ERD into a <strong>logical model</strong> — defining database structure as tables, columns, foreign keys.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Create Logical Schema</h4><p>Entity → Table, Attribute → Column, Relationship → Foreign Key</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Normalize Data</h4><p>Apply 1NF → 2NF → 3NF → BCNF to reduce redundancy</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Define Constraints</h4><p>PK, FK, Unique, Not Null, Check constraints</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Establish Relationships</h4><p>1:1 → FK + Unique, 1:N → FK, M:N → Junction table</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 24: 1NF -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NORMALIZATION: 1NF & 2NF</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>1NF (First Normal Form):</h3>
+        <ul>
+          <li>Each column contains <strong>atomic</strong> values (cannot be further divided)</li>
+          <li>Each row is <strong>unique</strong> (has a primary key)</li>
+          <li>Each column contains values of the <strong>same type</strong></li>
+        </ul>
+        <h3>E.g. 1NF violation:</h3>
+        <table class="table-small">
+          <thead><tr><th>student_id</th><th>name</th><th>phones</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Hưng</td><td style="color:red;">0901234567, 0912345678</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ The phones column contains multiple values → separate into its own table</p>
+      </div>
+      <div class="col">
+        <h3>2NF (Second Normal Form):</h3>
+        <ul>
+          <li>Table must be in <strong>1NF</strong></li>
+          <li>All non-key attributes must depend on the <strong>entire</strong> primary key (eliminate partial dependency)</li>
+        </ul>
+        <h3>E.g. 2NF violation:</h3>
+        <table class="table-small">
+          <thead><tr><th>student_id</th><th>course_id</th><th>student_name</th><th>grade</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>CS101</td><td style="color:red;">Hưng</td><td>A</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ student_name depends only on student_id, not on the entire PK (student_id + course_id)</p>
+        <p style="font-size:13px; color:#70AD47;">✅ Split: Students(id, name) + Enrollments(student_id, course_id, grade)</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 25: 3NF & BCNF -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NORMALIZATION: 3NF & BCNF</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3NF (Third Normal Form):</h3>
+        <ul>
+          <li>Table must be in <strong>2NF</strong></li>
+          <li>No <strong>transitive dependency</strong> (non-key attributes depend only on PK)</li>
+        </ul>
+        <h3>E.g. 3NF violation:</h3>
+        <table class="table-small">
+          <thead><tr><th>emp_id</th><th>dept_id</th><th style="color:red;">dept_name</th></tr></thead>
+          <tbody><tr><td>1</td><td>D01</td><td style="color:red;">IT</td></tr></tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ dept_name depends on dept_id (not PK emp_id)</p>
+        <p style="font-size:13px; color:#70AD47;">✅ Split: Employees(emp_id, dept_id) + Departments(dept_id, dept_name)</p>
+      </div>
+      <div class="col">
+        <h3>BCNF (Boyce-Codd Normal Form):</h3>
+        <ul>
+          <li>Table must be in <strong>3NF</strong></li>
+          <li>Every <strong>determinant</strong> must be a candidate key</li>
+          <li>Resolves overlapping candidate keys cases</li>
+        </ul>
+        <h3>Normalization Summary:</h3>
+        <table class="table-small">
+          <thead><tr><th>NF</th><th>Eliminates</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1NF</strong></td><td>Repeating groups, non-atomic values</td></tr>
+            <tr><td><strong>2NF</strong></td><td>Partial dependency</td></tr>
+            <tr><td><strong>3NF</strong></td><td>Transitive dependency</td></tr>
+            <tr><td><strong>BCNF</strong></td><td>Overlapping candidate keys</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 26: Constraints -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CONSTRAINTS & RELATIONSHIPS IN DATABASE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Constraints:</h3>
+        <table class="table-small">
+          <thead><tr><th>Constraint</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>PRIMARY KEY</strong></td><td>Uniquely identifies each row</td></tr>
+            <tr><td><strong>FOREIGN KEY</strong></td><td>Referential integrity between tables</td></tr>
+            <tr><td><strong>UNIQUE</strong></td><td>Unique value in column</td></tr>
+            <tr><td><strong>NOT NULL</strong></td><td>Does not allow NULL</td></tr>
+            <tr><td><strong>CHECK</strong></td><td>Validates conditions (e.g.: price >= 0)</td></tr>
+            <tr><td><strong>DEFAULT</strong></td><td>Default value</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Implement Relationships:</h3>
+        <table class="table-small">
+          <thead><tr><th>Relationship</th><th>Implementation</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1:1</strong></td><td>FK + UNIQUE constraint</td></tr>
+            <tr><td><strong>1:N</strong></td><td>FK on the "many" table</td></tr>
+            <tr><td><strong>M:N</strong></td><td>Junction table</td></tr>
+          </tbody>
+        </table>
+        <h3>E.g. M:N with JPA:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+@ManyToMany
+@JoinTable(
+  name = "student_course",
+  joinColumns = @JoinColumn(name = "student_id"),
+  inverseJoinColumns = @JoinColumn(name = "course_id")
+)
+private Set&lt;Course&gt; courses;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 27: Physical Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PHYSICAL DESIGN</h2></div>
+  <div class="slide-body">
+    <p>Transform logical design into a <strong>physical schema</strong> for a specific DBMS (MySQL, PostgreSQL).</p>
+    <div class="two-columns">
+      <div class="col">
+        <h3>Steps:</h3>
+        <ul>
+          <li><strong>Transform schema</strong> → tables, columns, data types</li>
+          <li><strong>Select data types</strong> → VARCHAR, INT, BIGINT, DECIMAL, DATETIME</li>
+          <li><strong>Define storage</strong> → tablespace, partitioning</li>
+          <li><strong>Configure indexing</strong> → B-tree, Hash, Full-text</li>
+          <li><strong>Implement relationships</strong> → FK constraints, cascading</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>E.g.: MySQL Physical Design</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+CREATE TABLE users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100) NOT NULL,
+  role ENUM('STUDENT','TEACHER','ADMIN')
+    DEFAULT 'STUDENT',
+  created_at DATETIME DEFAULT NOW(),
+  INDEX idx_email (email),
+  INDEX idx_role (role)
+) ENGINE=InnoDB CHARSET=utf8mb4;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 28: Indexing -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KEYS & INDEXES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>An index is a database object that <strong>speeds up queries</strong> by creating a fast lookup structure.</p>
+        <h3 style="color:#70AD47;">Benefits:</h3>
+        <ul>
+          <li>Reduces Full Table Scans</li>
+          <li>Speeds up JOIN operations</li>
+          <li>Supports sorting and grouping</li>
+          <li>Efficient range queries</li>
+        </ul>
+        <h3 style="color:#C00000;">Limitations:</h3>
+        <ul>
+          <li>Consumes storage (each index = 1 data structure)</li>
+          <li>Slows INSERT/UPDATE/DELETE (must update index)</li>
+          <li>Over-indexing → counterproductive</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>When to create an Index?</h3>
+        <table class="table-small">
+          <thead><tr><th>Should Index</th><th>Should Not</th></tr></thead>
+          <tbody>
+            <tr><td>Frequently used WHERE columns</td><td>Small tables (&lt;1000 rows)</td></tr>
+            <tr><td>JOIN columns</td><td>Columns with few distinct values</td></tr>
+            <tr><td>ORDER BY columns</td><td>Frequently UPDATEd columns</td></tr>
+            <tr><td>Foreign Keys</td><td>Large TEXT/BLOB columns</td></tr>
+          </tbody>
+        </table>
+        <h3>E.g. MySQL Index:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+-- Single column index
+CREATE INDEX idx_email ON users(email);
+
+-- Composite index
+CREATE INDEX idx_course_date
+  ON enrollments(course_id, enrolled_at);
+
+-- Unique index
+CREATE UNIQUE INDEX idx_unique_email
+  ON users(email);</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 29: Security & Backup -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE SECURITY & BACKUP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Database Security:</h3>
+        <ul>
+          <li><strong>Protect Sensitive Info</strong> — protect personal and financial data</li>
+          <li><strong>Compliance</strong> — comply with GDPR, HIPAA</li>
+          <li><strong>Prevent Data Loss</strong> — reduce risk of corruption/accidental deletion</li>
+          <li><strong>Maintain Integrity</strong> — prevent unauthorized modifications</li>
+        </ul>
+        <h3>Security measures:</h3>
+        <ul>
+          <li>Authentication (user/password, certificates)</li>
+          <li>Authorization (GRANT/REVOKE, RBAC)</li>
+          <li>Encryption (TDE, SSL/TLS connections)</li>
+          <li>Audit logging (who accessed what, when)</li>
+          <li>Input validation (SQL injection prevention)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Backup & Recovery:</h3>
+        <table class="table-small">
+          <thead><tr><th>Strategy</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Full Backup</strong></td><td>Entire DB — slow but complete</td></tr>
+            <tr><td><strong>Incremental</strong></td><td>Only changes since last backup</td></tr>
+            <tr><td><strong>Differential</strong></td><td>Changes since last full backup</td></tr>
+            <tr><td><strong>Point-in-time</strong></td><td>Restore to a specific point in time</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Cloud databases (AWS RDS, Azure SQL) provide <strong>automated backup</strong> + point-in-time recovery. In the course project, configure MySQL backup in Docker Compose.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Class Diagram Notation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS DIAGRAM — DETAILED NOTATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Visibility modifiers:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Access level</th></tr></thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>public</td></tr>
+            <tr><td><code>-</code></td><td>private</td></tr>
+            <tr><td><code>#</code></td><td>protected</td></tr>
+            <tr><td><code>~</code></td><td>package (default)</td></tr>
+          </tbody>
+        </table>
+        <h3>E.g. class notation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+┌─────────────────────────┐
+│       User              │  ← Class name
+├─────────────────────────┤
+│ - id: Long              │  ← Attributes
+│ - email: String         │
+│ - password: String      │
+│ # createdAt: DateTime   │
+├─────────────────────────┤
+│ + login(): boolean      │  ← Methods
+│ + logout(): void        │
+│ - validatePass(): bool  │
+│ + getEmail(): String    │
+└─────────────────────────┘</pre>
+      </div>
+      <div class="col">
+        <h3>Relationships between classes:</h3>
+        <table>
+          <thead><tr><th>Relationship</th><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Association</strong></td><td>──────</td><td>Regular association</td></tr>
+            <tr><td><strong>Dependency</strong></td><td>- - - -&gt;</td><td>Temporary dependency</td></tr>
+            <tr><td><strong>Inheritance</strong></td><td>───▷</td><td>Inheritance (extends)</td></tr>
+            <tr><td><strong>Realization</strong></td><td>- - -▷</td><td>Implements interface</td></tr>
+            <tr><td><strong>Aggregation</strong></td><td>◇──────</td><td>Has a (whole-part)</td></tr>
+            <tr><td><strong>Composition</strong></td><td>♦──────</td><td>Is a part of (strong)</td></tr>
+          </tbody>
+        </table>
+        <h3>Multiplicity:</h3>
+        <ul>
+          <li><code>1</code> — exactly 1</li>
+          <li><code>0..1</code> — 0 or 1</li>
+          <li><code>1..*</code> — 1 or many</li>
+          <li><code>*</code> — 0 or many</li>
+          <li><code>1..5</code> — from 1 to 5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Use Case Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USE CASE — INCLUDE & EXTEND</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&laquo;include&raquo; — Mandatory:</h3>
+        <p>The child UC is <strong>always called</strong> when the parent UC runs. Separates shared logic.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+"Place order"  --include--&gt;  "Authenticate user"
+"Purchase"     --include--&gt;  "Authenticate user"
+
+// Both UCs require authentication
+// → Separate into a shared UC</pre>
+        <h3>&laquo;extend&raquo; — Optional:</h3>
+        <p>The extending UC <strong>only runs under certain conditions</strong>.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+"Apply coupon"  --extend--&gt;  "Place order"
+
+// Coupon only runs when user has a code
+// Not mandatory</pre>
+      </div>
+      <div class="col">
+        <h3>Generalization (inheritance):</h3>
+        <p>An actor or UC inherits from another actor/UC.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+       User
+      /    \
+  Student  Teacher
+              \
+            Admin
+
+// Admin inherits from Teacher
+// Teacher inherits from User
+// Can do everything User can</pre>
+        <h3>Full example:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+┌──────────────────────────────┐
+│  Sales System                │
+│                              │
+│ ○ Login        ○ View products│
+│   ↑include       ↑           │
+│ ○ Place order ───┘           │
+│      ↑extend                 │
+│ ○ Apply coupon               │
+│ ○ Payment     ○ Export invoice│
+└──────────────────────────────┘
+   ↑          ↑
+Customer    Admin</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Activity Diagram Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ACTIVITY DIAGRAM — SWIM LANES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Swim Lanes</strong> divide activities by actor/role — easy to see who does what.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:10px;">
+┌──────────┬──────────────┬──────────┐
+│ Customer │   System     │  Admin   │
+├──────────┼──────────────┼──────────┤
+│    ●     │              │          │
+│    ↓     │              │          │
+│Place order│              │          │
+│    ↓     │              │          │
+│          │ Validate     │          │
+│          │ ◇──invalid──→│          │
+│          │  ↓ valid     │ Notify   │
+│          │ Save to DB   │          │
+│          │   ↓          │          │
+│          │ Send email   │          │
+│          │   ↓          │          │
+│          │              │ Approve  │
+│          │              │   ↓      │
+│ Receive  │              │          │
+│ notification│           │          │
+│    ↓     │              │          │
+│    ◉     │              │          │
+└──────────┴──────────────┴──────────┘</pre>
+      </div>
+      <div class="col">
+        <h3>Activity Diagram Notation:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>●</td><td>Initial node (start)</td></tr>
+            <tr><td>◉</td><td>Final node (end)</td></tr>
+            <tr><td>⬭</td><td>Activity (action)</td></tr>
+            <tr><td>◇</td><td>Decision/Merge</td></tr>
+            <tr><td>═══</td><td>Fork/Join (parallel)</td></tr>
+            <tr><td>→</td><td>Control flow</td></tr>
+            <tr><td>⊙</td><td>Object node</td></tr>
+            <tr><td>↪</td><td>Send signal</td></tr>
+          </tbody>
+        </table>
+        <h3>Best practices:</h3>
+        <ul>
+          <li>Name activities with verb + noun</li>
+          <li>Each diagram focuses on 1 process</li>
+          <li>Use swim lanes when there are multiple actors</li>
+          <li>Avoid too many decision nodes</li>
+          <li>Decompose complex activities into sub-activities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ER Cardinality -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERD — CROW'S FOOT NOTATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Crow's Foot</strong> is the most popular notation for ERD today — easy to read, intuitive.</p>
+        <h3>Cardinality notation:</h3>
+        <table class="table-small">
+          <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>──┤</td><td>Exactly one (1)</td></tr>
+            <tr><td>──◯┤</td><td>Zero or one (0..1)</td></tr>
+            <tr><td>──┤├</td><td>One and only one</td></tr>
+            <tr><td>──&lt;</td><td>One or many (1..*)</td></tr>
+            <tr><td>──◯&lt;</td><td>Zero or many (0..*)</td></tr>
+          </tbody>
+        </table>
+        <h3>E.g. reading ERD:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+Customer ──┤├────&lt;── Order
+
+// 1 Customer has many Orders (0+)
+// 1 Order belongs to exactly 1 Customer</pre>
+      </div>
+      <div class="col">
+        <h3>E.g. complete ERD:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:10px;">
+┌──────────┐         ┌──────────┐
+│ Customer │──┤├─&lt;──│  Order   │
+├──────────┤         ├──────────┤
+│ id (PK)  │         │ id (PK)  │
+│ name     │         │ date     │
+│ email    │         │ total    │
+│ phone    │         │ cust_id  │
+└──────────┘         │   (FK)   │
+                     └──────────┘
+                          │
+                          │┤├
+                          │
+                          ▼&lt;
+                     ┌──────────┐
+                     │OrderItem │
+                     ├──────────┤
+                     │ id (PK)  │
+                     │ order_id │
+                     │ prod_id  │
+                     │ qty      │
+                     │ price    │
+                     └──────────┘
+                          │
+                          │&gt;┤├
+                          ▼
+                     ┌──────────┐
+                     │ Product  │
+                     ├──────────┤
+                     │ id (PK)  │
+                     │ name     │
+                     │ price    │
+                     └──────────┘</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- PlantUML -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PLANTUML — DRAW UML WITH CODE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>PlantUML</strong> allows writing UML using a text DSL — version control on Git, auto generate diagrams. <a class="ref" href="https://plantuml.com/" target="_blank">[plantuml.com]</a></p>
+        <h3>Class Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@startuml
+class User {
+  -id: Long
+  -email: String
+  -password: String
+  +login(): boolean
+  +logout(): void
+}
+
+class Order {
+  -id: Long
+  -date: DateTime
+  -total: BigDecimal
+  +calculateTotal(): BigDecimal
+}
+
+User "1" --&gt; "*" Order : places
+@enduml</pre>
+      </div>
+      <div class="col">
+        <h3>Sequence Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@startuml
+actor User
+participant Browser
+participant Controller
+participant Service
+database DB
+
+User -&gt; Browser: Click Login
+Browser -&gt; Controller: POST /login
+Controller -&gt; Service: authenticate()
+Service -&gt; DB: SELECT user
+DB --&gt; Service: user data
+Service -&gt; Service: verifyPassword()
+Service --&gt; Controller: JWT token
+Controller --&gt; Browser: 200 + token
+Browser --&gt; User: Show dashboard
+@enduml</pre>
+        <h3>Benefits of PlantUML:</h3>
+        <ul>
+          <li>Text-based — Git diff capable</li>
+          <li>Auto generate, no manual drawing</li>
+          <li>Integrates with Markdown, Confluence</li>
+          <li>VS Code extension</li>
+          <li>Free, open source</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Mermaid -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MERMAID — DIAGRAMS IN MARKDOWN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Mermaid</strong> is an alternative to PlantUML — renders directly in Markdown, GitHub, GitLab. <a class="ref" href="https://mermaid.js.org/" target="_blank">[mermaid.js.org]</a></p>
+        <h3>Flowchart:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+flowchart TD
+  A[Start] --&gt; B{User logged in?}
+  B --&gt;|Yes| C[Show Dashboard]
+  B --&gt;|No| D[Show Login Page]
+  D --&gt; E[Enter credentials]
+  E --&gt; F{Valid?}
+  F --&gt;|Yes| C
+  F --&gt;|No| D
+```</pre>
+        <h3>Sequence Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+sequenceDiagram
+  User-&gt;&gt;Frontend: Click Login
+  Frontend-&gt;&gt;API: POST /login
+  API-&gt;&gt;DB: Query user
+  DB--&gt;&gt;API: User data
+  API--&gt;&gt;Frontend: JWT token
+  Frontend--&gt;&gt;User: Dashboard
+```</pre>
+      </div>
+      <div class="col">
+        <h3>ER Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ ORDER_ITEM : contains
+  PRODUCT ||--o{ ORDER_ITEM : "ordered in"
+  CUSTOMER {
+    int id PK
+    string name
+    string email
+  }
+  ORDER {
+    int id PK
+    int customer_id FK
+    date order_date
+  }
+```</pre>
+        <h3>Class Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+classDiagram
+  User &lt;|-- Student
+  User &lt;|-- Teacher
+
+  class User {
+    -Long id
+    -String email
+    +login() boolean
+  }
+  class Student {
+    -String studentCode
+    +enroll() void
+  }
+```</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Database Indexes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE INDEXES — DETAILS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Common index types:</h3>
+        <table class="table-small">
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>B-tree</strong></td><td>Default in MySQL/PostgreSQL, balanced tree</td></tr>
+            <tr><td><strong>Hash</strong></td><td>Fast equality lookup, no range query</td></tr>
+            <tr><td><strong>Bitmap</strong></td><td>Columns with few distinct values</td></tr>
+            <tr><td><strong>Full-text</strong></td><td>Search within text</td></tr>
+            <tr><td><strong>Spatial</strong></td><td>Geographic data</td></tr>
+            <tr><td><strong>Composite</strong></td><td>Multiple columns</td></tr>
+            <tr><td><strong>Unique</strong></td><td>Ensures unique constraint</td></tr>
+            <tr><td><strong>Partial</strong></td><td>Indexes part of the data</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>MySQL syntax:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+-- Single column
+CREATE INDEX idx_email ON users(email);
+
+-- Composite (order matters!)
+CREATE INDEX idx_status_date
+  ON orders(status, created_at);
+
+-- Unique
+CREATE UNIQUE INDEX idx_username
+  ON users(username);
+
+-- Full-text
+CREATE FULLTEXT INDEX idx_description
+  ON products(description);
+
+-- Drop
+DROP INDEX idx_email ON users;
+
+-- Show indexes
+SHOW INDEX FROM users;
+
+-- Explain query plan
+EXPLAIN SELECT * FROM users
+  WHERE email = 'test@cmc.vn';</pre>
+        <p style="font-size:13px; color:#C00000;">⚠️ Indexes slow down INSERT/UPDATE — only create for frequently searched columns.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SQL Joins -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SQL JOINS — MULTI-TABLE QUERIES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Types of JOIN:</h3>
+        <table>
+          <thead><tr><th>JOIN</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>INNER JOIN</strong></td><td>Only rows matching both tables</td></tr>
+            <tr><td><strong>LEFT JOIN</strong></td><td>All rows from left table + matching from right</td></tr>
+            <tr><td><strong>RIGHT JOIN</strong></td><td>All rows from right table + matching from left</td></tr>
+            <tr><td><strong>FULL OUTER</strong></td><td>All rows from both tables (PostgreSQL)</td></tr>
+            <tr><td><strong>CROSS JOIN</strong></td><td>Cartesian product</td></tr>
+            <tr><td><strong>SELF JOIN</strong></td><td>Join with itself</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>E.g. INNER JOIN:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, o.order_date, o.total
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'completed';</pre>
+        <h3>LEFT JOIN — Users without orders:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name
+ORDER BY order_count DESC;</pre>
+        <h3>SELF JOIN — Hierarchy tree:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT e.name AS employee,
+  m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+  ON e.manager_id = m.id;</pre>
+        <h3>Multiple JOINs:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, p.title, oi.qty
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id
+WHERE o.created_at &gt; '2026-01-01';</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- BTL Workflow -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DESIGN WORKFLOW FOR COURSE PROJECT</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Identify Use Cases</h4><p>List main functionalities → draw overview Use Case Diagram and decompose by actor</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Specify each Use Case</h4><p>Write detailed UC Spec: Actor, Pre/Post-conditions, Main Flow, Alternatives</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Draw Activity Diagrams</h4><p>For each main business process — swim lanes if there are multiple actors</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Design ERD</h4><p>Identify entities, attributes, relationships, cardinality</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Normalize Database</h4><p>Apply 1NF → 2NF → 3NF, define constraints</p></div></div>
+      <div class="step"><div class="step-num" style="background:#0070C0;">6</div><div class="step-content"><h4>Class & Sequence Diagrams</h4><p>For each important UC — detailed design of classes and interactions</p></div></div>
+      <div class="step"><div class="step-num" style="background:#806000;">7</div><div class="step-content"><h4>Physical Design</h4><p>Convert to SQL DDL, add indexes, configure DB</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 30: Summary -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUMMARY & REVIEW QUESTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core knowledge:</h3>
+        <ul>
+          <li><strong>UML</strong> — unified modeling language for OOP</li>
+          <li><strong>Structure diagrams:</strong> Class, Component, Deployment, Package</li>
+          <li><strong>Behavior diagrams:</strong> Use Case, Sequence, Activity, State Machine</li>
+          <li><strong>ERD:</strong> Entities, Attributes, Relationships, Cardinality</li>
+          <li><strong>Normalization:</strong> 1NF → 2NF → 3NF → BCNF</li>
+          <li><strong>Physical Design:</strong> Data types, Indexes, Constraints, Security</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Review questions:</h3>
+        <ul>
+          <li>1. How many types of UML diagrams are there? Name them.</li>
+          <li>2. How does a Class Diagram differ from an Object Diagram?</li>
+          <li>3. Sequence vs Activity Diagram — when to use each?</li>
+          <li>4. What are the components of an ERD?</li>
+          <li>5. Explain 1NF, 2NF, 3NF with examples.</li>
+          <li>6. When should and shouldn't you create an Index?</li>
+          <li>7. Design an ERD for an e-learning system.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 31: Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Questions? Discussion?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+</body>
+</html>

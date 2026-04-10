@@ -1,0 +1,2417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 09 - Angular Data Handling & API</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>DATA HANDLING &<br>API COMMUNICATION</h1>
+    <p class="subtitle">RxJS, HttpClient & Kết nối Angular ↔ Spring Boot</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NỘI DUNG BÀI HỌC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phần 1: RxJS & Observables</h3>
+        <ul><li>Reactive Programming</li><li>Observable, Observer, Subscription</li><li>Operators (map, filter, switchMap)</li><li>Subject & BehaviorSubject</li></ul>
+      </div>
+      <div class="col">
+        <h3>Phần 2: HttpClient</h3>
+        <ul><li>GET, POST, PUT, DELETE</li><li>Error handling (catchError)</li><li>Headers, Query params</li><li>Interceptors</li></ul>
+        <h3>Phần 3: Tích hợp Spring Boot</h3>
+        <ul><li>CORS configuration</li><li>Full-stack CRUD example</li></ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>RXJS & OBSERVABLES</h1><p class="section-desc">Reactive Programming trong Angular</p></div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 4: RxJS -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RXJS — REACTIVE EXTENSIONS FOR JAVASCRIPT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>RxJS</strong> là thư viện cho reactive programming với Observables — xử lý dữ liệu bất đồng bộ dạng streams. <a class="ref" href="https://rxjs.dev/" target="_blank">[rxjs.dev]</a></p>
+        <h3>Tại sao cần RxJS?</h3>
+        <ul>
+          <li><strong>Declarative</strong> — tập trung "what" thay vì "how"</li>
+          <li><strong>Async made easy</strong> — HTTP calls, events, timers</li>
+          <li><strong>Composable</strong> — chain operators để transform data</li>
+          <li><strong>Angular built-in</strong> — HttpClient trả về Observable</li>
+        </ul>
+        <h3>Observable vs Promise:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>Promise</th><th>Observable</th></tr></thead>
+          <tbody>
+            <tr><td>Values</td><td>1 giá trị</td><td>Nhiều giá trị theo thời gian</td></tr>
+            <tr><td>Lazy</td><td>Không</td><td>Có (chỉ chạy khi subscribe)</td></tr>
+            <tr><td>Cancel</td><td>Không</td><td>Có (unsubscribe)</td></tr>
+            <tr><td>Operators</td><td>Ít</td><td>Rất nhiều (map, filter, merge...)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Observable — Data Stream:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+// Tạo Observable
+const numbers$ = new Observable(observer => {
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  observer.complete();
+});
+
+// Subscribe để nhận data
+numbers$.subscribe({
+  next: val => console.log(val),
+  error: err => console.error(err),
+  complete: () => console.log('Done!')
+});</pre>
+        <h3>Operators phổ biến:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+this.userService.getAll().pipe(
+  map(users => users.filter(u => u.active)),
+  catchError(err => {
+    console.error(err);
+    return of([]); // fallback
+  })
+).subscribe(users => this.users = users);</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- HttpClient section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>HTTPCLIENT — API COMMUNICATION</h1><p class="section-desc">CRUD Operations với Spring Boot Backend</p></div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 6: HttpClient CRUD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTPCLIENT — CRUD OPERATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+// app.module.ts
+import { HttpClientModule } from
+  '@angular/common/http';
+
+@NgModule({
+  imports: [HttpClientModule, ...]
+})</pre>
+        <h3>Service — GET & POST:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  private apiUrl = 'http://localhost:8080/api/users';
+
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.apiUrl);
+  }
+
+  getById(id: number): Observable&lt;User&gt; {
+    return this.http.get&lt;User&gt;(
+      `${this.apiUrl}/${id}`);
+  }
+
+  create(user: User): Observable&lt;User&gt; {
+    return this.http.post&lt;User&gt;(this.apiUrl, user);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>PUT & DELETE:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+  update(id: number, user: User): Observable&lt;User&gt; {
+    return this.http.put&lt;User&gt;(
+      `${this.apiUrl}/${id}`, user);
+  }
+
+  delete(id: number): Observable&lt;void&gt; {
+    return this.http.delete&lt;void&gt;(
+      `${this.apiUrl}/${id}`);
+  }</pre>
+        <h3>Error Handling:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+  getAll(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.apiUrl)
+      .pipe(
+        catchError(err => {
+          console.error('API error:', err);
+          return throwError(() => err);
+        })
+      );
+  }</pre>
+        <h3>Headers & Params:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+const headers = new HttpHeaders()
+  .set('Authorization', `Bearer ${token}`);
+const params = new HttpParams()
+  .set('page', '1').set('size', '10');
+this.http.get(url, { headers, params });</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 7: Interceptors -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INTERCEPTORS & FULL-STACK INTEGRATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>HTTP Interceptor — tự động thêm JWT:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable()
+export class AuthInterceptor
+    implements HttpInterceptor {
+
+  intercept(req: HttpRequest&lt;any&gt;,
+    next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      const cloned = req.clone({
+        headers: req.headers.set(
+          'Authorization', `Bearer ${token}`)
+      });
+      return next.handle(cloned);
+    }
+    return next.handle(req);
+  }
+}
+
+// Register in app.module.ts:
+providers: [{
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
+  multi: true
+}]</pre>
+      </div>
+      <div class="col">
+        <h3>Full-Stack Flow:</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Angular Component</h4><p>User click button → call Service method</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Angular Service</h4><p>HttpClient.get() → Observable → HTTP request</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Interceptor</h4><p>Tự động thêm JWT token vào header</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Spring Boot Controller</h4><p>Nhận request → Service → Repository → DB</p></div></div>
+          <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Response</h4><p>JSON → Observable → subscribe → update UI</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Procedural vs Reactive -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROCEDURAL VS REACTIVE PROGRAMMING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Procedural (Imperative):</h3>
+        <p>Mô tả <strong>cách</strong> giải quyết — từng bước thực hiện.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+let count = 0;
+
+button.addEventListener('click', () => {
+  count++;
+  if (count % 2 === 0) {
+    console.log('Even click:', count);
+  }
+});
+
+// Khó test, khó compose
+// State scattered
+// Side effects everywhere</pre>
+      </div>
+      <div class="col">
+        <h3>Reactive (Declarative):</h3>
+        <p>Mô tả <strong>cái gì</strong> cần xảy ra — như stream of values.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+const buttonClicks$ = fromEvent(
+  button, 'click');
+
+buttonClicks$.pipe(
+  scan((count) => count + 1, 0),
+  filter((count) => count % 2 === 0),
+  tap((count) => console.log(
+    'Even click:', count))
+).subscribe();
+
+// Composable
+// Declarative
+// Easy to test
+// Cancel-able</pre>
+        <h3>Lợi ích Reactive:</h3>
+        <ul>
+          <li><strong>Composable</strong> — combine streams dễ</li>
+          <li><strong>Async</strong> — handle đồng bộ &amp; bất đồng bộ giống nhau</li>
+          <li><strong>Memory safe</strong> — dễ unsubscribe</li>
+          <li><strong>Testable</strong> — pure functions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Subject Types -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUBJECT, BEHAVIORSUBJECT, REPLAYSUBJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Subject</strong> = Observable + Observer. Vừa emit vừa subscribe được.</p>
+        <table class="table-small">
+          <thead><tr><th>Type</th><th>Đặc điểm</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Subject</strong></td><td>Không lưu state, subscribers chỉ nhận emissions sau khi subscribe</td></tr>
+            <tr><td><strong>BehaviorSubject</strong></td><td>Lưu giá trị hiện tại, emit ngay khi subscribe</td></tr>
+            <tr><td><strong>ReplaySubject</strong></td><td>Lưu N giá trị cuối, replay khi subscribe</td></tr>
+            <tr><td><strong>AsyncSubject</strong></td><td>Chỉ emit giá trị cuối khi complete</td></tr>
+          </tbody>
+        </table>
+        <h3>VD BehaviorSubject:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private currentUser$ =
+    new BehaviorSubject&lt;User | null&gt;(null);
+
+  user$ = this.currentUser$.asObservable();
+
+  login(user: User) {
+    this.currentUser$.next(user);
+  }
+
+  logout() {
+    this.currentUser$.next(null);
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser$.value;
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Sử dụng trong components:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  template: `
+    @if (user$ | async; as user) {
+      &lt;p&gt;Welcome, {{ user.name }}&lt;/p&gt;
+      &lt;button (click)="logout()"&gt;Logout&lt;/button&gt;
+    } @else {
+      &lt;a routerLink="/login"&gt;Login&lt;/a&gt;
+    }
+  `
+})
+export class HeaderComponent {
+  user$ = this.authService.user$;
+
+  constructor(
+    private authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
+  }
+}</pre>
+        <h3>VD ReplaySubject:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+const messages$ = new ReplaySubject&lt;string&gt;(3);
+
+messages$.next('msg 1');
+messages$.next('msg 2');
+messages$.next('msg 3');
+messages$.next('msg 4');
+
+// Subscriber mới sẽ nhận 3 messages cuối
+messages$.subscribe(m => console.log(m));
+// → msg 2, msg 3, msg 4</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Operators Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RXJS OPERATORS — TRANSFORMATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Transformation operators:</h3>
+        <table class="table-small">
+          <thead><tr><th>Operator</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>map</code></td><td>Transform mỗi value</td></tr>
+            <tr><td><code>mapTo</code></td><td>Map về 1 hằng số</td></tr>
+            <tr><td><code>switchMap</code></td><td>Switch sang inner observable, cancel cái cũ</td></tr>
+            <tr><td><code>mergeMap</code></td><td>Merge tất cả inner observables</td></tr>
+            <tr><td><code>concatMap</code></td><td>Sequential, đợi cái trước hoàn thành</td></tr>
+            <tr><td><code>exhaustMap</code></td><td>Bỏ qua emission mới khi đang xử lý</td></tr>
+            <tr><td><code>scan</code></td><td>Reduce streaming</td></tr>
+            <tr><td><code>buffer</code></td><td>Gom nhiều values thành array</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>switchMap — search-as-you-type:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+this.searchInput.valueChanges.pipe(
+  debounceTime(300),  // Đợi 300ms
+  distinctUntilChanged(),  // Bỏ duplicate
+  filter(text => text.length &gt; 2),
+  switchMap(text =>
+    this.userService.search(text))
+  // Khi user gõ tiếp, cancel request cũ
+).subscribe(results => {
+  this.results = results;
+});</pre>
+        <h3>mergeMap vs concatMap:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// mergeMap - parallel uploads
+files$.pipe(
+  mergeMap(file => uploadFile(file))
+).subscribe();
+
+// concatMap - sequential
+ids$.pipe(
+  concatMap(id => deleteUser(id))
+  // Đợi cái trước xong mới làm cái sau
+).subscribe();</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Filtering Operators -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FILTERING & UTILITY OPERATORS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Filtering:</h3>
+        <table class="table-small">
+          <thead><tr><th>Operator</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>filter</code></td><td>Chỉ pass values match condition</td></tr>
+            <tr><td><code>take(n)</code></td><td>Lấy n values đầu</td></tr>
+            <tr><td><code>takeUntil</code></td><td>Lấy đến khi observable khác emit</td></tr>
+            <tr><td><code>takeWhile</code></td><td>Lấy đến khi false</td></tr>
+            <tr><td><code>skip(n)</code></td><td>Bỏ n values đầu</td></tr>
+            <tr><td><code>distinctUntilChanged</code></td><td>Bỏ duplicate liền kề</td></tr>
+            <tr><td><code>debounceTime</code></td><td>Đợi N ms không có emit</td></tr>
+            <tr><td><code>throttleTime</code></td><td>Cho qua 1 emit mỗi N ms</td></tr>
+            <tr><td><code>first</code></td><td>Lấy emission đầu</td></tr>
+            <tr><td><code>last</code></td><td>Lấy emission cuối</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Utility:</h3>
+        <table class="table-small">
+          <thead><tr><th>Operator</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>tap</code></td><td>Side effect, không thay đổi value</td></tr>
+            <tr><td><code>delay</code></td><td>Delay emissions</td></tr>
+            <tr><td><code>finalize</code></td><td>Chạy khi complete/error</td></tr>
+            <tr><td><code>retry(n)</code></td><td>Retry n lần khi error</td></tr>
+            <tr><td><code>retryWhen</code></td><td>Custom retry logic</td></tr>
+            <tr><td><code>catchError</code></td><td>Catch &amp; handle error</td></tr>
+            <tr><td><code>timeout</code></td><td>Error nếu chậm hơn N ms</td></tr>
+            <tr><td><code>shareReplay</code></td><td>Cache &amp; share cho multiple subscribers</td></tr>
+          </tbody>
+        </table>
+        <h3>Combination:</h3>
+        <ul>
+          <li><strong>combineLatest</strong> — combine latest values</li>
+          <li><strong>forkJoin</strong> — parallel, đợi tất cả complete</li>
+          <li><strong>zip</strong> — pair values theo index</li>
+          <li><strong>merge</strong> — merge multiple observables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- forkJoin & combineLatest -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMBINING OBSERVABLES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>forkJoin — Parallel API calls:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Load nhiều API cùng lúc, đợi tất cả xong
+loadDashboard() {
+  forkJoin({
+    user: this.userService.getCurrentUser(),
+    courses: this.courseService.getAll(),
+    notifications:
+      this.notiService.getUnread()
+  }).subscribe(({ user, courses, notifications }) => {
+    this.user = user;
+    this.courses = courses;
+    this.notifications = notifications;
+  });
+}
+
+// Tương đương Promise.all
+const [u, c, n] = await Promise.all([
+  fetch('/user'), fetch('/courses'), fetch('/noti')
+]);</pre>
+      </div>
+      <div class="col">
+        <h3>combineLatest — Reactive forms:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Cập nhật khi BẤT KỲ source nào thay đổi
+this.filteredCourses$ = combineLatest([
+  this.courseService.getAll(),
+  this.searchTerm$,
+  this.categoryFilter$,
+  this.sortOrder$
+]).pipe(
+  map(([courses, search, category, sort]) => {
+    let result = courses;
+
+    if (search) {
+      result = result.filter(c =>
+        c.title.toLowerCase()
+          .includes(search.toLowerCase()));
+    }
+
+    if (category) {
+      result = result.filter(c =>
+        c.category === category);
+    }
+
+    return result.sort((a, b) =>
+      sort === 'asc'
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title));
+  })
+);</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- HttpParams -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTPCLIENT — QUERY PARAMS & HEADERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Query Params:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Cách 1: HttpParams object
+getCourses(page: number, size: number) {
+  const params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString())
+    .set('sort', 'createdAt,desc');
+
+  return this.http.get&lt;Page&lt;Course&gt;&gt;(
+    this.apiUrl, { params });
+}
+
+// Cách 2: Object literal
+getCourses(filters: any) {
+  return this.http.get(this.apiUrl, {
+    params: {
+      page: filters.page,
+      size: filters.size,
+      category: filters.category
+    }
+  });
+}
+
+// Cách 3: Append multiple values
+let params = new HttpParams();
+params = params.append('id', '1');
+params = params.append('id', '2');
+// ?id=1&amp;id=2</pre>
+      </div>
+      <div class="col">
+        <h3>Headers:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Custom headers
+const headers = new HttpHeaders()
+  .set('Content-Type', 'application/json')
+  .set('X-Custom-Header', 'value')
+  .set('Authorization', `Bearer ${token}`);
+
+this.http.post(url, body, { headers });
+
+// Multiple options
+this.http.get(url, {
+  headers: headers,
+  params: params,
+  observe: 'response',  // Lấy full response
+  responseType: 'json'
+});
+
+// Observe full response
+this.http.get&lt;Course[]&gt;(url, {
+  observe: 'response'
+}).subscribe(response => {
+  console.log('Status:', response.status);
+  console.log('Headers:', response.headers);
+  console.log('Body:', response.body);
+});</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Error Handling Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERROR HANDLING NÂNG CAO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Service-level error handling:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class UserService {
+
+  getAll(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.apiUrl)
+      .pipe(
+        retry({ count: 3, delay: 1000 }),
+        timeout(5000),
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(
+      error: HttpErrorResponse) {
+    let message = '';
+    if (error.status === 0) {
+      message = 'Network error - check connection';
+    } else if (error.status === 401) {
+      message = 'Unauthorized - please login';
+    } else if (error.status === 404) {
+      message = 'Resource not found';
+    } else if (error.status >= 500) {
+      message = 'Server error - try again later';
+    } else {
+      message = error.error?.message ||
+        'Unknown error';
+    }
+    return throwError(() => new Error(message));
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Global error handler:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable()
+export class GlobalErrorHandler
+    implements ErrorHandler {
+
+  constructor(
+    private notification: NotificationService,
+    private logger: LoggerService) {}
+
+  handleError(error: any): void {
+    // Log error to backend
+    this.logger.error(error);
+
+    // Show user-friendly message
+    const message = error.message ||
+      'Đã có lỗi xảy ra';
+    this.notification.error(message);
+
+    // Re-throw cho dev tools
+    console.error(error);
+  }
+}
+
+// Register
+providers: [
+  { provide: ErrorHandler,
+    useClass: GlobalErrorHandler }
+]</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Multiple Interceptors -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP INTERCEPTORS — USE CASES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Auth Interceptor:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const authInterceptor:
+    HttpInterceptorFn = (req, next) => {
+  const token = inject(AuthService).getToken();
+
+  if (token) {
+    const cloned = req.clone({
+      headers: req.headers.set(
+        'Authorization', `Bearer ${token}`)
+    });
+    return next(cloned);
+  }
+  return next(req);
+};</pre>
+        <h3>Loading Interceptor:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const loadingInterceptor:
+    HttpInterceptorFn = (req, next) => {
+  const loadingService = inject(LoadingService);
+  loadingService.show();
+
+  return next(req).pipe(
+    finalize(() => loadingService.hide())
+  );
+};</pre>
+      </div>
+      <div class="col">
+        <h3>Error Interceptor:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const errorInterceptor:
+    HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
+  const auth = inject(AuthService);
+
+  return next(req).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        auth.logout();
+        router.navigate(['/login']);
+      } else if (err.status === 403) {
+        router.navigate(['/forbidden']);
+      } else if (err.status >= 500) {
+        router.navigate(['/error']);
+      }
+      return throwError(() => err);
+    })
+  );
+};</pre>
+        <h3>Register multiple:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+provideHttpClient(
+  withInterceptors([
+    authInterceptor,
+    loadingInterceptor,
+    errorInterceptor
+  ])
+)</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- File Upload -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FILE UPLOAD — VỚI PROGRESS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Upload Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class FileService {
+  private apiUrl = '/api/files';
+
+  constructor(private http: HttpClient) {}
+
+  uploadFile(file: File):
+      Observable&lt;HttpEvent&lt;any&gt;&gt; {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('description', 'My file');
+
+    const req = new HttpRequest(
+      'POST', this.apiUrl, formData, {
+        reportProgress: true,
+        responseType: 'json'
+      });
+
+    return this.http.request(req);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Component với progress bar:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  template: `
+    &lt;input type="file"
+      (change)="onFileSelect($event)"&gt;
+    &lt;progress
+      [value]="progress"
+      max="100"&gt;{{ progress }}%
+    &lt;/progress&gt;
+  `
+})
+export class UploadComponent {
+  progress = 0;
+
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    this.fileService.uploadFile(file)
+      .subscribe((event: HttpEvent&lt;any&gt;) => {
+        if (event.type ===
+            HttpEventType.UploadProgress) {
+          this.progress = Math.round(
+            100 * event.loaded /
+            (event.total || 1));
+        } else if (event instanceof
+            HttpResponse) {
+          console.log('Upload complete!',
+            event.body);
+        }
+      });
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- WebSocket -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WEBSOCKET — REAL-TIME COMMUNICATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>WebSocket</strong> cho phép giao tiếp 2 chiều real-time giữa client và server — chat, notifications, live updates.</p>
+        <h3>RxJS WebSocket:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { webSocket } from 'rxjs/webSocket';
+
+@Injectable({ providedIn: 'root' })
+export class ChatService {
+  private socket$ = webSocket('ws://localhost:8080/chat');
+
+  messages$ = this.socket$.asObservable();
+
+  sendMessage(msg: any) {
+    this.socket$.next(msg);
+  }
+
+  close() {
+    this.socket$.complete();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>STOMP với SockJS:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+npm install @stomp/rx-stomp sockjs-client
+
+import { RxStomp } from '@stomp/rx-stomp';
+
+@Injectable({ providedIn: 'root' })
+export class WebSocketService {
+  private rxStomp: RxStomp;
+
+  constructor() {
+    this.rxStomp = new RxStomp();
+    this.rxStomp.configure({
+      brokerURL: 'ws://localhost:8080/ws',
+      reconnectDelay: 5000
+    });
+    this.rxStomp.activate();
+  }
+
+  watchTopic(topic: string) {
+    return this.rxStomp.watch(topic);
+  }
+
+  publish(destination: string, body: any) {
+    this.rxStomp.publish({
+      destination,
+      body: JSON.stringify(body)
+    });
+  }
+}</pre>
+        <p style="font-size:13px; color:#666;">Spring Boot dùng <code>@MessageMapping</code> + <code>SimpMessagingTemplate</code> để handle WebSocket messages.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Pagination -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PAGINATION & INFINITE SCROLL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Server-side Pagination:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+interface Page&lt;T&gt; {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
+@Component({...})
+export class CourseListComponent {
+  courses: Course[] = [];
+  page = 0;
+  size = 10;
+  totalPages = 0;
+
+  loadPage(page: number) {
+    this.courseService
+      .getAll(page, this.size)
+      .subscribe((data: Page&lt;Course&gt;) => {
+        this.courses = data.content;
+        this.totalPages = data.totalPages;
+        this.page = data.number;
+      });
+  }
+
+  ngOnInit() { this.loadPage(0); }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Infinite Scroll:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  template: `
+    @for (course of courses; track course.id) {
+      &lt;app-course-card [course]="course"/&gt;
+    }
+    &lt;div #anchor&gt;&lt;/div&gt;
+  `
+})
+export class InfiniteScrollComponent
+    implements OnInit, OnDestroy {
+
+  @ViewChild('anchor', { static: true })
+  anchor!: ElementRef;
+
+  observer!: IntersectionObserver;
+
+  ngOnInit() {
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.loadMore();
+        }
+      });
+    this.observer.observe(this.anchor.nativeElement);
+  }
+
+  loadMore() {
+    this.courseService.getPage(this.page++)
+      .subscribe(data =>
+        this.courses.push(...data.content));
+  }
+
+  ngOnDestroy() { this.observer.disconnect(); }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Caching -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP CACHING TRONG ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>shareReplay — Cache Observable:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class CategoryService {
+  private categories$?: Observable&lt;Category[]&gt;;
+
+  getAll(): Observable&lt;Category[]&gt; {
+    if (!this.categories$) {
+      this.categories$ = this.http
+        .get&lt;Category[]&gt;('/api/categories')
+        .pipe(
+          shareReplay(1)  // Cache 1 emission
+        );
+    }
+    return this.categories$;
+  }
+
+  // Force refresh
+  refresh() {
+    this.categories$ = undefined;
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Custom Cache Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class CacheService {
+  private cache = new Map&lt;string, {
+    data: any,
+    timestamp: number
+  }&gt;();
+
+  get&lt;T&gt;(key: string): T | null {
+    const item = this.cache.get(key);
+    if (!item) return null;
+
+    // Expire sau 5 phút
+    if (Date.now() - item.timestamp &gt; 300000) {
+      this.cache.delete(key);
+      return null;
+    }
+    return item.data;
+  }
+
+  set(key: string, data: any) {
+    this.cache.set(key, {
+      data,
+      timestamp: Date.now()
+    });
+  }
+
+  clear() {
+    this.cache.clear();
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Mock Backend -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MOCK BACKEND CHO DEVELOPMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Khi backend chưa sẵn sàng, có thể mock API để dev frontend song song.</p>
+        <h3>JSON Server (đơn giản):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+npm install -g json-server
+
+# Tạo db.json
+{
+  "users": [
+    { "id": 1, "name": "Hung" },
+    { "id": 2, "name": "Lan" }
+  ],
+  "courses": [
+    { "id": 1, "title": "Java" }
+  ]
+}
+
+# Run
+json-server --watch db.json --port 3000
+
+# REST API tự động:
+# GET /users
+# POST /users
+# PUT /users/1
+# DELETE /users/1</pre>
+      </div>
+      <div class="col">
+        <h3>InMemoryDataService:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+npm install angular-in-memory-web-api
+
+@Injectable({ providedIn: 'root' })
+export class InMemoryDataService
+    implements InMemoryDbService {
+  createDb() {
+    const users = [
+      { id: 1, name: 'Hung', email: 'h@cmc.vn' },
+      { id: 2, name: 'Lan', email: 'l@cmc.vn' }
+    ];
+    return { users };
+  }
+}
+
+// app.module.ts
+imports: [
+  HttpClientInMemoryWebApiModule.forRoot(
+    InMemoryDataService, {
+      dataEncapsulation: false,
+      delay: 500  // Simulate network
+    })
+]</pre>
+        <p style="font-size:13px; color:#666;">Mock backend giúp dev FE không cần đợi BE, test UI states (loading, error) dễ dàng.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Memory Leak Prevention -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>UNSUBSCRIBE PATTERNS — TRÁNH MEMORY LEAK</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Pattern 1: takeUntil + Subject</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export class UserListComponent
+    implements OnInit, OnDestroy {
+
+  private destroy$ = new Subject&lt;void&gt;();
+
+  ngOnInit() {
+    this.userService.getAll().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(users => this.users = users);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}</pre>
+        <h3>Pattern 2: takeUntilDestroyed (Angular 16+)</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { takeUntilDestroyed } from
+  '@angular/core/rxjs-interop';
+
+export class UserListComponent {
+  constructor() {
+    this.userService.getAll().pipe(
+      takeUntilDestroyed()
+    ).subscribe(users => this.users = users);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Pattern 3: async pipe (BEST)</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  template: `
+    @if (users$ | async; as users) {
+      @for (u of users; track u.id) {
+        &lt;p&gt;{{ u.name }}&lt;/p&gt;
+      }
+    }
+  `
+})
+export class UserListComponent {
+  users$ = this.userService.getAll();
+  // Async pipe tự subscribe + unsubscribe!
+}</pre>
+        <h3>Pattern 4: Subscription manual</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+private sub = new Subscription();
+
+ngOnInit() {
+  this.sub.add(
+    this.service1.getData().subscribe(...)
+  );
+  this.sub.add(
+    this.service2.getData().subscribe(...)
+  );
+}
+
+ngOnDestroy() {
+  this.sub.unsubscribe();
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- CORS Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CORS — KẾT NỐI ANGULAR & SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>CORS</strong> = Cross-Origin Resource Sharing. Browser chặn requests từ origin khác mặc định.</p>
+        <h3>Vấn đề:</h3>
+        <p>Angular chạy <code>localhost:4200</code> gọi Spring Boot <code>localhost:8080</code> → CORS error.</p>
+        <h3>Solution 1: Cấu hình Spring Boot</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+public class CorsConfig
+    implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(
+      CorsRegistry registry) {
+    registry.addMapping("/api/**")
+      .allowedOrigins(
+        "http://localhost:4200")
+      .allowedMethods("*")
+      .allowedHeaders("*")
+      .allowCredentials(true);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Solution 2: Angular Proxy (dev only)</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// proxy.conf.json
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
+
+// angular.json
+"serve": {
+  "options": {
+    "proxyConfig": "proxy.conf.json"
+  }
+}
+
+// Hoặc command line
+ng serve --proxy-config proxy.conf.json
+
+// Trong code, gọi /api/users
+// thay vì http://localhost:8080/api/users
+this.http.get('/api/users');</pre>
+        <p style="font-size:13px; color:#666;">Production: dùng nginx reverse proxy → cùng origin → no CORS.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Loading & Error States -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOADING & ERROR UI STATES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Pattern với BehaviorSubject:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+interface State&lt;T&gt; {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export class UserListComponent {
+  state$ = new BehaviorSubject&lt;State&lt;User[]&gt;&gt;({
+    data: null,
+    loading: false,
+    error: null
+  });
+
+  loadUsers() {
+    this.state$.next({
+      data: null,
+      loading: true,
+      error: null
+    });
+
+    this.userService.getAll().subscribe({
+      next: (users) =>
+        this.state$.next({
+          data: users,
+          loading: false,
+          error: null
+        }),
+      error: (err) =>
+        this.state$.next({
+          data: null,
+          loading: false,
+          error: err.message
+        })
+    });
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Template:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@if (state$ | async; as state) {
+
+  @if (state.loading) {
+    &lt;app-loading-spinner /&gt;
+  }
+
+  @if (state.error) {
+    &lt;app-error
+      [message]="state.error"
+      (retry)="loadUsers()" /&gt;
+  }
+
+  @if (state.data; as users) {
+    @if (users.length === 0) {
+      &lt;p&gt;No users found&lt;/p&gt;
+    } @else {
+      @for (u of users; track u.id) {
+        &lt;app-user-card [user]="u" /&gt;
+      }
+    }
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Skeleton loaders thay placeholder spinner — UX tốt hơn, app cảm giác nhanh hơn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Real World Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ THỰC TẾ — CRUD HOÀN CHỈNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Course Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class CourseService {
+  private apiUrl = '/api/courses';
+
+  constructor(private http: HttpClient) {}
+
+  getAll(filters?: any):
+      Observable&lt;Page&lt;Course&gt;&gt; {
+    let params = new HttpParams()
+      .set('page', filters?.page || '0')
+      .set('size', filters?.size || '10');
+    if (filters?.search) {
+      params = params.set('search', filters.search);
+    }
+    return this.http.get&lt;Page&lt;Course&gt;&gt;(
+      this.apiUrl, { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  getById(id: number): Observable&lt;Course&gt; {
+    return this.http.get&lt;Course&gt;(
+      `${this.apiUrl}/${id}`);
+  }
+
+  create(course: Course): Observable&lt;Course&gt; {
+    return this.http.post&lt;Course&gt;(
+      this.apiUrl, course);
+  }
+
+  update(id: number, course: Course):
+      Observable&lt;Course&gt; {
+    return this.http.put&lt;Course&gt;(
+      `${this.apiUrl}/${id}`, course);
+  }
+
+  delete(id: number): Observable&lt;void&gt; {
+    return this.http.delete&lt;void&gt;(
+      `${this.apiUrl}/${id}`);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-courses',
+  template: `
+    &lt;input
+      placeholder="Search..."
+      (input)="search$.next($any($event)
+        .target.value)"&gt;
+
+    @if (courses$ | async; as courses) {
+      @for (c of courses; track c.id) {
+        &lt;div&gt;
+          &lt;h3&gt;{{ c.title }}&lt;/h3&gt;
+          &lt;button (click)="delete(c.id)"&gt;
+            Delete
+          &lt;/button&gt;
+        &lt;/div&gt;
+      }
+    } @else {
+      &lt;app-spinner /&gt;
+    }
+  `
+})
+export class CoursesComponent {
+  search$ = new BehaviorSubject('');
+
+  courses$ = this.search$.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(term =>
+      this.courseService.getAll({ search: term })),
+    map(page => page.content)
+  );
+
+  delete(id: number) {
+    this.courseService.delete(id)
+      .subscribe(() => this.search$.next(''));
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Best Practices -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEST PRACTICES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Nên làm:</h3>
+        <ul>
+          <li>✅ <strong>Async pipe</strong> trong template — auto unsubscribe</li>
+          <li>✅ <strong>takeUntilDestroyed</strong> cho subscriptions trong code</li>
+          <li>✅ <strong>HTTP Interceptors</strong> cho auth, error, loading</li>
+          <li>✅ <strong>Type-safe</strong> với generics: <code>get&lt;User&gt;()</code></li>
+          <li>✅ <strong>Service singleton</strong> — providedIn: 'root'</li>
+          <li>✅ <strong>environment.ts</strong> cho API URLs</li>
+          <li>✅ <strong>Retry & timeout</strong> cho HTTP calls</li>
+          <li>✅ <strong>Loading & error states</strong> trong UI</li>
+          <li>✅ <strong>shareReplay</strong> để cache shared data</li>
+          <li>✅ <strong>switchMap</strong> cho search-as-you-type</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Tránh:</h3>
+        <ul>
+          <li>❌ Subscribe trong subscribe (callback hell)</li>
+          <li>❌ Nested Promises with Observables</li>
+          <li>❌ Quên unsubscribe → memory leak</li>
+          <li>❌ Hardcode API URLs trong components</li>
+          <li>❌ Không handle errors</li>
+          <li>❌ Dùng <code>any</code> thay vì proper types</li>
+          <li>❌ Logic API trong components — dùng services</li>
+          <li>❌ Block UI thread với synchronous calls</li>
+          <li>❌ Dùng Promise khi có Observable equivalent</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Angular Signals</strong> + <strong>fetch API</strong> + <strong>resource()</strong> — alternative cho RxJS trong nhiều use cases đơn giản.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Common Errors -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỖI THƯỜNG GẶP</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Lỗi</th><th style="width:35%">Nguyên nhân</th><th>Cách sửa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CORS error</strong></td><td>Backend không cho phép origin</td><td>Config CORS Spring Boot hoặc Angular proxy</td></tr>
+        <tr><td><strong>401 Unauthorized</strong></td><td>Token hết hạn hoặc thiếu</td><td>Refresh token, redirect login</td></tr>
+        <tr><td><strong>Response không phải JSON</strong></td><td>responseType sai</td><td>responseType: 'text' hoặc 'blob'</td></tr>
+        <tr><td><strong>Subscription không emit</strong></td><td>Quên call subscribe()</td><td>Always subscribe hoặc dùng async pipe</td></tr>
+        <tr><td><strong>Multiple HTTP requests</strong></td><td>Subscribe nhiều lần observable cold</td><td>Dùng shareReplay()</td></tr>
+        <tr><td><strong>Stale closure</strong></td><td>this không bind đúng</td><td>Dùng arrow function</td></tr>
+        <tr><td><strong>Memory leak</strong></td><td>Không unsubscribe</td><td>takeUntilDestroyed hoặc async pipe</td></tr>
+        <tr><td><strong>Order không đúng</strong></td><td>mergeMap thay vì concatMap</td><td>concatMap khi cần thứ tự</td></tr>
+        <tr><td><strong>Race condition</strong></td><td>mergeMap khi cần switchMap</td><td>switchMap để cancel cái cũ</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Resources -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TÀI LIỆU & TOOLS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tài liệu:</h3>
+        <ul>
+          <li><strong>RxJS Docs</strong> <a class="ref" href="https://rxjs.dev" target="_blank">[link]</a></li>
+          <li><strong>Learn RxJS</strong> <a class="ref" href="https://www.learnrxjs.io" target="_blank">[link]</a></li>
+          <li><strong>RxMarbles</strong> — visual operators <a class="ref" href="https://rxmarbles.com" target="_blank">[link]</a></li>
+          <li><strong>Angular HttpClient</strong> <a class="ref" href="https://angular.dev/guide/http" target="_blank">[link]</a></li>
+        </ul>
+        <h3>Tools:</h3>
+        <ul>
+          <li><strong>Postman</strong> — test API</li>
+          <li><strong>Insomnia</strong> — REST client nhẹ</li>
+          <li><strong>Charles Proxy</strong> — debug HTTP</li>
+          <li><strong>RxJS Operator Decision Tree</strong></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Patterns hữu ích:</h3>
+        <ul>
+          <li><strong>Smart/Dumb components</strong></li>
+          <li><strong>Container/Presentational</strong></li>
+          <li><strong>Repository pattern</strong> cho services</li>
+          <li><strong>Facade pattern</strong> cho complex state</li>
+        </ul>
+        <h3>Tham khảo project:</h3>
+        <ul>
+          <li><strong>RealWorld Angular</strong> — full-stack example</li>
+          <li><strong>NgRx Example App</strong></li>
+          <li><strong>Angular Material samples</strong></li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular 19+ giới thiệu <strong>resource() API</strong> — đơn giản hóa data fetching, tự động handle loading/error/refetch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- HTTP Status Codes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP STATUS CODES — XỬ LÝ TỪNG LOẠI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Status code categories:</h3>
+        <table class="table-small">
+          <thead><tr><th>Range</th><th>Loại</th></tr></thead>
+          <tbody>
+            <tr><td>1xx</td><td>Informational</td></tr>
+            <tr><td>2xx</td><td>Success</td></tr>
+            <tr><td>3xx</td><td>Redirection</td></tr>
+            <tr><td>4xx</td><td>Client Error</td></tr>
+            <tr><td>5xx</td><td>Server Error</td></tr>
+          </tbody>
+        </table>
+        <h3>Codes thường gặp:</h3>
+        <table class="table-small">
+          <thead><tr><th>Code</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>200</td><td>OK</td></tr>
+            <tr><td>201</td><td>Created</td></tr>
+            <tr><td>204</td><td>No Content</td></tr>
+            <tr><td>400</td><td>Bad Request</td></tr>
+            <tr><td>401</td><td>Unauthorized</td></tr>
+            <tr><td>403</td><td>Forbidden</td></tr>
+            <tr><td>404</td><td>Not Found</td></tr>
+            <tr><td>422</td><td>Unprocessable Entity</td></tr>
+            <tr><td>500</td><td>Internal Server Error</td></tr>
+            <tr><td>503</td><td>Service Unavailable</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Xử lý từng status:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+this.userService.getById(id).subscribe({
+  next: (user) => this.user = user,
+  error: (err: HttpErrorResponse) => {
+    switch (err.status) {
+      case 0:
+        this.message =
+          'Network error - check connection';
+        break;
+      case 401:
+        this.authService.logout();
+        this.router.navigate(['/login']);
+        break;
+      case 403:
+        this.message = 'You don\'t have permission';
+        break;
+      case 404:
+        this.message = 'User not found';
+        this.router.navigate(['/users']);
+        break;
+      case 422:
+        // Validation errors
+        this.errors = err.error.errors;
+        break;
+      case 500:
+      case 503:
+        this.message =
+          'Server error - try again later';
+        break;
+      default:
+        this.message =
+          err.error?.message || 'Unknown error';
+    }
+  }
+});</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Authentication Flow -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AUTHENTICATION FLOW HOÀN CHỈNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Auth Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private apiUrl = '/api/auth';
+  private currentUser$ =
+    new BehaviorSubject&lt;User | null&gt;(
+      this.getUserFromStorage());
+
+  constructor(private http: HttpClient) {}
+
+  login(email: string, password: string) {
+    return this.http.post&lt;AuthResponse&gt;(
+      `${this.apiUrl}/login`,
+      { email, password }
+    ).pipe(
+      tap((response) => {
+        localStorage.setItem(
+          'token', response.token);
+        localStorage.setItem(
+          'user', JSON.stringify(response.user));
+        this.currentUser$.next(response.user);
+      })
+    );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.currentUser$.next(null);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Login Component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-login',
+  template: `
+    &lt;form [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"&gt;
+      &lt;input formControlName="email" /&gt;
+      &lt;input formControlName="password"
+        type="password" /&gt;
+      &lt;button [disabled]="loginForm.invalid
+        || loading"&gt;
+        {{ loading ? 'Đang đăng nhập...'
+          : 'Login' }}
+      &lt;/button&gt;
+      @if (error) {
+        &lt;p class="error"&gt;{{ error }}&lt;/p&gt;
+      }
+    &lt;/form&gt;
+  `
+})
+export class LoginComponent {
+  loading = false;
+  error = '';
+
+  loginForm = this.fb.group({
+    email: ['', [Validators.required,
+      Validators.email]],
+    password: ['', Validators.required]
+  });
+
+  onSubmit() {
+    this.loading = true;
+    this.error = '';
+
+    this.authService.login(
+      this.loginForm.value.email!,
+      this.loginForm.value.password!
+    ).subscribe({
+      next: () => this.router
+        .navigate(['/dashboard']),
+      error: (err) => {
+        this.loading = false;
+        this.error = 'Sai email hoặc password';
+      }
+    });
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- API Response Wrapper -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>API RESPONSE WRAPPER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot thường wrap response trong cấu trúc thống nhất → frontend dễ xử lý.</p>
+        <h3>Backend response format:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Success
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Hung",
+    "email": "h@cmc.vn"
+  },
+  "message": "Success"
+}
+
+// Error
+{
+  "success": false,
+  "data": null,
+  "message": "User not found",
+  "errors": {
+    "email": "Email không hợp lệ"
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>TypeScript types:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+interface ApiResponse&lt;T&gt; {
+  success: boolean;
+  data: T;
+  message?: string;
+  errors?: { [key: string]: string };
+}
+
+@Injectable({ providedIn: 'root' })
+export class UserService {
+
+  getById(id: number): Observable&lt;User&gt; {
+    return this.http.get&lt;ApiResponse&lt;User&gt;&gt;(
+      `/api/users/${id}`
+    ).pipe(
+      map(response => {
+        if (!response.success) {
+          throw new Error(response.message);
+        }
+        return response.data;
+      })
+    );
+  }
+}
+
+// Hoặc dùng interceptor để unwrap tự động
+export const responseInterceptor:
+    HttpInterceptorFn = (req, next) => {
+  return next(req).pipe(
+    map(event => {
+      if (event instanceof HttpResponse &&
+          event.body?.success) {
+        return event.clone({
+          body: event.body.data
+        });
+      }
+      return event;
+    })
+  );
+};</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Optimistic UI -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>OPTIMISTIC UI UPDATES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Optimistic UI</strong>: Cập nhật UI ngay lập tức (giả định success), rollback nếu API fail. → UX cảm giác nhanh hơn nhiều.</p>
+        <h3>Pessimistic (truyền thống):</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+deleteUser(id: number) {
+  this.loading = true;
+  this.userService.delete(id).subscribe({
+    next: () => {
+      this.users = this.users
+        .filter(u => u.id !== id);
+      this.loading = false;
+    },
+    error: () => {
+      this.loading = false;
+      alert('Failed');
+    }
+  });
+}
+// User phải đợi response mới thấy update</pre>
+      </div>
+      <div class="col">
+        <h3>Optimistic:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+deleteUser(id: number) {
+  // Lưu state hiện tại để rollback
+  const previousUsers = [...this.users];
+
+  // Update UI NGAY
+  this.users = this.users
+    .filter(u => u.id !== id);
+
+  // Gọi API ngầm
+  this.userService.delete(id).subscribe({
+    next: () => {
+      // Success - không làm gì thêm
+      console.log('Deleted on server');
+    },
+    error: () => {
+      // Rollback nếu fail
+      this.users = previousUsers;
+      this.notification.error(
+        'Failed to delete - reverted');
+    }
+  });
+}</pre>
+        <h3>Khi nào dùng:</h3>
+        <ul>
+          <li>✅ Like, favorite, bookmark</li>
+          <li>✅ Delete với undo</li>
+          <li>✅ Toggle status</li>
+          <li>❌ Critical operations (payment)</li>
+          <li>❌ Operations cần server validation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Polling -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>POLLING — REAL-TIME UPDATES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Polling</strong> = gọi API định kỳ để lấy updates. Đơn giản hơn WebSocket nhưng tốn tài nguyên.</p>
+        <h3>Simple polling với interval:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class NotificationsComponent {
+
+  notifications$ = interval(5000).pipe(
+    // Mỗi 5 giây
+    switchMap(() =>
+      this.notiService.getUnread()),
+    map(response => response.data),
+    takeUntilDestroyed()
+  );
+}
+
+// Template
+@for (n of notifications$ | async; track n.id) {
+  &lt;div&gt;{{ n.message }}&lt;/div&gt;
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Smart polling — chỉ khi tab active:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { fromEvent } from 'rxjs';
+
+@Component({...})
+export class DashboardComponent {
+
+  isVisible$ = fromEvent(
+    document, 'visibilitychange'
+  ).pipe(
+    startWith(null),
+    map(() => !document.hidden)
+  );
+
+  data$ = this.isVisible$.pipe(
+    switchMap(visible => visible
+      ? interval(10000).pipe(
+          switchMap(() =>
+            this.api.getDashboardData()))
+      : EMPTY  // Ngừng polling khi tab ẩn
+    )
+  );
+}</pre>
+        <h3>So sánh:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>Polling</th><th>WebSocket</th></tr></thead>
+          <tbody>
+            <tr><td>Setup</td><td>Đơn giản</td><td>Phức tạp</td></tr>
+            <tr><td>Real-time</td><td>Delay</td><td>Tức thì</td></tr>
+            <tr><td>Tài nguyên</td><td>Tốn</td><td>Tiết kiệm</td></tr>
+            <tr><td>Phù hợp</td><td>Update không gấp</td><td>Chat, gaming</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Server-Sent Events -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SERVER-SENT EVENTS (SSE)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>SSE</strong> — server push events 1 chiều xuống client. Đơn giản hơn WebSocket, tự reconnect, dùng HTTP.</p>
+        <h3>Khi nào dùng SSE?</h3>
+        <ul>
+          <li>Notifications</li>
+          <li>Live updates (stock prices, scores)</li>
+          <li>Progress updates</li>
+          <li>Real-time logs</li>
+          <li>1 chiều server → client</li>
+        </ul>
+        <h3>Backend (Spring Boot):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@GetMapping(
+  value = "/api/events",
+  produces = "text/event-stream")
+public Flux&lt;ServerSentEvent&lt;String&gt;&gt;
+    streamEvents() {
+  return Flux.interval(Duration.ofSeconds(1))
+    .map(seq -> ServerSentEvent
+      .&lt;String&gt;builder()
+      .id(String.valueOf(seq))
+      .event("message")
+      .data("Event " + seq)
+      .build());
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Frontend (Angular):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class EventService {
+
+  getServerEvents(): Observable&lt;any&gt; {
+    return new Observable(observer => {
+      const eventSource = new EventSource(
+        '/api/events');
+
+      eventSource.onmessage = (event) => {
+        observer.next(JSON.parse(event.data));
+      };
+
+      eventSource.onerror = (error) => {
+        observer.error(error);
+      };
+
+      // Cleanup on unsubscribe
+      return () => eventSource.close();
+    });
+  }
+}
+
+@Component({...})
+export class LiveFeedComponent {
+  events$ = this.eventService.getServerEvents();
+
+  // Template
+  // @for (e of events$ | async; track $index) {
+  //   &lt;div&gt;{{ e }}&lt;/div&gt;
+  // }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Form Submission -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FORM SUBMISSION & API VALIDATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Submit form với validation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class CreateCourseComponent {
+  form: FormGroup;
+  serverErrors: { [key: string]: string } = {};
+
+  constructor(
+    private fb: FormBuilder,
+    private courseService: CourseService) {
+
+    this.form = this.fb.group({
+      title: ['', [Validators.required,
+        Validators.maxLength(100)]],
+      description: ['', Validators.required],
+      price: [0, [Validators.required,
+        Validators.min(0)]],
+      category: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.serverErrors = {};
+    this.courseService.create(this.form.value)
+      .subscribe({
+        next: (course) => {
+          this.notification.success(
+            'Created!');
+          this.router.navigate(
+            ['/courses', course.id]);
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.status === 422) {
+            // Validation errors từ backend
+            this.serverErrors = err.error.errors;
+          } else {
+            this.notification.error(
+              'Failed to create course');
+          }
+        }
+      });
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Template với errors:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;form [formGroup]="form"
+  (ngSubmit)="onSubmit()"&gt;
+
+  &lt;label&gt;Title&lt;/label&gt;
+  &lt;input formControlName="title" /&gt;
+  @if (form.get('title')?.touched) {
+    @if (form.get('title')?.errors?.['required']) {
+      &lt;p class="error"&gt;Bắt buộc&lt;/p&gt;
+    }
+    @if (form.get('title')?.errors?.['maxlength']) {
+      &lt;p class="error"&gt;Tối đa 100 ký tự&lt;/p&gt;
+    }
+  }
+  @if (serverErrors['title']) {
+    &lt;p class="error"&gt;
+      {{ serverErrors['title'] }}
+    &lt;/p&gt;
+  }
+
+  &lt;label&gt;Price&lt;/label&gt;
+  &lt;input type="number"
+    formControlName="price" /&gt;
+
+  &lt;button type="submit"
+    [disabled]="form.invalid"&gt;
+    Create Course
+  &lt;/button&gt;
+&lt;/form&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Testing HTTP -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING HTTP CALLS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>HttpClientTestingModule:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+describe('UserService', () => {
+  let service: UserService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [UserService]
+    });
+    service = TestBed.inject(UserService);
+    httpMock = TestBed.inject(
+      HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
+});</pre>
+      </div>
+      <div class="col">
+        <h3>Test GET request:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+it('should fetch users', () => {
+  const mockUsers = [
+    { id: 1, name: 'Hung' },
+    { id: 2, name: 'Lan' }
+  ];
+
+  service.getAll().subscribe(users => {
+    expect(users.length).toBe(2);
+    expect(users).toEqual(mockUsers);
+  });
+
+  // Expect 1 request đến URL này
+  const req = httpMock.expectOne(
+    'http://localhost:8080/api/users');
+  expect(req.request.method).toBe('GET');
+
+  // Trả mock response
+  req.flush(mockUsers);
+});
+
+it('should handle 404 error', () => {
+  service.getById(999).subscribe({
+    next: () => fail('Should have failed'),
+    error: (err) => {
+      expect(err.status).toBe(404);
+    }
+  });
+
+  const req = httpMock.expectOne(
+    'http://localhost:8080/api/users/999');
+  req.flush('Not found',
+    { status: 404, statusText: 'Not Found' });
+});</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Cancel Request -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CANCEL HTTP REQUESTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Khi user navigate sang page khác hoặc gõ search mới, request cũ nên được cancel để tiết kiệm tài nguyên.</p>
+        <h3>Cancel với unsubscribe:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export class UserListComponent
+    implements OnDestroy {
+
+  private subscription?: Subscription;
+
+  loadUsers() {
+    // Cancel request cũ nếu đang chạy
+    this.subscription?.unsubscribe();
+
+    this.subscription = this.userService
+      .getAll()
+      .subscribe(users => this.users = users);
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>switchMap auto cancel:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class SearchComponent {
+  searchControl = new FormControl('');
+
+  results$ = this.searchControl.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(term => {
+      if (!term) return of([]);
+      return this.userService.search(term);
+      // Khi user gõ tiếp,
+      // switchMap tự cancel request cũ
+    })
+  );
+}</pre>
+        <h3>AbortController (browser native):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+const controller = new AbortController();
+
+fetch('/api/users', {
+  signal: controller.signal
+}).then(r => r.json());
+
+// Cancel request
+controller.abort();</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Environment Config -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENVIRONMENT CONFIGURATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular cho phép cấu hình khác nhau cho dev/staging/prod thông qua environment files.</p>
+        <h3>Cấu trúc:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+src/environments/
+  ├── environment.ts          ← Default (dev)
+  ├── environment.staging.ts
+  └── environment.prod.ts</pre>
+        <h3>environment.ts (dev):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api',
+  wsUrl: 'ws://localhost:8080/ws',
+  tokenKey: 'auth_token',
+  enableDebug: true,
+  features: {
+    chat: true,
+    notifications: true,
+    analytics: false
+  }
+};</pre>
+      </div>
+      <div class="col">
+        <h3>environment.prod.ts:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const environment = {
+  production: true,
+  apiUrl: 'https://api.cmc.vn',
+  wsUrl: 'wss://api.cmc.vn/ws',
+  tokenKey: 'auth_token',
+  enableDebug: false,
+  features: {
+    chat: true,
+    notifications: true,
+    analytics: true
+  }
+};</pre>
+        <h3>Sử dụng:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { environment } from
+  '../environments/environment';
+
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  private apiUrl = `${environment.apiUrl}/users`;
+
+  getAll() {
+    return this.http.get(this.apiUrl);
+  }
+}
+
+// Build với environment khác
+ng build --configuration=production</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Resources -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP THỰC HÀNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài 1: User CRUD App</h3>
+        <ul>
+          <li>List users với pagination</li>
+          <li>Search-as-you-type với debounce</li>
+          <li>Create/Update form với validation</li>
+          <li>Delete với confirmation dialog</li>
+          <li>Loading & error states</li>
+          <li>Toast notifications</li>
+        </ul>
+        <h3>Bài 2: Real-time Dashboard</h3>
+        <ul>
+          <li>Polling stats mỗi 10 giây</li>
+          <li>Charts với live data</li>
+          <li>Stop polling khi tab inactive</li>
+          <li>Manual refresh button</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Bài 3: Auth System</h3>
+        <ul>
+          <li>Login/Register forms</li>
+          <li>JWT token storage</li>
+          <li>Auth Guard cho protected routes</li>
+          <li>Auto refresh token</li>
+          <li>Auto logout khi 401</li>
+          <li>Remember me functionality</li>
+        </ul>
+        <h3>Bài 4: File Upload</h3>
+        <ul>
+          <li>Drag & drop upload</li>
+          <li>Multiple files</li>
+          <li>Progress bar cho mỗi file</li>
+          <li>Cancel upload</li>
+          <li>Preview image</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Tích hợp Angular + Spring Boot là <strong>top skill</strong> cho enterprise developers — học chắc sẽ có việc tốt!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 8: Tổng kết -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>RxJS</strong> — reactive programming, Observable streams</li>
+          <li><strong>Observable</strong> = lazy, cancellable, multiple values</li>
+          <li><strong>HttpClient</strong> — GET, POST, PUT, DELETE → Observable</li>
+          <li><strong>Error handling</strong> — catchError, throwError</li>
+          <li><strong>Interceptor</strong> — tự động thêm JWT, logging</li>
+          <li><strong>Full-stack:</strong> Angular → HttpClient → Spring Boot → MySQL</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. Observable khác Promise thế nào?</li>
+          <li>2. Cách setup HttpClient trong Angular?</li>
+          <li>3. Viết service call GET /api/users.</li>
+          <li>4. catchError dùng để làm gì?</li>
+          <li>5. Interceptor hoạt động thế nào?</li>
+          <li>6. Mô tả full-stack flow: Angular → Spring Boot.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 03 - Architecture Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ========== PHẦN 1: GIỚI THIỆU ========== -->
+
+<!-- SLIDE 1: Title -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>ARCHITECTURE<br>DESIGN</h1>
+    <p class="subtitle">Thiết kế Kiến trúc Phần mềm</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 2: Contents -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NỘI DUNG BÀI HỌC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phần 1: Từ SRS đến SDD</h3>
+        <ul>
+          <li>Ôn tập SRS & ảnh hưởng đến kiến trúc</li>
+          <li>Quy trình: SRS → SDD</li>
+          <li>Ví dụ: Yêu cầu → Quyết định kiến trúc</li>
+        </ul>
+        <h3>Phần 2: Các mẫu kiến trúc</h3>
+        <ul>
+          <li>Monolithic Architecture</li>
+          <li>Layered Architecture (N-Tier)</li>
+          <li>MVC Pattern (Spring MVC + Angular)</li>
+          <li>Microservices Architecture</li>
+          <li>Event-Driven Architecture (EDA)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Phần 3: Lựa chọn kiến trúc</h3>
+        <ul>
+          <li>Khi nào dùng kiến trúc nào?</li>
+          <li>So sánh ưu/nhược điểm</li>
+          <li>Hướng dẫn lựa chọn</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 2: TỪ SRS ĐẾN ARCHITECTURE ========== -->
+
+<!-- SLIDE 3: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>TỪ SRS ĐẾN SDD</h1>
+    <p class="section-desc">Chuyển đổi yêu cầu phần mềm thành quyết định kiến trúc</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 4: Ôn tập SRS & Ảnh hưởng đến kiến trúc -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ÔN TẬP: SRS & ẢNH HƯỞNG ĐẾN KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <p style="font-size:15px; color:#666; font-style:italic; margin-bottom:8px;">* SRS, User Stories, Use Cases đã học chi tiết ở Bài 02 (SDD). Ở đây tập trung vào cách chúng ảnh hưởng đến quyết định kiến trúc.</p>
+    <table>
+      <thead><tr><th style="width:25%">Thành phần SRS</th><th style="width:40%">Nội dung</th><th>Ảnh hưởng đến kiến trúc</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Functional Requirements</strong></td><td>Hệ thống phải làm gì — Use Cases, User Stories</td><td>Quyết định <strong>components</strong> nào cần có (modules, services)</td></tr>
+        <tr><td><strong>Non-Functional Requirements</strong></td><td>Performance, security, scalability, availability</td><td>Quyết định <strong>patterns</strong> và infrastructure (monolithic vs microservices)</td></tr>
+        <tr><td><strong>Constraints</strong></td><td>Công nghệ, ngân sách, timeline, team size</td><td>Giới hạn <strong>lựa chọn</strong> (VD: team 3 người → không nên microservices)</td></tr>
+        <tr><td><strong>Dependencies</strong></td><td>Third-party APIs, legacy systems, external services</td><td>Quyết định <strong>integration patterns</strong> (API Gateway, message queue)</td></tr>
+      </tbody>
+    </table>
+    <div class="quote-box" style="margin-top:10px;">
+      <p><strong>Nguyên tắc:</strong> Functional requirements cho biết hệ thống cần <strong>làm gì</strong> → xác định components. Non-functional requirements cho biết hệ thống phải <strong>hoạt động thế nào</strong> → xác định kiến trúc.</p>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 5: Quy trình chuyển SRS → Architecture -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>QUY TRÌNH: SRS → SDD</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Phân tích yêu cầu</h4><p>Đọc SRS → xác định functional requirements (Use Cases) và non-functional requirements (quality attributes)</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Xác định Architectural Drivers</h4><p>Chọn ra các yêu cầu <strong>ảnh hưởng lớn nhất</strong> đến kiến trúc: scalability, security, performance, team size, deadline</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Chọn Architectural Pattern</h4><p>Dựa trên drivers → chọn pattern phù hợp: Monolithic, Layered, Microservices, Event-Driven</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Thiết kế Components & Interfaces</h4><p>Chia hệ thống thành modules/services, định nghĩa giao tiếp giữa chúng (REST APIs, message queues)</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Chọn Technology Stack</h4><p>Chọn ngôn ngữ, framework, database, infrastructure phù hợp với pattern đã chọn</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 6: Ví dụ: Non-functional → Architecture Decision -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: YÊU CẦU → QUYẾT ĐỊNH KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Yêu cầu từ SRS</th><th style="width:35%">Quyết định kiến trúc</th><th>Lý do</th></tr></thead>
+      <tbody>
+        <tr><td>Hỗ trợ 10,000 CCU</td><td>Microservices + Load Balancer</td><td>Scale horizontal từng service</td></tr>
+        <tr><td>Real-time notifications</td><td>Event-Driven (Kafka/WebSocket)</td><td>Async, push ngay khi có event</td></tr>
+        <tr><td>Team 3 người, deadline 3 tháng</td><td>Monolithic (Spring Boot)</td><td>Đơn giản, nhanh, 1 codebase</td></tr>
+        <tr><td>Web app CRUD, cần maintain lâu dài</td><td>Layered Architecture</td><td>Separation of concerns, dễ bảo trì</td></tr>
+        <tr><td>Dữ liệu nhạy cảm (y tế, tài chính)</td><td>Thêm Security Layer + Encryption</td><td>Compliance, audit trail</td></tr>
+        <tr><td>Nhiều team phát triển song song</td><td>Microservices + API Gateway</td><td>Independent deployment, bounded context</td></tr>
+      </tbody>
+    </table>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Nhiều tổ chức dùng <strong>Architecture Decision Records (ADRs)</strong> — ghi lại mỗi quyết định kiến trúc kèm lý do, alternatives đã xem xét, và trade-offs. ADRs giúp team mới hiểu "tại sao" hệ thống được thiết kế như vậy.</p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 3: CÁC MẪU KIẾN TRÚC ========== -->
+
+<!-- SLIDE 7: Section Architectural Patterns -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>CÁC MẪU KIẾN TRÚC PHỔ BIẾN</h1>
+    <p class="section-desc">Monolithic — Layered — MVC — Microservices — Event-Driven</p>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 8: Architectural Decisions Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG QUAN CÁC MẪU KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Thứ tự trình bày từ <strong>đơn giản → phức tạp</strong>, phản ánh tiến hóa kiến trúc phần mềm:</p>
+    <table>
+      <thead><tr><th style="width:22%">Pattern</th><th style="width:40%">Đặc điểm chính</th><th>Phù hợp cho</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Monolithic</strong></td><td>Toàn bộ ứng dụng là 1 đơn vị, tất cả components kết nối chặt chẽ</td><td>Startup, MVP, team nhỏ</td></tr>
+        <tr><td><strong>2. Layered (N-Tier)</strong></td><td>Chia ứng dụng thành các tầng (Presentation → Business → Data), mỗi tầng có trách nhiệm riêng</td><td>Web app, enterprise (ERP, CRM)</td></tr>
+        <tr><td><strong>3. MVC</strong></td><td>Model-View-Controller: tách logic, giao diện và điều khiển. Biến thể của Layered</td><td>Web frameworks (Spring MVC, Angular)</td></tr>
+        <tr><td><strong>4. Microservices</strong></td><td>Nhiều service nhỏ, độc lập, deploy riêng, mỗi service sở hữu database riêng</td><td>Hệ thống lớn, nhiều team, cần scale</td></tr>
+        <tr><td><strong>5. Event-Driven</strong></td><td>Luồng hệ thống điều khiển bởi events, giao tiếp bất đồng bộ qua message broker</td><td>Real-time, IoT, data pipeline</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;"><strong>Lưu ý:</strong> Không có kiến trúc "tốt nhất" — chỉ có kiến trúc <strong>phù hợp nhất</strong> cho bối cảnh cụ thể.</p>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== MONOLITHIC ===== -->
+
+<!-- SLIDE 24: Monolithic Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MONOLITHIC ARCHITECTURE — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <p>Toàn bộ ứng dụng được xây dựng như <strong>một đơn vị duy nhất</strong>. Tất cả thành phần (UI, business logic, data access) được kết nối chặt chẽ và hoạt động như một đơn vị triển khai. <a class="ref" href="https://en.wikipedia.org/wiki/Monolithic_application" target="_blank">[Wikipedia]</a></p>
+    <div class="quote-box">
+      <p><strong>VD:</strong> Ứng dụng Java Spring Boot đóng gói thành 1 file .jar — chứa tất cả controllers, services, repositories. Browser gửi HTTP request → 1 application xử lý tất cả → trả response.</p>
+    </div>
+    <table style="margin-top:12px;">
+      <thead><tr><th style="width:30%">Đặc điểm</th><th>Mô tả</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Unified Codebase</strong></td><td>Toàn bộ ứng dụng nằm trong 1 codebase, phát triển ban đầu dễ dàng</td></tr>
+        <tr><td><strong>Tight Coupling</strong></td><td>Tất cả module tích hợp chặt, phụ thuộc lẫn nhau</td></tr>
+        <tr><td><strong>Single Deployment</strong></td><td>Đóng gói và deploy 1 lần (1 file .jar/.war/.exe)</td></tr>
+        <tr><td><strong>Shared Database</strong></td><td>Sử dụng 1 database tập trung cho tất cả module</td></tr>
+        <tr><td><strong>Homogeneous Stack</strong></td><td>Toàn bộ ứng dụng dùng 1 tech stack/framework</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 25: Monolithic Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MONOLITHIC — ƯU & NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Ưu điểm:</h3>
+        <ul>
+          <li><strong>Simplified Development</strong> — 1 project, 1 IDE, dễ bắt đầu</li>
+          <li><strong>High Performance</strong> — giao tiếp trực tiếp giữa components (in-process calls), không cần network</li>
+          <li><strong>Easier Debugging</strong> — trace lỗi trong 1 codebase</li>
+          <li><strong>Simple Deployment</strong> — deploy 1 file duy nhất</li>
+          <li><strong>Simple Testing</strong> — test end-to-end dễ dàng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Nhược điểm:</h3>
+        <ul>
+          <li><strong>Scalability kém</strong> — phải scale toàn bộ ứng dụng</li>
+          <li><strong>Deployment Bottlenecks</strong> — thay đổi nhỏ cũng phải deploy lại toàn bộ</li>
+          <li><strong>Limited Fault Isolation</strong> — lỗi 1 module có thể crash toàn app</li>
+          <li><strong>Not Cloud-Native Friendly</strong> — khó tận dụng container orchestration</li>
+          <li><strong>Codebase phình to</strong> — khó hiểu, khó maintain theo thời gian</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Shopify vẫn dùng <strong>Modular Monolith</strong> — monolithic nhưng chia thành bounded contexts rõ ràng. Đây là bước trung gian trước khi chuyển sang microservices. <a class="ref" href="https://shopify.engineering/deconstructing-monolith-designing-software-maximizes-developer-productivity" target="_blank">[Shopify Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Monolithic Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: MONOLITHIC VỚI SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cấu trúc dự án Monolithic:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+my-app/
+  src/main/java/com/example/
+    controller/
+      UserController.java
+      CourseController.java
+      PaymentController.java
+    service/
+      UserService.java
+      CourseService.java
+      PaymentService.java
+    repository/
+      UserRepository.java
+      CourseRepository.java
+    model/
+      User.java, Course.java
+    config/
+      SecurityConfig.java
+  src/main/resources/
+    application.yml
+  pom.xml
+  → Build: 1 file app.jar</pre>
+      </div>
+      <div class="col">
+        <h3>Đặc điểm khi deploy:</h3>
+        <ul>
+          <li><strong>Build:</strong> <code>mvn package</code> → 1 file .jar</li>
+          <li><strong>Run:</strong> <code>java -jar app.jar</code></li>
+          <li><strong>Database:</strong> 1 MySQL instance chung</li>
+          <li><strong>Mọi module</strong> chạy trong cùng 1 process</li>
+        </ul>
+        <h3>Khi nào monolithic là đủ?</h3>
+        <ul>
+          <li>Team ≤ 5 người</li>
+          <li>MVP hoặc prototype</li>
+          <li>Domain đơn giản, ít module</li>
+          <li>Không cần scale từng phần</li>
+          <li>Deadline gấp, cần ship nhanh</li>
+        </ul>
+        <p style="font-size:14px; color:#666; margin-top:8px;"><strong>Bài tập lớn của môn này</strong> phù hợp bắt đầu với Monolithic + Layered/MVC.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== LAYERED ARCHITECTURE ===== -->
+
+<!-- SLIDE: Layered Architecture Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LAYERED ARCHITECTURE — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <p>Mô hình thiết kế chia ứng dụng thành <strong>nhiều tầng (layers)</strong>, mỗi tầng có vai trò và trách nhiệm cụ thể. Đây là kiến trúc phổ biến nhất cho ứng dụng web và enterprise. <a class="ref" href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">[Wikipedia]</a></p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Presentation Layer</h4><p>Giao diện người dùng (UI), API Gateway. Xử lý input và hiển thị dữ liệu.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Application Layer</h4><p>Điều phối luồng logic nghiệp vụ. Chứa Services, Use Cases.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Domain / Business Logic Layer</h4><p>Xử lý tập trung các quy tắc nghiệp vụ. Chứa Entities, Business Rules.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Data Layer</h4><p>Quản lý dữ liệu: Repositories, DAO. Lưu trữ và truy xuất từ database.</p></div></div>
+    </div>
+    <p style="margin-top:8px;"><strong>Nguyên tắc:</strong> Mỗi tầng chỉ gọi tầng ngay bên dưới, không được "nhảy cóc" qua tầng.</p>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 14: Presentation Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRESENTATION LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Vai trò:</strong> Tương tác trực tiếp với người dùng cuối.</p>
+        <h3>Thành phần:</h3>
+        <ul>
+          <li><strong>User Interface (UI)</strong> — Angular components, HTML/CSS</li>
+          <li><strong>API Gateway</strong> — điểm vào duy nhất cho client</li>
+          <li><strong>Controllers</strong> — nhận HTTP request, trả response</li>
+        </ul>
+        <h3>Chức năng:</h3>
+        <ul>
+          <li>Xử lý thông tin đầu vào từ người dùng (click, nhập liệu)</li>
+          <li>Hiển thị dữ liệu cho người dùng</li>
+          <li>Validation phía client (format email, required fields)</li>
+          <li>Routing, navigation</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ví dụ với Angular:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px; overflow:auto;">
+src/app/
+  components/
+    login/
+      login.component.ts
+      login.component.html
+    dashboard/
+      dashboard.component.ts
+  services/
+    auth.service.ts
+    api.service.ts
+  guards/
+    auth.guard.ts</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Presentation Layer chỉ gọi Application Layer thông qua HTTP APIs, không truy cập database trực tiếp.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 15: Application + Domain Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>APPLICATION & DOMAIN LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Application Layer</h3>
+        <p><strong>Vai trò:</strong> Điều phối luồng logic nghiệp vụ.</p>
+        <ul>
+          <li><strong>Services</strong> — orchestrate business operations</li>
+          <li><strong>Use Cases</strong> — xử lý từng tác vụ cụ thể</li>
+          <li><strong>DTOs</strong> — Data Transfer Objects giữa các tầng</li>
+        </ul>
+        <h3>Ví dụ với Java Spring Boot:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+@Service
+public class CourseService {
+  @Autowired
+  private CourseRepository repo;
+
+  public CourseDTO getCourse(Long id) {
+    Course c = repo.findById(id)
+      .orElseThrow();
+    return mapper.toDTO(c);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Domain / Business Logic Layer</h3>
+        <p><strong>Vai trò:</strong> Xử lý tập trung các quy tắc nghiệp vụ.</p>
+        <ul>
+          <li><strong>Entities</strong> — đối tượng nghiệp vụ (User, Course, Order)</li>
+          <li><strong>Business Rules</strong> — quy tắc (giá ≥ 0, đăng ký ≤ max)</li>
+          <li><strong>Value Objects</strong> — Email, Money, Address</li>
+          <li><strong>Domain Events</strong> — sự kiện nghiệp vụ</li>
+        </ul>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+@Entity
+public class Course {
+  @Id @GeneratedValue
+  private Long id;
+  private String title;
+  private BigDecimal price;
+
+  public void enroll(User user) {
+    if (students.size() >= maxCapacity)
+      throw new FullException();
+    students.add(user);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 16: Data Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATA LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Vai trò:</strong> Quản lý dữ liệu của hệ thống — lưu trữ và truy xuất từ database hoặc các nguồn khác.</p>
+        <h3>Thành phần:</h3>
+        <ul>
+          <li><strong>Repositories</strong> — interface truy cập dữ liệu</li>
+          <li><strong>DAO (Data Access Objects)</strong> — triển khai cụ thể</li>
+          <li><strong>ORM Mapping</strong> — ánh xạ Entity ↔ Table (JPA/Hibernate)</li>
+          <li><strong>Database Migrations</strong> — Flyway, Liquibase</li>
+        </ul>
+        <h3>Ví dụ Repository (Spring Data JPA):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+public interface CourseRepository
+    extends JpaRepository&lt;Course, Long&gt; {
+
+  List&lt;Course&gt; findByCategory(String cat);
+
+  @Query("SELECT c FROM Course c
+    WHERE c.price <= :max")
+  List&lt;Course&gt; findAffordable(BigDecimal max);
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Cấu trúc thư mục Backend:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+src/main/java/com/example/
+  controller/     ← Presentation
+    CourseController.java
+  service/        ← Application
+    CourseService.java
+  model/          ← Domain
+    Course.java
+    User.java
+  repository/     ← Data
+    CourseRepository.java
+  dto/
+    CourseDTO.java
+  config/
+    SecurityConfig.java</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Mỗi package tương ứng với 1 layer — giúp tổ chức code rõ ràng theo kiến trúc phân lớp.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 17: Layered Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LAYERED ARCHITECTURE — ƯU & NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Ưu điểm:</h3>
+        <ul>
+          <li><strong>Bảo trì dễ</strong> — thay đổi 1 tầng không ảnh hưởng tầng khác</li>
+          <li><strong>Phân tách rõ ràng</strong> — mỗi tầng có trách nhiệm riêng (Separation of Concerns)</li>
+          <li><strong>Dễ test</strong> — mock từng tầng để unit test</li>
+          <li><strong>Mở rộng</strong> — thêm tầng hoặc thay đổi implementation</li>
+          <li><strong>Team collaboration</strong> — FE team làm Presentation, BE team làm Business + Data</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Nhược điểm:</h3>
+        <ul>
+          <li><strong>Performance overhead</strong> — request phải đi qua nhiều tầng</li>
+          <li><strong>Phức tạp hơn</strong> — nhiều tầng = nhiều code boilerplate</li>
+          <li><strong>Khó tối ưu</strong> — luồng dữ liệu bắt buộc đi qua từng tầng</li>
+          <li><strong>Tight coupling giữa các tầng</strong> — nếu thiết kế không tốt</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Java Spring Boot + Angular là ví dụ điển hình của Layered Architecture: Angular (Presentation) → Spring Controllers (Application) → Services (Domain) → JPA Repositories (Data).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== MVC PATTERN ===== -->
+
+<!-- MVC Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC PATTERN — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Model-View-Controller (MVC)</strong> là pattern tách ứng dụng thành 3 thành phần độc lập, giúp phân tách logic, giao diện và điều khiển. Đây là biến thể phổ biến nhất của Layered Architecture cho web app. <a class="ref" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">[Wikipedia]</a></p>
+        <h3>3 thành phần:</h3>
+        <ul>
+          <li><strong>Model</strong> — Dữ liệu và business logic (Entity, Service, Repository)</li>
+          <li><strong>View</strong> — Giao diện người dùng (HTML/CSS, Angular templates)</li>
+          <li><strong>Controller</strong> — Điều phối: nhận request từ View, gọi Model, trả kết quả về View</li>
+        </ul>
+        <h3>Luồng hoạt động:</h3>
+        <p>User → <strong>Controller</strong> (nhận request) → <strong>Model</strong> (xử lý data) → <strong>View</strong> (hiển thị) → User</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/mvc-process.svg" alt="MVC Process Diagram">
+        <p class="img-caption">MVC Pattern — luồng tương tác giữa Model, View, Controller<br><a href="https://commons.wikimedia.org/wiki/File:MVC-Process.svg" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- MVC trong Spring Boot + Angular -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC TRONG JAVA SPRING BOOT + ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Backend — Spring MVC:</h3>
+        <table class="table-small">
+          <thead><tr><th>Thành phần</th><th>Vai trò</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Controller</strong></td><td>Nhận HTTP request, trả response</td><td>@RestController</td></tr>
+            <tr><td><strong>Service</strong></td><td>Business logic</td><td>@Service</td></tr>
+            <tr><td><strong>Repository</strong></td><td>Data access (Model)</td><td>JpaRepository</td></tr>
+            <tr><td><strong>Entity</strong></td><td>Data model (Model)</td><td>@Entity</td></tr>
+            <tr><td><strong>DTO</strong></td><td>Data transfer</td><td>CourseDTO</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Frontend — Angular (MVVM):</h3>
+        <table class="table-small">
+          <thead><tr><th>Thành phần</th><th>Vai trò</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Component (.ts)</strong></td><td>Controller/ViewModel</td><td>CourseComponent</td></tr>
+            <tr><td><strong>Template (.html)</strong></td><td>View</td><td>course.component.html</td></tr>
+            <tr><td><strong>Service</strong></td><td>Gọi API (Model)</td><td>CourseService</td></tr>
+            <tr><td><strong>Interface</strong></td><td>Data model</td><td>Course interface</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Angular thực tế dùng <strong>MVVM</strong> (Model-View-ViewModel), biến thể hiện đại của MVC với two-way data binding.</p>
+      </div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Bài tập lớn của môn này dùng <strong>Java Spring Boot (MVC backend)</strong> + <strong>Angular (MVVM frontend)</strong> — kết hợp phổ biến nhất cho enterprise web app hiện nay.</p>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- MVC Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC — ƯU & NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Ưu điểm:</h3>
+        <ul>
+          <li><strong>Separation of Concerns</strong> — tách rõ logic, giao diện, điều khiển</li>
+          <li><strong>Parallel Development</strong> — FE và BE phát triển song song</li>
+          <li><strong>Reusable Models</strong> — Model dùng chung cho nhiều Views</li>
+          <li><strong>Testable</strong> — unit test Controller và Model riêng biệt</li>
+          <li><strong>Framework support</strong> — Spring MVC, Angular, .NET MVC đều built-in</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Nhược điểm:</h3>
+        <ul>
+          <li><strong>Learning curve</strong> — cần hiểu rõ luồng MVC</li>
+          <li><strong>Boilerplate code</strong> — nhiều file cho 1 tính năng (Entity, DTO, Service, Controller, Component, Template)</li>
+          <li><strong>Controller phình to</strong> — nếu không tách Service, Controller dễ trở thành "God class"</li>
+          <li><strong>Phức tạp với UI đơn giản</strong> — overhead cho ứng dụng nhỏ</li>
+        </ul>
+        <h3>So sánh MVC vs Layered:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>MVC</th><th>Layered</th></tr></thead>
+          <tbody>
+            <tr><td>Focus</td><td>Tách UI khỏi logic</td><td>Tách trách nhiệm theo tầng</td></tr>
+            <tr><td>Scope</td><td>Presentation layer</td><td>Toàn bộ ứng dụng</td></tr>
+            <tr><td>Quan hệ</td><td colspan="2" style="text-align:center;">MVC thường <strong>nằm trong</strong> Layered Architecture</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== MICROSERVICES ===== -->
+
+<!-- SLIDE 21: Microservices Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MICROSERVICES ARCHITECTURE — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <p>Ứng dụng được phát triển như một tập hợp các <strong>service nhỏ, độc lập và loosely coupled</strong>. Mỗi service chịu trách nhiệm cho một khả năng nghiệp vụ cụ thể và có thể phát triển, triển khai, scale độc lập. <a class="ref" href="https://martinfowler.com/articles/microservices.html" target="_blank">[Martin Fowler]</a></p>
+    <div class="quote-box">
+      <p><strong>VD:</strong> Ứng dụng e-commerce gồm: UserService, ProductService, OrderService, PaymentService, NotificationService — mỗi service có database riêng, deploy riêng, có thể viết bằng ngôn ngữ khác nhau.</p>
+    </div>
+    <div class="cards" style="gap:12px; margin-top:12px;">
+      <div class="card"><h4>Independence</h4><p>Mỗi service là đơn vị độc lập — develop, deploy, maintain riêng</p></div>
+      <div class="card accent-orange"><h4>Bounded Context</h4><p>Mỗi service chịu trách nhiệm 1 chức năng nghiệp vụ cụ thể</p></div>
+      <div class="card accent-green"><h4>Decentralized Data</h4><p>Mỗi service quản lý database riêng — data isolation</p></div>
+      <div class="card accent-purple"><h4>APIs for Communication</h4><p>Giao tiếp qua REST, gRPC, hoặc messaging (Kafka)</p></div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 22: Microservices Key Characteristics -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐẶC ĐIỂM MICROSERVICES</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Đặc điểm</th><th>Mô tả</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Independence</strong></td><td>Mỗi microservice là đơn vị độc lập, có thể phát triển, triển khai và bảo trì riêng biệt</td></tr>
+        <tr><td><strong>Bounded Context</strong></td><td>Mỗi service chịu trách nhiệm 1 chức năng nghiệp vụ cụ thể (VD: user management, payment processing) và có domain riêng</td></tr>
+        <tr><td><strong>Decentralized Data</strong></td><td>Mỗi service quản lý database riêng, đảm bảo data isolation — không chia sẻ DB giữa các service</td></tr>
+        <tr><td><strong>APIs for Communication</strong></td><td>Giao tiếp qua lightweight APIs: REST, gRPC, hoặc messaging protocols (Kafka, RabbitMQ)</td></tr>
+        <tr><td><strong>Polyglot Development</strong></td><td>Mỗi service có thể dùng ngôn ngữ/framework khác nhau tùy yêu cầu (Java, Node.js, Python, Go)</td></tr>
+        <tr><td><strong>Resilience</strong></td><td>Lỗi ở 1 service không ảnh hưởng trực tiếp đến service khác — graceful degradation</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Scale từng service riêng lẻ dựa trên nhu cầu (VD: PaymentService cần scale nhiều hơn ProfileService)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 23: Microservices Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MICROSERVICES — ƯU & NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Ưu điểm:</h3>
+        <ul>
+          <li><strong>Scalability</strong> — scale từng service độc lập</li>
+          <li><strong>Flexibility in Technology</strong> — dùng tech stack khác nhau</li>
+          <li><strong>Faster Development</strong> — team nhỏ phát triển song song</li>
+          <li><strong>Improved Fault Isolation</strong> — lỗi không lan rộng</li>
+          <li><strong>Easier Maintenance</strong> — codebase nhỏ, dễ hiểu</li>
+          <li><strong>Independent Deployment</strong> — deploy không cần downtime toàn hệ thống</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Nhược điểm:</h3>
+        <ul>
+          <li><strong>Increased Complexity</strong> — quản lý nhiều service</li>
+          <li><strong>Communication Overhead</strong> — network calls giữa services</li>
+          <li><strong>Data Consistency</strong> — khó duy trì consistency across services</li>
+          <li><strong>Requires robust DevOps</strong> — CI/CD, monitoring, logging cho từng service</li>
+          <li><strong>Testing phức tạp</strong> — integration test giữa nhiều services</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Netflix vận hành <strong>1000+ microservices</strong>, Uber dùng mô hình DOMA (Domain-Oriented Microservice Architecture) để quản lý độ phức tạp. <a class="ref" href="https://www.uber.com/blog/microservice-architecture/" target="_blank">[Uber Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== EVENT-DRIVEN ARCHITECTURE ===== -->
+
+<!-- SLIDE 18: EDA Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EVENT-DRIVEN ARCHITECTURE (EDA) — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <p>Kiến trúc hướng sự kiện — luồng hoạt động được <strong>điều khiển bởi events</strong>. Tập trung vào việc sản xuất, phát hiện và phản ứng với các sự kiện. Khả năng thích ứng cao với hệ thống bất đồng bộ, phân tán và real-time. <a class="ref" href="https://en.wikipedia.org/wiki/Event-driven_architecture" target="_blank">[Wikipedia]</a></p>
+    <div class="cards" style="gap:14px;">
+      <div class="card"><h4>Event Producer</h4><p>Tạo ra events khi có thay đổi trạng thái (VD: đơn hàng được tạo, sensor kích hoạt). Publish event đến Event Broker.</p></div>
+      <div class="card accent-orange"><h4>Event Broker</h4><p>Trung tâm quản lý events — nhận từ Producer, phân phối đến Consumer. VD: Apache Kafka, RabbitMQ, Amazon SNS/SQS.</p></div>
+      <div class="card accent-green"><h4>Event Consumer</h4><p>Đăng ký nhận loại event quan tâm. Thực hiện hành động tương ứng (gửi notification, xử lý giao dịch).</p></div>
+    </div>
+    <div class="quote-box" style="margin-top:12px;">
+      <p><strong>VD:</strong> User đặt hàng → OrderService publish event "OrderCreated" → PaymentService xử lý thanh toán → NotificationService gửi email → InventoryService cập nhật kho.</p>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 19: EDA Producers & Consumers -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EVENT PRODUCERS & CONSUMERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Producers (Nhà sản xuất):</h3>
+        <ul>
+          <li>Tạo ra events khi có sự kiện hoặc thay đổi trạng thái</li>
+          <li>VD: đơn hàng được đặt, cảm biến kích hoạt, user đăng ký</li>
+          <li>Publish events đến Event Broker</li>
+          <li><strong>Không cần biết</strong> ai sẽ nhận event (decoupled)</li>
+        </ul>
+        <h3>Consumers (Người tiêu thụ):</h3>
+        <ul>
+          <li>Đăng ký (subscribe) các loại event quan tâm</li>
+          <li>Lắng nghe (consume) events từ Event Broker</li>
+          <li>Thực hiện hành động tương ứng</li>
+          <li>VD: gửi notification, xử lý thanh toán, cập nhật cache</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Event Broker (Trung gian):</h3>
+        <p>Trung tâm quản lý events, đảm bảo events được phân phối đến tất cả consumers đã đăng ký.</p>
+        <table class="table-small">
+          <thead><tr><th>Broker</th><th>Đặc điểm</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Apache Kafka</strong></td><td>High throughput, durable, distributed log. Phù hợp data pipeline lớn</td></tr>
+            <tr><td><strong>RabbitMQ</strong></td><td>Flexible routing, nhiều protocol (AMQP). Phù hợp task queue</td></tr>
+            <tr><td><strong>Amazon SNS/SQS</strong></td><td>Managed service, dễ scale. Phù hợp cloud-native</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 20: EDA Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EDA — ƯU & NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Ưu điểm:</h3>
+        <ul>
+          <li><strong>Asynchronous Communication</strong> — không cần chờ response</li>
+          <li><strong>Loose Coupling</strong> — services không phụ thuộc trực tiếp</li>
+          <li><strong>Scalability</strong> — scale từng consumer độc lập</li>
+          <li><strong>Flexibility</strong> — thêm consumer mới không ảnh hưởng hệ thống</li>
+          <li><strong>Real-Time Processing</strong> — xử lý ngay khi event xảy ra</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Nhược điểm:</h3>
+        <ul>
+          <li><strong>Increased Complexity</strong> — quản lý luồng event phức tạp</li>
+          <li><strong>Debugging khó</strong> — trace luồng bất đồng bộ</li>
+          <li><strong>Event Ordering</strong> — khó đảm bảo thứ tự events</li>
+          <li><strong>Requires robust middleware</strong> — cần Kafka/RabbitMQ ổn định</li>
+          <li><strong>Eventual Consistency</strong> — dữ liệu không nhất quán tức thì</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>LinkedIn xử lý <strong>7 triệu events/giây</strong> qua Apache Kafka. Các hệ thống IoT, fintech, e-commerce đều dùng EDA cho real-time processing. <a class="ref" href="https://engineering.linkedin.com/blog" target="_blank">[LinkedIn Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ===== VÍ DỤ THỰC TẾ ===== -->
+
+<!-- Layered Example với hình -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: LAYERED ARCHITECTURE — 3-TIER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Ứng dụng thực tế: Spring Boot + Angular</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Presentation (Angular)</h4><p>Components, Templates, Services → gửi HTTP request đến backend</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Application (Spring Controllers)</h4><p>Nhận request, validate, gọi Service layer</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Business Logic (Services)</h4><p>Xử lý nghiệp vụ, business rules, transactions</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Data (JPA Repositories)</h4><p>CRUD operations, query database (MySQL)</p></div></div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/three-tier.svg" alt="3-Tier Architecture">
+        <p class="img-caption">Kiến trúc 3 tầng (Presentation → Logic → Data)<br><a href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">Nguồn: Wikipedia</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Microservices Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: MICROSERVICES — E-COMMERCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến trúc e-commerce với Microservices:</h3>
+        <table class="table-small">
+          <thead><tr><th>Service</th><th>Database</th><th>Tech</th></tr></thead>
+          <tbody>
+            <tr><td><strong>User Service</strong></td><td>PostgreSQL</td><td>Java Spring</td></tr>
+            <tr><td><strong>Product Service</strong></td><td>MongoDB</td><td>Node.js</td></tr>
+            <tr><td><strong>Order Service</strong></td><td>MySQL</td><td>Java Spring</td></tr>
+            <tr><td><strong>Payment Service</strong></td><td>PostgreSQL</td><td>Go</td></tr>
+            <tr><td><strong>Notification</strong></td><td>Redis</td><td>Python</td></tr>
+          </tbody>
+        </table>
+        <h3>Communication:</h3>
+        <ul>
+          <li><strong>Sync:</strong> REST APIs qua API Gateway</li>
+          <li><strong>Async:</strong> Kafka cho events (OrderCreated, PaymentCompleted)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ví dụ thực tế:</h3>
+        <div class="cards" style="gap:10px;">
+          <div class="card"><h4>Netflix</h4><p>1000+ microservices, Java + Node.js, Eureka service discovery, Zuul API Gateway <a class="ref" href="https://netflixtechblog.com/" target="_blank">[Netflix Tech Blog]</a></p></div>
+          <div class="card accent-orange"><h4>Uber</h4><p>DOMA (Domain-Oriented Microservice Architecture), gRPC, Kafka <a class="ref" href="https://www.uber.com/blog/microservice-architecture/" target="_blank">[Uber Blog]</a></p></div>
+          <div class="card accent-green"><h4>Amazon</h4><p>Tiên phong microservices, "two-pizza team" rule, AWS Lambda cho serverless <a class="ref" href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/introduction.html" target="_blank">[AWS]</a></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- EDA Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ: EVENT-DRIVEN — LUỒNG ĐẶT HÀNG</h2></div>
+  <div class="slide-body">
+    <h3>Luồng xử lý đơn hàng qua events:</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>User đặt hàng</h4><p>OrderService tạo đơn hàng → publish event <strong>"OrderCreated"</strong> lên Kafka</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>PaymentService nhận event</h4><p>Xử lý thanh toán → publish <strong>"PaymentCompleted"</strong> hoặc <strong>"PaymentFailed"</strong></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>InventoryService nhận event</h4><p>Trừ kho, cập nhật số lượng sản phẩm</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>NotificationService nhận event</h4><p>Gửi email/SMS xác nhận cho khách hàng</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>AnalyticsService nhận event</h4><p>Cập nhật dashboard, thống kê real-time</p></div></div>
+    </div>
+    <p style="margin-top:10px;"><strong>Lưu ý:</strong> Mỗi service xử lý <strong>độc lập</strong>, không cần chờ service khác. Nếu NotificationService bị lỗi, đơn hàng vẫn được xử lý bình thường.</p>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Evolution Path -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TIẾN HÓA KIẾN TRÚC PHẦN MỀM</h2></div>
+  <div class="slide-body">
+    <p>Kiến trúc phần mềm <strong>không cố định</strong> — nó phát triển cùng với hệ thống. Nhiều tổ chức lớn đã trải qua quá trình tiến hóa sau:</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Monolithic</h4><p>Bắt đầu đơn giản, ship nhanh MVP. VD: Shopify, Netflix giai đoạn đầu</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Modular Monolith</h4><p>Chia monolith thành modules rõ ràng (bounded contexts), chuẩn bị cho tách service. VD: Shopify hiện tại</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Microservices</h4><p>Tách modules thành services độc lập khi cần scale. VD: Netflix, Uber, Amazon</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Event-Driven + Microservices</h4><p>Kết hợp async messaging cho real-time, loose coupling. VD: LinkedIn, fintech</p></div></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Martin Fowler khuyên: <strong>"MonolithFirst"</strong> — bắt đầu với monolith, chỉ chuyển sang microservices khi thực sự cần. Premature decomposition tốn kém hơn monolith. <a class="ref" href="https://martinfowler.com/bliki/MonolithFirst.html" target="_blank">[Martin Fowler]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Monolithic vs Microservices -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH: MONOLITHIC VS MICROSERVICES</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Tiêu chí</th><th style="width:37%">Monolithic</th><th>Microservices</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Codebase</strong></td><td>1 codebase duy nhất</td><td>Nhiều repos, mỗi service 1 repo</td></tr>
+        <tr><td><strong>Deployment</strong></td><td>Deploy toàn bộ mỗi lần</td><td>Deploy từng service độc lập</td></tr>
+        <tr><td><strong>Database</strong></td><td>1 database chia sẻ</td><td>Mỗi service có database riêng</td></tr>
+        <tr><td><strong>Communication</strong></td><td>In-process (method calls)</td><td>Network (REST, gRPC, Kafka)</td></tr>
+        <tr><td><strong>Scaling</strong></td><td>Scale toàn bộ app</td><td>Scale từng service riêng</td></tr>
+        <tr><td><strong>Team</strong></td><td>1 team chung</td><td>Nhiều team nhỏ (2-pizza teams)</td></tr>
+        <tr><td><strong>Failure</strong></td><td>1 lỗi → crash toàn app</td><td>1 lỗi → chỉ 1 service down</td></tr>
+        <tr><td><strong>DevOps</strong></td><td>Đơn giản</td><td>Phức tạp (CI/CD, monitoring, logging cho từng service)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- BTL Recommendation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KIẾN TRÚC CHO BÀI TẬP LỚN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến trúc đề xuất:</h3>
+        <p><strong>Monolithic + Layered + MVC</strong></p>
+        <ul>
+          <li><strong>Backend:</strong> Java Spring Boot (MVC pattern)</li>
+          <li><strong>Frontend:</strong> Angular (MVVM pattern)</li>
+          <li><strong>Database:</strong> MySQL</li>
+          <li><strong>Deployment:</strong> Docker Compose</li>
+        </ul>
+        <h3>Tại sao?</h3>
+        <ul>
+          <li>Team 3-5 người → monolithic đủ</li>
+          <li>Web app CRUD → layered phù hợp</li>
+          <li>Spring Boot + Angular → MVC/MVVM built-in</li>
+          <li>Không cần microservices cho BTL</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Cấu trúc dự án:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+project/
+  backend/        ← Java Spring Boot
+    controller/   ← Presentation (API)
+    service/      ← Business Logic
+    repository/   ← Data Access
+    model/        ← Entities
+    dto/          ← Data Transfer
+    config/       ← Security, CORS
+  frontend/       ← Angular
+    components/   ← View (UI)
+    services/     ← API calls
+    guards/       ← Auth guards
+  docker-compose.yml
+  README.md</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 4: LỰA CHỌN KIẾN TRÚC ========== -->
+
+<!-- SLIDE 26: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>LỰA CHỌN KIẾN TRÚC</h1>
+    <p class="section-desc">So sánh và hướng dẫn chọn kiến trúc phù hợp</p>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 27: Choosing Architecture -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KHI NÀO DÙNG KIẾN TRÚC NÀO?</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Kiến trúc</th><th style="width:45%">Phù hợp cho</th><th>Ví dụ thực tế</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Monolithic</strong></td><td>Small to medium apps, startup/MVP, ứng dụng không cần scale lớn</td><td>Shopify giai đoạn đầu, WordPress</td></tr>
+        <tr><td><strong>Layered</strong></td><td>Web app (Java Spring Boot, .NET), ứng dụng enterprise lớn (ERP, CRM)</td><td>Hầu hết ứng dụng web CRUD</td></tr>
+        <tr><td><strong>MVC</strong></td><td>Web app cần tách FE/BE rõ ràng, dùng framework có sẵn MVC</td><td>Spring MVC + Angular (BTL môn này)</td></tr>
+        <tr><td><strong>Microservices</strong></td><td>Large-scale apps, nhiều team, cần scale từng phần</td><td>Netflix, Uber, Amazon</td></tr>
+        <tr><td><strong>Event-Driven</strong></td><td>Real-time, IoT, data pipelines, microservices integration</td><td>LinkedIn, fintech, IoT</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 28: Comparison Table -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH CÁC MẪU KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <table class="table-small">
+      <thead><tr><th style="width:16%">Tiêu chí</th><th>Monolithic</th><th>Layered</th><th>MVC</th><th>Microservices</th><th>Event-Driven</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phức tạp</strong></td><td>Thấp</td><td>Trung bình</td><td>Trung bình</td><td>Rất cao</td><td>Cao</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Vertical</td><td>Vertical</td><td>Vertical</td><td>Horizontal</td><td>Horizontal</td></tr>
+        <tr><td><strong>Deploy</strong></td><td>1 unit</td><td>1 unit</td><td>1 unit</td><td>Từng service</td><td>Nhiều comp.</td></tr>
+        <tr><td><strong>Performance</strong></td><td>Rất tốt</td><td>Tốt</td><td>Tốt</td><td>TB (network)</td><td>Rất tốt (async)</td></tr>
+        <tr><td><strong>Fault Isol.</strong></td><td>Kém</td><td>Kém</td><td>Kém</td><td>Rất tốt</td><td>Tốt</td></tr>
+        <tr><td><strong>Team</strong></td><td>Nhỏ</td><td>Nhỏ-TB</td><td>Nhỏ-TB</td><td>Lớn</td><td>TB-Lớn</td></tr>
+        <tr><td><strong>Phù hợp</strong></td><td>MVP, startup</td><td>Enterprise</td><td>Web app</td><td>Scale lớn</td><td>Real-time</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 29: Decision Flowchart -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HƯỚNG DẪN LỰA CHỌN KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Team nhỏ (&lt;5 người), MVP, deadline gấp?</h4><p>→ <strong>Monolithic</strong> — đơn giản, nhanh, dễ debug</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Web app enterprise, cần structure rõ ràng?</h4><p>→ <strong>Layered Architecture</strong> — separation of concerns, dễ maintain, phù hợp Java Spring Boot + Angular</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Cần real-time, async, data pipeline?</h4><p>→ <strong>Event-Driven</strong> — Kafka/RabbitMQ, loose coupling, real-time processing</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Hệ thống lớn, nhiều team, cần scale từng phần?</h4><p>→ <strong>Microservices</strong> — independent deployment, polyglot, fault isolation</p></div></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Nhiều tổ chức bắt đầu với <strong>Monolithic → Modular Monolith → Microservices</strong> (evolutionary architecture). Không nên dùng microservices từ đầu nếu team nhỏ và chưa hiểu rõ domain. <a class="ref" href="https://martinfowler.com/bliki/MonolithFirst.html" target="_blank">[Martin Fowler]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Architecture Anti-patterns -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANTI-PATTERNS — NHỮNG SAI LẦM CẦN TRÁNH</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Anti-pattern</th><th style="width:40%">Vấn đề</th><th>Cách tránh</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Big Ball of Mud</strong></td><td>Không có kiến trúc rõ ràng, code lộn xộn, module phụ thuộc chằng chịt</td><td>Áp dụng Layered/MVC từ đầu</td></tr>
+        <tr><td><strong>God Class</strong></td><td>1 class/controller chứa quá nhiều logic, hàng nghìn dòng code</td><td>Single Responsibility, tách Service</td></tr>
+        <tr><td><strong>Distributed Monolith</strong></td><td>Dùng microservices nhưng vẫn tight coupling, deploy phải đồng bộ</td><td>Bounded context rõ ràng, async communication</td></tr>
+        <tr><td><strong>Premature Optimization</strong></td><td>Dùng microservices/Kafka cho app nhỏ → over-engineering</td><td>MonolithFirst, YAGNI principle</td></tr>
+        <tr><td><strong>Shared Database</strong></td><td>Nhiều services dùng chung 1 DB → tight coupling qua data</td><td>Database per service, API communication</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Architecture Documentation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TÀI LIỆU HÓA KIẾN TRÚC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cần ghi lại trong SDD:</h3>
+        <ul>
+          <li><strong>Architecture Pattern</strong> đã chọn và lý do</li>
+          <li><strong>Component Diagram</strong> — các module và quan hệ</li>
+          <li><strong>Deployment Diagram</strong> — infrastructure</li>
+          <li><strong>Technology Stack</strong> — ngôn ngữ, framework, DB</li>
+          <li><strong>API Contracts</strong> — endpoints, request/response</li>
+          <li><strong>Architecture Decision Records (ADRs)</strong></li>
+        </ul>
+        <h3>Công cụ vẽ sơ đồ:</h3>
+        <ul>
+          <li><strong>draw.io</strong> — miễn phí, kéo thả, export PNG/SVG</li>
+          <li><strong>PlantUML</strong> — code-based, version control trên Git</li>
+          <li><strong>Mermaid</strong> — viết trong Markdown</li>
+          <li><strong>Lucidchart</strong> — online, collaboration</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Mẫu ADR (Architecture Decision Record):</h3>
+        <table class="table-small">
+          <thead><tr><th style="width:30%">Mục</th><th>Nội dung</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Title</strong></td><td>Chọn Layered Architecture cho BTL</td></tr>
+            <tr><td><strong>Status</strong></td><td>Accepted</td></tr>
+            <tr><td><strong>Context</strong></td><td>Web app CRUD, team 4 người, deadline 3 tháng</td></tr>
+            <tr><td><strong>Decision</strong></td><td>Monolithic + Layered + MVC (Spring Boot + Angular)</td></tr>
+            <tr><td><strong>Alternatives</strong></td><td>Microservices (rejected: team nhỏ, over-engineering)</td></tr>
+            <tr><td><strong>Consequences</strong></td><td>+ Đơn giản, nhanh<br>- Khó scale nếu app phát triển lớn</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Case Study -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CASE STUDY: TIẾN HÓA KIẾN TRÚC CỦA NETFLIX</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Giai đoạn phát triển:</h3>
+        <table class="table-small">
+          <thead><tr><th>Năm</th><th>Kiến trúc</th><th>Lý do chuyển đổi</th></tr></thead>
+          <tbody>
+            <tr><td><strong>2007</strong></td><td>Monolithic (Java)</td><td>Ban đầu đủ dùng</td></tr>
+            <tr><td><strong>2008</strong></td><td>DB corruption → 3 ngày downtime</td><td>Single point of failure</td></tr>
+            <tr><td><strong>2009-2012</strong></td><td>Migration to Cloud + Microservices</td><td>Scale cho 200+ quốc gia</td></tr>
+            <tr><td><strong>2016+</strong></td><td>1000+ microservices trên AWS</td><td>Independent deployment, fault isolation</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Quá trình chuyển đổi mất <strong>7 năm</strong> — không phải overnight. <a class="ref" href="https://netflixtechblog.com/" target="_blank">[Netflix Tech Blog]</a></p>
+      </div>
+      <div class="col">
+        <h3>Bài học rút ra:</h3>
+        <ul>
+          <li>Bắt đầu <strong>monolithic</strong> khi chưa hiểu rõ domain</li>
+          <li>Chuyển sang microservices khi có <strong>nhu cầu thực sự</strong> (scale, team lớn)</li>
+          <li>Migration là <strong>quá trình dài</strong>, không phải rewrite</li>
+          <li>Cần <strong>DevOps maturity</strong> trước khi chuyển (CI/CD, monitoring, logging)</li>
+          <li>Chaos Engineering (Chaos Monkey) để test fault tolerance</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Netflix open-source nhiều tools: <strong>Eureka</strong> (service discovery), <strong>Zuul</strong> (API gateway), <strong>Hystrix</strong> (circuit breaker) — được sử dụng rộng rãi trong hệ sinh thái Spring Cloud.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE: Tổng kết -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>SRS → SDD:</strong> Functional requirements quyết định components, Non-functional quyết định patterns</li>
+          <li><strong>User Stories:</strong> As a [role], I want [feature], so that [benefit]</li>
+          <li><strong>Use Case:</strong> Actor, Goal, Steps, Pre/Post-conditions</li>
+          <li><strong>5 mẫu kiến trúc:</strong> Monolithic, Layered, MVC, Microservices, Event-Driven</li>
+          <li>Không có kiến trúc "tốt nhất" — chỉ có kiến trúc <strong>phù hợp nhất</strong></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. Functional vs Non-functional requirements?</li>
+          <li>2. User Story khác Use Case thế nào?</li>
+          <li>3. Nêu 4 tầng trong Layered Architecture.</li>
+          <li>4. Event-Driven Architecture phù hợp khi nào?</li>
+          <li>5. So sánh Microservices vs Monolithic.</li>
+          <li>6. Khi nào nên bắt đầu với Monolithic?</li>
+          <li>7. Bài tập lớn nên dùng kiến trúc nào? Tại sao?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 31: Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

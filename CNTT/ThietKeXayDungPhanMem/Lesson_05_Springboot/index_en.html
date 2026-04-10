@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 05 - Java Spring Boot & RESTful API</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>JAVA SPRING BOOT<br>& RESTFUL API</h1>
+    <p class="subtitle">Building Backend with Spring Boot</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LESSON CONTENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Part 1: Introduction to Spring Boot</h3>
+        <ul>
+          <li>What is Spring Boot? Why use it?</li>
+          <li>Spring Boot Architecture (MVC)</li>
+          <li>Installation & project creation</li>
+        </ul>
+        <h3>Part 2: RESTful API</h3>
+        <ul>
+          <li>What is REST? Design principles</li>
+          <li>HTTP Methods & Status Codes</li>
+          <li>API endpoints examples</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Part 3: Main Components</h3>
+        <ul>
+          <li>Entity — database mapping</li>
+          <li>Repository — data access</li>
+          <li>Service — business logic</li>
+          <li>Controller — handling HTTP requests</li>
+        </ul>
+        <h3>Part 4: Advanced</h3>
+        <ul>
+          <li>DTO & Domain Model</li>
+          <li>Lombok</li>
+          <li>Bean Life Cycle</li>
+          <li>Build & Run project</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>INTRODUCTION TO JAVA SPRING BOOT</h1>
+    <p class="section-desc">Fast and efficient Java application development framework</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHAT IS JAVA SPRING BOOT?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot is a framework that helps <strong>simplify and accelerate</strong> Java application development, especially for web applications and APIs. <a class="ref" href="https://spring.io/projects/spring-boot" target="_blank">[spring.io]</a></p>
+        <h3>Key features:</h3>
+        <ul>
+          <li><strong>Minimal configuration</strong> — auto-configuration instead of XML</li>
+          <li><strong>Embedded server</strong> — built-in Tomcat/Jetty</li>
+          <li><strong>Starter dependencies</strong> — add features with a single dependency</li>
+          <li><strong>Production-ready</strong> — health checks, metrics, logging</li>
+          <li><strong>Spring Initializr</strong> — create a project online in 30 seconds</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Why choose Spring Boot?</h3>
+        <table class="table-small">
+          <thead><tr><th>Advantage</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Fast</strong></td><td>Faster development than traditional Java EE</td></tr>
+            <tr><td><strong>Integration</strong></td><td>Easy connection to DB, messaging, caching</td></tr>
+            <tr><td><strong>Dependency</strong></td><td>Maven/Gradle manages libraries automatically</td></tr>
+            <tr><td><strong>Community</strong></td><td>Largest in the Java ecosystem</td></tr>
+            <tr><td><strong>Standalone</strong></td><td>Run with java -jar, no separate server needed</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#C00000; margin-top:8px;"><strong>Limitations:</strong> Dependencies increase application size; learning curve for the vast Spring ecosystem.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING BOOT ARCHITECTURE — MVC</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Controller (API Layer)</h4><p>Receives HTTP request from client → validates input → calls Service → returns response (JSON). Annotations: <code>@RestController</code>, <code>@GetMapping</code>, <code>@PostMapping</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Service (Business Logic)</h4><p>Processes business logic → calls Repository → returns results to Controller. Annotation: <code>@Service</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Repository (Data Access)</h4><p>Interface for database access → extends JpaRepository → provides CRUD operations. Annotation: <code>@Repository</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Entity (Domain Model)</h4><p>Java class mapped to a database table → each instance = 1 row. Annotations: <code>@Entity</code>, <code>@Id</code>, <code>@Column</code></p></div></div>
+    </div>
+    <div class="quote-box" style="margin-top:10px;">
+      <p><strong>Request flow:</strong> Client → Controller → Service → Repository → Database → Repository → Service → Controller → Client (JSON response)</p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>IOC & DEPENDENCY INJECTION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>IoC (Inversion of Control)</strong> — inverting control: instead of a class creating its own dependencies, the container injects them. <a class="ref" href="https://martinfowler.com/articles/injection.html" target="_blank">[Martin Fowler]</a></p>
+        <h3>3 ways to inject:</h3>
+        <ul>
+          <li><strong>Constructor Injection</strong> (recommended) — immutable, easy to test</li>
+          <li><strong>Setter Injection</strong> — for optional dependencies</li>
+          <li><strong>Field Injection</strong> — <code>@Autowired</code> on field (not recommended)</li>
+        </ul>
+        <h3>Benefits:</h3>
+        <ul>
+          <li>Loose coupling — easy to change implementation</li>
+          <li>Easy unit testing — mock dependencies</li>
+          <li>Cleaner code — focus on business logic</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Example: 3 Injection types</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// 1. Constructor Injection (BEST)
+@Service
+@RequiredArgsConstructor
+public class UserService {
+  private final UserRepository userRepo;
+  // Spring auto-injects UserRepository
+}
+
+// 2. Setter Injection
+@Service
+public class UserService {
+  private UserRepository userRepo;
+  @Autowired
+  public void setUserRepo(UserRepository r) {
+    this.userRepo = r;
+  }
+}
+
+// 3. Field Injection (AVOID)
+@Service
+public class UserService {
+  @Autowired
+  private UserRepository userRepo;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEAN LIFE CYCLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>In Spring, a <strong>Bean</strong> is an object managed by the Spring IoC Container (ApplicationContext).</p>
+        <h3>Bean lifecycle:</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Instantiation</h4><p>Container creates instance, calls constructor</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Populate Properties</h4><p>Injects dependencies (@Autowired)</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Initialization</h4><p>Calls @PostConstruct, InitializingBean</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Ready to Use</h4><p>Bean is ready for use</p></div></div>
+          <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Destruction</h4><p>Calls @PreDestroy, DisposableBean</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bean Scopes:</h3>
+        <table class="table-small">
+          <thead><tr><th>Scope</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>singleton</strong></td><td>1 instance for the entire app (default)</td></tr>
+            <tr><td><strong>prototype</strong></td><td>New instance for each request</td></tr>
+            <tr><td><strong>request</strong></td><td>1 instance per HTTP request (web)</td></tr>
+            <tr><td><strong>session</strong></td><td>1 instance per HTTP session</td></tr>
+          </tbody>
+        </table>
+        <h3>Dependency Injection:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+// Constructor injection (recommended)
+@Service
+@RequiredArgsConstructor
+public class UserService {
+  private final UserRepository userRepo;
+  // Spring auto-injects UserRepository
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Constructor injection is preferred over @Autowired field injection because it is easier to test, immutable, and fails fast when a dependency is missing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STEREOTYPE ANNOTATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring automatically detects and creates Beans from classes with special annotations (component scanning).</p>
+        <table>
+          <thead><tr><th>Annotation</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>@Component</code></td><td>Generic Spring bean</td></tr>
+            <tr><td><code>@Service</code></td><td>Business logic layer</td></tr>
+            <tr><td><code>@Repository</code></td><td>Data access layer (auto exception translation)</td></tr>
+            <tr><td><code>@Controller</code></td><td>Web MVC controller (returns view)</td></tr>
+            <tr><td><code>@RestController</code></td><td>REST controller (returns JSON)</td></tr>
+            <tr><td><code>@Configuration</code></td><td>Class containing @Bean definitions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Example: @Configuration & @Bean</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+public class AppConfig {
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public RestTemplate restTemplate() {
+    return new RestTemplate();
+  }
+
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Spring 6 + Spring Boot 3 supports <strong>AOT compilation</strong> with GraalVM Native Image — speeds up startup from 3s to 50ms, reduces RAM 5x.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AUTO-CONFIGURATION & STARTERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Auto-Configuration:</h3>
+        <p>Spring Boot automatically configures beans based on dependencies in the classpath. Enabled by <code>@SpringBootApplication</code> = <code>@Configuration + @EnableAutoConfiguration + @ComponentScan</code>.</p>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+@SpringBootApplication
+public class MyAppApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(
+      MyAppApplication.class, args);
+  }
+}</pre>
+        <p style="font-size:14px; color:#666;">Example: Having <code>spring-boot-starter-data-jpa</code> in pom.xml → Spring Boot auto-configures DataSource, EntityManager, TransactionManager.</p>
+      </div>
+      <div class="col">
+        <h3>Popular Starter Dependencies:</h3>
+        <table class="table-small">
+          <thead><tr><th>Starter</th><th>Features</th></tr></thead>
+          <tbody>
+            <tr><td>spring-boot-starter-web</td><td>REST API, Tomcat, Jackson</td></tr>
+            <tr><td>spring-boot-starter-data-jpa</td><td>JPA, Hibernate, HikariCP</td></tr>
+            <tr><td>spring-boot-starter-security</td><td>Spring Security</td></tr>
+            <tr><td>spring-boot-starter-validation</td><td>Bean Validation (JSR 380)</td></tr>
+            <tr><td>spring-boot-starter-test</td><td>JUnit, Mockito, AssertJ</td></tr>
+            <tr><td>spring-boot-starter-actuator</td><td>Production monitoring</td></tr>
+            <tr><td>spring-boot-starter-mail</td><td>Email sending</td></tr>
+            <tr><td>spring-boot-starter-cache</td><td>Caching abstraction</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>RESTFUL API</h1>
+    <p class="section-desc">Designing APIs following REST architecture</p>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHAT IS REST?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>REST</strong> (Representational State Transfer) is an architectural style for building web services. <a class="ref" href="https://en.wikipedia.org/wiki/REST" target="_blank">[Wikipedia]</a></p>
+        <h3>RESTful design principles:</h3>
+        <ul>
+          <li><strong>Stateless</strong> — each request contains all necessary information, server does not store sessions</li>
+          <li><strong>Resource-based</strong> — everything is a resource, accessed via URI</li>
+          <li><strong>HTTP Methods</strong> — GET, POST, PUT, DELETE for CRUD</li>
+          <li><strong>JSON/XML</strong> — standard data format</li>
+          <li><strong>Status Codes</strong> — 200, 201, 400, 404, 500...</li>
+          <li><strong>Consistent URIs</strong> — /api/users, /api/courses/{id}</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>HTTP Methods:</h3>
+        <table>
+          <thead><tr><th>Method</th><th>CRUD</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GET</strong></td><td>Read</td><td>GET /api/users</td></tr>
+            <tr><td><strong>POST</strong></td><td>Create</td><td>POST /api/users</td></tr>
+            <tr><td><strong>PUT</strong></td><td>Update</td><td>PUT /api/users/1</td></tr>
+            <tr><td><strong>DELETE</strong></td><td>Delete</td><td>DELETE /api/users/1</td></tr>
+            <tr><td><strong>PATCH</strong></td><td>Partial Update</td><td>PATCH /api/users/1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP STATUS CODES & API EXAMPLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Common Status Codes:</h3>
+        <table class="table-small">
+          <thead><tr><th>Code</th><th>Meaning</th><th>When</th></tr></thead>
+          <tbody>
+            <tr><td><strong>200</strong></td><td>OK</td><td>GET/PUT successful</td></tr>
+            <tr><td><strong>201</strong></td><td>Created</td><td>POST creation successful</td></tr>
+            <tr><td><strong>204</strong></td><td>No Content</td><td>DELETE successful</td></tr>
+            <tr><td><strong>400</strong></td><td>Bad Request</td><td>Invalid input</td></tr>
+            <tr><td><strong>401</strong></td><td>Unauthorized</td><td>Not logged in</td></tr>
+            <tr><td><strong>403</strong></td><td>Forbidden</td><td>No permission</td></tr>
+            <tr><td><strong>404</strong></td><td>Not Found</td><td>Resource does not exist</td></tr>
+            <tr><td><strong>500</strong></td><td>Server Error</td><td>Server error</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Example: GET /api/users</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+// Request
+GET /api/users HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer eyJhbGci...
+
+// Response 200 OK
+[
+  {
+    "id": 1,
+    "email": "hung@cmc.edu.vn",
+    "fullName": "Nguyễn Việt Hưng",
+    "role": "TEACHER"
+  },
+  {
+    "id": 2,
+    "email": "sv01@cmc.edu.vn",
+    "fullName": "Trần Văn A",
+    "role": "STUDENT"
+  }
+]</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>MAIN COMPONENTS</h1>
+    <p class="section-desc">Entity — Repository — Service — Controller</p>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INSTALLATION & PROJECT CREATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Required tools:</h3>
+        <ul>
+          <li><strong>JDK 17+</strong> (Java Development Kit)</li>
+          <li><strong>IDE:</strong> IntelliJ IDEA / Eclipse / VS Code</li>
+          <li><strong>Maven</strong> or <strong>Gradle</strong> (build tool)</li>
+          <li><strong>MySQL 8.0+</strong> (database)</li>
+          <li><strong>Postman</strong> or <strong>curl</strong> (test API)</li>
+        </ul>
+        <h3>How to create a project:</h3>
+        <ul>
+          <li><strong>Spring Initializr:</strong> <a class="ref" href="https://start.spring.io" target="_blank">[start.spring.io]</a></li>
+          <li>STS IDE (Spring Tool Suite)</li>
+          <li>Spring Boot CLI</li>
+          <li>IntelliJ → New Project → Spring Boot</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Initializr — Configuration:</h3>
+        <table class="table-small">
+          <thead><tr><th>Item</th><th>Selection</th></tr></thead>
+          <tbody>
+            <tr><td>Project</td><td>Maven</td></tr>
+            <tr><td>Language</td><td>Java</td></tr>
+            <tr><td>Spring Boot</td><td>3.x (stable, not SNAPSHOT)</td></tr>
+            <tr><td>Packaging</td><td>JAR</td></tr>
+            <tr><td>Java</td><td>17</td></tr>
+          </tbody>
+        </table>
+        <h3>Dependencies to add:</h3>
+        <ul>
+          <li><strong>Spring Web</strong> — REST API</li>
+          <li><strong>Spring Data JPA</strong> — database access</li>
+          <li><strong>MySQL Driver</strong> — MySQL connection</li>
+          <li><strong>Lombok</strong> — reduce boilerplate code</li>
+          <li><strong>Spring Security</strong> — authentication (next lesson)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING BOOT PROJECT STRUCTURE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+my-app/
+├── src/main/java/com/example/
+│   ├── MyAppApplication.java  ← Main class
+│   ├── controller/
+│   │   └── UserController.java
+│   ├── service/
+│   │   └── UserService.java
+│   ├── repository/
+│   │   └── UserRepository.java
+│   ├── model/
+│   │   └── User.java          ← Entity
+│   ├── dto/
+│   │   └── UserDTO.java
+│   └── config/
+│       └── SecurityConfig.java
+├── src/main/resources/
+│   ├── application.properties  ← DB Config
+│   └── static/                 ← Static files
+├── src/test/java/              ← Unit tests
+├── pom.xml                     ← Maven config
+└── target/                     ← Build output</pre>
+      </div>
+      <div class="col">
+        <h3>application.properties:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+# Server
+server.port=8080
+
+# Database
+spring.datasource.url=
+  jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=secret
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate
+  .dialect=
+  org.hibernate.dialect.MySQLDialect</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;"><strong>ddl-auto=update:</strong> Hibernate automatically creates/updates tables from Entity. Use for dev, NOT for production.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENTITY — DATABASE MAPPING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Entity</strong> represents a table in the database. Each instance = 1 row.</p>
+        <h3>Key Annotations:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>@Entity</code></td><td>Marks class as entity</td></tr>
+            <tr><td><code>@Table</code></td><td>Specifies table name</td></tr>
+            <tr><td><code>@Id</code></td><td>Primary key</td></tr>
+            <tr><td><code>@GeneratedValue</code></td><td>Auto-increment</td></tr>
+            <tr><td><code>@Column</code></td><td>Column mapping (name, nullable, unique)</td></tr>
+            <tr><td><code>@Enumerated</code></td><td>Enum mapping</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Example: User Entity</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Entity
+@Table(name = "users")
+public class User {
+
+  @Id
+  @GeneratedValue(strategy =
+    GenerationType.IDENTITY)
+  private Long id;
+
+  @Column(nullable = false,
+    unique = true, length = 100)
+  private String email;
+
+  @Column(nullable = false)
+  private String password;
+
+  @Column(name = "full_name")
+  private String fullName;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
+  // Role = enum {STUDENT, TEACHER, ADMIN}
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOMBOK — REDUCING BOILERPLATE CODE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Why do we need Getters/Setters?</h3>
+        <ul>
+          <li><strong>Encapsulation</strong> — private fields, accessed via methods</li>
+          <li><strong>Framework requirement</strong> — JPA/Hibernate uses reflection via getter/setter</li>
+          <li><strong>Validation</strong> — setter can add validation logic</li>
+        </ul>
+        <h3>Without Lombok:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+public class User {
+  private String email;
+  public String getEmail() { return email; }
+  public void setEmail(String e) { email = e; }
+  // + constructor, toString, equals, hashCode
+  // = 50-100 lines of boilerplate!
+}</pre>
+      </div>
+      <div class="col">
+        <h3>With Lombok:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+
+  @Id @GeneratedValue(strategy =
+    GenerationType.IDENTITY)
+  private Long id;
+
+  private String email;
+  private String password;
+  private String fullName;
+  private Role role;
+}</pre>
+        <h3>Popular Lombok Annotations:</h3>
+        <ul>
+          <li><code>@Getter/@Setter</code> — auto generate</li>
+          <li><code>@NoArgsConstructor</code> — empty constructor</li>
+          <li><code>@AllArgsConstructor</code> — full constructor</li>
+          <li><code>@Builder</code> — Builder pattern</li>
+          <li><code>@Data</code> — combines all</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DTO — DATA TRANSFER OBJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3 types of data in Spring Boot:</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Purpose</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Entity</strong></td><td>Maps to DB table, contains all fields</td><td>User.java (@Entity)</td></tr>
+            <tr><td><strong>DTO</strong></td><td>Transfers data via API, only necessary fields</td><td>UserDTO.java</td></tr>
+            <tr><td><strong>Domain Model</strong></td><td>Business objects, contains business logic</td><td>Report, Calculator</td></tr>
+          </tbody>
+        </table>
+        <h3>Why use DTO?</h3>
+        <ul>
+          <li>Don't expose the entire Entity (e.g., password)</li>
+          <li>Reduce data transfer (only needed fields)</li>
+          <li>Increase security (hide internal structure)</li>
+          <li>Decouple API contract from DB schema</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Example: Entity vs DTO</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Entity — has password, internal fields
+@Entity
+public class User {
+  private Long id;
+  private String email;
+  private String password;  // DO NOT expose!
+  private String fullName;
+  private Role role;
+  private LocalDateTime createdAt;
+}
+
+// DTO — only fields needed for API
+@Data
+public class UserDTO {
+  private Long id;
+  private String email;
+  // NO password
+  private String fullName;
+  private String role;
+}
+
+// CreateUserDTO — input for POST
+@Data
+public class CreateUserDTO {
+  @NotBlank
+  private String email;
+  @Size(min = 8)
+  private String password;
+  private String fullName;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REPOSITORY — DATA ACCESS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Repository</strong> is an interface providing CRUD operations for entities — the bridge to the database.</p>
+        <h3>Extends interfaces:</h3>
+        <table class="table-small">
+          <thead><tr><th>Interface</th><th>Provides</th></tr></thead>
+          <tbody>
+            <tr><td><code>CrudRepository</code></td><td>save, findById, findAll, delete</td></tr>
+            <tr><td><code>JpaRepository</code></td><td>CRUD + paging + sorting + flush</td></tr>
+            <tr><td><code>PagingAndSortingRepository</code></td><td>CRUD + paging + sorting</td></tr>
+          </tbody>
+        </table>
+        <h3>Built-in methods:</h3>
+        <ul>
+          <li><code>save(entity)</code> — insert or update</li>
+          <li><code>findById(id)</code> — find by ID</li>
+          <li><code>findAll()</code> — get all</li>
+          <li><code>deleteById(id)</code> — delete by ID</li>
+          <li><code>count()</code> — count records</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Example: UserRepository</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Repository
+public interface UserRepository
+    extends JpaRepository&lt;User, Long&gt; {
+
+  // Query by method name
+  Optional&lt;User&gt; findByEmail(String email);
+  List&lt;User&gt; findByRole(Role role);
+  boolean existsByEmail(String email);
+
+  // Custom query
+  @Query("SELECT u FROM User u "
+    + "WHERE u.fullName LIKE %:name%")
+  List&lt;User&gt; searchByName(
+    @Param("name") String name);
+
+  // Native SQL
+  @Query(value = "SELECT * FROM users "
+    + "WHERE role = ?1",
+    nativeQuery = true)
+  List&lt;User&gt; findByRoleNative(String role);
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SERVICE — BUSINESS LOGIC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Service</strong> contains business logic — the bridge between Controller and Repository.</p>
+        <h3>Roles:</h3>
+        <ul>
+          <li>Process business rules</li>
+          <li>Call Repository to access DB</li>
+          <li>Keep Controller simple (thin controller)</li>
+          <li>Transaction management (<code>@Transactional</code>)</li>
+          <li>Validation, transformation, calculations</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Example: UserService</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+  private final UserRepository userRepo;
+
+  public List&lt;User&gt; getAllUsers() {
+    return userRepo.findAll();
+  }
+
+  public User getUserById(Long id) {
+    return userRepo.findById(id)
+      .orElseThrow(() ->
+        new ResourceNotFoundException(
+          "User not found: " + id));
+  }
+
+  @Transactional
+  public User createUser(UserDTO dto) {
+    if (userRepo.existsByEmail(dto.getEmail()))
+      throw new DuplicateException("Email exists");
+    User user = User.builder()
+      .email(dto.getEmail())
+      .password(encoder.encode(dto.getPassword()))
+      .fullName(dto.getFullName())
+      .role(Role.STUDENT)
+      .build();
+    return userRepo.save(user);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CONTROLLER — HANDLING HTTP REQUESTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Controller</strong> handles HTTP requests from clients and sends responses.</p>
+        <h3>Annotations:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>@RestController</code></td><td>Marks REST controller</td></tr>
+            <tr><td><code>@RequestMapping</code></td><td>Base path (/api/users)</td></tr>
+            <tr><td><code>@GetMapping</code></td><td>Handle GET request</td></tr>
+            <tr><td><code>@PostMapping</code></td><td>Handle POST request</td></tr>
+            <tr><td><code>@PutMapping</code></td><td>Handle PUT request</td></tr>
+            <tr><td><code>@DeleteMapping</code></td><td>Handle DELETE request</td></tr>
+            <tr><td><code>@PathVariable</code></td><td>Get param from URL</td></tr>
+            <tr><td><code>@RequestBody</code></td><td>Get data from body (JSON)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Example: UserController</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+
+  private final UserService userService;
+
+  @GetMapping
+  public List&lt;User&gt; getAll() {
+    return userService.getAllUsers();
+  }
+
+  @GetMapping("/{id}")
+  public User getById(@PathVariable Long id) {
+    return userService.getUserById(id);
+  }
+
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public User create(@RequestBody UserDTO dto) {
+    return userService.createUser(dto);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    userService.deleteUser(id);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REQUEST PROCESSING FLOW</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Client Request</h4><p>Client sends HTTP request (GET, POST...) to an endpoint in the Controller. E.g.: <code>GET /api/users/1</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Controller Handling</h4><p>Controller receives request, validates input, calls the corresponding method in Service. E.g.: <code>userService.getUserById(1)</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Service Logic</h4><p>Service processes business logic, calls Repository. E.g.: check permissions, transform data, call <code>userRepo.findById(1)</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Repository → Database</h4><p>Repository executes SQL query through JPA/Hibernate. E.g.: <code>SELECT * FROM users WHERE id = 1</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Response to Client</h4><p>Results return in reverse: DB → Repository → Service → Controller → JSON Response (200 OK)</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BUILD & RUN PROJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Build with Maven:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Build JAR
+mvn clean package
+
+# Output: target/my-app-0.0.1.jar
+
+# Run
+java -jar target/my-app-0.0.1.jar
+
+# Run with profile
+java -jar my-app.jar --spring.profiles.active=prod</pre>
+        <h3>Build with Gradle:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Build JAR
+./gradlew bootJar
+
+# Output: build/libs/my-app-0.0.1.jar
+
+# Run
+java -jar build/libs/my-app-0.0.1.jar</pre>
+      </div>
+      <div class="col">
+        <h3>Docker deployment:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Dockerfile
+FROM openjdk:17-slim
+COPY target/my-app.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# docker-compose.yml
+services:
+  app:
+    build: .
+    ports: ["8080:8080"]
+    depends_on: [mysql]
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: mydb
+    ports: ["3306:3306"]</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VALIDATION WITH BEAN VALIDATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot integrates Bean Validation (JSR 380) — automatically validates input via annotations. <a class="ref" href="https://beanvalidation.org/" target="_blank">[Bean Validation]</a></p>
+        <h3>Common Annotations:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>@NotNull</code></td><td>Must not be null</td></tr>
+            <tr><td><code>@NotBlank</code></td><td>String must not be null/empty/whitespace</td></tr>
+            <tr><td><code>@NotEmpty</code></td><td>Collection/String must not be empty</td></tr>
+            <tr><td><code>@Size(min, max)</code></td><td>String/Collection length</td></tr>
+            <tr><td><code>@Min/@Max</code></td><td>Minimum/maximum value</td></tr>
+            <tr><td><code>@Email</code></td><td>Valid email</td></tr>
+            <tr><td><code>@Pattern</code></td><td>Regex pattern</td></tr>
+            <tr><td><code>@Past/@Future</code></td><td>Date in the past/future</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Example: DTO with Validation</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Data
+public class CreateUserDTO {
+  @NotBlank(message = "Email is required")
+  @Email(message = "Email is invalid")
+  private String email;
+
+  @NotBlank
+  @Size(min = 8, max = 100,
+    message = "Password must be 8-100 characters")
+  private String password;
+
+  @NotBlank
+  @Size(max = 100)
+  private String fullName;
+
+  @Min(value = 18, message = "Age must be >= 18")
+  private Integer age;
+}
+
+// Controller — add @Valid
+@PostMapping
+public User create(
+    @Valid @RequestBody CreateUserDTO dto) {
+  return userService.createUser(dto);
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GLOBAL EXCEPTION HANDLING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Use <code>@ControllerAdvice</code> + <code>@ExceptionHandler</code> for centralized error handling, returning standardized responses to clients.</p>
+        <h3>Benefits:</h3>
+        <ul>
+          <li>Clean code — no try/catch in each controller</li>
+          <li>Consistent response format</li>
+          <li>Centralized logging</li>
+          <li>Easy to maintain</li>
+        </ul>
+        <h3>Custom Exception:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException
+    extends RuntimeException {
+  public ResourceNotFoundException(String msg) {
+    super(msg);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Global Exception Handler:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+  @ExceptionHandler(
+    ResourceNotFoundException.class)
+  public ResponseEntity&lt;ErrorResponse&gt;
+      handleNotFound(
+        ResourceNotFoundException ex) {
+    return ResponseEntity
+      .status(HttpStatus.NOT_FOUND)
+      .body(new ErrorResponse(
+        "NOT_FOUND", ex.getMessage()));
+  }
+
+  @ExceptionHandler(
+    MethodArgumentNotValidException.class)
+  public ResponseEntity&lt;ErrorResponse&gt;
+      handleValidation(
+        MethodArgumentNotValidException ex) {
+    Map&lt;String,String&gt; errors = new HashMap&lt;&gt;();
+    ex.getBindingResult().getFieldErrors()
+      .forEach(err -> errors.put(
+        err.getField(),
+        err.getDefaultMessage()));
+    return ResponseEntity.badRequest()
+      .body(new ErrorResponse(
+        "VALIDATION_ERROR", errors));
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOGGING WITH SLF4J & LOGBACK</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot uses <strong>SLF4J</strong> (interface) + <strong>Logback</strong> (implementation) as default.</p>
+        <h3>5 levels:</h3>
+        <table class="table-small">
+          <thead><tr><th>Level</th><th>When to use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TRACE</strong></td><td>Most detailed, deep debugging</td></tr>
+            <tr><td><strong>DEBUG</strong></td><td>Development debug information</td></tr>
+            <tr><td><strong>INFO</strong></td><td>Important events (default)</td></tr>
+            <tr><td><strong>WARN</strong></td><td>Warnings, still operational</td></tr>
+            <tr><td><strong>ERROR</strong></td><td>Errors that need handling</td></tr>
+          </tbody>
+        </table>
+        <h3>Configuration in application.properties:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+logging.level.root=INFO
+logging.level.com.example=DEBUG
+logging.file.name=logs/app.log
+logging.pattern.console=
+  %d{HH:mm:ss} %-5level %logger{36} - %msg%n</pre>
+      </div>
+      <div class="col">
+        <h3>Usage in code:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+@Slf4j  // Lombok auto-creates logger
+public class UserService {
+
+  public User createUser(UserDTO dto) {
+    log.info("Creating user: {}", dto.getEmail());
+
+    try {
+      User user = userRepo.save(...);
+      log.debug("User saved with id: {}",
+        user.getId());
+      return user;
+    } catch (Exception e) {
+      log.error("Failed to create user: {}",
+        dto.getEmail(), e);
+      throw new ServiceException(
+        "Cannot create user", e);
+    }
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Structured Logging</strong> with JSON format is widely used for microservices — easy to search, filter, and analyze in ELK Stack or Datadog.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PAGINATION & SORTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Data JPA supports <strong>Pagination & Sorting</strong> out of the box — no need to write SQL <code>LIMIT/OFFSET</code>.</p>
+        <h3>Repository:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public interface UserRepository
+    extends JpaRepository&lt;User, Long&gt; {
+
+  // Pageable is already available from JpaRepository
+  Page&lt;User&gt; findByRole(
+    Role role, Pageable pageable);
+
+  Page&lt;User&gt; findByEmailContaining(
+    String email, Pageable pageable);
+}</pre>
+        <h3>Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public Page&lt;User&gt; getUsers(
+    int page, int size, String sortBy) {
+  Pageable pageable = PageRequest.of(
+    page, size, Sort.by(sortBy).descending());
+  return userRepo.findAll(pageable);
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Controller:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@GetMapping
+public Page&lt;User&gt; getAll(
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size,
+    @RequestParam(defaultValue = "id") String sort) {
+  return userService.getUsers(page, size, sort);
+}
+
+// Or use Pageable directly
+@GetMapping
+public Page&lt;User&gt; getAll(Pageable pageable) {
+  return userRepo.findAll(pageable);
+}</pre>
+        <h3>Request example:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+GET /api/users?page=0&amp;size=10&amp;sort=createdAt,desc
+
+Response:
+{
+  "content": [...],
+  "totalElements": 100,
+  "totalPages": 10,
+  "number": 0,
+  "size": 10
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ADVANCED</h1>
+    <p class="section-desc">DTO — Data Types — Bean Life Cycle — Build & Run</p>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>API DOCUMENTATION WITH SWAGGER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>SpringDoc OpenAPI</strong> automatically generates API documentation from code, with a UI for testing APIs. <a class="ref" href="https://springdoc.org/" target="_blank">[springdoc.org]</a></p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
+  &lt;artifactId&gt;
+    springdoc-openapi-starter-webmvc-ui
+  &lt;/artifactId&gt;
+  &lt;version&gt;2.3.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+        <p>Access:</p>
+        <ul>
+          <li><strong>Swagger UI:</strong> <code>/swagger-ui.html</code></li>
+          <li><strong>OpenAPI JSON:</strong> <code>/v3/api-docs</code></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Annotations:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@Tag(name = "User", description = "User APIs")
+public class UserController {
+
+  @Operation(summary = "Get all users")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200"),
+    @ApiResponse(responseCode = "401")
+  })
+  @GetMapping
+  public Page&lt;UserDTO&gt; getAll(
+      @Parameter(description = "Page number")
+      @RequestParam(defaultValue = "0") int page) {
+    return userService.getAll(page);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CACHING IN SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Caching improves performance by storing results in memory, avoiding repeated DB queries.</p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+@SpringBootApplication
+@EnableCaching
+public class MyAppApplication { }</pre>
+        <h3>Cache providers:</h3>
+        <ul>
+          <li><strong>ConcurrentMap</strong> — default</li>
+          <li><strong>Caffeine</strong> — high performance local</li>
+          <li><strong>Redis</strong> — distributed cache</li>
+          <li><strong>EhCache, Hazelcast</strong> — enterprise</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Usage:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class CourseService {
+
+  @Cacheable(value = "courses", key = "#id")
+  public Course getById(Long id) {
+    log.info("Loading from DB: {}", id);
+    return courseRepo.findById(id).orElseThrow();
+  }
+
+  @CacheEvict(value = "courses", key = "#id")
+  public Course update(Long id, CourseDTO dto) {
+    // Evict cache on update
+  }
+
+  @CacheEvict(value = "courses",
+    allEntries = true)
+  public void clearAll() { }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p><strong>Redis</strong> is the most popular cache for microservices — distributed, persistent, supports pub/sub.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ASYNC & SCHEDULED TASKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>@Async — Asynchronous:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootApplication
+@EnableAsync
+public class MyAppApplication { }
+
+@Service
+public class EmailService {
+
+  @Async
+  public void sendWelcomeEmail(String email) {
+    // Takes 5-10s, does not block request
+    log.info("Sending email to {}", email);
+    mailSender.send(...);
+  }
+}
+
+// Controller
+@PostMapping
+public User register(@RequestBody UserDTO dto) {
+  User user = userService.create(dto);
+  emailService.sendWelcomeEmail(user.getEmail());
+  return user; // Returns immediately, no waiting
+}</pre>
+      </div>
+      <div class="col">
+        <h3>@Scheduled — Cron Jobs:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootApplication
+@EnableScheduling
+public class MyAppApplication { }
+
+@Component
+@Slf4j
+public class ReportScheduler {
+
+  // Every 5 seconds
+  @Scheduled(fixedRate = 5000)
+  public void healthCheck() {
+    log.info("Health check OK");
+  }
+
+  // Every day at 2 AM (cron)
+  @Scheduled(cron = "0 0 2 * * *")
+  public void generateDailyReport() {
+    log.info("Generating daily report...");
+    reportService.generateDaily();
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE MIGRATION WITH FLYWAY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Flyway</strong> manages DB schema with version control — replaces <code>ddl-auto=update</code> for production. <a class="ref" href="https://flywaydb.org/" target="_blank">[flywaydb.org]</a></p>
+        <h3>Why is it needed?</h3>
+        <ul>
+          <li><strong>Versioned</strong> — schema has history, can rollback</li>
+          <li><strong>Reproducible</strong> — same DB across all environments</li>
+          <li><strong>Team collaboration</strong> — migrations in Git</li>
+          <li><strong>Production safe</strong> — no unintended schema changes</li>
+        </ul>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.flywaydb&lt;/groupId&gt;
+  &lt;artifactId&gt;flyway-mysql&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>File structure:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+src/main/resources/db/migration/
+  V1__create_users_table.sql
+  V2__add_email_index.sql
+  V3__create_courses_table.sql
+  V4__add_role_column.sql</pre>
+        <h3>Example: V1__create_users_table.sql</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+CREATE TABLE users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_email (email)
+) ENGINE=InnoDB CHARSET=utf8mb4;</pre>
+        <p style="font-size:13px; color:#C00000; margin-top:8px;">⚠️ DO NOT modify already applied migrations — create new migrations instead.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING PROFILES — DEV / STAGING / PROD</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Profiles allow different configurations for each environment — different DB, log level, security.</p>
+        <h3>File structure:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+src/main/resources/
+  application.yml           ← Common config
+  application-dev.yml       ← Dev environment
+  application-staging.yml   ← Staging
+  application-prod.yml      ← Production</pre>
+        <h3>Main application.yml:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+spring:
+  application:
+    name: my-app
+  profiles:
+    active: dev  # Default profile</pre>
+      </div>
+      <div class="col">
+        <h3>application-prod.yml:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+spring:
+  datasource:
+    url: jdbc:mysql://prod-db:3306/mydb
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: validate  # DO NOT update prod!
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.example: INFO
+  file:
+    name: /var/log/app.log
+
+server:
+  port: 8080
+  ssl:
+    enabled: true</pre>
+        <h3>Run with a specific profile:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+java -jar app.jar --spring.profiles.active=prod
+# Or env var
+SPRING_PROFILES_ACTIVE=prod java -jar app.jar</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING BOOT ACTUATOR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Actuator provides <strong>production-ready features</strong> — health checks, metrics, monitoring via HTTP endpoints. <a class="ref" href="https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html" target="_blank">[Spring Docs]</a></p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;
+    spring-boot-starter-actuator
+  &lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+        <h3>Important endpoints:</h3>
+        <table class="table-small">
+          <thead><tr><th>Endpoint</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>/actuator/health</td><td>Health check (UP/DOWN)</td></tr>
+            <tr><td>/actuator/info</td><td>App info, version</td></tr>
+            <tr><td>/actuator/metrics</td><td>Memory, CPU, threads</td></tr>
+            <tr><td>/actuator/env</td><td>Environment variables</td></tr>
+            <tr><td>/actuator/loggers</td><td>View/change log levels</td></tr>
+            <tr><td>/actuator/mappings</td><td>All endpoints</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Configuration:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true</pre>
+        <h3>Example response /health:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+{
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP",
+      "details": {
+        "database": "MySQL",
+        "validationQuery": "isValid()"
+      }
+    },
+    "diskSpace": {"status": "UP"},
+    "ping": {"status": "UP"}
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING IN SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Types of tests:</h3>
+        <table class="table-small">
+          <thead><tr><th>Type</th><th>Annotation</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Unit Test</td><td>@Mock, @InjectMocks</td><td>Test 1 class in isolation</td></tr>
+            <tr><td>Slice Test</td><td>@WebMvcTest, @DataJpaTest</td><td>Test 1 layer</td></tr>
+            <tr><td>Integration</td><td>@SpringBootTest</td><td>Test the entire app</td></tr>
+          </tbody>
+        </table>
+        <h3>Unit Test with Mockito:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+  @Mock UserRepository userRepo;
+  @InjectMocks UserService userService;
+
+  @Test
+  void shouldFindUserById() {
+    User user = new User(1L, "test@cmc.vn");
+    when(userRepo.findById(1L))
+      .thenReturn(Optional.of(user));
+
+    User found = userService.getUserById(1L);
+
+    assertEquals("test@cmc.vn", found.getEmail());
+    verify(userRepo).findById(1L);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Integration Test with MockMvc:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserControllerTest {
+
+  @Autowired MockMvc mockMvc;
+
+  @Test
+  void shouldGetAllUsers() throws Exception {
+    mockMvc.perform(get("/api/users"))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$").isArray());
+  }
+
+  @Test
+  void shouldCreateUser() throws Exception {
+    String json = """
+      {
+        "email": "new@cmc.vn",
+        "password": "secret123",
+        "fullName": "New User"
+      }
+      """;
+    mockMvc.perform(post("/api/users")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath("$.email")
+        .value("new@cmc.vn"));
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CORS — CONNECTING ANGULAR & SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>CORS</strong> (Cross-Origin Resource Sharing) — allows Angular (port 4200) to call Spring Boot API (port 8080). By default, browsers block cross-origin requests.</p>
+        <h3>Method 1: @CrossOrigin annotation</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200")
+public class UserController { ... }</pre>
+        <h3>Method 2: Global config</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@Configuration
+public class WebConfig
+    implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(
+      CorsRegistry registry) {
+    registry.addMapping("/api/**")
+      .allowedOrigins("http://localhost:4200")
+      .allowedMethods("GET","POST","PUT","DELETE")
+      .allowedHeaders("*")
+      .allowCredentials(true);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Method 3: Spring Security Config</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Bean
+public CorsConfigurationSource
+    corsConfigurationSource() {
+  CorsConfiguration config =
+    new CorsConfiguration();
+  config.setAllowedOrigins(
+    List.of("http://localhost:4200",
+      "https://myapp.cmc.vn"));
+  config.setAllowedMethods(
+    List.of("GET","POST","PUT","DELETE"));
+  config.setAllowedHeaders(List.of("*"));
+  config.setAllowCredentials(true);
+
+  UrlBasedCorsConfigurationSource source =
+    new UrlBasedCorsConfigurationSource();
+  source.registerCorsConfiguration(
+    "/**", config);
+  return source;
+}
+
+// In SecurityFilterChain
+http.cors(cors ->
+  cors.configurationSource(
+    corsConfigurationSource()));</pre>
+        <p style="font-size:13px; color:#C00000;">⚠️ DO NOT use <code>allowedOrigins("*")</code> with <code>allowCredentials(true)</code> — the browser will block it.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING BOOT BEST PRACTICES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Do:</h3>
+        <ul>
+          <li><strong>Constructor injection</strong> — don't use @Autowired field</li>
+          <li><strong>DTO for API</strong> — don't expose Entity directly</li>
+          <li><strong>@Transactional</strong> at Service layer</li>
+          <li><strong>Validation</strong> with @Valid + Bean Validation</li>
+          <li><strong>Global exception handler</strong> with @ControllerAdvice</li>
+          <li><strong>application-{profile}.yml</strong> — separate config per environment</li>
+          <li><strong>Contextual logging</strong> — log.info("User {} created", id)</li>
+          <li><strong>Pagination</strong> for list endpoints</li>
+          <li><strong>HTTPS</strong> for production</li>
+          <li><strong>Environment variables</strong> for secrets (DO NOT commit passwords)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Avoid:</h3>
+        <ul>
+          <li>❌ Field injection (@Autowired field)</li>
+          <li>❌ Return Entity from Controller</li>
+          <li>❌ Business logic in Controller</li>
+          <li>❌ <code>ddl-auto=update</code> in production</li>
+          <li>❌ Hardcode credentials in code</li>
+          <li>❌ N+1 query problem (use @EntityGraph or fetch join)</li>
+          <li>❌ Catch generic Exception — catch specific ones</li>
+          <li>❌ Synchronized methods — use @Async when needed</li>
+          <li>❌ No tests → prone to bugs</li>
+          <li>❌ Using <code>Optional</code> as field or parameter</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Spring Boot 3.2+ supports <strong>Virtual Threads</strong> (Project Loom) — handles millions of concurrent requests with very little memory.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMMON ERRORS & SOLUTIONS</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Error</th><th style="width:35%">Cause</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Port 8080 already in use</strong></td><td>Another process is occupying the port</td><td>Change <code>server.port</code> or kill the process</td></tr>
+        <tr><td><strong>Failed to configure DataSource</strong></td><td>Missing DB config or DB is not running</td><td>Check <code>application.yml</code>, start MySQL</td></tr>
+        <tr><td><strong>NoSuchBeanDefinitionException</strong></td><td>Bean not created (missing @Component/@Service)</td><td>Add annotation, check @ComponentScan</td></tr>
+        <tr><td><strong>LazyInitializationException</strong></td><td>Accessing lazy collection outside transaction</td><td>Use @Transactional or fetch eager</td></tr>
+        <tr><td><strong>404 Not Found</strong></td><td>Wrong URL, controller missing @RequestMapping</td><td>Check path, /actuator/mappings</td></tr>
+        <tr><td><strong>403 Forbidden</strong></td><td>Spring Security blocks request</td><td>Configure SecurityFilterChain</td></tr>
+        <tr><td><strong>CORS error in browser</strong></td><td>Frontend calling from different origin</td><td>Configure CORS (previous slide)</td></tr>
+        <tr><td><strong>JsonMappingException</strong></td><td>Circular reference (User → Order → User)</td><td>Use @JsonIgnore or @JsonManagedReference</td></tr>
+        <tr><td><strong>OutOfMemoryError</strong></td><td>Small heap or memory leak</td><td>Increase -Xmx, profile with VisualVM</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUMMARY & REVIEW QUESTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core knowledge:</h3>
+        <ul>
+          <li><strong>Spring Boot</strong> = Java framework, auto-config, embedded server</li>
+          <li><strong>MVC:</strong> Controller → Service → Repository → Entity</li>
+          <li><strong>REST:</strong> HTTP methods, status codes, JSON, stateless</li>
+          <li><strong>Entity</strong> = @Entity, maps to DB table</li>
+          <li><strong>Repository</strong> = JpaRepository, CRUD + custom queries</li>
+          <li><strong>Service</strong> = @Service, business logic</li>
+          <li><strong>Controller</strong> = @RestController, handles HTTP</li>
+          <li><strong>DTO</strong> = data transfer, don't expose Entity</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Review questions:</h3>
+        <ul>
+          <li>1. What are the advantages of Spring Boot?</li>
+          <li>2. Explain the request processing flow in Spring MVC.</li>
+          <li>3. How is Entity different from DTO? Why use DTO?</li>
+          <li>4. What are the main Entity annotations?</li>
+          <li>5. What methods does JpaRepository provide?</li>
+          <li>6. @RestController vs @Controller?</li>
+          <li>7. How many phases does Bean Life Cycle have?</li>
+          <li>8. How to build and deploy a Spring Boot project?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Questions? Discussion?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+</body>
+</html>

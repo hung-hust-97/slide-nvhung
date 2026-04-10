@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 04 - Lập trình hướng đối tượng với Dart</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG<br>VỚI DART</h1>
+    <p class="subtitle">Async Programming, OOP Principles, Inheritance & Mixins</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <img src="assets/dart-oop.png" alt="Dart OOP">
+    <h1>LẬP TRÌNH DART NÂNG CAO</h1>
+    <p class="section-desc">Async/Await, lập trình hướng đối tượng, kế thừa và mixins trong Dart</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐỒNG BỘ VS BẤT ĐỒNG BỘ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Synchronous (Đồng bộ)</h3>
+        <p>Code Dart chạy trên <strong>1 thread</strong>, thực thi từng câu lệnh một.</p>
+        <p style="margin-top:8px;">Nếu 1 khối code chặn thread (đọc file, gọi API), <span class="accent">toàn bộ ứng dụng sẽ bị treo</span>.</p>
+        <div class="quote-box" style="margin-top:10px;">
+          <p style="font-family:monospace; font-size:14px; color:#333;">
+            void main() {<br>
+            &nbsp;&nbsp;print("Start processing");<br>
+            &nbsp;&nbsp;processData(); // Chặn!<br>
+            &nbsp;&nbsp;print("End");<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Asynchronous (Bất đồng bộ)</h3>
+        <p>Khi 1 method đang làm việc, <strong>khối code khác vẫn được thực thi</strong>. Cảm giác như đa luồng (thực ra vẫn là 1 thread).</p>
+        <p style="margin-top:8px;">Dart dùng <span class="highlight">Future&lt;T&gt;</span> và từ khóa <span class="highlight">async/await</span>.</p>
+        <div class="quote-box" style="margin-top:10px;">
+          <p style="font-family:monospace; font-size:14px; color:#333;">
+            void main() async {<br>
+            &nbsp;&nbsp;print("Start");<br>
+            &nbsp;&nbsp;await fetchData();<br>
+            &nbsp;&nbsp;print("Done!");<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FUTURE&lt;T&gt; TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>Future&lt;T&gt; là object đại diện cho một <strong>giá trị sẽ được cung cấp trong tương lai</strong> — tức method trả về kết quả không tức thì mà sau một khoảng thời gian tính toán.</p>
+    </div>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <h3>Đặc điểm</h3>
+        <ul>
+          <li>Method trả về <code>Future&lt;T&gt;</code> không cung cấp kết quả ngay lập tức</li>
+          <li>Kết quả được "delivery" khi computation hoàn tất</li>
+          <li>Dùng cho: gọi API, đọc file, database query, network request</li>
+          <li>Non-blocking — ứng dụng tiếp tục chạy trong khi chờ</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/future-timeline.png" alt="Future Timeline">
+        <p class="img-caption">Future&lt;T&gt; — kết quả trong tương lai<br>Nguồn: dart.dev</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ASYNC VÀ AWAIT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Từ khóa async</h3>
+        <p>Function được khai báo với từ khóa <code>async</code> sau dấu <code>()</code>. Object trả về luôn là <code>Future&lt;T&gt;</code>.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            Future&lt;void&gt; myAsyncFunction() async {<br>
+            &nbsp;&nbsp;// Asynchronous operations here<br>
+            }
+          </p>
+        </div>
+        <h3 style="margin-top:12px;">Từ khóa await</h3>
+        <p>Dùng <code>await</code> để <strong>chờ expression hoàn thành</strong> trước khi thực thi dòng tiếp theo trong function.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            await expression;
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ thực tế</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Future&lt;void&gt; fetchData() async {<br>
+            &nbsp;&nbsp;print("Starting data fetch...");<br>
+            &nbsp;&nbsp;await Future.delayed(Duration(seconds: 2));<br>
+            &nbsp;&nbsp;print("Data has been fetched!");<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;print("Program started");<br>
+            &nbsp;&nbsp;fetchData(); // Không chặn!<br>
+            &nbsp;&nbsp;print("Program ended");<br>
+            }
+          </p>
+        </div>
+        <p style="margin-top:8px; font-size:13px; color:#555;">Output: Program started → Program ended → Starting... → Data fetched!</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ ASYNC/AWAIT THỰC TẾ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>API Call Pattern</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Mô phỏng gọi API lấy danh sách sản phẩm<br><br>
+            Future&lt;List&lt;Product&gt;&gt; fetchProducts() async {<br>
+            &nbsp;&nbsp;// Gọi API, đợi response<br>
+            &nbsp;&nbsp;var response = await http.get(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Uri.parse('https://api.example.com/products'));<br>
+            &nbsp;&nbsp;// Parse JSON<br>
+            &nbsp;&nbsp;var data = jsonDecode(response.body);<br>
+            &nbsp;&nbsp;return data.map((e) =&gt; Product.fromJson(e)).toList();<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Error Handling với try-catch</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Future&lt;User&gt; login(String email, String password) async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var response = await authService.login(email, password);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return User.fromJson(response.data);<br>
+            &nbsp;&nbsp;} catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Login failed: $e");<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;rethrow; // Ném lỗi lên trên<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter 3.x</strong> tích hợp <strong>async/await</strong> xuyên suốt — từ API calls đến Firebase, local database (Hive, SQLite). Kết hợp với <strong>freezed</strong> để generate immutable data classes tự động.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>OOP TRONG DART — 5 NGUYÊN TẮC</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Objects &amp; Classes</h4>
+        <p>Class Dart chứa methods, fields và static members. Mọi thứ đều là object — bao gồm cả số và null.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Encapsulation</h4>
+        <p>Ẩn dữ liệu nội bộ, chỉ cho phép truy cập qua methods (getters/setters). Dùng <code>_</code> prefix cho private fields.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Inheritance</h4>
+        <p>Class kế thừa trực tiếp hoặc gián tiếp từ Object. Dart chỉ hỗ trợ <strong>single inheritance</strong>. Dùng <strong>mixins</strong> để thừa kế behavior.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>Abstraction</h4>
+        <p>Ẩn chi tiết implementation, chỉ expose functionality cần thiết. Dùng <code>abstract class</code> hoặc <code>interface</code>.</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>Polymorphism</h4>
+        <p>Object có thể nhận nhiều form qua method overriding. Dart cho phép overriding method nhưng <strong>không</strong> cho phép overloading.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS, CONSTRUCTOR VÀ METHODS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Ví dụ: Class Product</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Product {<br>
+            &nbsp;&nbsp;String manufacture = '';<br>
+            &nbsp;&nbsp;String name = '';<br>
+            &nbsp;&nbsp;var price;<br>
+            &nbsp;&nbsp;int quantity;<br><br>
+            &nbsp;&nbsp;// Constructor<br>
+            &nbsp;&nbsp;Product(var price, {int quantity = 0}) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.price = price;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;this.quantity = quantity;<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;// Method<br>
+            &nbsp;&nbsp;double calculateTotal() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.price * this.quantity;<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng Class</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            void main() {<br>
+            &nbsp;&nbsp;var p = Product(29.99, quantity: 3);<br>
+            &nbsp;&nbsp;var total = p.calculateTotal();<br>
+            &nbsp;&nbsp;print("Tổng: \$$total");<br>
+            &nbsp;&nbsp;// Output: Tổng: $89.97<br>
+            }
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Các loại Constructor</h3>
+        <ul style="font-size:16px;">
+          <li><span class="highlight">Default Constructor</span> — không tham số</li>
+          <li><span class="highlight">Parameterized Constructor</span> — có tham số</li>
+          <li><span class="highlight">Named Constructor</span> — Product.fromJson()</li>
+          <li><span class="highlight">Initializer List</span> — : assert(...)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GETTER VÀ SETTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Encapsulation với Getter/Setter</h3>
+        <p>Dùng <code>get</code> trước method không tham số để định nghĩa Getter, và <code>set</code> trước method có 1 tham số để định nghĩa Setter.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            class BankAccount {<br>
+            &nbsp;&nbsp;double _balance = 0.0;<br><br>
+            &nbsp;&nbsp;// Getter<br>
+            &nbsp;&nbsp;double get balance =&gt; _balance;<br><br>
+            &nbsp;&nbsp;// Setter cho nạp tiền<br>
+            &nbsp;&nbsp;set deposit(double amount) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (amount &gt; 0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_balance += amount;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            void main() {<br>
+            &nbsp;&nbsp;var account = BankAccount();<br>
+            &nbsp;&nbsp;account.deposit = 1000.0;<br>
+            &nbsp;&nbsp;print(account.balance);<br>
+            &nbsp;&nbsp;// Output: 1000.0<br><br>
+            &nbsp;&nbsp;account.deposit = -50.0; // Bị từ chối!<br>
+            &nbsp;&nbsp;print(account.balance);<br>
+            &nbsp;&nbsp;// Still: 1000.0<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Tại sao cần Getter/Setter?</h4>
+          <p>Kiểm soát truy cập, validate dữ liệu, bảo vệ dữ liệu internal — nguyên tắc Encapsulation trong OOP.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KẾ THỪA TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Từ khóa quan trọng</h3>
+        <ul>
+          <li><span class="highlight">extends</span> — kế thừa từ class cha</li>
+          <li><span class="highlight">super</span> — truy cập dữ liệu/thuộc tính cha</li>
+          <li><span class="highlight">@override</span> — ghi đè method của cha</li>
+          <li><span class="highlight">this</span> — tham chiếu đến object hiện tại</li>
+        </ul>
+        <div class="quote-box" style="margin-top:10px;">
+          <p style="font-family:monospace; font-size:13px;">
+            class Animal {<br>
+            &nbsp;&nbsp;String name;<br>
+            &nbsp;&nbsp;Animal(this.name);<br>
+            &nbsp;&nbsp;void makeSound() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("$name makes a sound.");<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            class Dog extends Animal {<br>
+            &nbsp;&nbsp;Dog(String name) : super(name);<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void makeSound() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("$name barks: Woof! Woof!");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            void main() {<br>
+            &nbsp;&nbsp;var dog = Dog("Buddy");<br>
+            &nbsp;&nbsp;dog.makeSound();<br>
+            &nbsp;&nbsp;// Output: Buddy barks: Woof! Woof!<br><br>
+            &nbsp;&nbsp;var animal = Animal("Generic");<br>
+            &nbsp;&nbsp;animal.makeSound();<br>
+            &nbsp;&nbsp;// Output: Generic makes a sound.<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Lưu ý quan trọng</h4>
+          <p>Dart chỉ hỗ trợ <strong>single inheritance</strong> (1 class chỉ extends 1 class cha). Dùng <strong>mixins</strong> để thừa kế nhiều behavior.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CASCADE OPERATOR, ABSTRACT CLASS VÀ INTERFACE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Cascade Operator (..)</h3>
+        <p>Thay vì viết object nhiều lần, dùng <code>..</code> để gọi liên tiếp các method.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            var person = Person()<br>
+            &nbsp;&nbsp;..name = "Lan"<br>
+            &nbsp;&nbsp;..age = 25<br>
+            &nbsp;&nbsp;..introduce();
+          </p>
+        </div>
+        <h3 style="margin-top:12px;">Abstract Class</h3>
+        <p>Không thể instantiate trực tiếp. Chứa <strong>abstract methods</strong> (không có implementation).</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            abstract class B {<br>
+            &nbsp;&nbsp;void displayInfo(); // Abstract<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Interface (implements)</h3>
+        <p>Class <code>implements</code> một interface phải định nghĩa TẤT CẢ methods và properties của interface đó.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Student implements Person {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;String name = '';<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void displayInfo() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Name: $name");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>freezed</strong> và <strong>sealed classes</strong> (Dart 3.0) thay thế abstract class cho immutable data models — giảm boilerplate, tăng type safety.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MIXINS TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm Mixin</h3>
+        <p>Mixin là class không dùng trực tiếp để tạo object. Nó cung cấp methods và properties để <strong>tái sử dụng</strong> trong các class khác.</p>
+        <p style="margin-top:8px;">Dùng từ khóa <code>with</code> để áp dụng mixin vào class.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            mixin Logger {<br>
+            &nbsp;&nbsp;void log(String message) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Log: $message");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ đầy đủ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class Service {<br>
+            &nbsp;&nbsp;void execute() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Executing service...");<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            class ServiceLogger extends Service with Logger {<br>
+            &nbsp;&nbsp;void doSomething() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;log("Doing something important...");<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;var s = ServiceLogger();<br>
+            &nbsp;&nbsp;s.execute();<br>
+            &nbsp;&nbsp;s.doSomething();<br>
+            }
+          </p>
+        </div>
+        <p style="margin-top:6px; font-size:13px; color:#555;">Output: Executing service... → Log: Doing something important...</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CALLABLE CLASSES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Class như Function</h3>
+        <p>Class Dart có thể hoạt động như function — có thể được gọi, nhận arguments và trả về kết quả.</p>
+        <p style="margin-top:8px;">Method <code>call()</code> là method đặc biệt — bất kỳ class nào định nghĩa nó có thể hoạt động như một function Dart bình thường.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:14px;">
+            class MyCallable {<br>
+            &nbsp;&nbsp;void call(String message) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("You called me with: $message");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng Callable Class</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            void main() {<br>
+            &nbsp;&nbsp;var obj = MyCallable();<br>
+            &nbsp;&nbsp;obj("Hello!"); // Gọi như function<br>
+            &nbsp;&nbsp;// Output: You called me with: Hello!<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:12px;">
+          <h4>Ứng dụng thực tế</h4>
+          <p>Dùng callable classes để tạo <strong>function objects</strong> với state, callback handlers, hoặc API clients trong Flutter. Kết hợp với <code>typedef</code> để define function type.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG</h1>
+    <p class="section-desc">Classes, Constructors, Inheritance, Abstraction và Polymorphism</p>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NAMED CONSTRUCTORS VÀ FACTORY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Named Constructor</h3>
+        <p>Cho phép tạo nhiều cách khởi tạo khác nhau cho cùng 1 class.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Point {<br>
+            &nbsp;&nbsp;double x, y;<br><br>
+            &nbsp;&nbsp;// Named constructor<br>
+            &nbsp;&nbsp;Point.origin()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: x = 0, y = 0;<br><br>
+            &nbsp;&nbsp;Point.custom(this.x, this.y);<br>
+            }
+          </p>
+        </div>
+        <h3 style="margin-top:12px;">Const Constructor</h3>
+        <p>Constructor với <code>const</code> tạo object <strong>compile-time constant</strong>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class ImmutablePoint {<br>
+            &nbsp;&nbsp;final double x, y;<br>
+            &nbsp;&nbsp;const ImmutablePoint(this.x, this.y);<br>
+            }<br>
+            const p = ImmutablePoint(3, 4);
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Factory Constructor</h3>
+        <p>Kiểm soát việc khởi tạo object — có thể trả về instance đã có sẵn hoặc subclass.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Logger {<br>
+            &nbsp;&nbsp;static final _cache = &lt;String, Logger&gt;{};<br><br>
+            &nbsp;&nbsp;factory Logger(String name) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return _cache.putIfAbsent(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name, () =&gt; Logger._internal(name));<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;Logger._internal(this.name);<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Khi nào dùng Factory?</h4>
+          <p>Singleton pattern, cache instances, khởi tạo có điều kiện, hoặc trả về subclass.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CONST VÀ STATIC TRONG CLASS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Const Constructor</h3>
+        <p>Constructor với <code>const</code> tạo object <strong>compile-time constant</strong> — tất cả fields phải là final.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class ImmutablePoint {<br>
+            &nbsp;&nbsp;final double x, y;<br><br>
+            &nbsp;&nbsp;const ImmutablePoint(this.x, this.y);<br>
+            }<br><br>
+            const p = ImmutablePoint(3, 4);
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Lợi ích</h4>
+          <p>Const objects được <strong>cache</strong> bởi Dart VM — tiết kiệm memory, so sánh bằng identity (cùng 1 object).</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Static Members</h3>
+        <p>Thuộc về <strong>class</strong>, không phải instance. Gọi qua <code>ClassName.member</code>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class MathUtils {<br>
+            &nbsp;&nbsp;static const pi = 3.14159;<br><br>
+            &nbsp;&nbsp;static double circleArea(double r) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return pi * r * r;<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;print(MathUtils.circleArea(5));<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Static vs Instance</h4>
+          <p>Static: gọi không cần tạo object. Instance: gọi qua variable. Static không truy cập <code>this</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KẾ THỪA SÂU — SUPER VÀ OVERRIDE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Constructor trong Inheritance</h3>
+        <p>Constructor của subclass <strong>phải gọi</strong> constructor của parent qua <code>super</code>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Vehicle {<br>
+            &nbsp;&nbsp;String brand;<br>
+            &nbsp;&nbsp;Vehicle(this.brand);<br>
+            }<br><br>
+            class Car extends Vehicle {<br>
+            &nbsp;&nbsp;int doors;<br>
+            &nbsp;&nbsp;// Gọi super constructor<br>
+            &nbsp;&nbsp;Car(String brand, this.doors)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: super(brand);<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Super để gọi Parent Method</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Parent {<br>
+            &nbsp;&nbsp;void greet() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Hello!");<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            class Child extends Parent {<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void greet() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;super.greet();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("And welcome!");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Quy tắc Override</h4>
+          <p>Dùng <code>@override</code> annotation — Dart sẽ báo lỗi nếu method không tồn tại ở parent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ABSTRACT CLASS — ĐỊNH NGHĨA VÀ VÍ DỤ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Abstract class là <strong>blueprint</strong> cho các class khác kế thừa. <span class="highlight">Không thể instantiate trực tiếp</span>.</p>
+        <p style="margin-top:8px;">Có thể chứa:</p>
+        <ul>
+          <li><strong>Abstract methods</strong> — không có body, subclass phải implement</li>
+          <li><strong>Concrete methods</strong> — có body, subclass có thể override</li>
+          <li><strong>Fields và constructors</strong></li>
+        </ul>
+        <div class="card accent-purple" style="margin-top:10px;">
+          <h4>So sánh</h4>
+          <p>Abstract class ≠ Interface: abstract class có thể có shared implementation, interface chỉ define contract.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ đầy đủ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            abstract class Shape {<br>
+            &nbsp;&nbsp;String color;<br>
+            &nbsp;&nbsp;Shape(this.color);<br><br>
+            &nbsp;&nbsp;// Abstract method<br>
+            &nbsp;&nbsp;double area();<br><br>
+            &nbsp;&nbsp;// Concrete method<br>
+            &nbsp;&nbsp;void describe() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Color: $color");<br>
+            &nbsp;&nbsp;}<br>
+            }<br><br>
+            class Circle extends Shape {<br>
+            &nbsp;&nbsp;double radius;<br>
+            &nbsp;&nbsp;Circle(String color, this.radius)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;: super(color);<br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;double area() =&gt; 3.14 * radius * radius;<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INTERFACE — IMPLEMENTS TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm Interface</h3>
+        <p>Interface là <strong>contract</strong> — class implement interface phải implement TẤT CẢ methods và properties của nó.</p>
+        <p style="margin-top:8px;">Trong Dart, <span class="highlight">mọi class đều là interface</span>. Dùng <code>implements</code> để implement.</p>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Khác với Abstract class</h4>
+          <p>Interface <strong>không có implementation mặc định</strong>. Subclass phải định nghĩa lại mọi thứ.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            abstract class Printable {<br>
+            &nbsp;&nbsp;void printInfo(); // Contract<br>
+            }<br><br>
+            class Report implements Printable {<br>
+            &nbsp;&nbsp;String title = '';<br>
+            &nbsp;&nbsp;DateTime date = DateTime.now();<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void printInfo() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("$title - $date");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            class Invoice implements Printable {<br>
+            &nbsp;&nbsp;double amount = 0;<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;void printInfo() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("Invoice: \$$amount");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MIXINS NÂNG CAO — WITH CLAUSE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao cần Mixins?</h3>
+        <p>Dart chỉ hỗ trợ <strong>single inheritance</strong> (1 class extends 1 class). Mixins cho phép kế thừa behavior từ nhiều nguồn.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            mixin Flyer {<br>
+            &nbsp;&nbsp;void fly() =&gt; print("Flying!");<br>
+            }<br><br>
+            mixin Swimmer {<br>
+            &nbsp;&nbsp;void swim() =&gt; print("Swimming!");<br>
+            }<br><br>
+            class Duck extends Animal with Flyer, Swimmer {}
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Mixin on Type</h3>
+        <p>Dùng <code>on</code> để giới hạn mixin chỉ áp dụng cho class nào đó.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            mixin Piloting on Aircraft {<br>
+            &nbsp;&nbsp;void pilot() =&gt; print("Piloting...");<br>
+            }<br><br>
+            // CHỉ áp dụng cho subclass của Aircraft<br>
+            class Helicopter extends Aircraft with Piloting {}
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Trong <strong>Flutter 3.x</strong>, mixins thường dùng với <strong>Riverpod</strong> (`StateNotifier` mixin) và animation controllers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CALLABLE CLASSES — THỰC HÀNH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khai báo Callable</h3>
+        <p>Class có method <code>call()</code> có thể được gọi như function thông thường.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            class TaxCalculator {<br>
+            &nbsp;&nbsp;final double rate;<br>
+            &nbsp;&nbsp;TaxCalculator(this.rate);<br><br>
+            &nbsp;&nbsp;double call(double amount) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return amount + (amount * rate);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            void main() {<br>
+            &nbsp;&nbsp;var tax = TaxCalculator(0.1);<br>
+            &nbsp;&nbsp;print(tax(1000)); // 1100.0<br>
+            &nbsp;&nbsp;print(tax(2500)); // 2750.0<br><br>
+            &nbsp;&nbsp;// Hoặc gọi trực tiếp<br>
+            &nbsp;&nbsp;var result = TaxCalculator(0.08)(500);<br>
+            &nbsp;&nbsp;print(result); // 540.0<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Ứng dụng</h4>
+          <p>Tạo function objects với state, validation callbacks, hoặc strategy pattern trong Flutter widgets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXTENSION METHODS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Thêm methods cho class có sẵn</h3>
+        <p>Extension methods cho phép thêm functionality cho class mà <strong>không cần kế thừa</strong> hoặc sửa source code.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            extension StringExtensions on String {<br>
+            &nbsp;&nbsp;bool get isEmail {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this.contains('@');<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;String capitalize() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return this[0].toUpperCase()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ substring(1);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            void main() {<br>
+            &nbsp;&nbsp;"hello".capitalize();<br>
+            &nbsp;&nbsp;// "Hello"<br><br>
+            &nbsp;&nbsp;"test@example.com".isEmail;<br>
+            &nbsp;&nbsp;// true<br><br>
+            &nbsp;&nbsp;"world".capitalize().isEmail;<br>
+            &nbsp;&nbsp;// false<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:10px;">
+          <h4>Khi nào dùng?</h4>
+          <p>Thêm utility methods cho String, int, List của thư viện bên thứ 3 hoặc Dart SDK mà không thể sửa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENUM TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Enum cơ bản</h3>
+        <p>Enum định nghĩa tập hợp cố định các giá trị. Dart enums là <strong>classes</strong> có thể có methods.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:14px;">
+            enum Priority { low, medium, high }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;var p = Priority.high;<br>
+            &nbsp;&nbsp;print(p.name); // "high"<br>
+            &nbsp;&nbsp;print(p.index); // 2<br><br>
+            &nbsp;&nbsp;for (var v in Priority.values) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print("${v.name}: ${v.index}");<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Enum với Properties và Methods</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            enum Status {<br>
+            &nbsp;&nbsp;pending(0, "Đang chờ"),<br>
+            &nbsp;&nbsp;active(1, "Đang hoạt động"),<br>
+            &nbsp;&nbsp;completed(2, "Hoàn thành");<br><br>
+            &nbsp;&nbsp;final int code;<br>
+            &nbsp;&nbsp;final String label;<br>
+            &nbsp;&nbsp;const Status(this.code, this.label);<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;print(Status.active.label);<br>
+            &nbsp;&nbsp;// "Đang hoạt động"<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Dart 3.0 Enhanced Enums</h4>
+          <p>Enum có thể implements interfaces, mix with mixins, và có static members — đủ để thay thế sealed classes trong nhiều trường hợp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SEALED CLASSES (DART 3.0)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Sealed class là <strong>abstract class</strong> nhưng các subclasses bị giới hạn trong cùng file. Dart <strong>biết trước tất cả subclasses</strong> — enable exhaustive switch expressions.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            sealed class Result {}<br><br>
+            class Success extends Result {<br>
+            &nbsp;&nbsp;final dynamic data;<br>
+            &nbsp;&nbsp;Success(this.data);<br>
+            }<br><br>
+            class Error extends Result {<br>
+            &nbsp;&nbsp;final String message;<br>
+            &nbsp;&nbsp;Error(this.message);<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Exhaustive Switch</h3>
+        <p>Dart yêu cầu xử lý <strong>tất cả cases</strong> — compiler báo lỗi nếu thiếu case.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            String describe(Result r) =&gt; switch (r) {<br>
+            &nbsp;&nbsp;Success(:final data) =&gt; "Data: $data",<br>
+            &nbsp;&nbsp;Error(:final message) =&gt; "Error: $message",<br>
+            };
+          </p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Sealed classes + records (Dart 3.0) là bộ đôi mạnh mẽ thay thế union types, dùng phổ biến trong BLoC states, API responses, và form validation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>THỰC HÀNH VÀ ÔN TẬP</h1>
+    <p class="section-desc">Bài tập, tổng kết và định hướng học tập</p>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — HỆ THỐNG QUẢN LÝ HỌC SINH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu</h3>
+        <ul>
+          <li>Xây dựng class hierarchy: <code>Person</code> → <code>Student</code>, <code>Teacher</code></li>
+          <li>Student có: mã SV, điểm trung bình, danh sách môn học</li>
+          <li>Teacher có: mã GV, danh sách môn dạy, lương</li>
+          <li>Dùng abstract class <code>Person</code> với method <code>displayInfo()</code></li>
+          <li>Dùng interface <code>Assessable</code> cho việc tính điểm</li>
+        </ul>
+        <h3 style="margin-top:10px;">Mục tiêu</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><p style="font-size:13px;">Thực hành inheritance và <code>super</code></p></div>
+          <div class="card accent-green"><p style="font-size:13px;">Thực hành abstract class và interface</p></div>
+          <div class="card accent-orange"><p style="font-size:13px;">Thực hành polymorphism</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Code skeleton</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Abstract base class<br>
+            abstract class Person {<br>
+            &nbsp;&nbsp;String name; int age;<br>
+            &nbsp;&nbsp;Person(this.name, this.age);<br>
+            &nbsp;&nbsp;void displayInfo();<br>
+            }<br><br>
+            // Student extends Person<br>
+            class Student extends Person {<br>
+            &nbsp;&nbsp;String studentId;<br>
+            &nbsp;&nbsp;List&lt;double&gt; grades = [];<br><br>
+            &nbsp;&nbsp;Student(name, age, this.studentId) : super(name, age);<br><br>
+            &nbsp;&nbsp;double get gpa {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (grades.isEmpty) return 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return grades.reduce((a,b) =&gt; a+b) / grades.length;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;@override void displayInfo() { ... }<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — MIXINS VÀ CASCADE OPERATOR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài 1: Mixin Logger</h3>
+        <p>Tạo hệ thống logging với mixins.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:12px;">
+            mixin ConsoleLogger {<br>
+            &nbsp;&nbsp;void log(String msg) =&gt; print('[LOG] $msg');<br>
+            }<br><br>
+            mixin FileLogger {<br>
+            &nbsp;&nbsp;void log(String msg) =&gt; _writeToFile('[LOG] $msg');<br>
+            }<br><br>
+            class AppService with ConsoleLogger, FileLogger {<br>
+            &nbsp;&nbsp;// Cả 2 log methods đều có thể dùng<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài 2: Cascade Operator</h3>
+        <p>Tạo object User và Order với cascade operator.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Thay vì<br>
+            var order = Order();<br>
+            order.id = 'ORD001';<br>
+            order.customer = 'Nguyen Van A';<br>
+            order.addItem(Product('Laptop', 1500));<br>
+            order.calculateTotal();<br><br>
+            // Dùng cascade<br>
+            var order = Order()<br>
+            &nbsp;&nbsp;..id = 'ORD001'<br>
+            &nbsp;&nbsp;..customer = 'Nguyen Van A'<br>
+            &nbsp;&nbsp;..addItem(Product('Laptop', 1500))<br>
+            &nbsp;&nbsp;..calculateTotal();
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ASYNC/AWAIT — BÀI TẬP API CALL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu</h3>
+        <p>Xây dựng function <code>fetchUserProfile()</code> gọi API, xử lý lỗi, và trả về User object.</p>
+        <div class="steps" style="margin-top:8px;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Tạo class <code>User</code> với named constructor <code>fromJson()</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>Viết <code>fetchUserProfile(String id)</code> với try-catch-finally</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Xử lý 3 loại lỗi: network, timeout, server error</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Code hoàn chỉnh</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            Future&lt;User&gt; fetchUserProfile(String id) async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final res = await http<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.get(Uri.parse('/users/$id'))<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.timeout(Duration(seconds: 10));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (res.statusCode == 200)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return User.fromJson(jsonDecode(res.body));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw HttpException('Server error: ${res.statusCode}');<br><br>
+            &nbsp;&nbsp;} on TimeoutException {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw NetworkException('Request timeout');<br>
+            &nbsp;&nbsp;} on SocketException {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw NetworkException('No internet');<br>
+            &nbsp;&nbsp;} catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;rethrow;<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT BÀI 4 — OOP VỚI DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Async Programming</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Future&lt;T&gt;</h4><p style="font-size:13px;">Giá trị trong tương lai — async operations</p></div>
+          <div class="card accent-green"><h4>async/await</h4><p style="font-size:13px;">Cú pháp đồng bộ cho code bất đồng bộ</p></div>
+          <div class="card accent-orange"><h4>try/catch/finally</h4><p style="font-size:13px;">Error handling cho async operations</p></div>
+        </div>
+        <h3 style="margin-top:12px;">OOP Principles</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Encapsulation</h4><p style="font-size:13px;">Getter/Setter, private fields (_)</p></div>
+          <div class="card accent-green"><h4>Inheritance</h4><p style="font-size:13px;">extends, super, @override</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Advanced OOP</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Abstraction</h4><p style="font-size:13px;">abstract class, abstract methods</p></div>
+          <div class="card accent-orange"><h4>Polymorphism</h4><p style="font-size:13px;">Method overriding, Dart no overloading</p></div>
+          <div class="card accent-green"><h4>Mixins</h4><p style="font-size:13px;">with clause, mixin on Type</p></div>
+          <div class="card accent-gold"><h4>Extension Methods</h4><p style="font-size:13px;">Thêm methods không cần kế thừa</p></div>
+          <div class="card accent-purple"><h4>Sealed Classes</h4><p style="font-size:13px;">Exhaustive switch (Dart 3.0)</p></div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Dart 3.0</strong>: Records, Patterns, Class modifiers (final, base, interface, mixin). <strong>Sealed classes + records</strong> là bộ công cụ mạnh thay thế union types.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Flutter Framework và Quản lý Trạng thái</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">30</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DART 3.0 — RECORDS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Record là một <strong>compound values</strong> — ghép nhiều giá trị vào 1 object không cần định nghĩa class. Immutable by default.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            // Positional record (2 fields)<br>
+            (String, int) user = ('Nguyen', 25);<br><br>
+            // Named record (2 fields)<br>
+            ({String name, int age}) user =<br>
+            &nbsp;&nbsp;(name: 'Nguyen', age: 25);<br><br>
+            print(user.name); // 'Nguyen'<br>
+            print(user.$2);   // 25 (positional)
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Tại sao cần Records?</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>Không cần class đơn giản</h4><p style="font-size:13px;">Thay thế data class cho response nhỏ, không cần methods</p></div>
+          <div class="card accent-green"><h4>Type-safe tuple</h4><p style="font-size:13px;">Mỗi field có type riêng — khác List/Map</p></div>
+          <div class="card accent-orange"><h4>Return nhiều giá trị</h4><p style="font-size:13px;">Thay thế tuple, out params trong các ngôn ngữ khác</p></div>
+          <div class="card accent-gold"><h4>Pattern matching</h4><p style="font-size:13px;">Dùng trong switch/case với Dart 3.0</p></div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Records + Sealed classes = bộ đôi mạnh cho <strong>typed API responses</strong>, không cần thư viện nào thêm. Dùng trong BLoC states, Riverpod providers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RECORDS — VÍ DỤ VÀ ỨNG DỤNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Return nhiều giá trị</h3>
+        <p>Thay thế out parameters — function trả về nhiều kết quả cùng lúc.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Thay vì dùng class/hàm riêng<br>
+            ({double total, double discount}) calc(<br>
+            &nbsp;&nbsp;double price, int qty) {<br>
+            &nbsp;&nbsp;double total = price * qty;<br>
+            &nbsp;&nbsp;double discount = qty &gt; 10 ? total * 0.1 : 0;<br>
+            &nbsp;&nbsp;return (total: total, discount: discount);<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;var r = calc(100, 15);<br>
+            &nbsp;&nbsp;print("Tổng: \$${r.total}");<br>
+            &nbsp;&nbsp;// Tổng: $1500<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>API Response với Record</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Future&lt;({List&lt;Product&gt; data,<br>
+            &nbsp;&nbsp;String? error})&gt; fetchProducts() async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var res = await http.get(uri);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var list = jsonDecode(res.body)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map((e) =&gt; Product.fromJson(e)).toList();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (data: list, error: null as String?);<br>
+            &nbsp;&nbsp;} catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return (data: &lt;Product&gt;[], error: e.toString());<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>So sánh vs Class</h4>
+          <p>Record tốt cho data transport đơn giản. Class tốt khi cần methods, validation, hay shared behavior.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PATTERN MATCHING VỚI SWITCH (DART 3.0)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Switch Expressions</h3>
+        <p>Switch trong Dart 3.0 là <strong>expression</strong> — trả về giá trị, có thể gán cho biến.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            String describe(Object obj) =&gt; switch (obj) {<br>
+            &nbsp;&nbsp;int i when i &gt; 0 =&gt; 'Positive int: $i',<br>
+            &nbsp;&nbsp;int i =&gt; 'Negative int: $i',<br>
+            &nbsp;&nbsp;String s =&gt; 'String: $s',<br>
+            &nbsp;&nbsp;_ =&gt; 'Unknown type',<br>
+            };
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>Ưu điểm</h4>
+          <p>Exhaustive (yêu cầu xử lý mọi case), có guard clause (<code>when</code>), ngắn gọn hơn if-else chain.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Object Patterns</h3>
+        <p>Dùng pattern để destructure object — trích xuất fields ngay trong switch.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            ({String name, int age}) user = (name: 'Lan', age: 22);<br><br>
+            String greet(Object obj) =&gt; switch (obj) {<br>
+            &nbsp;&nbsp;({String name, int age}) u<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;when age &lt; 18 =&gt; '$name is a minor',<br>
+            &nbsp;&nbsp;({String name}) u =&gt; 'Hello, $name!',<br>
+            &nbsp;&nbsp;_ =&gt; 'Unknown',<br>
+            };
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">List Patterns</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            [int first, int second, ...] nums = [1, 2, 3, 4];<br>
+            // first=1, second=2, rest=[3,4]
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS MODIFIERS (DART 3.0)</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>final class</h4>
+        <p>Không thể <strong>extend hoặc implement</strong>. Dùng khi class đã hoàn chỉnh, không muốn bị kế thừa.</p>
+        <div class="quote-box" style="margin-top:4px;">
+          <p style="font-family:monospace; font-size:12px;">final class Config { ... }<br>// Cannot be extended/implemented</p>
+        </div>
+      </div>
+      <div class="card accent-orange">
+        <h4>base class</h4>
+        <p>Bắt buộc subclass phải dùng <code>base/extends</code> — ngăn implement sai. Tất cả implementations phải khai báo base.</p>
+        <div class="quote-box" style="margin-top:4px;">
+          <p style="font-family:monospace; font-size:12px;">base class Animal { ... }<br>base class Dog extends Animal { ... }</p>
+        </div>
+      </div>
+      <div class="card accent-green">
+        <h4>interface class</h4>
+        <p>Chỉ có thể <strong>implement</strong>, không thể extend. Tách contract khỏi implementation.</p>
+        <div class="quote-box" style="margin-top:4px;">
+          <p style="font-family:monospace; font-size:12px;">interface class Drawable { ... }<br>class Circle implements Drawable { ... }</p>
+        </div>
+      </div>
+      <div class="card accent-gold">
+        <h4>mixin class</h4>
+        <p>Vừa có thể <strong>mix in</strong> được, vừa có thể <strong>extend/implement</strong>. Dùng cho mixin cần constructor.</p>
+        <div class="quote-box" style="margin-top:4px;">
+          <p style="font-family:monospace; font-size:12px;">mixin class Logger { ... }<br>class App with Logger { }</p>
+        </div>
+      </div>
+    </div>
+    <div class="card accent-purple" style="margin-top:8px;">
+      <h4>Kết hợp: base interface class</h4>
+      <p><code>base interface class</code> — implement được nhưng phải khai báo base. <code>sealed class</code> cũng là <code>base class</code> implicit.</p>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GENERICS TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khái niệm</h3>
+        <p>Generics cho phép viết code <strong>tái sử dụng</strong> cho nhiều types mà không mất type safety. Parameterize type ngay từ đầu.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            // Không generics — mất type safety<br>
+            class Box { Object? item; }<br><br>
+            // Với generics — type safe<br>
+            class Box&lt;T&gt; {<br>
+            &nbsp;&nbsp;T? item;<br>
+            &nbsp;&nbsp;T? get item =&gt; _item;<br>
+            &nbsp;&nbsp;void set item(T? val) { _item = val; }<br>
+            }<br><br>
+            var intBox = Box&lt;int&gt;();<br>
+            intBox.item = 42; // ✅ type safe
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Generics Constraints</h3>
+        <p>Giới hạn T phải implement một interface nhất định.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // T phải implement Comparable<br>
+            T max&lt;T extends Comparable&lt;T&gt;&gt;(T a, T b) {<br>
+            &nbsp;&nbsp;return a.compareTo(b) &gt; 0 ? a : b;<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;print(max(3, 5)); // 5<br>
+            &nbsp;&nbsp;print(max('apple', 'banana')); // banana<br>
+            }
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Generic Collections</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            List&lt;String&gt; names = ['Lan', 'Minh'];<br>
+            Map&lt;String, int&gt; scores = {'Lan': 95, 'Minh': 88};<br>
+            Set&lt;int&gt; unique = {1, 2, 3, 2}; // {1,2,3}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GENERICS NÂNG CAO — FUNCTIONS VÀ COLLECTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Generic Functions</h3>
+        <p>Hàm với type parameter — áp dụng cho mọi loại dữ liệu.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Swap 2 phần tử trong List<br>
+            void swap&lt;T&gt;(List&lt;T&gt; list, int i, int j) {<br>
+            &nbsp;&nbsp;T temp = list[i];<br>
+            &nbsp;&nbsp;list[i] = list[j];<br>
+            &nbsp;&nbsp;list[j] = temp;<br>
+            }<br><br>
+            // Filter generic<br>
+            List&lt;T&gt; filter&lt;T&gt;(List&lt;T&gt; items,<br>
+            &nbsp;&nbsp;bool Function(T) predicate) {<br>
+            &nbsp;&nbsp;return items.where(predicate).toList();<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Generic Repository Pattern</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            abstract class Repository&lt;T&gt; {<br>
+            &nbsp;&nbsp;Future&lt;List&lt;T&gt;&gt; getAll();<br>
+            &nbsp;&nbsp;Future&lt;T?&gt; getById(String id);<br>
+            &nbsp;&nbsp;Future&lt;T&gt; create(T item);<br>
+            &nbsp;&nbsp;Future&lt;void&gt; update(T item);<br>
+            &nbsp;&nbsp;Future&lt;void&gt; delete(String id);<br>
+            }<br><br>
+            class UserRepository<br>
+            &nbsp;&nbsp;implements Repository&lt;User&gt; { ... }<br><br>
+            class ProductRepository<br>
+            &nbsp;&nbsp;implements Repository&lt;Product&gt; { ... }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Lợi ích</h4>
+          <p>Code reuse, type safety tại compile time, IDE autocomplete cho T, giảm boilerplate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>THỰC HÀNH NÂNG CAO</h1>
+    <p class="section-desc">Records, Patterns, Generics, Collections, Async &amp; SOLID Principles</p>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — RECORDS VÀ PATTERN MATCHING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài 1: Product với Record</h3>
+        <p>Định nghĩa Product dùng record thay vì class.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Record với named fields<br>
+            ({String name, double price, String category}) product = (<br>
+            &nbsp;&nbsp;name: 'Laptop', price: 1200.0, category: 'Electronics');<br><br>
+            // Tính discount theo category<br>
+            double getDiscount(category) =&gt; switch (category) {<br>
+            &nbsp;&nbsp;'Electronics' =&gt; 0.1,<br>
+            &nbsp;&nbsp;'Books' =&gt; 0.2,<br>
+            &nbsp;&nbsp;'Food' =&gt; 0.0,<br>
+            &nbsp;&nbsp;_ =&gt; 0.05,<br>
+            };
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài 2: Sealed Class + Record</h3>
+        <p>Xây dựng hệ thống xử lý payment result.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            sealed class PaymentResult {}<br><br>
+            class Paid extends PaymentResult {<br>
+            &nbsp;&nbsp;final ({String txId, double amount}) data;<br>
+            &nbsp;&nbsp;Paid(this.data);<br>
+            }<br><br>
+            class Failed extends PaymentResult {<br>
+            &nbsp;&nbsp;final ({String code, String reason}) err;<br>
+            &nbsp;&nbsp;Failed(this.err);<br>
+            }<br><br>
+            String describe(PaymentResult r) =&gt; switch (r) {<br>
+            &nbsp;&nbsp;Paid(:final data) =&gt; 'Paid: ${data.txId}',<br>
+            &nbsp;&nbsp;Failed(:final err) =&gt; 'Failed: ${err.code}',<br>
+            };
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — GENERICS VÀ COLLECTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Bài 1: Generic Stack</h3>
+        <p>Xây dựng Stack (LIFO) dùng generics.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class Stack&lt;T&gt; {<br>
+            &nbsp;&nbsp;final List&lt;T&gt; _items = [];<br><br>
+            &nbsp;&nbsp;void push(T item) =&gt; _items.add(item);<br>
+            &nbsp;&nbsp;T pop() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (_items.isEmpty) throw StateError('Empty');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return _items.removeLast();<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;T? get peek {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return _items.isEmpty ? null : _items.last;<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;bool get isEmpty =&gt; _items.isEmpty;<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;var stack = Stack&lt;int&gt;();<br>
+            &nbsp;&nbsp;stack.push(1); stack.push(2);<br>
+            &nbsp;&nbsp;print(stack.pop()); // 2<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài 2: Filter Collection</h3>
+        <p>Dùng generics để filter danh sách theo predicate.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            List&lt;T&gt; filterBy&lt;T,&gt;(<br>
+            &nbsp;&nbsp;List&lt;T&gt; items,<br>
+            &nbsp;&nbsp;bool Function(T) condition) {<br>
+            &nbsp;&nbsp;return items.where(condition).toList();<br>
+            }<br><br>
+            void main() {<br>
+            &nbsp;&nbsp;var students = [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Student('Lan', 3.5),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Student('Minh', 2.8),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Student('Huy', 3.8),<br>
+            &nbsp;&nbsp;];<br><br>
+            &nbsp;&nbsp;// Filter top students (GPA &gt; 3.0)<br>
+            &nbsp;&nbsp;var top = filterBy(students,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;(s) =&gt; s.gpa &gt; 3.0);<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Mở rộng</h4>
+          <p>Viết thêm <code>sortBy&lt;T,K&gt;(List&lt;T&gt;, K Function(T))</code> — generic sort theo bất kỳ field nào.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP — ASYNC PATTERNS VÀ STREAMS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu: ChatService</h3>
+        <p>Xây dựng service gửi/nhận messages theo kiểu async stream.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class ChatService {<br>
+            &nbsp;&nbsp;final _controller = StreamController&lt;Message&gt;();<br><br>
+            &nbsp;&nbsp;Stream&lt;Message&gt; get messages =&gt; _controller.stream;<br><br>
+            &nbsp;&nbsp;Future&lt;void&gt; send(Message msg) async {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Mô phỏng gửi qua network<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;await Future.delayed(Duration(milliseconds: 500));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_controller.add(msg);<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;void dispose() { _controller.close(); }<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>StreamBuilder trong Flutter</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            StreamBuilder&lt;Message&gt;(<br>
+            &nbsp;&nbsp;stream: chatService.messages,<br>
+            &nbsp;&nbsp;builder: (ctx, snapshot) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!snapshot.hasData)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return CircularProgressIndicator();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final msgs = snapshot.data!;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return ListView.builder(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemCount: msgs.length,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemBuilder: (_, i) =&gt; MsgBubble(msgs[i]),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            },<br>
+            )
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Bổ sung thêm</h4>
+          <p>Viết hàm <code>await for</code> để listen stream trong async function. Xử lý <code>Stream.periodic</code> cho timer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXCEPTION HANDLING NÂNG CAO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Custom Exceptions</h3>
+        <p>Tạo exception riêng cho domain — giúp xử lý lỗi có ý nghĩa.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Custom exception class<br>
+            class AppException implements Exception {<br>
+            &nbsp;&nbsp;final String code;<br>
+            &nbsp;&nbsp;final String message;<br>
+            &nbsp;&nbsp;AppException(this.code, this.message);<br><br>
+            &nbsp;&nbsp;@override<br>
+            &nbsp;&nbsp;String toString() =&gt; '[$code] $message';<br>
+            }<br><br>
+            class AuthException extends AppException {<br>
+            &nbsp;&nbsp;AuthException(super.message) : super('AUTH');<br>
+            }<br><br>
+            class ValidationException extends AppException {<br>
+            &nbsp;&nbsp;ValidationException(super.message) : super('VALID');<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Async Exception Handling</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            Future&lt;User&gt; login(email, pass) async {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;final res = await _api.post('/login', {...});<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return User.fromJson(res.data);<br><br>
+            &nbsp;&nbsp;} on AuthException catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Xử lý lỗi đăng nhập cụ thể<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return showLoginError(e.message);<br><br>
+            &nbsp;&nbsp;} on ValidationException catch (e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Validate input<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return showFieldError(e.message);<br><br>
+            &nbsp;&nbsp;} catch (e, st) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Log lỗi không mong đợi<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;logger.error(e, st);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px;">
+          <h4>finally</h4>
+          <p><code>finally</code> luôn chạy — dùng để cleanup: đóng file, disconnect, reset loading state.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COLLECTIONS — MAP, SET, VÀ OPERATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Map&lt;K, V&gt;</h3>
+        <p>Key-value pairs — tìm kiếm theo key với O(1).</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            Map&lt;String, Student&gt; registry = {<br>
+            &nbsp;&nbsp;'SV001': Student('Lan', 3.5),<br>
+            &nbsp;&nbsp;'SV002': Student('Minh', 3.8),<br>
+            };<br><br>
+            // Tìm hoặc tạo mới<br>
+            var s = registry.putIfAbsent(<br>
+            &nbsp;&nbsp;'SV003', () =&gt; Student('Huy', 3.2));<br><br>
+            // Map operations<br>
+            registry.forEach((id, st) {<br>
+            &nbsp;&nbsp;print('$id: ${st.name}');<br>
+            });<br><br>
+            var names = registry.map(<br>
+            &nbsp;&nbsp;(k, v) =&gt; MapEntry(k, v.name));<br>
+            // {SV001: Lan, SV002: Minh, SV003: Huy}
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Set&lt;T&gt;</h3>
+        <p>Tập hợp các phần tử duy nhất — không trùng lặp.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            var roles = {'admin', 'editor', 'viewer'};<br><br>
+            // Set operations<br>
+            var active = {'admin', 'editor'};&nbsp;&nbsp;// online<br>
+            var adminOnly = active.intersection(roles);<br>
+            // {'admin', 'editor'}<br><br>
+            var allPerms = active.union({'moderator'});<br>
+            // {'admin', 'editor', 'moderator'}<br><br>
+            var extra = roles.difference(active);<br>
+            // {'viewer'}<br><br>
+            if (roles.contains('admin')) { ... }
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Collection Methods</h4>
+          <p><code>where</code>, <code>map</code>, <code>reduce</code>, <code>fold</code>, <code>any</code>, <code>every</code>, <code>expand</code> — functional operations phổ biến.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SOLID PRINCIPLES TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>S — Single Responsibility</h4>
+        <p>Mỗi class có <strong>một lý do duy nhất</strong> để thay đổi. Tách biệt responsibilities.</p>
+        <p style="font-size:12px; margin-top:4px; color:#555;"><strong>Bad:</strong> class vừa tính lương, vừa xuất PDF, vừa gửi email.</p>
+        <p style="font-size:12px; color:#555;"><strong>Good:</strong> PayrollCalculator + PdfExporter + EmailService riêng biệt.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>O — Open/Closed</h4>
+        <p>Class <strong>mở để mở rộng</strong>, <strong>đóng để sửa đổi</strong>. Dùng abstract class, interface, extension.</p>
+        <p style="font-size:12px; margin-top:4px; color:#555;"><strong>Good:</strong> <code>abstract class Shape</code> + <code>Circle extends Shape</code>, <code>Rectangle extends Shape</code>.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>L — Liskov Substitution</h4>
+        <p>Subclass có thể thay thế <strong>parent</strong> mà không thay đổi behavior. Override method phải tương thích.</p>
+        <p style="font-size:12px; margin-top:4px; color:#555;"><strong>Example:</strong> <code>Square extends Rectangle</code> — LSP violation vì setWidth≠setHeight.</p>
+      </div>
+      <div class="card accent-gold">
+        <h4>I — Interface Segregation</h4>
+        <p>Nhiều <strong>interface nhỏ</strong> tốt hơn 1 interface lớn. Class chỉ implement những gì cần.</p>
+        <p style="font-size:12px; margin-top:4px; color:#555;"><strong>Good:</strong> <code>Walkable</code>, <code>Flyable</code>, <code>Swimmable</code> riêng — thay vì 1 <code>Animal</code> interface lớn.</p>
+      </div>
+      <div class="card accent-purple">
+        <h4>D — Dependency Inversion</h4>
+        <p>Phụ thuộc vào <strong>abstraction</strong>, không phải concrete class. Dùng <code>inject</code> (DI pattern).</p>
+        <p style="font-size:12px; margin-top:4px; color:#555;"><strong>Example:</strong> Constructor nhận <code>Repository&lt;T&gt;</code>, không biết cụ thể là MySQL hay Firebase.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SOLID — MINH HỌA TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Dependency Inversion</h3>
+        <p>Đúng: phụ thuộc abstraction (<code>Repository</code>), không concrete class.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // Abstraction<br>
+            abstract class Repository&lt;T&gt; {<br>
+            &nbsp;&nbsp;Future&lt;List&lt;T&gt;&gt; findAll();<br>
+            &nbsp;&nbsp;Future&lt;T?&gt; findById(String id);<br>
+            }<br><br>
+            // Concrete implementations<br>
+            class UserRepository implements Repository&lt;User&gt; {<br>
+            &nbsp;&nbsp;final _db = FirebaseFirestore.instance;<br>
+            &nbsp;&nbsp;Future&lt;List&lt;User&gt;&gt; findAll() async { ... }<br>
+            &nbsp;&nbsp;Future&lt;User?&gt; findById(String id) async { ... }<br>
+            }<br><br>
+            // Service phụ thuộc abstraction<br>
+            class UserService {<br>
+            &nbsp;&nbsp;final Repository&lt;User&gt; _repo; // injected<br>
+            &nbsp;&nbsp;UserService(this._repo);<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Interface Segregation</h3>
+        <p>Tách nhỏ interface — class chỉ implement những gì cần.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            // THAY VÌ: 1 interface lớn<br>
+            abstract class Animal { void fly(); void run(); void swim(); }<br><br>
+            // ĐÚNG: Nhiều interface nhỏ<br>
+            abstract class Flyable { void fly(); }<br>
+            abstract class Walkable { void walk(); }<br>
+            abstract class Swimmable { void swim(); }<br><br>
+            class Dolphin implements Swimmable { ... }<br>
+            class Dog implements Walkable { ... }<br>
+            class Duck implements Walkable, Flyable, Swimmable { ... }
+          </p>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px;">
+          <h4>Lưu ý</h4>
+          <p>Trong Flutter: BLoC pattern tự nhiên tuân theo <strong>SRP</strong>, Riverpod tuân theo <strong>DIP</strong>. Kết hợp chúng cho codebase sạch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DESIGN PATTERNS TRONG DART</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Singleton</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Config {<br>
+            &nbsp;&nbsp;static final Config _instance = Config._();<br>
+            &nbsp;&nbsp;factory Config() =&gt; _instance;<br>
+            &nbsp;&nbsp;Config._();<br>
+            }<br>
+            // Dùng: Config().apiKey
+          </p>
+        </div>
+        <h3 style="margin-top:10px;">Factory Pattern</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            class Transport {<br>
+            &nbsp;&nbsp;factory Transport(String type) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;switch (type) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'car': return Car();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'bike': return Bike();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default: throw ArgumentError();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Observer / Listener</h3>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:12px;">
+            class Observable&lt;T&gt; {<br>
+            &nbsp;&nbsp;T? _value;<br>
+            &nbsp;&nbsp;final _listeners = &lt;void Function(T?)&gt;[];<br><br>
+            &nbsp;&nbsp;T? get value =&gt; _value;<br><br>
+            &nbsp;&nbsp;void set value(T? v) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_value = v;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (var l in _listeners) l(v);<br>
+            &nbsp;&nbsp;}<br><br>
+            &nbsp;&nbsp;void listen(void Function(T?) fn) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;_listeners.add(fn);<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px;">
+          <h4>Ứng dụng</h4>
+          <p>Singleton: Config, Logger. Factory: platform-specific objects. Observer: state management, event buses.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PART OF — TÁCH FILE CLASS LỚN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao cần part of?</h3>
+        <p>Khi class quá lớn, chia thành nhiều files nhưng vẫn là <strong>một unit</strong> về type system.</p>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            // ─── models/product.dart ───<br>
+            part 'product_part.dart';<br><br>
+            class Product {<br>
+            &nbsp;&nbsp;String name;<br>
+            &nbsp;&nbsp;double price;<br>
+            &nbsp;&nbsp;// Gọi từ product_part.dart<br>
+            &nbsp;&nbsp;void applyDiscount(double pct) { ... }<br>
+            }
+          </p>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p style="font-family:monospace; font-size:13px;">
+            // ─── models/product_part.dart ───<br>
+            part of 'product.dart';<br><br>
+            extension ProductExt on Product {<br>
+            &nbsp;&nbsp;String get formattedPrice =&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;'${price.toStringAsFixed(2)}\$';<br>
+            }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ứng dụng thực tế</h3>
+        <p>Tách model + extension + serialization logic ra riêng file — mỗi file có một concerns riêng.</p>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><h4>models/user.dart</h4><p style="font-size:13px;">Class definition + constructors</p></div>
+          <div class="card accent-green"><h4>models/user.g.dart</h4><p style="font-size:13px;">Generated code (json_serializable)</p></div>
+          <div class="card accent-orange"><h4>models/user_validators.dart</h4><p style="font-size:13px;">Validation methods</p></div>
+          <div class="card accent-gold"><h4>models/user_extensions.dart</h4><p style="font-size:13px;">Helper extensions</p></div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>json_serializable</strong>, <strong>freezed</strong>, <strong>riverpod_generator</strong> tự động tạo các part files. Không cần viết tay — chỉ cần khai báo <code>part</code> đúng.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TREE SHAKING VÀ METADATA (ANNOTATIONS)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Annotations / Metadata</h3>
+        <p>Dùng <code>@</code> để gắn metadata cho class, method, field. Framework tự động đọc qua <code>reflect</code>.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // Flutter &amp; json_serializable<br>
+            @JsonKey(name: 'first_name')<br>
+            final String firstName;<br><br>
+            @JsonSerializable()<br>
+            class User {<br>
+            &nbsp;&nbsp;final String name;<br>
+            &nbsp;&nbsp;@JsonKey(ignore: true)<br>
+            &nbsp;&nbsp;final String? tempCache;<br>
+            }<br><br>
+            // Riverpod<br>
+            @riverpod<br>
+            Future&lt;List&lt;Product&gt;&gt; products(ref) async { ... }
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Tree Shaking</h3>
+        <p>Dart compiler loại bỏ code không dùng — chỉ giữ lại những gì thực sự cần ở compile time.</p>
+        <div class="quote-box">
+          <p style="font-family:monospace; font-size:13px;">
+            // tree_shaking.dart<br>
+            void _private() { ... } // Bị loại bỏ<br><br>
+            void public() { ... } // Giữ lại<br><br>
+            @pragma('vm:entry-point')<br>
+            void forceKeep() { } // Giữ lại bằng được
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Kết hợp</h4>
+          <p>Annotations như <code>@riverpod</code> được đọc bởi code generator → tạo output files. Tree shaking đảm bảo output nhỏ nhất có thể.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT TOÀN DIỆN — BÀI 4</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core OOP</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Classes &amp; Constructors</strong> — default, named, factory, const</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Encapsulation</strong> — getter/setter, _private, validation</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Inheritance</strong> — extends, super, @override, single inheritance</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Abstraction</strong> — abstract class, abstract methods</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>Polymorphism</strong> — overriding, no overloading</p></div>
+          <div class="card"><p style="font-size:12px;"><strong>Mixins</strong> — with, mixin on Type, mixin class</p></div>
+        </div>
+        <h3 style="margin-top:8px;">Async</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Future&lt;T&gt;</strong> — giá trị trong tương lai</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>async/await</strong> — sync-style async code</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Streams</strong> — async data sequences</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Error handling</strong> — try/catch/on/finally</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Dart 3.0 Advanced</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Records</strong> — anonymous compound types</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>Patterns</strong> — switch expressions, object/list patterns</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Sealed classes</strong> — exhaustive types</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Class modifiers</strong> — final, base, interface, mixin</p></div>
+          <div class="card accent-purple"><p style="font-size:12px;"><strong>Enums</strong> — enhanced enums (Dart 3.0)</p></div>
+          <div class="card"><p style="font-size:12px;"><strong>Generics</strong> — type parameters, constraints, functions</p></div>
+        </div>
+        <h3 style="margin-top:8px;">Architecture</h3>
+        <div class="cards" style="flex-direction:column; gap:4px;">
+          <div class="card"><p style="font-size:12px;"><strong>Extension Methods</strong> — thêm methods không cần kế thừa</p></div>
+          <div class="card accent-green"><p style="font-size:12px;"><strong>Callable Classes</strong> — class như function</p></div>
+          <div class="card accent-orange"><p style="font-size:12px;"><strong>SOLID</strong> — 5 nguyên tắc thiết kế OOP</p></div>
+          <div class="card accent-gold"><p style="font-size:12px;"><strong>Patterns</strong> — Singleton, Factory, Observer</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ÔN TẬP VÀ ĐỊNH HƯỚNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tự kiểm tra</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p>Future vs Stream — khi nào dùng cái nào?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>So sánh: extends vs implements vs with — khi nào dùng?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>Sự khác nhau: sealed class vs final class vs abstract class?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p>Khi nào dùng Record thay vì Class?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <p>Các nguyên tắc SOLID viết lại cho từng principle?</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <p>Generics constraints — ví dụ thực tế?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài tập mở rộng</h3>
+        <div class="cards" style="flex-direction:column; gap:6px;">
+          <div class="card"><p style="font-size:13px;">Viết E-commerce app structure: Product, Cart, Order với đầy đủ OOP</p></div>
+          <div class="card accent-green"><p style="font-size:13px;">Triển khai Repository pattern với generic + dependency injection</p></div>
+          <div class="card accent-orange"><p style="font-size:13px;">Xây dựng BLoC pattern cho 1 screen — event → state → UI</p></div>
+          <div class="card accent-gold"><p style="font-size:13px;">Dùng freezed + riverpod tạo immutable models cho E-commerce app</p></div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; BÀI TIẾP THEO</div>
+          <p><strong>Bài 5:</strong> Flutter Framework &amp; State Management — Provider, Riverpod, BLoC. <strong>Bài 6:</strong> Navigation &amp; Routing, REST API &amp; GraphQL integration.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Flutter Framework và Quản lý Trạng thái</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">50</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>

@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 04 - UML & Database Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>UML & DATABASE<br>DESIGN</h1>
+    <p class="subtitle">Thiết kế Sơ đồ UML & Cơ sở dữ liệu</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 2: Contents -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NỘI DUNG BÀI HỌC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phần 1: UML — Ngôn ngữ mô hình hóa</h3>
+        <ul>
+          <li>Lịch sử & tổng quan UML</li>
+          <li>Cơ chế mở rộng UML</li>
+          <li>Các loại biểu đồ UML</li>
+        </ul>
+        <h3>Phần 2: Biểu đồ cấu trúc</h3>
+        <ul>
+          <li>Class & Object Diagram</li>
+          <li>Component & Deployment Diagram</li>
+          <li>Package Diagram</li>
+        </ul>
+        <h3>Phần 3: Biểu đồ hành vi</h3>
+        <ul>
+          <li>Use Case, Sequence, Activity Diagram</li>
+          <li>State Machine, Communication Diagram</li>
+          <li>Data Flow Diagram (DFD)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Phần 4: Thiết kế cơ sở dữ liệu</h3>
+        <ul>
+          <li>ERD — Entity Relationship Diagram</li>
+          <li>Entities, Attributes, Relationships</li>
+          <li>Cardinality</li>
+        </ul>
+        <h3>Phần 5: Logical & Physical Design</h3>
+        <ul>
+          <li>Normalization (1NF → BCNF)</li>
+          <li>Constraints & Relationships</li>
+          <li>Physical Design & Indexing</li>
+          <li>Security & Backup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 1: UML TỔNG QUAN ========== -->
+
+<!-- SLIDE 3: Section UML -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>UNIFIED MODELING LANGUAGE (UML)</h1>
+    <p class="section-desc">Ngôn ngữ mô hình hóa thống nhất cho thiết kế hướng đối tượng</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 4: UML Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>UML — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>UML (Unified Modeling Language) là <strong>ngôn ngữ đồ họa tiêu chuẩn</strong> để mô tả, trực quan hóa, xây dựng và tài liệu hóa các hệ thống hướng đối tượng. <a class="ref" href="https://en.wikipedia.org/wiki/Unified_Modeling_Language" target="_blank">[Wikipedia]</a></p>
+        <h3>3 loại mô hình hóa:</h3>
+        <ul>
+          <li><strong>UC Modeling</strong> — yêu cầu chức năng (Use Case Diagrams)</li>
+          <li><strong>Static Modeling</strong> — cấu trúc hệ thống (Class, Component, Package)</li>
+          <li><strong>Dynamic Modeling</strong> — hành vi hệ thống (Sequence, Activity, State)</li>
+        </ul>
+        <h3>Công cụ vẽ UML:</h3>
+        <ul>
+          <li><strong>draw.io</strong> — miễn phí, kéo thả, export PNG/SVG</li>
+          <li><strong>PlantUML</strong> — code-based, version control trên Git</li>
+          <li><strong>StarUML, Visual Paradigm</strong> — professional tools</li>
+          <li><strong>Mermaid</strong> — viết trong Markdown</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/uml-diagrams-overview.svg" alt="UML Diagrams Overview">
+        <p class="img-caption">Tổng quan các loại biểu đồ UML<br><a href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 5: History -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỊCH SỬ PHÁT TRIỂN UML</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Giai đoạn</th><th style="width:40%">Sự kiện</th><th>Ý nghĩa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1970s-1980s</strong></td><td>Kỷ nguyên tiền-UML: các phương pháp rời rạc (Booch, OMT, OOSE)</td><td>Mỗi nhóm dùng notation riêng → khó giao tiếp</td></tr>
+        <tr><td><strong>1994-1995</strong></td><td>"Three Amigos" — Grady Booch, James Rumbaugh, Ivar Jacobson hợp nhất phương pháp</td><td>UML 0.9, 0.91 drafts ra đời</td></tr>
+        <tr><td><strong>1997</strong></td><td>UML 1.0 được OMG (Object Management Group) chấp nhận làm chuẩn</td><td>Trở thành tiêu chuẩn công nghiệp</td></tr>
+        <tr><td><strong>1997-2003</strong></td><td>UML 1.x — cải tiến dần</td><td>Thêm nhiều loại diagram</td></tr>
+        <tr><td><strong>2005+</strong></td><td>UML 2.x — major revision</td><td>Thêm Composite Structure, Interaction Overview</td></tr>
+        <tr><td><strong>2017</strong></td><td>UML 2.5.1 — phiên bản mới nhất</td><td>Chuẩn ISO/IEC 19505</td></tr>
+      </tbody>
+    </table>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>UML vẫn là chuẩn cho tài liệu thiết kế, nhưng nhiều team hiện nay dùng <strong>lightweight diagrams</strong> (Mermaid, PlantUML) thay vì formal UML tools — dễ maintain, version control được.</p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 6: UML Extension -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CƠ CHẾ MỞ RỘNG UML</h2></div>
+  <div class="slide-body">
+    <p>UML cung cấp 3 cơ chế để mở rộng ngôn ngữ cho phù hợp với domain cụ thể:</p>
+    <div class="cards" style="gap:14px;">
+      <div class="card"><h4>Tagged Value</h4><p>Mở rộng thuộc tính, thêm thông tin mới. Đặt trong ngoặc nhọn: <code>{tag = value}</code>. VD: <code>{version = "2.0"}</code>, <code>{author = "Hung"}</code></p></div>
+      <div class="card accent-orange"><h4>Constraint</h4><p>Điều kiện phải đúng — thêm quy tắc mới hoặc sửa đổi quy tắc hiện có. VD: <code>{ordered}</code>, <code>{readonly}</code>, <code>{balance >= 0}</code></p></div>
+      <div class="card accent-green"><h4>Stereotype</h4><p>Định nghĩa building block mới từ UML element hiện có, tùy chỉnh theo domain. Đặt trong guillemets: <code>&laquo;entity&raquo;</code>, <code>&laquo;service&raquo;</code>, <code>&laquo;controller&raquo;</code></p></div>
+    </div>
+    <div class="quote-box" style="margin-top:12px;">
+      <p><strong>VD trong Spring Boot:</strong> <code>&laquo;entity&raquo; User</code>, <code>&laquo;repository&raquo; UserRepository</code>, <code>&laquo;service&raquo; UserService</code>, <code>&laquo;controller&raquo; UserController</code></p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 7: UML Types Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC LOẠI BIỂU ĐỒ UML</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Biểu đồ cấu trúc (Structure):</h3>
+        <table class="table-small">
+          <thead><tr><th>Biểu đồ</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Class</strong></td><td>Lớp, thuộc tính, phương thức, quan hệ</td></tr>
+            <tr><td><strong>Object</strong></td><td>Thể hiện đối tượng tại runtime</td></tr>
+            <tr><td><strong>Component</strong></td><td>Thành phần phần mềm & dependencies</td></tr>
+            <tr><td><strong>Deployment</strong></td><td>Triển khai vật lý (hardware, software)</td></tr>
+            <tr><td><strong>Package</strong></td><td>Tổ chức & dependencies giữa packages</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Biểu đồ hành vi (Behavior):</h3>
+        <table class="table-small">
+          <thead><tr><th>Biểu đồ</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Use Case</strong></td><td>Tương tác actor ↔ hệ thống</td></tr>
+            <tr><td><strong>Sequence</strong></td><td>Luồng message theo thời gian</td></tr>
+            <tr><td><strong>Activity</strong></td><td>Workflow, luồng điều khiển</td></tr>
+            <tr><td><strong>State Machine</strong></td><td>Trạng thái & chuyển đổi đối tượng</td></tr>
+            <tr><td><strong>Communication</strong></td><td>Tương tác đối tượng trong kịch bản</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Trong BTL: tập trung vào <strong>Use Case, Activity, Sequence, Class</strong> và <strong>ERD</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 2: BIỂU ĐỒ CẤU TRÚC ========== -->
+
+<!-- SLIDE 8: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>BIỂU ĐỒ CẤU TRÚC</h1>
+    <p class="section-desc">Class — Object — Component — Deployment — Package</p>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 9: Class Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS DIAGRAM & OBJECT DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Class Diagram:</h3>
+        <p>Biểu đồ cấu trúc thể hiện <strong>bản thiết kế</strong> hệ thống — các lớp, thuộc tính, phương thức và mối quan hệ.</p>
+        <ul>
+          <li><strong>Class:</strong> tên, attributes (-private, +public), methods</li>
+          <li><strong>Association:</strong> quan hệ giữa classes (1:1, 1:N, M:N)</li>
+          <li><strong>Inheritance:</strong> kế thừa (extends)</li>
+          <li><strong>Interface:</strong> implements</li>
+          <li><strong>Composition/Aggregation:</strong> chứa/thuộc về</li>
+        </ul>
+        <h3>Object Diagram:</h3>
+        <p>Ảnh chụp hệ thống tại <strong>thời điểm cụ thể</strong> — hiển thị instances và trạng thái thực tế.</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/class-diagram.svg" alt="Class Diagram Example">
+        <p class="img-caption">Ví dụ Class Diagram — BankAccount<br><a href="https://commons.wikimedia.org/wiki/File:BankAccount1.svg" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 10: Component & Deployment -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPONENT & DEPLOYMENT DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Component Diagram:</h3>
+        <p>Trực quan hóa cấu trúc cấp cao của các <strong>thành phần phần mềm</strong>:</p>
+        <ul>
+          <li>Mô hình hóa các khía cạnh vật lý</li>
+          <li>Components, interfaces, dependencies</li>
+          <li>Phát triển dựa trên thành phần (CBD)</li>
+        </ul>
+        <h3>VD Spring Boot Components:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&laquo;component&raquo; AuthModule
+  ├── AuthController
+  ├── AuthService
+  ├── JwtProvider
+  └── UserRepository</pre>
+      </div>
+      <div class="col">
+        <h3>Deployment Diagram:</h3>
+        <p>Cấu hình <strong>triển khai runtime</strong> — hardware, software, middleware:</p>
+        <ul>
+          <li>Kiến trúc vật lý của hệ thống</li>
+          <li>Triển khai artifacts trên hardware</li>
+          <li>Hệ thống phân tán, cloud, multi-tier</li>
+        </ul>
+        <h3>VD Deployment:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&laquo;device&raquo; Client Browser
+  └── Angular SPA
+&laquo;server&raquo; App Server (Docker)
+  └── Spring Boot .jar
+&laquo;server&raquo; DB Server
+  └── MySQL 8.0</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 11: Package Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PACKAGE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Minh họa <strong>tổ chức và dependencies</strong> giữa các packages trong hệ thống:</p>
+        <ul>
+          <li>Tổ chức cấu trúc hệ thống một cách logic</li>
+          <li>Quản lý hệ thống lớn bằng cách nhóm các phần tử liên quan</li>
+          <li>Trực quan hóa dependencies → giảm coupling</li>
+          <li>Đại diện cho namespace hierarchies</li>
+        </ul>
+        <h3>VD Package Structure Spring Boot:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+com.example.app
+  ├── controller    → Presentation
+  ├── service       → Business Logic
+  ├── repository    → Data Access
+  ├── model         → Domain Entities
+  ├── dto           → Data Transfer
+  ├── config        → Configuration
+  └── exception     → Error Handling</pre>
+      </div>
+      <div class="col">
+        <h3>Ký hiệu Package Diagram:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>Hình chữ nhật có tab</td><td>Package</td></tr>
+            <tr><td>Mũi tên nét đứt</td><td>Dependency (phụ thuộc)</td></tr>
+            <tr><td>&laquo;import&raquo;</td><td>Import package</td></tr>
+            <tr><td>&laquo;access&raquo;</td><td>Access package</td></tr>
+            <tr><td>&laquo;merge&raquo;</td><td>Merge package</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Trong Java, package structure phản ánh trực tiếp architecture layers. Spring Boot convention: mỗi package = 1 layer trong Layered Architecture.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 3: BIỂU ĐỒ HÀNH VI ========== -->
+
+<!-- SLIDE 12: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>BIỂU ĐỒ HÀNH VI</h1>
+    <p class="section-desc">Use Case — Sequence — Activity — State Machine — DFD</p>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 13: Use Case Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USE CASE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Biểu diễn tương tác giữa <strong>actors và hệ thống</strong>: <a class="ref" href="https://en.wikipedia.org/wiki/Use_case_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Xác định chức năng hệ thống cung cấp</li>
+          <li>Định nghĩa tương tác actor ↔ system</li>
+          <li>Làm rõ yêu cầu cho stakeholders</li>
+          <li>Nền tảng cho thiết kế và kiểm thử</li>
+        </ul>
+        <h3>Thành phần:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>Hình người (stick figure)</td><td>Actor</td></tr>
+            <tr><td>Hình ellipse</td><td>Use Case</td></tr>
+            <tr><td>Hình chữ nhật</td><td>System boundary</td></tr>
+            <tr><td>&laquo;include&raquo;</td><td>UC bắt buộc gọi UC khác</td></tr>
+            <tr><td>&laquo;extend&raquo;</td><td>UC mở rộng tùy chọn</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: Hệ thống e-learning</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+       ┌─────────────────────┐
+       │   E-Learning System │
+       │                     │
+Student─┤  (Đăng nhập)       │
+       │  (Xem khóa học)     │─Admin
+       │  (Làm bài thi)      │
+       │  (Thanh toán)        │
+Teacher─┤  (Tạo khóa học)    │
+       │  (Chấm điểm)        │
+       └─────────────────────┘
+
+  Đăng nhập ──include──▷ Xác thực
+  Thanh toán ──extend──▷ Áp dụng mã giảm giá</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 14: Sequence Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SEQUENCE DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Mô hình hóa cách các đối tượng <strong>tương tác theo thời gian</strong> trong một kịch bản cụ thể:</p>
+        <ul>
+          <li>Luồng message giữa objects theo timeline</li>
+          <li>Tài liệu hóa cách UC được thực hiện</li>
+          <li>Phát hiện vấn đề thiết kế (tight coupling)</li>
+          <li>Dùng trong design, debugging, documentation</li>
+        </ul>
+        <h3>Thành phần:</h3>
+        <ul>
+          <li><strong>Lifeline</strong> — đường sống đối tượng (dọc)</li>
+          <li><strong>Message</strong> — mũi tên gọi method</li>
+          <li><strong>Return</strong> — mũi tên nét đứt (trả về)</li>
+          <li><strong>Activation bar</strong> — thời gian xử lý</li>
+          <li><strong>Alt/Loop/Opt</strong> — fragments điều kiện</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: Đăng nhập (Spring Boot)</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+User    →  Angular     →  AuthController  →  AuthService  →  UserRepo  →  DB
+ │          │              │                │              │           │
+ │──login──▷│              │                │              │           │
+ │          │──POST /login▷│                │              │           │
+ │          │              │──authenticate─▷│              │           │
+ │          │              │                │──findByEmail▷│           │
+ │          │              │                │              │──SELECT──▷│
+ │          │              │                │              │◁──user────│
+ │          │              │                │◁──User───────│           │
+ │          │              │                │──generateJWT │           │
+ │          │              │◁──JWT Token────│              │           │
+ │          │◁──200 + JWT──│                │              │           │
+ │◁──store──│              │                │              │           │</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 15: Activity Diagram -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ACTIVITY DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Thể hiện <strong>luồng điều khiển</strong> và các hoạt động trong hệ thống: <a class="ref" href="https://en.wikipedia.org/wiki/Activity_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Mô hình hóa workflows, business processes</li>
+          <li>Mô tả logic đằng sau UC hoặc operation</li>
+          <li>Trực quan hóa luồng song song và điều kiện</li>
+          <li>Phân tích và tối ưu quy trình</li>
+        </ul>
+        <h3>Ký hiệu chính:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>● (filled circle)</td><td>Start node</td></tr>
+            <tr><td>◉ (bullseye)</td><td>End node</td></tr>
+            <tr><td>Rounded rectangle</td><td>Activity/Action</td></tr>
+            <tr><td>Diamond ◇</td><td>Decision/Merge</td></tr>
+            <tr><td>Thick bar ═</td><td>Fork/Join (parallel)</td></tr>
+            <tr><td>Swim lanes</td><td>Phân chia theo actor/role</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: Quy trình đặt hàng</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+  ●
+  ↓
+[Chọn sản phẩm]
+  ↓
+[Thêm vào giỏ hàng]
+  ↓
+◇──Tiếp tục mua?──▷ [Chọn SP]
+  ↓ Không
+[Nhập thông tin giao hàng]
+  ↓
+═══ Fork ═══
+↓           ↓
+[Xử lý     [Gửi email
+thanh toán]  xác nhận]
+↓           ↓
+═══ Join ═══
+  ↓
+◇──Thanh toán OK?
+  ↓ Yes        ↓ No
+[Tạo đơn]   [Hiển thị lỗi]
+  ↓             ↓
+  ◉             ◉</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 16: State Machine -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE MACHINE & COMMUNICATION DIAGRAM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>State Machine Diagram:</h3>
+        <p>Mô hình hóa các <strong>trạng thái</strong> đối tượng trải qua và <strong>chuyển đổi</strong> giữa chúng:</p>
+        <ul>
+          <li>Hành vi đối tượng qua vòng đời</li>
+          <li>Logic phụ thuộc trạng thái</li>
+          <li>Hệ thống event-driven / reactive</li>
+        </ul>
+        <h3>VD: Trạng thái đơn hàng</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+● → [Pending] ──pay──▷ [Processing]
+                         ↓ ship
+                      [Shipped]
+                         ↓ deliver
+                      [Delivered] → ◉
+     [Pending] ──cancel──▷ [Cancelled] → ◉</pre>
+      </div>
+      <div class="col">
+        <h3>Communication Diagram:</h3>
+        <p>Hiển thị cách đối tượng <strong>tương tác trong kịch bản</strong> cụ thể — tương tự Sequence nhưng tập trung vào <strong>quan hệ</strong> thay vì thời gian.</p>
+        <ul>
+          <li>Trực quan hóa object interactions</li>
+          <li>Phân tích relationships giữa objects</li>
+          <li>Hiểu cách các phần hệ thống cộng tác</li>
+        </ul>
+        <h3>Khi nào dùng?</h3>
+        <table class="table-small">
+          <thead><tr><th>Sequence</th><th>Communication</th></tr></thead>
+          <tbody>
+            <tr><td>Tập trung thời gian</td><td>Tập trung quan hệ</td></tr>
+            <tr><td>Luồng phức tạp</td><td>Tổng quan interaction</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 17: DFD -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATA FLOW DIAGRAM (DFD)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Biểu diễn đồ họa cấp cao về <strong>luồng dữ liệu</strong> trong hệ thống: <a class="ref" href="https://en.wikipedia.org/wiki/Data-flow_diagram" target="_blank">[Wikipedia]</a></p>
+        <ul>
+          <li>Luồng dữ liệu giữa modules, components</li>
+          <li>Data storage/cached</li>
+        </ul>
+        <h3>Các cấp độ DFD:</h3>
+        <ul>
+          <li><strong>Level 0 (Context Diagram):</strong> tổng quan hệ thống + external entities</li>
+          <li><strong>Level 1:</strong> phân rã quy trình chính thành sub-processes</li>
+          <li><strong>Level 2+:</strong> chi tiết hơn từng sub-process</li>
+        </ul>
+        <h3>Các bước tạo DFD:</h3>
+        <ul>
+          <li>Xác định Processes (chức năng chính)</li>
+          <li>Xác định Data Flows (dữ liệu di chuyển thế nào)</li>
+          <li>Xác định Data Stores (lưu trữ ở đâu)</li>
+          <li>Xác định External Entities (ai tương tác)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Ký hiệu DFD:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>Hình tròn / bo tròn</td><td>Process (xử lý)</td></tr>
+            <tr><td>Mũi tên</td><td>Data flow (luồng dữ liệu)</td></tr>
+            <tr><td>2 đường song song</td><td>Data store (kho dữ liệu)</td></tr>
+            <tr><td>Hình chữ nhật</td><td>External entity</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>DFD không thuộc UML nhưng vẫn rất hữu ích cho phân tích hệ thống. Trong BTL, kết hợp DFD Level 0 với Use Case Diagram để có cái nhìn toàn diện.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 4: ERD ========== -->
+
+<!-- SLIDE 18: Section ERD -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>ENTITY RELATIONSHIP DIAGRAM (ERD)</h1>
+    <p class="section-desc">Thiết kế mô hình dữ liệu — Entities, Attributes, Relationships</p>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 19: ERD Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERD — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>ERD là biểu diễn trực quan về <strong>dữ liệu và mối quan hệ</strong> trong cơ sở dữ liệu. <a class="ref" href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model" target="_blank">[Wikipedia]</a></p>
+        <h3>Thành phần chính:</h3>
+        <table class="table-small">
+          <thead><tr><th>Thành phần</th><th>Ký hiệu</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Entity</strong></td><td>Hình chữ nhật</td><td>Đối tượng có dữ liệu (User, Course)</td></tr>
+            <tr><td><strong>Attribute</strong></td><td>Hình ellipse</td><td>Thuộc tính (name, email, price)</td></tr>
+            <tr><td><strong>Relationship</strong></td><td>Hình thoi</td><td>Quan hệ giữa entities</td></tr>
+            <tr><td><strong>Primary Key</strong></td><td>Gạch chân</td><td>Định danh duy nhất</td></tr>
+          </tbody>
+        </table>
+        <h3>Mục đích ERD:</h3>
+        <ul>
+          <li>Đảm bảo tính toàn vẹn dữ liệu</li>
+          <li>Giảm thiểu dư thừa</li>
+          <li>Tối ưu hiệu suất</li>
+          <li>Hỗ trợ mở rộng trong tương lai</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="assets/erd-example.png" alt="ERD Example">
+        <p class="img-caption">Ví dụ ERD — MMORPG Database<br><a href="https://commons.wikimedia.org/wiki/File:ER_Diagram_MMORPG.png" target="_blank">Nguồn: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 20: Entities & Attributes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENTITIES & ATTRIBUTES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Entity (Thực thể):</h3>
+        <p>Đối tượng, khái niệm trong hệ thống có <strong>dữ liệu được lưu trữ</strong>.</p>
+        <ul>
+          <li>Biểu diễn bằng hình chữ nhật</li>
+          <li>Đặt tên bằng danh từ số ít: User, Course, Order</li>
+          <li><strong>Strong Entity:</strong> tồn tại độc lập (có PK riêng)</li>
+          <li><strong>Weak Entity:</strong> phụ thuộc entity khác</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Attribute (Thuộc tính):</h3>
+        <table class="table-small">
+          <thead><tr><th>Loại</th><th>Mô tả</th><th>VD</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Simple</strong></td><td>Không thể chia nhỏ</td><td>age, price</td></tr>
+            <tr><td><strong>Composite</strong></td><td>Có thể chia thành sub-attributes</td><td>address → street, city, zip</td></tr>
+            <tr><td><strong>Derived</strong></td><td>Tính từ attribute khác</td><td>age (từ birthdate)</td></tr>
+            <tr><td><strong>Multi-valued</strong></td><td>Nhiều giá trị</td><td>phone numbers</td></tr>
+            <tr><td><strong>Key</strong></td><td>Định danh duy nhất (PK)</td><td>user_id, course_id</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 21: Relationships & Cardinality -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RELATIONSHIPS & CARDINALITY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Relationships (Mối quan hệ):</h3>
+        <table>
+          <thead><tr><th>Loại</th><th>Mô tả</th><th>VD</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1:1</strong></td><td>Một thực thể liên kết với đúng 1 thực thể khác</td><td>User ↔ Profile</td></tr>
+            <tr><td><strong>1:N</strong></td><td>Một thực thể liên kết với nhiều thực thể khác</td><td>Customer → Orders</td></tr>
+            <tr><td><strong>M:N</strong></td><td>Nhiều ↔ Nhiều (cần bảng trung gian)</td><td>Students ↔ Courses</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Cardinality (Bản số):</h3>
+        <p>Chỉ rõ <strong>số lượng instances</strong> của entity có thể/phải liên kết:</p>
+        <ul>
+          <li><strong>Relationship 1:N</strong> → 1 customer <em>có thể</em> có nhiều orders</li>
+          <li><strong>Cardinality 1:N</strong> → 1 customer <em>phải</em> có ít nhất 1 order</li>
+        </ul>
+        <h3>Ký hiệu:</h3>
+        <ul>
+          <li><code>1</code> — chính xác 1</li>
+          <li><code>0..1</code> — 0 hoặc 1 (tùy chọn)</li>
+          <li><code>1..*</code> — 1 hoặc nhiều (bắt buộc)</li>
+          <li><code>0..*</code> hoặc <code>*</code> — 0 hoặc nhiều</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ========== PHẦN 5: LOGICAL & PHYSICAL DESIGN ========== -->
+
+<!-- SLIDE 22: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>LOGICAL & PHYSICAL DESIGN</h1>
+    <p class="section-desc">Normalization — Constraints — Indexing — Security</p>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 23: Logical Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOGICAL DESIGN</h2></div>
+  <div class="slide-body">
+    <p>Chuyển ERD thành <strong>mô hình logic</strong> — định nghĩa cấu trúc database dưới dạng tables, columns, foreign keys.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Tạo Logical Schema</h4><p>Entity → Table, Attribute → Column, Relationship → Foreign Key</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Normalize Data</h4><p>Áp dụng 1NF → 2NF → 3NF → BCNF để giảm dư thừa</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Define Constraints</h4><p>PK, FK, Unique, Not Null, Check constraints</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Establish Relationships</h4><p>1:1 → FK + Unique, 1:N → FK, M:N → Junction table</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 24: 1NF -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NORMALIZATION: 1NF & 2NF</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>1NF (First Normal Form):</h3>
+        <ul>
+          <li>Mỗi cột chứa giá trị <strong>nguyên tử</strong> (không thể chia nhỏ)</li>
+          <li>Mỗi hàng là <strong>duy nhất</strong> (có primary key)</li>
+          <li>Mỗi cột chứa giá trị <strong>cùng kiểu</strong></li>
+        </ul>
+        <h3>VD vi phạm 1NF:</h3>
+        <table class="table-small">
+          <thead><tr><th>student_id</th><th>name</th><th>phones</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Hưng</td><td style="color:red;">0901234567, 0912345678</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ Cột phones chứa nhiều giá trị → tách thành bảng riêng</p>
+      </div>
+      <div class="col">
+        <h3>2NF (Second Normal Form):</h3>
+        <ul>
+          <li>Bảng phải ở <strong>1NF</strong></li>
+          <li>Mọi non-key attribute phải phụ thuộc <strong>toàn bộ</strong> primary key (loại bỏ partial dependency)</li>
+        </ul>
+        <h3>VD vi phạm 2NF:</h3>
+        <table class="table-small">
+          <thead><tr><th>student_id</th><th>course_id</th><th>student_name</th><th>grade</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>CS101</td><td style="color:red;">Hưng</td><td>A</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ student_name chỉ phụ thuộc student_id, không phụ thuộc toàn bộ PK (student_id + course_id)</p>
+        <p style="font-size:13px; color:#70AD47;">✅ Tách: Students(id, name) + Enrollments(student_id, course_id, grade)</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 25: 3NF & BCNF -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NORMALIZATION: 3NF & BCNF</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3NF (Third Normal Form):</h3>
+        <ul>
+          <li>Bảng phải ở <strong>2NF</strong></li>
+          <li>Không có <strong>transitive dependency</strong> (non-key attributes chỉ phụ thuộc PK)</li>
+        </ul>
+        <h3>VD vi phạm 3NF:</h3>
+        <table class="table-small">
+          <thead><tr><th>emp_id</th><th>dept_id</th><th style="color:red;">dept_name</th></tr></thead>
+          <tbody><tr><td>1</td><td>D01</td><td style="color:red;">IT</td></tr></tbody>
+        </table>
+        <p style="font-size:13px; color:#C00000;">❌ dept_name phụ thuộc dept_id (không phải PK emp_id)</p>
+        <p style="font-size:13px; color:#70AD47;">✅ Tách: Employees(emp_id, dept_id) + Departments(dept_id, dept_name)</p>
+      </div>
+      <div class="col">
+        <h3>BCNF (Boyce-Codd Normal Form):</h3>
+        <ul>
+          <li>Bảng phải ở <strong>3NF</strong></li>
+          <li>Mọi <strong>determinant</strong> phải là candidate key</li>
+          <li>Giải quyết trường hợp overlapping candidate keys</li>
+        </ul>
+        <h3>Tóm tắt Normalization:</h3>
+        <table class="table-small">
+          <thead><tr><th>NF</th><th>Loại bỏ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1NF</strong></td><td>Repeating groups, non-atomic values</td></tr>
+            <tr><td><strong>2NF</strong></td><td>Partial dependency</td></tr>
+            <tr><td><strong>3NF</strong></td><td>Transitive dependency</td></tr>
+            <tr><td><strong>BCNF</strong></td><td>Overlapping candidate keys</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 26: Constraints -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CONSTRAINTS & RELATIONSHIPS TRONG DATABASE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Constraints (Ràng buộc):</h3>
+        <table class="table-small">
+          <thead><tr><th>Constraint</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>PRIMARY KEY</strong></td><td>Định danh duy nhất mỗi hàng</td></tr>
+            <tr><td><strong>FOREIGN KEY</strong></td><td>Tính toàn vẹn tham chiếu giữa bảng</td></tr>
+            <tr><td><strong>UNIQUE</strong></td><td>Giá trị duy nhất trong cột</td></tr>
+            <tr><td><strong>NOT NULL</strong></td><td>Không cho phép NULL</td></tr>
+            <tr><td><strong>CHECK</strong></td><td>Kiểm tra điều kiện (VD: price >= 0)</td></tr>
+            <tr><td><strong>DEFAULT</strong></td><td>Giá trị mặc định</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Implement Relationships:</h3>
+        <table class="table-small">
+          <thead><tr><th>Quan hệ</th><th>Cách implement</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1:1</strong></td><td>FK + UNIQUE constraint</td></tr>
+            <tr><td><strong>1:N</strong></td><td>FK ở bảng "nhiều"</td></tr>
+            <tr><td><strong>M:N</strong></td><td>Junction table (bảng trung gian)</td></tr>
+          </tbody>
+        </table>
+        <h3>VD M:N với JPA:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+@ManyToMany
+@JoinTable(
+  name = "student_course",
+  joinColumns = @JoinColumn(name = "student_id"),
+  inverseJoinColumns = @JoinColumn(name = "course_id")
+)
+private Set&lt;Course&gt; courses;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 27: Physical Design -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PHYSICAL DESIGN</h2></div>
+  <div class="slide-body">
+    <p>Chuyển logical design thành <strong>physical schema</strong> cho DBMS cụ thể (MySQL, PostgreSQL).</p>
+    <div class="two-columns">
+      <div class="col">
+        <h3>Các bước:</h3>
+        <ul>
+          <li><strong>Transform schema</strong> → tables, columns, data types</li>
+          <li><strong>Select data types</strong> → VARCHAR, INT, BIGINT, DECIMAL, DATETIME</li>
+          <li><strong>Define storage</strong> → tablespace, partitioning</li>
+          <li><strong>Configure indexing</strong> → B-tree, Hash, Full-text</li>
+          <li><strong>Implement relationships</strong> → FK constraints, cascading</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: MySQL Physical Design</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+CREATE TABLE users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100) NOT NULL,
+  role ENUM('STUDENT','TEACHER','ADMIN')
+    DEFAULT 'STUDENT',
+  created_at DATETIME DEFAULT NOW(),
+  INDEX idx_email (email),
+  INDEX idx_role (role)
+) ENGINE=InnoDB CHARSET=utf8mb4;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 28: Indexing -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KEYS & INDEXES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Index là đối tượng database <strong>tăng tốc truy vấn</strong> bằng cách tạo cấu trúc tra cứu nhanh.</p>
+        <h3 style="color:#70AD47;">Lợi ích:</h3>
+        <ul>
+          <li>Giảm Full Table Scans</li>
+          <li>Tăng tốc JOIN operations</li>
+          <li>Hỗ trợ sorting và grouping</li>
+          <li>Truy vấn range hiệu quả</li>
+        </ul>
+        <h3 style="color:#C00000;">Hạn chế:</h3>
+        <ul>
+          <li>Tốn storage (mỗi index = 1 cấu trúc dữ liệu)</li>
+          <li>Chậm INSERT/UPDATE/DELETE (phải cập nhật index)</li>
+          <li>Over-indexing → phản tác dụng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Khi nào tạo Index?</h3>
+        <table class="table-small">
+          <thead><tr><th>Nên Index</th><th>Không nên</th></tr></thead>
+          <tbody>
+            <tr><td>Cột WHERE thường xuyên</td><td>Bảng nhỏ (&lt;1000 rows)</td></tr>
+            <tr><td>Cột JOIN</td><td>Cột ít distinct values</td></tr>
+            <tr><td>Cột ORDER BY</td><td>Cột hay UPDATE</td></tr>
+            <tr><td>Foreign Keys</td><td>Cột TEXT/BLOB lớn</td></tr>
+          </tbody>
+        </table>
+        <h3>VD MySQL Index:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+-- Single column index
+CREATE INDEX idx_email ON users(email);
+
+-- Composite index
+CREATE INDEX idx_course_date
+  ON enrollments(course_id, enrolled_at);
+
+-- Unique index
+CREATE UNIQUE INDEX idx_unique_email
+  ON users(email);</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 29: Security & Backup -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE SECURITY & BACKUP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Database Security:</h3>
+        <ul>
+          <li><strong>Protect Sensitive Info</strong> — bảo vệ dữ liệu cá nhân, tài chính</li>
+          <li><strong>Compliance</strong> — tuân thủ GDPR, HIPAA</li>
+          <li><strong>Prevent Data Loss</strong> — giảm rủi ro hỏng/xóa nhầm</li>
+          <li><strong>Maintain Integrity</strong> — ngăn sửa đổi trái phép</li>
+        </ul>
+        <h3>Biện pháp bảo mật:</h3>
+        <ul>
+          <li>Authentication (user/password, certificates)</li>
+          <li>Authorization (GRANT/REVOKE, RBAC)</li>
+          <li>Encryption (TDE, SSL/TLS connections)</li>
+          <li>Audit logging (ai truy cập gì, khi nào)</li>
+          <li>Input validation (SQL injection prevention)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Backup & Recovery:</h3>
+        <table class="table-small">
+          <thead><tr><th>Chiến lược</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Full Backup</strong></td><td>Toàn bộ DB — chậm nhưng đầy đủ</td></tr>
+            <tr><td><strong>Incremental</strong></td><td>Chỉ thay đổi từ lần backup cuối</td></tr>
+            <tr><td><strong>Differential</strong></td><td>Thay đổi từ lần full backup cuối</td></tr>
+            <tr><td><strong>Point-in-time</strong></td><td>Khôi phục đến thời điểm cụ thể</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Cloud databases (AWS RDS, Azure SQL) cung cấp <strong>automated backup</strong> + point-in-time recovery. Trong BTL, cấu hình MySQL backup trong Docker Compose.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Class Diagram Notation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CLASS DIAGRAM — KÝ HIỆU CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Visibility modifiers:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Mức truy cập</th></tr></thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>public</td></tr>
+            <tr><td><code>-</code></td><td>private</td></tr>
+            <tr><td><code>#</code></td><td>protected</td></tr>
+            <tr><td><code>~</code></td><td>package (default)</td></tr>
+          </tbody>
+        </table>
+        <h3>VD class notation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+┌─────────────────────────┐
+│       User              │  ← Class name
+├─────────────────────────┤
+│ - id: Long              │  ← Attributes
+│ - email: String         │
+│ - password: String      │
+│ # createdAt: DateTime   │
+├─────────────────────────┤
+│ + login(): boolean      │  ← Methods
+│ + logout(): void        │
+│ - validatePass(): bool  │
+│ + getEmail(): String    │
+└─────────────────────────┘</pre>
+      </div>
+      <div class="col">
+        <h3>Quan hệ giữa classes:</h3>
+        <table>
+          <thead><tr><th>Quan hệ</th><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Association</strong></td><td>──────</td><td>Liên kết thông thường</td></tr>
+            <tr><td><strong>Dependency</strong></td><td>- - - -&gt;</td><td>Phụ thuộc tạm thời</td></tr>
+            <tr><td><strong>Inheritance</strong></td><td>───▷</td><td>Kế thừa (extends)</td></tr>
+            <tr><td><strong>Realization</strong></td><td>- - -▷</td><td>Implements interface</td></tr>
+            <tr><td><strong>Aggregation</strong></td><td>◇──────</td><td>Có một (whole-part)</td></tr>
+            <tr><td><strong>Composition</strong></td><td>♦──────</td><td>Là một phần của (strong)</td></tr>
+          </tbody>
+        </table>
+        <h3>Multiplicity:</h3>
+        <ul>
+          <li><code>1</code> — đúng 1</li>
+          <li><code>0..1</code> — 0 hoặc 1</li>
+          <li><code>1..*</code> — 1 hoặc nhiều</li>
+          <li><code>*</code> — 0 hoặc nhiều</li>
+          <li><code>1..5</code> — từ 1 đến 5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Use Case Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>USE CASE — INCLUDE & EXTEND</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>&laquo;include&raquo; — Bắt buộc:</h3>
+        <p>UC con <strong>luôn được gọi</strong> khi UC cha chạy. Tách logic dùng chung.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+"Đặt hàng"  --include--&gt;  "Xác thực user"
+"Mua hàng"  --include--&gt;  "Xác thực user"
+
+// Cả 2 UC đều cần xác thực
+// → Tách thành UC riêng dùng chung</pre>
+        <h3>&laquo;extend&raquo; — Tùy chọn:</h3>
+        <p>UC mở rộng <strong>chỉ chạy trong điều kiện</strong> nhất định.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+"Áp dụng coupon"  --extend--&gt;  "Đặt hàng"
+
+// Coupon chỉ chạy khi user có mã
+// Không bắt buộc</pre>
+      </div>
+      <div class="col">
+        <h3>Generalization (kế thừa):</h3>
+        <p>Actor hoặc UC kế thừa từ actor/UC khác.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+       User
+      /    \
+  Student  Teacher
+              \
+            Admin
+
+// Admin kế thừa Teacher
+// Teacher kế thừa User
+// Có thể làm tất cả những gì User có</pre>
+        <h3>VD đầy đủ:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+┌──────────────────────────────┐
+│  Hệ thống Bán hàng           │
+│                              │
+│ ○ Đăng nhập   ○ Xem sản phẩm │
+│   ↑include       ↑           │
+│ ○ Đặt hàng ─────┘           │
+│      ↑extend                 │
+│ ○ Áp dụng coupon             │
+│ ○ Thanh toán  ○ Xuất hóa đơn │
+└──────────────────────────────┘
+   ↑          ↑
+Customer    Admin</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Activity Diagram Detail -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ACTIVITY DIAGRAM — SWIM LANES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Swim Lanes</strong> phân chia activities theo actor/role — dễ nhìn ai làm gì.</p>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:10px;">
+┌──────────┬──────────────┬──────────┐
+│ Customer │   System     │  Admin   │
+├──────────┼──────────────┼──────────┤
+│    ●     │              │          │
+│    ↓     │              │          │
+│ Đăt hàng │              │          │
+│    ↓     │              │          │
+│          │ Validate     │          │
+│          │ ◇──invalid──→│          │
+│          │  ↓ valid     │ Notify   │
+│          │ Lưu DB       │          │
+│          │   ↓          │          │
+│          │ Send email   │          │
+│          │   ↓          │          │
+│          │              │ Approve  │
+│          │              │   ↓      │
+│ Nhận     │              │          │
+│ thông báo│              │          │
+│    ↓     │              │          │
+│    ◉     │              │          │
+└──────────┴──────────────┴──────────┘</pre>
+      </div>
+      <div class="col">
+        <h3>Ký hiệu Activity Diagram:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>●</td><td>Initial node (start)</td></tr>
+            <tr><td>◉</td><td>Final node (end)</td></tr>
+            <tr><td>⬭</td><td>Activity (action)</td></tr>
+            <tr><td>◇</td><td>Decision/Merge</td></tr>
+            <tr><td>═══</td><td>Fork/Join (parallel)</td></tr>
+            <tr><td>→</td><td>Control flow</td></tr>
+            <tr><td>⊙</td><td>Object node</td></tr>
+            <tr><td>↪</td><td>Send signal</td></tr>
+          </tbody>
+        </table>
+        <h3>Best practices:</h3>
+        <ul>
+          <li>Đặt tên activity bằng động từ + danh từ</li>
+          <li>Mỗi diagram tập trung 1 quy trình</li>
+          <li>Dùng swim lanes khi có nhiều actors</li>
+          <li>Tránh quá nhiều decision nodes</li>
+          <li>Decompose activity phức tạp thành sub-activities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ER Cardinality -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERD — CROW'S FOOT NOTATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Crow's Foot</strong> là notation phổ biến nhất cho ERD hiện nay — dễ đọc, trực quan.</p>
+        <h3>Ký hiệu cardinality:</h3>
+        <table class="table-small">
+          <thead><tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td>──┤</td><td>Exactly one (1)</td></tr>
+            <tr><td>──◯┤</td><td>Zero or one (0..1)</td></tr>
+            <tr><td>──┤├</td><td>One and only one</td></tr>
+            <tr><td>──&lt;</td><td>One or many (1..*)</td></tr>
+            <tr><td>──◯&lt;</td><td>Zero or many (0..*)</td></tr>
+          </tbody>
+        </table>
+        <h3>VD đọc ERD:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+Customer ──┤├────&lt;── Order
+
+// 1 Customer có nhiều Orders (0+)
+// 1 Order thuộc về đúng 1 Customer</pre>
+      </div>
+      <div class="col">
+        <h3>VD complete ERD:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:10px;">
+┌──────────┐         ┌──────────┐
+│ Customer │──┤├─&lt;──│  Order   │
+├──────────┤         ├──────────┤
+│ id (PK)  │         │ id (PK)  │
+│ name     │         │ date     │
+│ email    │         │ total    │
+│ phone    │         │ cust_id  │
+└──────────┘         │   (FK)   │
+                     └──────────┘
+                          │
+                          │┤├
+                          │
+                          ▼&lt;
+                     ┌──────────┐
+                     │OrderItem │
+                     ├──────────┤
+                     │ id (PK)  │
+                     │ order_id │
+                     │ prod_id  │
+                     │ qty      │
+                     │ price    │
+                     └──────────┘
+                          │
+                          │&gt;┤├
+                          ▼
+                     ┌──────────┐
+                     │ Product  │
+                     ├──────────┤
+                     │ id (PK)  │
+                     │ name     │
+                     │ price    │
+                     └──────────┘</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- PlantUML -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PLANTUML — VẼ UML BẰNG CODE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>PlantUML</strong> cho phép viết UML bằng text DSL — version control trên Git, auto generate diagrams. <a class="ref" href="https://plantuml.com/" target="_blank">[plantuml.com]</a></p>
+        <h3>Class Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@startuml
+class User {
+  -id: Long
+  -email: String
+  -password: String
+  +login(): boolean
+  +logout(): void
+}
+
+class Order {
+  -id: Long
+  -date: DateTime
+  -total: BigDecimal
+  +calculateTotal(): BigDecimal
+}
+
+User "1" --&gt; "*" Order : places
+@enduml</pre>
+      </div>
+      <div class="col">
+        <h3>Sequence Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@startuml
+actor User
+participant Browser
+participant Controller
+participant Service
+database DB
+
+User -&gt; Browser: Click Login
+Browser -&gt; Controller: POST /login
+Controller -&gt; Service: authenticate()
+Service -&gt; DB: SELECT user
+DB --&gt; Service: user data
+Service -&gt; Service: verifyPassword()
+Service --&gt; Controller: JWT token
+Controller --&gt; Browser: 200 + token
+Browser --&gt; User: Show dashboard
+@enduml</pre>
+        <h3>Lợi ích PlantUML:</h3>
+        <ul>
+          <li>Text-based — Git diff được</li>
+          <li>Auto generate, không cần vẽ tay</li>
+          <li>Tích hợp Markdown, Confluence</li>
+          <li>VS Code extension</li>
+          <li>Free, open source</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Mermaid -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MERMAID — DIAGRAMS TRONG MARKDOWN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Mermaid</strong> là alternative của PlantUML — render trực tiếp trong Markdown, GitHub, GitLab. <a class="ref" href="https://mermaid.js.org/" target="_blank">[mermaid.js.org]</a></p>
+        <h3>Flowchart:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+flowchart TD
+  A[Start] --&gt; B{User logged in?}
+  B --&gt;|Yes| C[Show Dashboard]
+  B --&gt;|No| D[Show Login Page]
+  D --&gt; E[Enter credentials]
+  E --&gt; F{Valid?}
+  F --&gt;|Yes| C
+  F --&gt;|No| D
+```</pre>
+        <h3>Sequence Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+sequenceDiagram
+  User-&gt;&gt;Frontend: Click Login
+  Frontend-&gt;&gt;API: POST /login
+  API-&gt;&gt;DB: Query user
+  DB--&gt;&gt;API: User data
+  API--&gt;&gt;Frontend: JWT token
+  Frontend--&gt;&gt;User: Dashboard
+```</pre>
+      </div>
+      <div class="col">
+        <h3>ER Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ ORDER_ITEM : contains
+  PRODUCT ||--o{ ORDER_ITEM : "ordered in"
+  CUSTOMER {
+    int id PK
+    string name
+    string email
+  }
+  ORDER {
+    int id PK
+    int customer_id FK
+    date order_date
+  }
+```</pre>
+        <h3>Class Diagram:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+```mermaid
+classDiagram
+  User &lt;|-- Student
+  User &lt;|-- Teacher
+
+  class User {
+    -Long id
+    -String email
+    +login() boolean
+  }
+  class Student {
+    -String studentCode
+    +enroll() void
+  }
+```</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- Database Indexes -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE INDEXES — CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Loại index phổ biến:</h3>
+        <table class="table-small">
+          <thead><tr><th>Loại</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>B-tree</strong></td><td>Mặc định MySQL/PostgreSQL, balanced tree</td></tr>
+            <tr><td><strong>Hash</strong></td><td>Equality lookup nhanh, không range query</td></tr>
+            <tr><td><strong>Bitmap</strong></td><td>Cột ít distinct values</td></tr>
+            <tr><td><strong>Full-text</strong></td><td>Search trong text</td></tr>
+            <tr><td><strong>Spatial</strong></td><td>Geographic data</td></tr>
+            <tr><td><strong>Composite</strong></td><td>Nhiều cột</td></tr>
+            <tr><td><strong>Unique</strong></td><td>Đảm bảo unique constraint</td></tr>
+            <tr><td><strong>Partial</strong></td><td>Index 1 phần data</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Cú pháp MySQL:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+-- Single column
+CREATE INDEX idx_email ON users(email);
+
+-- Composite (order matters!)
+CREATE INDEX idx_status_date
+  ON orders(status, created_at);
+
+-- Unique
+CREATE UNIQUE INDEX idx_username
+  ON users(username);
+
+-- Full-text
+CREATE FULLTEXT INDEX idx_description
+  ON products(description);
+
+-- Drop
+DROP INDEX idx_email ON users;
+
+-- Show indexes
+SHOW INDEX FROM users;
+
+-- Explain query plan
+EXPLAIN SELECT * FROM users
+  WHERE email = 'test@cmc.vn';</pre>
+        <p style="font-size:13px; color:#C00000;">⚠️ Index làm INSERT/UPDATE chậm hơn — chỉ tạo cho cột thường xuyên search.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SQL Joins -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SQL JOINS — TRUY VẤN ĐA BẢNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Các loại JOIN:</h3>
+        <table>
+          <thead><tr><th>JOIN</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>INNER JOIN</strong></td><td>Chỉ rows match cả 2 bảng</td></tr>
+            <tr><td><strong>LEFT JOIN</strong></td><td>Tất cả rows bảng trái + match bảng phải</td></tr>
+            <tr><td><strong>RIGHT JOIN</strong></td><td>Tất cả rows bảng phải + match bảng trái</td></tr>
+            <tr><td><strong>FULL OUTER</strong></td><td>Tất cả rows cả 2 bảng (PostgreSQL)</td></tr>
+            <tr><td><strong>CROSS JOIN</strong></td><td>Cartesian product</td></tr>
+            <tr><td><strong>SELF JOIN</strong></td><td>Join với chính nó</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD INNER JOIN:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, o.order_date, o.total
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'completed';</pre>
+        <h3>LEFT JOIN — User chưa có order:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name
+ORDER BY order_count DESC;</pre>
+        <h3>SELF JOIN — Cây phân cấp:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT e.name AS employee,
+  m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+  ON e.manager_id = m.id;</pre>
+        <h3>Multiple JOINs:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+SELECT u.name, p.title, oi.qty
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id
+WHERE o.created_at &gt; '2026-01-01';</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- BTL Workflow -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>QUY TRÌNH THIẾT KẾ CHO BÀI TẬP LỚN</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Xác định Use Cases</h4><p>Liệt kê chức năng chính → vẽ Use Case Diagram tổng quan và phân rã theo actor</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Đặc tả từng Use Case</h4><p>Viết UC Spec chi tiết: Actor, Pre/Post-conditions, Main Flow, Alternatives</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Vẽ Activity Diagrams</h4><p>Cho mỗi quy trình nghiệp vụ chính — swim lanes nếu có nhiều actors</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Thiết kế ERD</h4><p>Identify entities, attributes, relationships, cardinality</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Normalize Database</h4><p>Áp dụng 1NF → 2NF → 3NF, định nghĩa constraints</p></div></div>
+      <div class="step"><div class="step-num" style="background:#0070C0;">6</div><div class="step-content"><h4>Class & Sequence Diagrams</h4><p>Cho mỗi UC quan trọng — thiết kế chi tiết classes và tương tác</p></div></div>
+      <div class="step"><div class="step-num" style="background:#806000;">7</div><div class="step-content"><h4>Physical Design</h4><p>Convert sang SQL DDL, thêm indexes, configure DB</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 30: Tổng kết -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>UML</strong> — ngôn ngữ mô hình hóa thống nhất cho OOP</li>
+          <li><strong>Biểu đồ cấu trúc:</strong> Class, Component, Deployment, Package</li>
+          <li><strong>Biểu đồ hành vi:</strong> Use Case, Sequence, Activity, State Machine</li>
+          <li><strong>ERD:</strong> Entities, Attributes, Relationships, Cardinality</li>
+          <li><strong>Normalization:</strong> 1NF → 2NF → 3NF → BCNF</li>
+          <li><strong>Physical Design:</strong> Data types, Indexes, Constraints, Security</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. UML có mấy loại biểu đồ? Kể tên.</li>
+          <li>2. Class Diagram khác Object Diagram thế nào?</li>
+          <li>3. Sequence vs Activity Diagram — khi nào dùng?</li>
+          <li>4. ERD gồm những thành phần gì?</li>
+          <li>5. Giải thích 1NF, 2NF, 3NF bằng ví dụ.</li>
+          <li>6. Khi nào nên và không nên tạo Index?</li>
+          <li>7. Thiết kế ERD cho hệ thống e-learning.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- SLIDE 31: Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

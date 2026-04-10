@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 02 - Nền tảng lưu trữ & truy nhập dữ liệu đa phương tiện</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>NỀN TẢNG LƯU TRỮ &<br>TRUY NHẬP DỮ LIỆU<br>ĐA PHƯƠNG TIỆN</h1>
+    <p class="subtitle">Chương 2: Truy nhập dữ liệu đa phương tiện từ đĩa từ, CD-ROM và máy chủ phương tiện</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 1: ĐẶT VẤN ĐỀ</h1>
+    <p class="section-desc">Tại sao truy nhập dữ liệu đa phương tiện lại khó?</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THÁCH THỨC CỦA DỮ LIỆU ĐA PHƯƠNG TIỆN TRÊN INTERNET</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <div class="card">
+          <h4>YouTube (2009)</h4>
+          <ul>
+            <li>Hơn <strong>1 tỷ video</strong> được xem mỗi ngày</li>
+            <li>Băng thông chiếm ~51% chi phí vận hành</li>
+            <li>Chi phí chạy hệ thống: <strong>~1 triệu USD/ngày</strong></li>
+            <li>Giấy phép nội dung chiếm 36% chi phí</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:12px;">
+          <h4>Dailymotion (2009)</h4>
+          <ul>
+            <li>Website video lớn thứ 2 thế giới</li>
+            <li>Xếp hạng <strong>thứ 29</strong> toàn cầu</li>
+            <li>114 triệu khách truy cập</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card accent-orange">
+          <h4>Câu hỏi cốt lõi</h4>
+          <p style="font-size:15px; margin-top:8px;">Làm thế nào để <strong>đảm bảo tính liên tục</strong> (continuous) cho dữ liệu video/audio khi phục vụ <strong>hàng tỷ yêu cầu</strong> từ một hạ tầng vật lý có giới hạn?</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:12px;">
+          <h4>Thách thức kỹ thuật</h4>
+          <ul>
+            <li>Dung lượng lớn: video HD ~4 GB/giờ</li>
+            <li>Yêu cầu thời gian thực (real-time)</li>
+            <li>Độ trễ thấp, không được gián đoạn</li>
+            <li>Đồng thời hàng triệu người xem</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐẶC TRƯNG CỦA DỮ LIỆU ĐA PHƯƠNG TIỆN</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:16px; margin-bottom:8px;">Dữ liệu video</h3>
+        <ul>
+          <li>Kích thước cực lớn: 1 giờ video 4K ≈ 10-20 GB</li>
+          <li>Tốc độ bit (bitrate): 4-25 Mbps (tùy chất lượng)</li>
+          <li>Yêu cầu throughput liên tục, ổn định</li>
+          <li>Không nén được thêm (lossy vs lossless)</li>
+        </ul>
+        <h3 style="color:#0070C0; font-size:16px; margin-top:16px; margin-bottom:8px;">Dữ liệu audio</h3>
+        <ul>
+          <li>MP3: 128-320 kbps</li>
+          <li>FLAC lossless: 700-1000 kbps</li>
+          <li>Streaming liên tục, không buffering lớn</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:16px; margin-bottom:8px;">So sánh với dữ liệu truyền thống</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>Dữ liệu thông thường</th>
+              <th>Đa phương tiện</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Thời gian thực</td>
+              <td>Không bắt buộc</td>
+              <td>Bắt buộc</td>
+            </tr>
+            <tr>
+              <td>Chịu độ trễ</td>
+              <td>Cao</td>
+              <td>Rất thấp</td>
+            </tr>
+            <tr>
+              <td>Kích thước</td>
+              <td>KB - MB</td>
+              <td>GB - TB</td>
+            </tr>
+            <tr>
+              <td>Yêu cầu I/O</td>
+              <td>Ngẫu nhiên</td>
+              <td>Tuần tự liên tục</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CẤU TRÚC Ổ ĐĨA TỪ (MAGNETIC DISK)</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Cấu trúc vật lý</h3>
+        <ul>
+          <li><strong>Platters (Đĩa phẳng):</strong> các đĩa tròn phẳng phủ vật liệu từ tính, quay quanh trục</li>
+          <li><strong>Spindle (Trục chính):</strong> trục quay kết nối tất cả đĩa</li>
+          <li><strong>Read/Write Heads (Đầu đọc/ghi):</strong> di chuyển trên bề mặt đĩa</li>
+          <li><strong>Tracks:</strong> các vòng tròn đồng tâm trên mỗi mặt đĩa</li>
+          <li><strong>Sectors:</strong> chia nhỏ track thành các cung</li>
+          <li><strong>Cylinders:</strong> tập hợp các track cùng bán kính trên các mặt đĩa khác nhau</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Quá trình truy nhập đĩa (3 bước)</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Seek (Tìm kiếm)</h4>
+              <p>Đầu đọc di chuyển đến track chứa sector cần đọc</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Rotational Delay (Trễ quay)</h4>
+              <p>Đợi sector quay tới vị trí đầu đọc</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Data Transfer (Truyền dữ liệu)</h4>
+              <p>Đọc/ghi dữ liệu từ sector</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC THÔNG SỐ QUAN TRỌNG CỦA Ổ ĐĨA</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <div class="card">
+          <h4>Seek Time (Thời gian tìm kiếm)</h4>
+          <p>Thời gian di chuyển đầu đọc đến track đích:</p>
+          <ul>
+            <li><strong>Gia tốc (Acceleration):</strong> tăng tốc đầu đọc</li>
+            <li><strong>Động lượng (Coasting):</strong> chạy ổn định</li>
+            <li><strong>Giảm tốc (Deceleration):</strong> dừng đúng track</li>
+          </ul>
+          <p style="margin-top:8px;">Thông thường: <strong>3-15 ms</strong></p>
+        </div>
+        <div class="card" style="margin-top:10px;">
+          <h4>Rotation Time (Thời gian quay)</h4>
+          <p>Thời gian đợi sector quay tới vị trí đầu đọc. Tốc độ quay phổ biến: <strong>5400, 7200, 10000, 15000 RPM</strong></p>
+          <p style="margin-top:6px;">Thông thường: <strong>2-6 ms</strong></p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card accent-green">
+          <h4>Transfer Rate (Tốc độ truyền dữ liệu)</h4>
+          <p>Tốc độ đọc/ghi dữ liệu từ đĩa (MB/s). Thường chỉ nói đến tốc độ đọc.</p>
+          <p style="margin-top:8px;">Phổ biến: <strong>50-200 MB/s</strong> (HDD), <strong>500+ MB/s</strong> (SSD)</p>
+        </div>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Công thức tổng thời gian truy nhập</h4>
+          <p style="font-family:monospace; font-size:14px; background:#f0f4f8; padding:10px; border-radius:6px; margin-top:8px;">
+            T<sub>access</sub> = T<sub>seek</sub> + T<sub>rotation</sub> + T<sub>transfer</sub>
+          </p>
+          <p style="margin-top:8px;">Trong đó T<sub>seek</sub> chiếm ~50-70% tổng thời gian truy nhập ngẫu nhiên.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÔNG NGHỆ RAID — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+
+    <div class="quote-box">
+      <p><strong>RAID: Redundant Array of Inexpensive Disks</strong><br>
+      Mảng các đĩa rẻ có độ dư ( fault-tolerance ) — ghép nhiều đĩa vật lý thành một đơn vị lưu trữ logic có khả năng chịu lỗi.</p>
+    </div>
+
+    <div class="cards" style="margin-top:14px;">
+      <div class="card">
+        <h4>RAID-0: Striping</h4>
+        <p>Chia dữ liệu thành các block đều nhau, phân tán lên k đĩa. <strong>Tốc độ cao, KHÔNG có dự phòng.</strong></p>
+      </div>
+      <div class="card accent-green">
+        <h4>RAID-1: Mirroring</h4>
+        <p>Đĩa đối xứng — mỗi đĩa có 1 bản sao chính xác. <strong>Dự phòng cao, chi phí gấp đôi.</strong></p>
+      </div>
+      <div class="card accent-orange">
+        <h4>RAID-5: Striping + Parity</h4>
+        <p>Chia striping + 1 đĩa parity cho mỗi cluster k đĩa. <strong>Cân bằng hiệu năng và độ an toàn.</strong></p>
+      </div>
+    </div>
+
+    <div class="ai-box" style="margin-top:12px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p>Ngày nay, <strong>RAID 6 (Double Parity)</strong> và <strong>RAID-DP</strong> (Netflix sử dụng) cho phép chịu lỗi 2 đĩa cùng lúc. AWS EBS, Google Cloud PD dùng phần mềm RAID-like replication thay vì RAID phần cứng truyền thống.</p>
+    </div>
+
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RAID-0: STRIPING — CÔNG THỨC VÀ ƯU/NHƯỢC ĐIỂM</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Cấu hình</h3>
+        <ul>
+          <li>1 đĩa điều khiển + n đĩa dữ liệu (n ≥ 2)</li>
+          <li>Kỹ thuật <strong>striping</strong>: chia dữ liệu thành các block bằng nhau</li>
+          <li>Block b<sub>i</sub> lưu vào đĩa: <strong>(i + j) mod k</strong><br>
+            <span style="font-size:12px; color:#666;">trong đó j = đĩa bắt đầu, k = số đĩa</span></li>
+        </ul>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Ưu điểm</h3>
+        <ul>
+          <li>Tốc độ đọc/ghi tăng lên đáng kể</li>
+          <li>Có thể đọc song song từ k đĩa</li>
+          <li>Chi phí thấp (không dùng đĩa dự phòng)</li>
+          <li>Dung lượng sử dụng = 100% (không hao tốn)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Nhược điểm</h3>
+        <div class="card accent-orange">
+          <p><strong>KHÔNG có khả năng chịu lỗi!</strong><br>
+          Nếu 1 đĩa bất kỳ hỏng → toàn bộ mảng mất dữ liệu. Striping không cung cấp redundancy.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Giới hạn hiệu năng</h3>
+        <ul>
+          <li>Phụ thuộc kích thước bộ đệm (buffer)</li>
+          <li>Phụ thuộc độ rộng băng thông controller</li>
+          <li>Không phù hợp cho dữ liệu quan trọng</li>
+        </ul>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Ứng dụng</h3>
+        <p style="font-size:14px;">Video editing tạm thời, gaming, cache layer — nơi cần tốc độ cao, dữ liệu không quan trọng.</p>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RAID-1: MIRRORING — ĐỐI XỨNG ĐĨA</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Nguyên lý hoạt động</h3>
+        <div class="card">
+          <p>Mỗi đĩa dữ liệu có <strong>1 đĩa đối xứng (mirror)</strong> chứa bản sao y hệt.</p>
+          <p style="margin-top:8px;">Nếu có N đĩa vật lý → chỉ có <strong>n = N/2 đĩa</strong> dữ liệu hoạt động đồng thời.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Ưu điểm</h3>
+        <ul>
+          <li><strong>Khôi phục tức thì</strong> khi đĩa hỏng</li>
+          <li>Đọc có thể song song từ cả 2 đĩa → tăng tốc đọc</li>
+          <li>Độ an toàn dữ liệu cực cao</li>
+          <li>Đơn giản về mặt logic</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Nhược điểm</h3>
+        <div class="card accent-orange">
+          <p><strong>Chi phí gấp đôi</strong> — chỉ sử dụng được 50% dung lượng tổng.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">So sánh RAID-0 vs RAID-1</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>RAID-0</th>
+              <th>RAID-1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dung lượng sử dụng</td>
+              <td>100%</td>
+              <td>50%</td>
+            </tr>
+            <tr>
+              <td>Tốc độ đọc</td>
+              <td>Rất cao</td>
+              <td>Cao (song song)</td>
+            </tr>
+            <tr>
+              <td>Tốc độ ghi</td>
+              <td>Cao</td>
+              <td>Trung bình (ghi 2 đĩa)</td>
+            </tr>
+            <tr>
+              <td>Chịu lỗi</td>
+              <td>0 đĩa</td>
+              <td>1 đĩa</td>
+            </tr>
+            <tr>
+              <td>Chi phí</td>
+              <td>Thấp</td>
+              <td>Cao (×2)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RAID-5: STRIPING + PARITY — CÂN BẰNG HIỆU NĂNG VÀ AN TOÀN</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Nguyên lý hoạt động</h3>
+        <ul>
+          <li>Mỗi cluster k đĩa có <strong>1 đĩa parity</strong></li>
+          <li>Parity block = XOR của các data block trong cluster</li>
+          <li>Nếu 1 đĩa hỏng → khôi phục bằng XOR các đĩa còn lại</li>
+          <li>Đĩa parity phân bổ đều trên các đĩa (rotating parity)</li>
+        </ul>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Ví dụ phục hồi</h3>
+        <div class="card" style="font-size:13px;">
+          <p>Giả sử D2 hỏng. Bit j của D1=1, D3=1, D<sub>p</sub>=0</p>
+          <p style="font-family:monospace; margin-top:6px;">D2<sub>j</sub> = D1<sub>j</sub> ⊕ D3<sub>j</sub> ⊕ D<sub>pj</sub><br>= 1 ⊕ 1 ⊕ 0 = <strong>0</strong></p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card accent-green">
+          <h4>Ưu điểm</h4>
+          <ul style="font-size:14px;">
+            <li>Chỉ dùng <strong>1 đĩa parity</strong> cho k đĩa dữ liệu</li>
+            <li>Đọc/ghi song song trên nhiều đĩa</li>
+            <li>Hiệu năng sử dụng cao: (k-1)/k</li>
+            <li>Khôi phục khi 1 đĩa hỏng</li>
+          </ul>
+        </div>
+        <div class="card accent-orange" style="margin-top:10px;">
+          <h4>Nhược điểm</h4>
+          <ul style="font-size:14px;">
+            <li>Mỗi lần ghi phải cập nhật cả parity → ghi chậm hơn RAID-0</li>
+            <li><strong>Không chịu được 2 đĩa hỏng đồng thời</strong></li>
+            <li> rebuild đĩa mới có thể mất vài giờ → rủi ro đĩa thứ 2 hỏng trong lúc rebuild</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 2: LẬP LỊCH TRUY NHẬP ĐĨA</h1>
+    <p class="section-desc">Sắp xếp yêu cầu từ nhiều clients — FCFS, SCAN, SCAN-EDF</p>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TOÁN: NHIỀU CLIENTS CÙNG TRUY CẬP ĐĨA</h2></div>
+  <div class="slide-body">
+
+    <div class="quote-box">
+      <p><strong>Yêu cầu:</strong> Sắp xếp thực hiện các yêu cầu đọc dữ liệu trên đĩa từ các client khác nhau một cách tối ưu. Các giải thuật phải chạy rất nhanh (không mất nhiều thời gian tính toán).</p>
+    </div>
+
+    <div class="two-columns" style="margin-top:14px;">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">FCFS (First-Come-First-Served)</h3>
+        <div class="card">
+          <p>Mỗi yêu cầu được gán <strong>nhãn thời gian</strong>. Các yêu cầu được phục vụ theo đúng thứ tự nhãn thời gian này.</p>
+          <p style="margin-top:8px;"><strong>Ví dụ:</strong> Thứ tự phục vụ: R2, R1, R4, R3 (theo thời gian đến)</p>
+        </div>
+        <ul style="font-size:14px; margin-top:8px;">
+          <li>Đơn giản, công bằng</li>
+          <li>Không tối ưu về khoảng cách đầu đọc</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">SCAN (Elevator Algorithm)</h3>
+        <div class="card accent-green">
+          <p>Đầu đọc di chuyển theo <strong>1 chiều</strong> (hướng ra tâm hoặc vào tâm), phục vụ các yêu cầu trên đường đi. Khi đến đầu mút → đảo chiều.</p>
+          <p style="margin-top:8px;"><strong>Ví dụ:</strong> Đầu đọc đi từ ngoài vào trong, phục vụ R1→R3→R5, đến tâm → quay ra phục vụ R8→R6.</p>
+        </div>
+        <ul style="font-size:14px; margin-top:8px;">
+          <li>Tối ưu khoảng cách di chuyển</li>
+          <li>Phổ biến trong hệ điều hành</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH FCFS VÀ SCAN</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">FCFS — Ví dụ minh họa</h3>
+        <div class="card" style="font-size:13px;">
+          <p>Đầu đọc bắt đầu tại track 0. Có 4 yêu cầu: R1(50), R2(120), R3(80), R4(30)</p>
+          <p style="margin-top:8px;"><strong>Thứ tự phục vụ:</strong> R1→R2→R3→R4</p>
+          <p style="margin-top:6px;">Tổng khoảng cách: |0-50|+|50-120|+|120-80|+|80-30| = <strong>200 tracks</strong></p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px; font-size:13px;">
+          <p><strong>Nhược điểm FCFS:</strong></p>
+          <ul>
+            <li>Đầu đọc di chuyển tới lui nhiều</li>
+            <li>Thời gian chờ trung bình cao</li>
+            <li>Không thích hợp cho hệ thống bận rộn</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">SCAN — Ví dụ minh họa</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p>Đầu đọc bắt đầu tại track 0, đi từ ngoài vào trong (hướng tăng)</p>
+          <p style="margin-top:8px;"><strong>Thứ tự phục vụ:</strong> R4(30)→R1(50)→R3(80)→R2(120)</p>
+          <p style="margin-top:6px;">Tổng khoảng cách: |0-30|+|30-50|+|50-80|+|80-120| = <strong>120 tracks</strong></p>
+        </div>
+        <div class="card" style="margin-top:8px; font-size:13px;">
+          <p><strong>SCAN tiết kiệm 40% khoảng cách!</strong></p>
+          <p style="margin-top:6px;">Đầu đọc chỉ di chuyển 1 chiều tối đa. Mọi yêu cầu gần đầu mút phải đợi 1 chu kỳ SCAN.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:14px; margin-top:10px;">CLOOK (cải tiến SCAN)</h3>
+        <p style="font-size:13px;">Thay vì đến đầu mút, SCAN chỉ đến yêu cầu cuối cùng rồi quay lại ngay → giảm khoảng cách không cần thiết.</p>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SCAN-EDF: KẾT HỢP ƯU TIÊN THỜI GIAN THỰC</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">EDF (Earliest Deadline First)</h3>
+        <div class="card">
+          <p>Các yêu cầu được gán <strong>nhãn ưu tiên</strong> dựa trên deadline thời gian thực. Yêu cầu có deadline gần nhất được phục vụ trước.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">SCAN-EDF: Kết hợp cả hai</h3>
+        <ul>
+          <li>Ưu tiên yêu cầu có <strong>deadline khẩn cấp</strong> nhất</li>
+          <li>Khi không có yêu cầu khẩn → dùng SCAN để tối ưu khoảng cách</li>
+          <li>Khi có yêu cầu thoát deadline → phục vụ ngay lập tức</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="card accent-orange">
+          <h4>Quy tắc SCAN-EDF</h4>
+          <ol style="font-size:14px; margin-top:8px;">
+            <li>Sắp xếp yêu cầu theo thứ tự <strong>deadline giảm dần</strong> (gần nhất trước)</li>
+            <li>Phục vụ yêu cầu có thể thực hiện được theo thứ tự ưu tiên</li>
+            <li>Yêu cầu thoát khỏi hàng đợi khi: deadline đã qua hoặc dữ liệu đã được phục vụ đầy đủ</li>
+          </ol>
+        </div>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>Ứng dụng trong MM</h4>
+          <p style="font-size:14px;">Video streaming yêu cầu playback liên tục → mỗi frame có deadline. SCAN-EDF đảm bảo frame được phục vụ đúng giờ, tránh giật hình.</p>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Linux kernel 5.x+ dùng <strong>MQ-DEADLINE</strong> I/O scheduler — kết hợp deadline (EDF) với multi-queue để tối ưu SSD/HDD cho cả real-time và batch workloads.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 3: MÁY CHỦ PHƯƠNG TIỆN (MOD SERVER)</h1>
+    <p class="section-desc">Xây dựng máy chủ video/audio trên nền đĩa từ</p>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MÁY CHỦ PHƯƠNG TIỆN THEO YÊU CẦU (MOD SERVER)</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Yêu cầu hệ thống</h3>
+        <ul>
+          <li>Phục vụ <strong>đồng thời nhiều client</strong></li>
+          <li>Hỗ trợ các thao tác VCR:<br>
+            &nbsp;&nbsp;• <strong>Play</strong> (xem bình thường)<br>
+            &nbsp;&nbsp;• <strong>Rewind</strong> (tua lại)<br>
+            &nbsp;&nbsp;• <strong>Fast-Forward</strong> (tua đi)<br>
+            &nbsp;&nbsp;• <strong>Pause</strong> (tạm dừng)</li>
+          <li>Đảm bảo tính liên tục (continuity)</li>
+        </ul>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Tham số hệ thống</h3>
+        <div class="card" style="font-size:13px;">
+          <p><strong>n</strong> đĩa: d1, d2, …, dn<br>
+          <strong>k</strong> movies: m1, m2, …, mk<br>
+          1 movie = chuỗi liên tiếp các block có kích thước cố định<br>
+          1 block = 1 tập sectors</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Các loại yêu cầu từ client</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr>
+              <th>Thao tác</th>
+              <th>Mô tả</th>
+              <th>Block yêu cầu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Play (bình thường)</strong></td>
+              <td>Xem liên tục</td>
+              <td>b, b+1, b+2, …</td>
+            </tr>
+            <tr>
+              <td><strong>Fast-Forward</strong></td>
+              <td>Tua nhanh (step > 1)</td>
+              <td>b, b+step, b+2·step, …</td>
+            </tr>
+            <tr>
+              <td><strong>Rewind</strong></td>
+              <td>Tua lại</td>
+              <td>b, b-step, b-2·step, …</td>
+            </tr>
+            <tr>
+              <td><strong>Pause</strong></td>
+              <td>Tạm dừng</td>
+              <td>Giữ nguyên b</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card accent-purple" style="margin-top:10px; font-size:13px;">
+          <h4>Công thức tổng quát</h4>
+          <p>Các block được yêu cầu: b, (b+step), (b+2·step), …, (b+(len-1)·step)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KỊCH BẢN MOD SERVER — MỘT CLIENT</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Kịch bản 1: 1 client yêu cầu 1 movie</h3>
+        <div class="card">
+          <p>MOD server có <strong>3 đĩa</strong>. Client xem movie m1 bắt đầu từ block b.</p>
+          <p style="margin-top:8px;">Các block được đọc tuần tự: b, b+1, b+2, …</p>
+          <p style="margin-top:6px;">Nếu m1 có blocks trải đều trên 3 đĩa → đọc song song 3 đĩa → throughput tăng gấp 3.</p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Nguyên tắc phân bổ blocks</h4>
+          <p style="font-size:13px;">Blocks của cùng 1 movie nên phân bổ đều trên các đĩa (round-robin) để tận dụng đọc song song. Đây là nguyên tắc thiết kế quan trọng nhất của MOD server.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Ví dụ cụ thể</h3>
+        <div class="card" style="font-size:13px;">
+          <p><strong>Hệ thống:</strong> 3 đĩa (d1, d2, d3), movie có 30 blocks</p>
+          <p style="margin-top:6px;"><strong>Phân bổ:</strong></p>
+          <ul>
+            <li>d1: block 0, 3, 6, 9, … (mod 3 = 0)</li>
+            <li>d2: block 1, 4, 7, 10, … (mod 3 = 1)</li>
+            <li>d3: block 2, 5, 8, 11, … (mod 3 = 2)</li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Kết quả:</strong> Mỗi vòng đọc lấy 3 blocks song song → tốc độ gấp 3 lần so với 1 đĩa.</p>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Netflix sử dụng <strong>OpenConnect</strong> — CDN server đặt gần người dùng, dùng RAID-like replication và striping để phục vụ video với độ trễ < 10ms tại Mỹ.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KỊCH BẢN MOD SERVER — NHIỀU CLIENTS CÙNG MOVIE</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Kịch bản 2: 2 clients xem cùng 1 movie</h3>
+        <div class="card">
+          <p>Tại một thời điểm, có thể có <strong>2 yêu cầu truy nhập đồng thời</strong> vào 1 movie trên cùng 1 đĩa.</p>
+          <p style="margin-top:8px;">Giả sử đĩa d1 chứa block 5 của movie m1. Cả hai clients đều cần block 5 cùng lúc → <strong>xung đột đĩa</strong>.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Giải thuật SCAN-EDF cho MOD</h3>
+        <ul style="font-size:14px;">
+          <li>Mỗi transaction được gán <strong>nhãn ưu tiên</strong></li>
+          <li>Sắp xếp theo thứ tự ưu tiên giảm dần</li>
+          <li>Các yêu cầu có thể thực hiện → phục vụ theo thứ tự</li>
+          <li>Yêu cầu thoát khỏi hàng đợi khi: deadline qua hoặc đã phục vụ đủ</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Tiêu chí gán client cho đĩa</h3>
+        <div class="card accent-orange">
+          <p>Khi gán client Cj cho đĩa DS di, MOD server phải đảm bảo DS có đủ tài nguyên cho yêu cầu hiện tại:</p>
+          <ul style="font-size:13px; margin-top:6px;">
+            <li><strong>Dữ liệu:</strong> Đĩa phải có dữ liệu cần thiết</li>
+            <li><strong>Throughput:</strong> Tổng bitrate các client trên đĩa ≤ tốc độ truyền đĩa</li>
+            <li><strong>Buffer:</strong> Bộ đệm đĩa đủ chứa dữ liệu cần đọc</li>
+          </ul>
+        </div>
+        <div class="card accent-green" style="margin-top:8px;">
+          <h4>Mẹo thiết kế</h4>
+          <p style="font-size:13px;">Đặt nhiều bản sao của movie phổ biến (hot movies) trên nhiều đĩa khác nhau → giảm xung đột, tăng đồng thời phục vụ.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 4: TRUY NHẬP DỮ LIỆU TỪ CD-ROM</h1>
+    <p class="section-desc">Đặc điểm cấu trúc, bộ đệm và lập lịch đa khu vực</p>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CẤU TRÚC VẬT LÝ CD-ROM</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đặc điểm cấu trúc</h3>
+        <div class="card">
+          <ul style="font-size:14px;">
+            <li>Chỉ có <strong>1 đĩa phẳng</strong> duy nhất</li>
+            <li>1 track dài hình <strong>xoáy ốc</strong> (spiral), không phải vòng tròn đồng tâm như đĩa từ</li>
+            <li>Track chia thành các <strong>sector</strong> có độ dài giống nhau</li>
+            <li>Đầu đọc di chuyển dọc theo track với <strong>vận tốc tuyến tính không đổi (CLV)</strong></li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">CLV (Constant Linear Velocity)</h3>
+        <ul style="font-size:14px;">
+          <li>Tốc độ quay thay đổi theo vị trí đọc: nhanh ở tâm, chậm ở mép</li>
+          <li>Mật độ dữ liệu đều → tốc độ truyền ổn định</li>
+          <li>Tốc độ truyền: ~1.2-1.4 MB/s (1× CD-ROM)</li>
+          <li>52× CD-ROM: ~75 MB/s</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">So sánh CD-ROM vs Ổ đĩa từ</h3>
+        <table style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>CD-ROM</th>
+              <th>Ổ đĩa từ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Số đĩa</td>
+              <td>1</td>
+              <td>Nhiều (đa đĩa)</td>
+            </tr>
+            <tr>
+              <td>Cấu trúc track</td>
+              <td>Xoáy ốc (CLV)</td>
+              <td>Vòng đồng tâm</td>
+            </tr>
+            <tr>
+              <td>Seek time</td>
+              <td>80-300 ms</td>
+              <td>3-15 ms</td>
+            </tr>
+            <tr>
+              <td>Truy nhập ngẫu nhiên</td>
+              <td>Rất chậm</td>
+              <td>Nhanh</td>
+            </tr>
+            <tr>
+              <td>Truy nhập tuần tự</td>
+              <td>Khá tốt</td>
+              <td>Tốt</td>
+            </tr>
+            <tr>
+              <td>Giá thành</td>
+              <td>Rẻ</td>
+              <td>Đắt hơn</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card accent-orange" style="margin-top:10px; font-size:13px;">
+          <p><strong>CD-ROM phù hợp:</strong> Phân phối phần mềm, dữ liệu chỉ đọc, lưu trữ lâu dài. <strong>Không phù hợp:</strong> Hệ thống real-time đòi hỏi nhiều concurrent clients.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐỌC DỮ LIỆU TỪ CD-ROM — MULTI-SECTOR READ</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Bài toán đặt ra</h3>
+        <div class="card">
+          <p>CD có <strong>100 sectors</strong>. Đầu đọc hiện tại tại sector 58.</p>
+          <p style="margin-top:8px;">Client muốn đọc sectors: <strong>10, 30, 50, 70, 90</strong></p>
+          <p style="margin-top:8px;">Bộ đệm (buffer) có kích thước giới hạn → cần sắp xếp thứ tự đọc tối ưu.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">Nguyên tắc</h3>
+        <ul style="font-size:14px;">
+          <li>Tua đầu đọc về vị trí 0 → đọc theo chiều xoáy ốc tăng dần</li>
+          <li>Đọc trước sectors sẽ cần sau (prefetching)</li>
+          <li>Buffer giữ sẵn dữ liệu chưa cần ngay</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Cách 1: Dùng bộ đệm (Buffer)</h3>
+        <div class="card" style="font-size:13px;">
+          <p>1. Đọc sector 70 → 90 → 10 vào bộ đệm (backwards)</p>
+          <p style="margin-top:6px;">2. Sector 10 được lấy ra sử dụng → đọc sector 30 vào bộ đệm</p>
+          <p style="margin-top:6px;">3. Sector 30 sử dụng → đọc sector 50 vào bộ đệm</p>
+          <p style="margin-top:6px;">4. Tiếp tục: 50 → 70 → 90</p>
+          <p style="margin-top:8px; font-style:italic; color:#666;">Cần buffer đủ lớn để chứa sectors "tương lai"</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:10px; margin-bottom:8px;">Cách 2: Đưa đầu đọc về vị trí 0</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p>1. Đầu đọc quay về sector 0</p>
+          <p style="margin-top:6px;">2. Đọc 10, 30, 50 vào buffer</p>
+          <p style="margin-top:6px;">3. Sử dụng 10 → đọc 70 vào buffer</p>
+          <p style="margin-top:6px;">4. Sử dụng 30 → đọc 90 vào buffer</p>
+          <p style="margin-top:8px; font-style:italic; color:#666;">Tốn thời gian quay về 0 nhưng đọc tuần tự hiệu quả hơn</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>YÊU CẦU VỀ BỘ ĐỆM (BUFFER)</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hai yêu cầu quan trọng</h3>
+        <div class="card">
+          <h4>1. Tính liên tục (Continuity)</h4>
+          <p>Dữ liệu hiển thị phía client phải liên tục, không bị gián đoạn. Buffer phải luôn có dữ liệu sẵn sàng.</p>
+        </div>
+        <div class="card accent-green" style="margin-top:10px;">
+          <h4>2. Sử dụng hiệu quả (Buffer Utilisation)</h4>
+          <p>Dữ liệu trên bộ đệm không bị ghi đè trước khi sử dụng. Buffer phải đủ lớn để chứa dữ liệu đang chờ.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Mô hình hoạt động</h3>
+        <div class="card" style="font-size:13px;">
+          <p style="font-family:monospace; background:#f0f4f8; padding:8px; border-radius:4px;">
+            Server ──đọc──► Buffer ──gửi──► Client<br>
+            t_fill (đọc đủ)    t_use (client tiêu thụ)
+          </p>
+          <p style="margin-top:8px;"><strong>Trong t_fill (s)</strong>, server đọc được: t_fill × b_wd (bytes) dữ liệu nén</p>
+          <p style="margin-top:4px;"><strong>Trong 1s</strong>, client tiêu thụ: cons (bytes) dữ liệu không nén</p>
+          <p style="margin-top:4px;"><strong>Tỷ lệ nén:</strong> 1 byte dữ liệu nén → r byte không nén</p>
+        </div>
+        <div class="card accent-orange" style="margin-top:10px; font-size:13px;">
+          <p><strong>Công thức tính buffer tối thiểu:</strong></p>
+          <p style="font-family:monospace; margin-top:6px;">B = t_fill × b_wd - (t_fill × cons / r)</p>
+          <p style="margin-top:4px;">→ Đảm bảo buffer luôn đầy để không gián đoạn playback</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>XÁC ĐỊNH KÍCH THƯỚC BỘ ĐỆM</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Các thông số</h3>
+        <table style="font-size:13px;">
+          <thead>
+            <tr>
+              <th>Ký hiệu</th>
+              <th>Ý nghĩa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:monospace;">t<sub>fill</sub></td>
+              <td>Thời gian server đọc đầy buffer (s)</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">b<sub>wd</sub></td>
+              <td>Tốc độ đọc đĩa (bytes/s)</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">cons</td>
+              <td>Tốc độ tiêu thụ của client (bytes/s)</td>
+            </tr>
+            <tr>
+              <td style="font-family:monospace;">r</td>
+              <td>Tỷ lệ nén (1 byte nén → r byte không nén)</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Lượng dữ liệu nén đọc được</h3>
+        <div class="card" style="font-size:14px; font-family:monospace;">
+          Q<sub>fill</sub> = t<sub>fill</sub> × b<sub>wd</sub> (bytes)
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Lượng dữ liệu không nén client cần</h3>
+        <div class="card" style="font-size:14px; font-family:monospace;">
+          Q<sub>use</sub> = Q<sub>fill</sub> × r = t<sub>fill</sub> × b<sub>wd</sub> × r (bytes)
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Lượng thực client tiêu thụ trong t<sub>fill</sub></h3>
+        <div class="card" style="font-size:14px; font-family:monospace;">
+          Q<sub>consumed</sub> = t<sub>fill</sub> × cons (bytes)
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Điều kiện đảm bảo liên tục</h3>
+        <div class="card accent-green" style="font-size:14px; font-family:monospace;">
+          t<sub>fill</sub> × b<sub>wd</sub> × r ≥ t<sub>fill</sub> × cons<br>
+          ⟹ <strong>b<sub>wd</sub> × r ≥ cons</strong>
+        </div>
+        <p style="font-size:13px; margin-top:8px;">Nghĩa là: tốc độ cung cấp dữ liệu phải ≥ tốc độ tiêu thụ của client.</p>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RTF (REAL-TIME FILE) — LẬP LỊCH ĐA KHU VỰC</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Bài toán đa khu vực (Multi-Zone)</h3>
+        <div class="card">
+          <p>Server nhận yêu cầu đọc tập sectors <strong>{s1, s2, ..., sk}</strong>. Tốc độ dịch chuyển đầu đọc: <strong>lv</strong> (linear velocity). Cần lên lịch tối ưu để đọc tất cả sectors mà không vi phạm deadline.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px; margin-bottom:8px;">RTF (Real-Time File)</h3>
+        <p style="font-size:14px;">RTF được biểu diễn bằng bộ <strong>(l<sub>f</sub>, b<sub>f</sub>, p<sub>f</sub>)</strong>:</p>
+        <ul style="font-size:13px;">
+          <li><strong>l<sub>f</sub></strong>: độ dài file = số blocks</li>
+          <li><strong>b<sub>f</sub></strong>: kích thước khối = số sectors/block</li>
+          <li><strong>p<sub>f</sub></strong>: chu kỳ của file (thời gian lặp lại playback)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Ví dụ RTF</h3>
+        <div class="card" style="font-size:13px;">
+          <p>Movie 90 phút, bitrate 4 Mbps, block = 1MB:</p>
+          <ul>
+            <li>l<sub>f</sub> = (90×60×4×10^6) / (8×10^6) = <strong>2700 blocks</strong></li>
+            <li>b<sub>f</sub> = 1MB = 1 block</li>
+            <li>p<sub>f</sub> = 90 phút = chu kỳ playback</li>
+          </ul>
+        </div>
+        <div class="card accent-orange" style="margin-top:10px; font-size:13px;">
+          <h4>Kiểm tra xung đột RTF</h4>
+          <p>Hai files f1(l1,b1,p1) và f2(l2,b2,p2) không xung đột nếu playback rates độc lập và buffers không trùng nhau trong cùng chu kỳ.</p>
+          <p style="margin-top:6px;">Công thức: |st(f1) - st(f2)| > buffer requirement để tránh trùng lặp.</p>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>AWS S3 và Google Cloud Storage dùng <strong>range request + prefetching</strong> để stream video thay vì đọc CD-ROM. Buffer sizing dựa trên ABR (Adaptive Bitrate) algorithm.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 5: BÀI TẬP & THỰC HÀNH</h1>
+    <p class="section-desc">Các bài toán từ đĩa từ, RAID, MOD server đến CD-ROM</p>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 1: XÁC ĐỊNH VỊ TRÍ ĐẦU FILE</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>Cho hệ thống có <strong>n đĩa</strong>. Cần lưu trữ tập files f1, f2, …, fn. Xác định các điểm đầu (vị trí bắt đầu) của các file sao cho:</p>
+          <ul style="font-size:14px; margin-top:8px;">
+            <li>Tận dụng tối đa đọc song song giữa các đĩa</li>
+            <li>Giảm thiểu xung đột seek</li>
+            <li>Các files phổ biến (hot) nên đặt trên nhiều đĩa khác nhau</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hướng dẫn</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p><strong>Bước 1:</strong> Tính tổng kích thước tất cả files = T (blocks)</p>
+          <p style="margin-top:6px;"><strong>Bước 2:</strong> Chia đều lên n đĩa: T/n blocks mỗi đĩa</p>
+          <p style="margin-top:6px;"><strong>Bước 3:</strong> Đặt block đầu tiên của f_i tại đĩa (i mod n)</p>
+          <p style="margin-top:6px;"><strong>Bước 4:</strong> Đặt block tiếp theo tại đĩa ((i+1) mod n), ...</p>
+          <p style="margin-top:8px; font-style:italic; color:#666;">Công thức: Block b_k của f_i → đĩa (k+i) mod n</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px; font-size:13px;">
+          <p><strong>Ví dụ:</strong> 4 đĩa, f1 có 7 blocks: đặt vào d1,d2,d3,d4,d1,d2,d3</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 2: PHÂN BỔ MOVIE TRÊN RAID-0</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>Hệ thống MOD có <strong>4 đĩa</strong>, dùng kiến trúc RAID-0. Có 3 movies:</p>
+          <ul style="font-size:14px;">
+            <li>m1 = 10 blocks</li>
+            <li>m2 = 14 blocks</li>
+            <li>m3 = 7 blocks</li>
+          </ul>
+          <p style="margin-top:8px;">Dùng hình vẽ thể hiện cách phân bổ blocks lên 4 đĩa (d1, d2, d3, d4) sao cho đọc song song hiệu quả nhất.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hướng dẫn giải</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p><strong>Bước 1:</strong> Tính block i của movie → đĩa = i mod 4</p>
+          <p style="margin-top:6px;"><strong>m1 (10 blocks):</strong></p>
+          <ul style="font-size:12px;">
+            <li>d1: m1[0], m1[4], m1[8]</li>
+            <li>d2: m1[1], m1[5], m1[9]</li>
+            <li>d3: m1[2], m1[6]</li>
+            <li>d4: m1[3], m1[7]</li>
+          </ul>
+          <p style="margin-top:6px;"><strong>m2 (14 blocks):</strong> tương tự, mod 4</p>
+          <p style="margin-top:6px;"><strong>m3 (7 blocks):</strong> tương tự, mod 4</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px; font-size:13px;">
+          <p><strong>Câu hỏi thêm:</strong> Nếu có 2 clients cùng xem m1 trên 2 đĩa khác nhau → tốc độ đọc tăng gấp bao nhiêu lần so với 1 đĩa?</p>
+          <p style="margin-top:4px;">→ <strong>4 lần</strong> (striping trên 4 đĩa)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 3: PHỤC HỒI DỮ LIỆU RAID-5</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>Trong 1 cluster RAID-5 có <strong>4 đĩa</strong>: D1, D2, D3, Dp (parity).</p>
+          <p style="margin-top:8px;"><strong>Câu 1:</strong> Nếu 2 đĩa D1 và D2 hỏng đồng thời → có khả năng phục hồi không? Giải thích?</p>
+          <p style="margin-top:6px;"><strong>Câu 2:</strong> Một cách tổng quát, nếu dùng đĩa parity → hệ thống chịu được tối đa bao nhiêu đĩa hỏng?</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hướng dẫn giải</h3>
+        <div class="card accent-orange" style="font-size:13px;">
+          <p><strong>Câu 1:</strong> KHÔNG phục hồi được</p>
+          <p style="margin-top:6px;">RAID-5 chỉ dùng <strong>1 đĩa parity</strong> cho mỗi cluster. Với 2 đĩa hỏng → không đủ thông tin để XOR khôi phục (cần ít nhất 1 đĩa còn sống + parity).</p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px; font-size:13px;">
+          <p><strong>Câu 2:</strong> Tối đa <strong>1 đĩa</strong> hỏng</p>
+          <p style="margin-top:6px;">Với 1 đĩa parity, có thể khôi phục 1 đĩa bất kỳ:<br>
+          D<sub>x</sub> = D<sub>p</sub> ⊕ D<sub>1</sub> ⊕ D<sub>2</sub> ⊕ ... ⊕ D<sub>n</sub> (trừ D<sub>x</sub>)</p>
+          <p style="margin-top:6px;"><strong>RAID-6 (Double Parity)</strong> dùng 2 đĩa parity → chịu được 2 đĩa hỏng đồng thời.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 4: TÍNH BUFFER VÀ SỐ CLIENT ĐỒNG THỜI</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>1 đĩa có tốc độ đọc <strong>k MB/s</strong>. Bộ đệm có kích thước <strong>b MB</strong>.</p>
+          <p style="margin-top:8px;">2 clients C1 và C2 cùng xem 1 movie:</p>
+          <ul style="font-size:13px;">
+            <li>cons(C1) = r1 MB/s</li>
+            <li>cons(C2) = r2 MB/s</li>
+          </ul>
+          <p style="margin-top:6px;">Hỏi: 2 clients có thể xem đồng thời không? Tính buffer tối thiểu?</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hướng dẫn giải</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p><strong>Bước 1:</strong> Kiểm tra điều kiện bandwidth</p>
+          <p style="font-family:monospace;">k ≥ r1 + r2</p>
+          <p style="margin-top:4px;">Đĩa phải đọc đủ nhanh để phục vụ cả 2 clients cùng lúc.</p>
+          <p style="margin-top:8px;"><strong>Bước 2:</strong> Tính thời gian đọc đầy buffer</p>
+          <p style="font-family:monospace;">t<sub>fill</sub> = b / (k - (r1 + r2))</p>
+          <p style="margin-top:4px;">Thời gian buffer thực sự tăng = thời gian đọc trừ thời gian tiêu thụ.</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px; font-size:13px;">
+          <p><strong>Ví dụ:</strong> k=10 MB/s, r1=4 MB/s, r2=3 MB/s, b=7 MB</p>
+          <p style="font-family:monospace; margin-top:4px;">10 ≥ 4+3=7 ✓ → Có thể phục vụ đồng thời</p>
+          <p style="font-family:monospace; margin-top:4px;">t<sub>fill</sub> = 7 / (10-7) = 7/3 ≈ <strong>2.33s</strong></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 5: ĐÁNH GIÁ GIẢI THUẬT LẬP LỊCH ĐĨA</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>Đánh giá hiệu quả của các thuật toán <strong>FCFS, SCAN, SCAN-EDF</strong> (giả sử đầu đọc luôn ở vị trí 0) về:</p>
+          <ul style="font-size:14px;">
+            <li>Tổng khoảng cách đầu đọc phải di chuyển</li>
+            <li>Thời gian chờ trung bình</li>
+            <li>Khả năng đáp ứng deadline thời gian thực</li>
+          </ul>
+          <p style="margin-top:8px;">Yêu cầu: vẽ sơ đồ minh họa, tính toán số liệu cụ thể.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Hướng dẫn giải</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p><strong>Bảng so sánh (vị trí y/c: 30, 50, 80, 120):</strong></p>
+          <table style="font-size:11px; margin-top:6px;">
+            <thead>
+              <tr><th>Thuật toán</th><th>Thứ tự</th><th>Khoảng cách</th><th>Real-time</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FCFS</td><td>30→50→80→120</td><td>170</td><td>Không</td></tr>
+              <tr><td>SCAN</td><td>30→50→80→120</td><td>120</td><td>Không</td></tr>
+              <tr><td>SCAN-EDF</td><td>Theo deadline</td><td>Biến đổi</td><td>Có</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px; font-size:13px;">
+          <p><strong>Kết luận:</strong></p>
+          <ul>
+            <li><strong>FCFS:</strong> công bằng nhất, đơn giản, khoảng cách xa nhất</li>
+            <li><strong>SCAN:</strong> tối ưu khoảng cách, không đảm bảo real-time</li>
+            <li><strong>SCAN-EDF:</strong> duy trì tính liên tục video, tối ưu deadline</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>PHẦN 6: ÔN TẬP & TỔNG KẾT</h1>
+    <p class="section-desc">Kiến thức trọng tâm và câu hỏi ôn thi</p>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT KIẾN THỨC TRỌNG TÂM</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Phần 1-2: Đĩa từ & RAID</h3>
+        <div class="cards">
+          <div class="card" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">Cấu trúc đĩa từ</h4>
+            <p>T<sub>access</sub> = T<sub>seek</sub> + T<sub>rotation</sub> + T<sub>transfer</sub></p>
+          </div>
+          <div class="card accent-green" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">RAID-0 (Striping)</h4>
+            <p>Tốc độ cao, không dự phòng. Block b<sub>i</sub> → đĩa (i+j) mod k</p>
+          </div>
+          <div class="card" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">RAID-1 (Mirroring)</h4>
+            <p>Dự phòng cao, chi phí gấp đôi, 50% dung lượng sử dụng</p>
+          </div>
+          <div class="card accent-orange" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">RAID-5 (Striping + Parity)</h4>
+            <p>Cân bằng hiệu năng & an toàn. Chịu được 1 đĩa hỏng</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Phần 3-5: Lập lịch & CD-ROM</h3>
+        <div class="cards">
+          <div class="card" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">FCFS</h4>
+            <p>Đơn giản, công bằng, không tối ưu khoảng cách</p>
+          </div>
+          <div class="card accent-green" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">SCAN</h4>
+            <p>Tối ưu khoảng cách đầu đọc, đảo chiều ở đầu mút</p>
+          </div>
+          <div class="card accent-orange" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">SCAN-EDF</h4>
+            <p>Kết hợp deadline real-time + khoảng cách tối ưu</p>
+          </div>
+          <div class="card accent-gold" style="font-size:13px; padding:10px;">
+            <h4 style="margin-bottom:4px;">Buffer sizing</h4>
+            <p>B ≥ t<sub>fill</sub> × (b<sub>wd</sub> × r - cons)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH TỔNG QUAN CÁC CÔNG NGHỆ LƯU TRỮ</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <table style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Công nghệ</th>
+              <th>Dung lượng</th>
+              <th>Tốc độ</th>
+              <th>Chịu lỗi</th>
+              <th>Chi phí</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HDD (đơn)</td>
+              <td>Rất cao (TB)</td>
+              <td>Thấp</td>
+              <td>0</td>
+              <td>Thấp</td>
+            </tr>
+            <tr>
+              <td>RAID-0</td>
+              <td>100%</td>
+              <td>Rất cao</td>
+              <td>0</td>
+              <td>Thấp</td>
+            </tr>
+            <tr>
+              <td>RAID-1</td>
+              <td>50%</td>
+              <td>Cao</td>
+              <td>1 đĩa</td>
+              <td>Cao</td>
+            </tr>
+            <tr>
+              <td>RAID-5</td>
+              <td>(k-1)/k</td>
+              <td>Cao</td>
+              <td>1 đĩa</td>
+              <td>Trung bình</td>
+            </tr>
+            <tr>
+              <td>SSD</td>
+              <td>Cao</td>
+              <td>Rất cao</td>
+              <td>0 (thường)</td>
+              <td>Cao</td>
+            </tr>
+            <tr>
+              <td>CD-ROM</td>
+              <td>700 MB</td>
+              <td>Thấp</td>
+              <td>Vĩnh viễn</td>
+              <td>Rất rẻ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <div class="card" style="font-size:13px;">
+          <h4>Khi nào dùng gì?</h4>
+          <ul>
+            <li><strong>Streaming video quy mô lớn:</strong> RAID-0/5 với nhiều đĩa</li>
+            <li><strong>Database nghiệp vụ:</strong> RAID-1 hoặc RAID-5/6</li>
+            <li><strong>Video editing tạm thời:</strong> RAID-0 (tốc độ cao)</li>
+            <li><strong>Phân phối phần mềm:</strong> CD-ROM / DVD</li>
+            <li><strong>Modern cloud:</strong> SSD NVMe + distributed replication</li>
+          </ul>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Google YouTube dùng <strong>TCOV (Tiered Cache + Object Storage)</strong>: hot content → RAM cache, warm → SSD NVMe, cold → HDD. Tối ưu chi phí/dung lượng với multi-tier storage.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Câu hỏi lý thuyết</h3>
+        <div class="card" style="font-size:13px;">
+          <ol style="margin-left:16px;">
+            <li style="margin-bottom:6px;">Phân biệt <strong>Striping</strong>, <strong>Mirroring</strong> và <strong>Parity</strong>. Cho ví dụ minh họa.</li>
+            <li style="margin-bottom:6px;">Tại sao RAID-5 chỉ chịu được 1 đĩa hỏng, không phải 2?</li>
+            <li style="margin-bottom:6px;">Nêu sự khác biệt giữa <strong>FCFS</strong>, <strong>SCAN</strong> và <strong>SCAN-EDF</strong>. Khi nào dùng SCAN-EDF?</li>
+            <li style="margin-bottom:6px;">Giải thích nguyên lý <strong>CLV</strong> của CD-ROM và ảnh hưởng đến tốc độ truy nhập.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Câu hỏi tính toán</h3>
+        <div class="card" style="font-size:13px;">
+          <ol style="margin-left:16px;">
+            <li style="margin-bottom:6px;">Tính thời gian truy nhập ngẫu nhiên của đĩa có T<sub>seek</sub>=8ms, T<sub>rotation</sub>=4ms, TR=100 MB/s, đọc 1MB?</li>
+            <li style="margin-bottom:6px;">Cho 5 đĩa RAID-5. Tính dung lượng sử dụng được và số đĩa có thể hỏng?</li>
+            <li style="margin-bottom:6px;">MOD server có k=8 MB/s, 2 clients r1=3 MB/s, r2=2 MB/s, b=6 MB. Tính số client tối đa và buffer cần thiết?</li>
+            <li style="margin-bottom:6px;">Cho 2 RTF files f1(10,1,100), f2(15,1,150). Kiểm tra xung đột tại st(f1)=5, st(f2)=12?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP 6: KIỂM TRA XUNG ĐỘT RTF</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Đề bài</h3>
+        <div class="card">
+          <p>Cho 2 file RTF f1, f2. Kiểm tra xem 2 file có đảm bảo <strong>không xung đột</strong> không nếu:</p>
+          <ul style="font-size:14px; margin-top:8px;">
+            <li>st(f1) = s1 (thời điểm bắt đầu f1)</li>
+            <li>st(f2) = s2 (thời điểm bắt đầu f2)</li>
+            <li>f1: (l1, b1, p1) — l: độ dài, b: kích thước block, p: chu kỳ</li>
+            <li>f2: (l2, b2, p2)</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Điều kiện không xung đột</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p>Hai RTF files không xung đột khi và chỉ khi buffer requirements không trùng nhau trong cùng chu kỳ playback:</p>
+          <p style="font-family:monospace; margin-top:6px;">|st(f1) - st(f2)| > buffer(f1) + buffer(f2)</p>
+          <p style="margin-top:6px;">Hay tổng quát: <strong>không có 2 sectors cùng cần đĩa trong cùng thời điểm</strong></p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Ví dụ minh họa</h3>
+        <div class="card" style="font-size:13px;">
+          <p><strong>Cho:</strong></p>
+          <ul>
+            <li>f1: l1=20 blocks, b1=1 block, p1=120s, s1=0s</li>
+            <li>f2: l2=15 blocks, b2=1 block, p2=90s, s2=25s</li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Kiểm tra:</strong></p>
+          <p>|0 - 25| = 25 > buffer(f1)+buffer(f2) = ?</p>
+          <p style="margin-top:6px;">→ Tính buffer mỗi file: buffer = l × b × p / (bitrate)</p>
+          <p style="margin-top:6px;">→ So sánh với |s1 - s2| để kết luận xung đột</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:8px; font-size:13px;">
+          <p><strong>Gợi ý:</strong> Vẽ timeline của f1 và f2 trên cùng trục thời gian. Khoảng cách giữa các lần start nên lớn hơn tổng buffer cần thiết.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MÔ HÌNH ĐA PHƯƠNG TIỆN HIỆN ĐẠI (2020+)</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Thay đổi công nghệ lưu trữ</h3>
+        <div class="card" style="font-size:13px;">
+          <h4>SSD NVMe thay thế HDD truyền thống</h4>
+          <ul>
+            <li>Tốc độ đọc: 3-7 GB/s (vs 100-200 MB/s của HDD)</li>
+            <li>Seek time gần như bằng 0 (no moving parts)</li>
+            <li>Chi phí giảm 10× trong 5 năm qua</li>
+            <li>Amazon, Google, Microsoft đã chuyển phần lớn sang NVMe SSD</li>
+          </ul>
+        </div>
+        <div class="card accent-purple" style="margin-top:8px; font-size:13px;">
+          <h4>Distributed Storage</h4>
+          <p>Thay vì RAID truyền thống, dùng <strong> erasure coding</strong> trên nhiều server: Reed-Solomon (n+2 overhead), cho phép chịu lỗi nhiều node cùng lúc với chi phí thấp hơn.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Streaming hiện đại</h3>
+        <div class="cards">
+          <div class="card" style="font-size:13px; padding:10px;">
+            <h4>Netflix / YouTube (2024+)</h4>
+            <p>Tỷ lệ nén AV1: 50% tiết kiệm so với H.264. ABR (Adaptive Bitrate) tự động chọn chất lượng theo băng thông. Buffer target: 3-10 giây thay vì phút.</p>
+          </div>
+          <div class="card accent-orange" style="margin-top:6px; font-size:13px; padding:10px;">
+            <h4>Cloud Gaming (Google Stadia, GeForce Now)</h4>
+            <p>Yêu cầu latency < 20ms end-to-end. Dùng edge computing + GPU clusters + RDMA networking. Không còn dùng CD-ROM hay HDD.</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>GPUDirect Storage (GDS)</strong> — NVIDIA cho phép dữ liệu đi thẳng từ storage sang GPU, bỏ qua CPU/RAM bottleneck, tăng throughput cho AI inference và video processing.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>THỰC HÀNH: MÔ PHỎNG MOD SERVER ĐƠN GIẢN</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Mục tiêu thực hành</h3>
+        <div class="card" style="font-size:13px;">
+          <p>Xây dựng chương trình mô phỏng đơn giản MOD server bằng Python để hiểu cách phân bổ blocks và tính throughput.</p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Yêu cầu</h3>
+        <ol style="font-size:13px;">
+          <li>Nhập: số đĩa n, danh sách movies với số blocks</li>
+          <li>Tính: vị trí block thứ i của movie j trên đĩa nào (round-robin)</li>
+          <li>Tính: throughput tối đa khi đọc song song k đĩa</li>
+          <li>Kiểm tra: số clients tối đa cho 1 movie với bitrate cho trước</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Gợi ý code (Python)</h3>
+        <div class="quote-box" style="font-size:12px; font-family:monospace; line-height:1.6;">
+          <p>def get_disk(block_i, num_disks, start_disk=0):</p>
+          <p style="margin-left:20px;">return (block_i + start_disk) % num_disks</p>
+          <p style="margin-top:8px;">def max_throughput(tr_per_disk, n):</p>
+          <p style="margin-left:20px;">return tr_per_disk * n  # striped RAID-0</p>
+          <p style="margin-top:8px;">def max_concurrent_clients(tr_per_disk, bitrate):</p>
+          <p style="margin-left:20px;">return tr_per_disk // bitrate</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:10px; font-size:13px;">
+          <h4>Nộp</h4>
+          <p>Báo cáo gồm: source code, kết quả chạy với 3 test cases, nhận xét về hiệu năng khi tăng số đĩa.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐỊNH HƯỚNG NGHỀ NGHIỆP LIÊN QUAN</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Các vai trò liên quan</h3>
+        <div class="cards">
+          <div class="card" style="font-size:13px;">
+            <h4>Storage Engineer</h4>
+            <p>Thiết kế hệ thống lưu trữ phân tán, tối ưu RAID, tuning I/O scheduler. Lương: $100-180K (Mỹ).</p>
+          </div>
+          <div class="card" style="margin-top:6px; font-size:13px;">
+            <h4>Streaming Engineer</h4>
+            <p>Xây dựng hệ thống phân phối video (CDN, ABR, adaptive streaming). Lương: $120-200K.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Công nghệ cần học</h3>
+        <div class="card" style="font-size:13px;">
+          <ul>
+            <li><strong>Lưu trữ:</strong> Linux I/O stack, NVMe, ZFS, Ceph, MinIO</li>
+            <li><strong>Streaming:</strong> HLS/DASH, FFmpeg, SRT, RTMP</li>
+            <li><strong>Cloud:</strong> AWS EBS, S3, Google PD, Azure Disk</li>
+            <li><strong>Monitoring:</strong> Prometheus + Grafana (I/O metrics)</li>
+            <li><strong>Chứng chỉ:</strong> AWS Solutions Architect, CompTIA Storage+</li>
+          </ul>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Object Storage API (S3-compatible)</strong> là chuẩn công nghiệp hiện nay — dùng bởi AWS S3, MinIO, Ceph. Kiến thức về lập lịch đĩa vẫn cốt lõi nhưng triển khai trên distributed object storage.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>GIỚI THIỆU NỘI DUNG BÀI TIẾP THEO</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <div class="card" style="font-size:14px;">
+          <h3 style="color:#0070C0; margin-bottom:10px;">Bài 3: Cấu trúc dữ liệu đa chiều</h3>
+          <p>Cấu trúc dữ liệu và giải thuật để tổ chức, lưu trữ và tìm kiếm dữ liệu đa phương tiện hiệu quả trong không gian đa chiều.</p>
+          <ul style="margin-top:10px;">
+            <li>K-D Tree, Quad-tree, MX-Quadtree</li>
+            <li>Vector Database (FAISS, Milvus, Pinecone)</li>
+            <li>ANN (Approximate Nearest Neighbor)</li>
+            <li>Approximate vs Exact search trade-offs</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:14px;">Chuẩn bị cho buổi sau</h3>
+        <ul style="font-size:14px;">
+          <li>Ôn lại: cấu trúc cây (binary tree, B-tree)</li>
+          <li>Đọc trước: Vector similarity search</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="card" style="font-size:14px;">
+          <h3 style="color:#0070C0; margin-bottom:10px;">Bài 4: Tìm kiếm dữ liệu văn bản & ảnh</h3>
+          <p>Kỹ thuật tìm kiếm nội dung (content-based retrieval) cho văn bản, ảnh và video.</p>
+          <ul style="margin-top:10px;">
+            <li>Information Retrieval (IR) cơ bản</li>
+            <li>Vector Space Model, LSI, TF-IDF</li>
+            <li>CBIR: Color histogram, Texture, Shape</li>
+            <li>SIFT, SURF, ORB feature extraction</li>
+            <li>Google Lens, CLIP, AI-based retrieval</li>
+          </ul>
+        </div>
+        <div class="card accent-gold" style="margin-top:10px; font-size:13px;">
+          <h4>Đọc thêm</h4>
+          <p><em>Multimedia Database Systems</em> — Subrahmanian, Prentice Hall, 2002.<br>
+          <em>FAISS: A Library for Efficient Similarity Search</em> — Facebook AI Research.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐIỂM NHẬN THỨC CHÍNH (KEY TAKEAWAYS)</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Dữ liệu đa phương tiện đặc biệt</h4>
+              <p>Kích thước lớn, yêu cầu thời gian thực, cần continuity → đòi hỏi thiết kế hệ thống hoàn toàn khác dữ liệu truyền thống.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>RAID là nền tảng lưu trữ MM</h4>
+              <p>Striping (RAID-0) tăng throughput, Mirroring (RAID-1) tăng reliability, Parity (RAID-5) cân bằng cả hai — chọn đúng loại RAID cho từng yêu cầu.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Lập lịch đĩa quyết định UX</h4>
+              <p>SCAN-EDF kết hợp tối ưu khoảng cách với đảm bảo deadline real-time → đảm bảo video không bị gián đoạn.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Buffer sizing = yếu tố sống còn</h4>
+              <p>Buffer phải đủ lớn: B ≥ t_fill × (b_wd × r - cons). Quá nhỏ → gián đoạn, quá lớn → lãng phí tài nguyên.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <h4>MOD server = bài toán song song hóa</h4>
+              <p>Phân bổ blocks đều trên n đĩa (round-robin) → tận dụng đọc song song → tăng throughput tuyến tính theo số đĩa.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <h4>CLV CD-ROM ≠ đĩa từ</h4>
+              <p>Đặc điểm xoáy ốc + CLV khiến CD-ROM seek rất chậm → không phù hợp real-time. Lịch sử nhưng kiến thức nền tảng vẫn giá trị.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VÍ DỤ THỰC TẾ: HỆ THỐNG LƯU TRỮ VIDEO CỦA YOUTUBE</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Kiến trúc lưu trữ YouTube</h3>
+        <div class="card" style="font-size:13px;">
+          <ul>
+            <li><strong>Tier 1 (Hot):</strong> RAM cache — video đang trending, phục vụ ngay lập tức, latency < 5ms</li>
+            <li><strong>Tier 2 (Warm):</strong> SSD NVMe — video phổ biến, phục vụ nhanh với chi phí thấp hơn RAM</li>
+            <li><strong>Tier 3 (Cold):</strong> HDD large-scale — video cũ, ít xem</li>
+            <li><strong>Tier 4 (Archive):</strong> Tape/Glacier — video không ai xem trong vài năm</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Công nghệ sử dụng</h3>
+        <ul style="font-size:13px;">
+          <li>Distributed filesystem: Google GFS, Colossus</li>
+          <li>Database: Bigtable (metadata videos)</li>
+          <li>CDN: Google Global Cache, Peering</li>
+          <li>Encoding: VP9, AV1 (giảm 50% bandwidth)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Số liệu thực tế</h3>
+        <div class="cards">
+          <div class="card" style="font-size:13px; padding:10px;">
+            <h4>500+ giờ video upload mỗi phút (2024)</h4>
+            <p>Chi phí lưu trữ ước tính: ~$1 tỷ/năm</p>
+          </div>
+          <div class="card accent-green" style="margin-top:6px; font-size:13px; padding:10px;">
+            <h4>Multi-resolution storage</h4>
+            <p>Mỗi video lưu 18+ variants (144p → 8K). Tổng storage cho 1 video: ~3-20 GB</p>
+          </div>
+          <div class="card accent-orange" style="margin-top:6px; font-size:13px; padding:10px;">
+            <h4>RAID-like replication</h4>
+            <p>Ít nhất 3 bản sao trên 3 datacenter khác nhau. Erasure coding: Reed-Solomon (10+4) cho cold storage → chịu lỗi 4 node.</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>YouTube sử dụng <strong>per-title encoding</strong> — tự động chọn bitrate tối ưu cho mỗi video thay vì dùng fixed ladder. Tiết kiệm 20-40% bandwidth mà không giảm chất lượng.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỐI ƯU HÓA I/O CHO STREAMING — THỰC HÀNH</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Công cụ phân tích I/O</h3>
+        <div class="card" style="font-size:13px;">
+          <h4>iostat — monitoring disk I/O</h4>
+          <p style="font-family:monospace; font-size:12px; background:#f0f4f8; padding:6px; border-radius:4px;">
+            iostat -x 1<br>
+            # avgrq-sz: avg request size (sectors)<br>
+            # await: avg wait time (ms)<br>
+            # %util: disk utilization
+          </p>
+        </div>
+        <div class="card" style="margin-top:8px; font-size:13px;">
+          <h4>iotop — per-process I/O</h4>
+          <p style="font-family:monospace; font-size:12px; background:#f0f4f8; padding:6px; border-radius:4px;">
+            iotop -o<br>
+            # Theo dõi process nào đang đọc/ghi nhiều nhất
+          </p>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">RAID tuning</h3>
+        <ul style="font-size:13px;">
+          <li><strong>Stripe size:</strong> 64-256KB tốt cho video streaming</li>
+          <li><strong>Cache:</strong> bật write-back cache cho reads</li>
+          <li><strong>Scheduler:</strong> deadline hoặc mq-deadline cho real-time</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Benchmark storage performance</h3>
+        <div class="card" style="font-size:13px;">
+          <h4>fio — Flexible I/O Tester</h4>
+          <p style="font-family:monospace; font-size:12px; background:#f0f4f8; padding:6px; border-radius:4px;">
+            fio --name=seq-read --filename=test.dat \<br>
+            &nbsp;&nbsp;--rw=read --bs=1M --size=1G \<br>
+            &nbsp;&nbsp;--runtime=60 --time_based<br>
+            # Sequential: 500+ MB/s (NVMe)<br>
+            # Random 4K: 100K+ IOPS
+          </p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px; font-size:13px;">
+          <h4>Nguyên tắc tối ưu</h4>
+          <ol style="font-size:12px; margin-left:16px;">
+            <li>Đo trước: biết throughput thực của hệ thống</li>
+            <li>Đặt block size = stripe size để tránh read-modify-write</li>
+            <li>Align partition + filesystem đúng (4K sector alignment)</li>
+            <li>Dùng direct I/O để bypass OS cache khi cần đo chính xác</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ĐÁNH GIÁ HIỆU QUẢ SCAN-EDF BẰNG SIMULATION</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Thiết kế simulation</h3>
+        <div class="card" style="font-size:13px;">
+          <p><strong>Input:</strong></p>
+          <ul>
+            <li>Danh sách yêu cầu với (track_position, deadline)</li>
+            <li>Vị trí ban đầu của đầu đọc</li>
+            <li>Tốc độ di chuyển đầu đọc (ms/track)</li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Output:</strong></p>
+          <ul>
+            <li>Tổng khoảng cách di chuyển</li>
+            <li>Số yêu cầu bị miss deadline</li>
+            <li>Thời gian hoàn thành</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Kết quả kỳ vọng</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p>So sánh 3 thuật toán trên cùng workload:</p>
+          <table style="font-size:11px; margin-top:6px;">
+            <thead><tr><th>Thuật toán</th><th>Khoảng cách</th><th>Miss deadline</th></tr></thead>
+            <tbody>
+              <tr><td>FCFS</td><td>Cao</td><td>Nhiều</td></tr>
+              <tr><td>SCAN</td><td>Thấp</td><td>Nhiều</td></tr>
+              <tr><td>SCAN-EDF</td><td>Trung bình</td><td>Ít nhất</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Gợi ý code (Python)</h3>
+        <div class="quote-box" style="font-size:11px; font-family:monospace; line-height:1.7;">
+          <p>import heapq</p>
+          <p>requests = [(track, deadline, i) for i in range(n)]</p>
+          <p># SCAN-EDF: priority = deadline (earliest first)</p>
+          <p>deadline_queue = sorted(requests, key=lambda x: x[1])</p>
+          <p>scan_queue = sorted(requests, key=lambda x: x[0])</p>
+          <p>def scan_edf(requests, current_pos):</p>
+          <p style="margin-left:12px;">urgent = [r for r in requests if r[1] &lt; threshold]</p>
+          <p style="margin-left:12px;">if urgent: return min(urgent, key=lambda x: x[1])</p>
+          <p style="margin-left:12px;">else: return nearest(requests, current_pos)</p>
+        </div>
+        <div class="card accent-gold" style="margin-top:10px; font-size:13px;">
+          <h4>Báo cáo yêu cầu</h4>
+          <p>Chạy 5 test cases với workload khác nhau (số lượng request, độ khẩn cấp). Vẽ biểu đồ so sánh 3 thuật toán. Nhận xét trade-off.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NETFLIX VÀ AMAZON: CASE STUDY LƯU TRỮ STREAMING</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Netflix Open Connect</h3>
+        <div class="card" style="font-size:13px;">
+          <p>CDN server được đặt trong ISPs và IXPs trên toàn thế giới. Mỗi server có 10-36 ổ đĩa, lưu trữ video phổ biến tại khu vực.</p>
+          <ul style="margin-top:8px;">
+            <li>Phục vụ >95% lưu lượng Netflix toàn cầu</li>
+            <li>Tiết kiệm bandwidth backbone ~50%</li>
+            <li>Server được tối ưu cho streaming: read-heavy, sequential</li>
+            <li>RAID-0 với striped replication trên nhiều nodes</li>
+          </ul>
+        </div>
+        <div class="ai-box" style="margin-top:8px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Netflix dùng <strong>chaos engineering</strong> — chủ động gây lỗi để kiểm tra hệ thống chịu được bao nhiêu. Tỷ lệ thành công: 99.99%. Chi phí downtime: $1 triệu/phút.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Amazon Prime Video</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <p>AWS Elemental MediaConvert để encode video. S3 Intelligent-Tiering tự động chuyển video ít xem sang storage tier rẻ hơn.</p>
+          <ul style="margin-top:8px;">
+            <li>CloudFront CDN (300+ PoPs toàn cầu)</li>
+            <li>EBS io2 Block Express: 99.999% durability, 256K IOPS</li>
+            <li>S3 Multi-factor Authentication delete cho archive</li>
+            <li>CloudWatch dashboards theo dõi streaming health</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Bài học chung</h3>
+        <div class="card" style="font-size:13px;">
+          <ol>
+            <li>Multi-tier storage: hot/warm/cold/archive</li>
+            <li>Geographic distribution: gần người dùng</li>
+            <li>Redundancy: erasure coding hoặc RAID</li>
+            <li>Monitoring: real-time health dashboards</li>
+            <li>Automation: tự động failover</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PHÂN TÍCH PERFORMANCE MOD SERVER</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Các tham số ảnh hưởng</h3>
+        <table style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Tham số</th>
+              <th>Ảnh hưởng</th>
+              <th>Cách tối ưu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Số đĩa (n)</td>
+              <td>Throughput tăng tuyến tính</td>
+              <td>Thêm đĩa (nếu có budget)</td>
+            </tr>
+            <tr>
+              <td>Kích thước block</td>
+              <td>Overhead seek vs throughput</td>
+              <td>64KB-1MB cho video</td>
+            </tr>
+            <tr>
+              <td>Seek time đĩa</td>
+              <td>Quyết định latency</td>
+              <td>Chọn HDD performance</td>
+            </tr>
+            <tr>
+              <td>Transfer rate</td>
+              <td>Quyết định bandwidth</td>
+              <td>RAID-0 striped, SSD NVMe</td>
+            </tr>
+            <tr>
+              <td>Buffer size</td>
+              <td>Continuity vs memory cost</td>
+              <td>Tính theo công thức B</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Công thức tính throughput</h3>
+        <div class="card" style="font-size:13px;">
+          <p style="font-family:monospace;">Throughput_max = min(n × TR, sum(cons_i))</p>
+          <p style="margin-top:6px;">Trong đó: n = số đĩa, TR = transfer rate mỗi đĩa, cons_i = bitrate mỗi client</p>
+        </div>
+        <div class="card accent-green" style="margin-top:8px; font-size:13px;">
+          <h4>Ví dụ: MOD server với 8 đĩa</h4>
+          <p>n=8, TR=100 MB/s mỗi đĩa</p>
+          <p style="margin-top:4px;">→ Throughput_max = min(800, sum_cons)</p>
+          <p style="margin-top:4px;">Video 4K: bitrate=25 Mbps=3.125 MB/s</p>
+          <p>→ Số client tối đa = 800/3.125 = <strong>256 clients</strong></p>
+        </div>
+        <div class="card accent-orange" style="margin-top:8px; font-size:13px;">
+          <h4>Giới hạn thực tế</h4>
+          <p>Network bandwidth thường là bottleneck: 10 Gbps NIC = 1.25 GB/s → giới hạn ở ~400 clients 4K.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERASURE CODING — THẾ HỆ SAU CỦA RAID</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Giới hạn của RAID truyền thống</h3>
+        <div class="card accent-orange" style="font-size:13px;">
+          <ul>
+            <li>RAID chỉ hoạt động trong 1 server</li>
+            <li>RAID-5/6 rebuild mất vài giờ → rủi ro đĩa thứ 2 hỏng trong lúc rebuild</li>
+            <li>Không mở rộng được online (phải offline)</li>
+            <li>Replication đơn giản: chi phí gấp 2-3 lần</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Erasure Coding (EC)</h3>
+        <div class="card" style="font-size:13px;">
+          <p><strong>Reed-Solomon (n+k):</strong></p>
+          <ul>
+            <li>Chia dữ liệu thành n chunks</li>
+            <li>Tạo k chunks parity bằng GF(2^8) arithmetic</li>
+            <li>Hệ thống (10+4): 10 data chunks + 4 parity → chịu lỗi 4 bất kỳ chunks nào</li>
+            <li>Chi phí overhead: k/(n+k) — thấp hơn replication 3x</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">So sánh EC vs Replication</h3>
+        <table style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>Replication 3×</th>
+              <th>EC (10+4)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Storage overhead</td>
+              <td>200%</td>
+              <td>40%</td>
+            </tr>
+            <tr>
+              <td>Chịu lỗi</td>
+              <td>2 node</td>
+              <td>4 node</td>
+            </tr>
+            <tr>
+              <td>Network cost</td>
+              <td>Cao</td>
+              <td>Thấp</td>
+            </tr>
+            <tr>
+              <td>Decode khi lỗi</td>
+              <td>Đọc bản sao</td>
+              <td>Tính XOR</td>
+            </tr>
+            <tr>
+              <td>Ứng dụng</td>
+              <td>Hot data</td>
+              <td>Cold/warm data</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Azure Blob Storage dùng <strong>Locally Repairable Codes (LRC)</strong> — chia thành local groups, chỉ cần decode trong group nhỏ thay vì toàn bộ. Giảm repair bandwidth 40-60%.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG HỢP: BẢNG SO SÁNH CÁC LOẠI LƯU TRỮ MM</h2></div>
+  <div class="slide-body">
+
+    <table style="font-size:12px;">
+      <thead>
+        <tr>
+          <th style="width:15%;">Hệ thống</th>
+          <th style="width:12%;">Đặc điểm</th>
+          <th style="width:13%;">Đĩa từ</th>
+          <th style="width:13%;">RAID</th>
+          <th style="width:13%;">CD-ROM</th>
+          <th style="width:12%;">SSD</th>
+          <th style="width:12%;">Distributed</th>
+          <th style="width:10%;">Ứng dụng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MOD Server</strong></td>
+          <td>Real-time, nhiều clients</td>
+          <td>✓ Striped</td>
+          <td>RAID-0/5</td>
+          <td>✗</td>
+          <td>✓ NVMe</td>
+          <td>✓ Erasure coding</td>
+          <td>VOD, streaming</td>
+        </tr>
+        <tr>
+          <td><strong>Video editing</strong></td>
+          <td>Tốc độ cao, write nặng</td>
+          <td>✓</td>
+          <td>RAID-0</td>
+          <td>✗</td>
+          <td>✓✓ NVMe</td>
+          <td>✗</td>
+          <td>Post-production</td>
+        </tr>
+        <tr>
+          <td><strong>Archive/LTA</strong></td>
+          <td>Dung lượng lớn, ít truy cập</td>
+          <td>✓ HDD</td>
+          <td>RAID-6</td>
+          <td>✓</td>
+          <td>✗</td>
+          <td>✓ EC</td>
+          <td>Backup, compliance</td>
+        </tr>
+        <tr>
+          <td><strong>CDN edge</strong></td>
+          <td>Read-heavy, geo-distributed</td>
+          <td>✓</td>
+          <td>RAID-0</td>
+          <td>✗</td>
+          <td>✓✓ SSD</td>
+          <td>✓✓</td>
+          <td>Netflix, YouTube</td>
+        </tr>
+        <tr>
+          <td><strong>Cloud DB</strong></td>
+          <td>Latency thấp, durability cao</td>
+          <td>✗</td>
+          <td>RAID-Z</td>
+          <td>✗</td>
+          <td>✓✓✓ NVMe</td>
+          <td>✓✓✓</td>
+          <td>AWS EBS, GCS</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card accent-green" style="margin-top:14px; font-size:13px;">
+      <h4>Kết luận</h4>
+      <p>Không có giải pháp "tốt nhất" — chọn đúng công nghệ cho đúng yêu cầu:
+      <strong>Hot data</strong> → NVMe SSD + distributed cache,
+      <strong>Warm data</strong> → SSD hoặc HDD striped,
+      <strong>Cold data</strong> → HDD + erasure coding hoặc tape,
+      <strong>Archive</strong> → Cloud archive (Glacier, S3 Glacier).</p>
+    </div>
+
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÔNG THỨC VÀ THUẬT NGỮ QUAN TRỌNG</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Công thức cần nhớ</h3>
+        <div class="cards" style="gap:8px;">
+          <div class="card" style="font-size:12px; padding:10px;">
+            <p style="font-family:monospace;">T<sub>access</sub> = T<sub>seek</sub> + T<sub>rotation</sub> + T<sub>transfer</sub></p>
+            <p style="font-size:11px; color:#666; margin-top:4px;">Thời gian truy nhập đĩa</p>
+          </div>
+          <div class="card" style="font-size:12px; padding:10px;">
+            <p style="font-family:monospace;">Block b<sub>i</sub> → disk (i+j) mod k</p>
+            <p style="font-size:11px; color:#666; margin-top:4px;">RAID-0 striping</p>
+          </div>
+          <div class="card" style="font-size:12px; padding:10px;">
+            <p style="font-family:monospace;">Throughput_max = min(n × TR, Σcons_i)</p>
+            <p style="font-size:11px; color:#666; margin-top:4px;">MOD server throughput</p>
+          </div>
+          <div class="card" style="font-size:12px; padding:10px;">
+            <p style="font-family:monospace;">B ≥ t<sub>fill</sub> × (b<sub>wd</sub> × r - cons)</p>
+            <p style="font-size:11px; color:#666; margin-top:4px;">Buffer tối thiểu cho continuity</p>
+          </div>
+          <div class="card" style="font-size:12px; padding:10px;">
+            <p style="font-family:monospace;">RTF: (l<sub>f</sub>, b<sub>f</sub>, p<sub>f</sub>)</p>
+            <p style="font-size:11px; color:#666; margin-top:4px;">Real-Time File parameters</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Thuật ngữ quan trọng</h3>
+        <div class="cards" style="gap:6px;">
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Striping:</strong> Chia dữ liệu phân tán lên nhiều đĩa
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Mirroring:</strong> Sao chép y hệt dữ liệu sang đĩa dự phòng
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Parity:</strong> XOR của các data blocks để phục hồi
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>CLV:</strong> Tốc độ tuyến tính không đổi (CD-ROM)
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>SCAN-EDF:</strong> Kết hợp deadline ưu tiên + khoảng cách SCAN
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Erasure Coding:</strong> Mã hóa dư để phục hồi nhiều lỗi
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Continuity:</strong> Tính liên tục phát video không gián đoạn
+          </div>
+          <div class="card" style="font-size:12px; padding:8px;">
+            <strong>Throughput:</strong> Tốc độ truyền dữ liệu tổng thể
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TÀI LIỆU THAM KHẢO VÀ ĐỌC THÊM</h2></div>
+  <div class="slide-body">
+
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Tài liệu chính</h3>
+        <div class="card" style="font-size:13px;">
+          <ul>
+            <li><strong>Multimedia Database Systems</strong> — Subrahmanian, Prentice Hall, 2002 (Chương 2)</li>
+            <li><strong>Operating System Concepts</strong> — Silberschatz et al., Wiley, 10th ed., 2018 (Chương 10: I/O Systems)</li>
+            <li><strong>Computer Organization and Design</strong> — Patterson & Hennessy, Morgan Kaufmann (Disk architecture)</li>
+            <li><strong>Storage Networks: The Complete Reference</strong> — Robert Spalding, McGraw-Hill</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Bài báo khoa học</h3>
+        <ul style="font-size:13px;">
+          <li>Ozden et al. — "Multimedia on Demand Servers" (1996)</li>
+          <li>Vin et al. — "Indexing and Retrieval of Video Data" (1997)</li>
+          <li>Chen et al. — "A Load-Shedding Framework for CMOS Imagery" (2010)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#0070C0; font-size:15px; margin-bottom:8px;">Tài liệu thực tế</h3>
+        <div class="card accent-green" style="font-size:13px;">
+          <ul>
+            <li>Netflix Open Connect: <a href="https://openconnect.netflix.com/en/" class="ref" target="_blank">openconnect.netflix.com</a></li>
+            <li>AWS Storage Gateway docs: EBS, S3,EFS, FSx</li>
+            <li>Linux I/O Scheduler: <code>mq-deadline</code>, <code>bfq</code> documentation</li>
+            <li>MinIO Erasure Coding: min.io/docs</li>
+            <li>Ceph Architecture: docs.ceph.com</li>
+          </ul>
+        </div>
+        <h3 style="color:#0070C0; font-size:15px; margin-top:12px; margin-bottom:8px;">Video bài giảng</h3>
+        <ul style="font-size:13px;">
+          <li>Stanford CS110 — I/O and File Systems</li>
+          <li>MIT 6.824 — Distributed Storage (YouTube)</li>
+          <li>GCP Cloud Storage Deep Dive (Google Cloud Skills Boost)</li>
+        </ul>
+        <div class="card accent-gold" style="margin-top:10px; font-size:13px;">
+          <h4>Chuẩn bị thi</h4>
+          <p>Nắm chắc: công thức RAID, SCAN-EDF, buffer sizing, RTF. Làm hết 6 bài tập từ slides 25-30.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Cấu trúc dữ liệu đa chiều</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">50</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

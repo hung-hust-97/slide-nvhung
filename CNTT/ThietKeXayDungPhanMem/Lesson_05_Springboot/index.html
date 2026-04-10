@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 05 - Java Spring Boot & RESTful API</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>JAVA SPRING BOOT<br>& RESTFUL API</h1>
+    <p class="subtitle">Xây dựng Backend với Spring Boot</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NỘI DUNG BÀI HỌC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phần 1: Giới thiệu Spring Boot</h3>
+        <ul>
+          <li>Spring Boot là gì? Tại sao dùng?</li>
+          <li>Kiến trúc Spring Boot (MVC)</li>
+          <li>Cài đặt & tạo project</li>
+        </ul>
+        <h3>Phần 2: RESTful API</h3>
+        <ul>
+          <li>REST là gì? Nguyên tắc thiết kế</li>
+          <li>HTTP Methods & Status Codes</li>
+          <li>Ví dụ API endpoints</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Phần 3: Các thành phần chính</h3>
+        <ul>
+          <li>Entity — ánh xạ database</li>
+          <li>Repository — truy cập dữ liệu</li>
+          <li>Service — business logic</li>
+          <li>Controller — xử lý HTTP requests</li>
+        </ul>
+        <h3>Phần 4: Nâng cao</h3>
+        <ul>
+          <li>DTO & Domain Model</li>
+          <li>Lombok</li>
+          <li>Bean Life Cycle</li>
+          <li>Build & Run project</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>GIỚI THIỆU JAVA SPRING BOOT</h1>
+    <p class="section-desc">Framework phát triển ứng dụng Java nhanh và hiệu quả</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>JAVA SPRING BOOT LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot là framework giúp <strong>đơn giản hóa và tăng tốc</strong> phát triển ứng dụng Java, đặc biệt cho web applications và APIs. <a class="ref" href="https://spring.io/projects/spring-boot" target="_blank">[spring.io]</a></p>
+        <h3>Tính năng chính:</h3>
+        <ul>
+          <li><strong>Minimal configuration</strong> — auto-configuration thay vì XML</li>
+          <li><strong>Embedded server</strong> — Tomcat/Jetty tích hợp sẵn</li>
+          <li><strong>Starter dependencies</strong> — thêm tính năng bằng 1 dependency</li>
+          <li><strong>Production-ready</strong> — health checks, metrics, logging</li>
+          <li><strong>Spring Initializr</strong> — tạo project online trong 30 giây</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Tại sao chọn Spring Boot?</h3>
+        <table class="table-small">
+          <thead><tr><th>Ưu điểm</th><th>Chi tiết</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nhanh</strong></td><td>Phát triển nhanh hơn Java EE truyền thống</td></tr>
+            <tr><td><strong>Tích hợp</strong></td><td>Dễ dàng kết nối DB, messaging, caching</td></tr>
+            <tr><td><strong>Dependency</strong></td><td>Maven/Gradle quản lý thư viện tự động</td></tr>
+            <tr><td><strong>Cộng đồng</strong></td><td>Lớn nhất trong Java ecosystem</td></tr>
+            <tr><td><strong>Standalone</strong></td><td>Chạy bằng java -jar, không cần server riêng</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#C00000; margin-top:8px;"><strong>Hạn chế:</strong> Dependencies làm tăng kích thước ứng dụng; learning curve cho Spring ecosystem rộng lớn.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KIẾN TRÚC SPRING BOOT — MVC</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Controller (API Layer)</h4><p>Nhận HTTP request từ client → validate input → gọi Service → trả response (JSON). Annotations: <code>@RestController</code>, <code>@GetMapping</code>, <code>@PostMapping</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Service (Business Logic)</h4><p>Xử lý logic nghiệp vụ → gọi Repository → trả kết quả cho Controller. Annotation: <code>@Service</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Repository (Data Access)</h4><p>Interface truy cập database → extends JpaRepository → cung cấp CRUD operations. Annotation: <code>@Repository</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Entity (Domain Model)</h4><p>Class Java ánh xạ với bảng database → mỗi instance = 1 row. Annotations: <code>@Entity</code>, <code>@Id</code>, <code>@Column</code></p></div></div>
+    </div>
+    <div class="quote-box" style="margin-top:10px;">
+      <p><strong>Luồng xử lý:</strong> Client → Controller → Service → Repository → Database → Repository → Service → Controller → Client (JSON response)</p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>IOC & DEPENDENCY INJECTION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>IoC (Inversion of Control)</strong> — đảo ngược điều khiển: thay vì class tự tạo dependencies, container sẽ inject chúng vào. <a class="ref" href="https://martinfowler.com/articles/injection.html" target="_blank">[Martin Fowler]</a></p>
+        <h3>3 cách inject:</h3>
+        <ul>
+          <li><strong>Constructor Injection</strong> (khuyến nghị) — immutable, dễ test</li>
+          <li><strong>Setter Injection</strong> — cho optional dependencies</li>
+          <li><strong>Field Injection</strong> — <code>@Autowired</code> trên field (không khuyến nghị)</li>
+        </ul>
+        <h3>Lợi ích:</h3>
+        <ul>
+          <li>Loose coupling — dễ thay đổi implementation</li>
+          <li>Dễ unit test — mock dependencies</li>
+          <li>Code cleaner — tập trung business logic</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: 3 kiểu Injection</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// 1. Constructor Injection (BEST)
+@Service
+@RequiredArgsConstructor
+public class UserService {
+  private final UserRepository userRepo;
+  // Spring tự inject UserRepository
+}
+
+// 2. Setter Injection
+@Service
+public class UserService {
+  private UserRepository userRepo;
+  @Autowired
+  public void setUserRepo(UserRepository r) {
+    this.userRepo = r;
+  }
+}
+
+// 3. Field Injection (AVOID)
+@Service
+public class UserService {
+  @Autowired
+  private UserRepository userRepo;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEAN LIFE CYCLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Trong Spring, <strong>Bean</strong> là object được quản lý bởi Spring IoC Container (ApplicationContext).</p>
+        <h3>Vòng đời Bean:</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Instantiation</h4><p>Container tạo instance, gọi constructor</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Populate Properties</h4><p>Inject dependencies (@Autowired)</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Initialization</h4><p>Gọi @PostConstruct, InitializingBean</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Ready to Use</h4><p>Bean sẵn sàng sử dụng</p></div></div>
+          <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Destruction</h4><p>Gọi @PreDestroy, DisposableBean</p></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bean Scopes:</h3>
+        <table class="table-small">
+          <thead><tr><th>Scope</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><strong>singleton</strong></td><td>1 instance cho toàn app (mặc định)</td></tr>
+            <tr><td><strong>prototype</strong></td><td>Instance mới mỗi lần request</td></tr>
+            <tr><td><strong>request</strong></td><td>1 instance/HTTP request (web)</td></tr>
+            <tr><td><strong>session</strong></td><td>1 instance/HTTP session</td></tr>
+          </tbody>
+        </table>
+        <h3>Dependency Injection:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+// Constructor injection (recommended)
+@Service
+@RequiredArgsConstructor
+public class UserService {
+  private final UserRepository userRepo;
+  // Spring tự inject UserRepository
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Constructor injection được khuyến khích hơn @Autowired field injection vì dễ test, immutable, và fail-fast khi thiếu dependency.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STEREOTYPE ANNOTATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring tự động phát hiện và tạo Beans từ các class có annotation đặc biệt (component scanning).</p>
+        <table>
+          <thead><tr><th>Annotation</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td><code>@Component</code></td><td>Generic Spring bean</td></tr>
+            <tr><td><code>@Service</code></td><td>Business logic layer</td></tr>
+            <tr><td><code>@Repository</code></td><td>Data access layer (auto exception translation)</td></tr>
+            <tr><td><code>@Controller</code></td><td>Web MVC controller (returns view)</td></tr>
+            <tr><td><code>@RestController</code></td><td>REST controller (returns JSON)</td></tr>
+            <tr><td><code>@Configuration</code></td><td>Class chứa @Bean definitions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: @Configuration & @Bean</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Configuration
+public class AppConfig {
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public RestTemplate restTemplate() {
+    return new RestTemplate();
+  }
+
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Spring 6 + Spring Boot 3 hỗ trợ <strong>AOT compilation</strong> với GraalVM Native Image — tăng tốc startup từ 3s xuống 50ms, giảm RAM 5x.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>AUTO-CONFIGURATION & STARTERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Auto-Configuration:</h3>
+        <p>Spring Boot tự động cấu hình các beans dựa trên dependencies trong classpath. Bật bằng <code>@SpringBootApplication</code> = <code>@Configuration + @EnableAutoConfiguration + @ComponentScan</code>.</p>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+@SpringBootApplication
+public class MyAppApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(
+      MyAppApplication.class, args);
+  }
+}</pre>
+        <p style="font-size:14px; color:#666;">VD: Có <code>spring-boot-starter-data-jpa</code> trong pom.xml → Spring Boot tự cấu hình DataSource, EntityManager, TransactionManager.</p>
+      </div>
+      <div class="col">
+        <h3>Starter Dependencies phổ biến:</h3>
+        <table class="table-small">
+          <thead><tr><th>Starter</th><th>Tính năng</th></tr></thead>
+          <tbody>
+            <tr><td>spring-boot-starter-web</td><td>REST API, Tomcat, Jackson</td></tr>
+            <tr><td>spring-boot-starter-data-jpa</td><td>JPA, Hibernate, HikariCP</td></tr>
+            <tr><td>spring-boot-starter-security</td><td>Spring Security</td></tr>
+            <tr><td>spring-boot-starter-validation</td><td>Bean Validation (JSR 380)</td></tr>
+            <tr><td>spring-boot-starter-test</td><td>JUnit, Mockito, AssertJ</td></tr>
+            <tr><td>spring-boot-starter-actuator</td><td>Production monitoring</td></tr>
+            <tr><td>spring-boot-starter-mail</td><td>Email sending</td></tr>
+            <tr><td>spring-boot-starter-cache</td><td>Caching abstraction</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>RESTFUL API</h1>
+    <p class="section-desc">Thiết kế API theo kiến trúc REST</p>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REST LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>REST</strong> (Representational State Transfer) là kiểu kiến trúc để xây dựng web services. <a class="ref" href="https://en.wikipedia.org/wiki/REST" target="_blank">[Wikipedia]</a></p>
+        <h3>Nguyên tắc thiết kế RESTful:</h3>
+        <ul>
+          <li><strong>Stateless</strong> — mỗi request chứa đầy đủ thông tin, server không lưu session</li>
+          <li><strong>Resource-based</strong> — mọi thứ là resource, truy cập qua URI</li>
+          <li><strong>HTTP Methods</strong> — GET, POST, PUT, DELETE cho CRUD</li>
+          <li><strong>JSON/XML</strong> — data format chuẩn</li>
+          <li><strong>Status Codes</strong> — 200, 201, 400, 404, 500...</li>
+          <li><strong>Consistent URIs</strong> — /api/users, /api/courses/{id}</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>HTTP Methods:</h3>
+        <table>
+          <thead><tr><th>Method</th><th>CRUD</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GET</strong></td><td>Read</td><td>GET /api/users</td></tr>
+            <tr><td><strong>POST</strong></td><td>Create</td><td>POST /api/users</td></tr>
+            <tr><td><strong>PUT</strong></td><td>Update</td><td>PUT /api/users/1</td></tr>
+            <tr><td><strong>DELETE</strong></td><td>Delete</td><td>DELETE /api/users/1</td></tr>
+            <tr><td><strong>PATCH</strong></td><td>Partial Update</td><td>PATCH /api/users/1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HTTP STATUS CODES & API EXAMPLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Status Codes thường dùng:</h3>
+        <table class="table-small">
+          <thead><tr><th>Code</th><th>Ý nghĩa</th><th>Khi nào</th></tr></thead>
+          <tbody>
+            <tr><td><strong>200</strong></td><td>OK</td><td>GET/PUT thành công</td></tr>
+            <tr><td><strong>201</strong></td><td>Created</td><td>POST tạo mới thành công</td></tr>
+            <tr><td><strong>204</strong></td><td>No Content</td><td>DELETE thành công</td></tr>
+            <tr><td><strong>400</strong></td><td>Bad Request</td><td>Input không hợp lệ</td></tr>
+            <tr><td><strong>401</strong></td><td>Unauthorized</td><td>Chưa đăng nhập</td></tr>
+            <tr><td><strong>403</strong></td><td>Forbidden</td><td>Không có quyền</td></tr>
+            <tr><td><strong>404</strong></td><td>Not Found</td><td>Resource không tồn tại</td></tr>
+            <tr><td><strong>500</strong></td><td>Server Error</td><td>Lỗi server</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: GET /api/users</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+// Request
+GET /api/users HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer eyJhbGci...
+
+// Response 200 OK
+[
+  {
+    "id": 1,
+    "email": "hung@cmc.edu.vn",
+    "fullName": "Nguyễn Việt Hưng",
+    "role": "TEACHER"
+  },
+  {
+    "id": 2,
+    "email": "sv01@cmc.edu.vn",
+    "fullName": "Trần Văn A",
+    "role": "STUDENT"
+  }
+]</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>CÁC THÀNH PHẦN CHÍNH</h1>
+    <p class="section-desc">Entity — Repository — Service — Controller</p>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÀI ĐẶT & TẠO PROJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Công cụ cần thiết:</h3>
+        <ul>
+          <li><strong>JDK 17+</strong> (Java Development Kit)</li>
+          <li><strong>IDE:</strong> IntelliJ IDEA / Eclipse / VS Code</li>
+          <li><strong>Maven</strong> hoặc <strong>Gradle</strong> (build tool)</li>
+          <li><strong>MySQL 8.0+</strong> (database)</li>
+          <li><strong>Postman</strong> hoặc <strong>curl</strong> (test API)</li>
+        </ul>
+        <h3>Cách tạo project:</h3>
+        <ul>
+          <li><strong>Spring Initializr:</strong> <a class="ref" href="https://start.spring.io" target="_blank">[start.spring.io]</a></li>
+          <li>STS IDE (Spring Tool Suite)</li>
+          <li>Spring Boot CLI</li>
+          <li>IntelliJ → New Project → Spring Boot</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Spring Initializr — Cấu hình:</h3>
+        <table class="table-small">
+          <thead><tr><th>Mục</th><th>Chọn</th></tr></thead>
+          <tbody>
+            <tr><td>Project</td><td>Maven</td></tr>
+            <tr><td>Language</td><td>Java</td></tr>
+            <tr><td>Spring Boot</td><td>3.x (stable, không SNAPSHOT)</td></tr>
+            <tr><td>Packaging</td><td>JAR</td></tr>
+            <tr><td>Java</td><td>17</td></tr>
+          </tbody>
+        </table>
+        <h3>Dependencies cần thêm:</h3>
+        <ul>
+          <li><strong>Spring Web</strong> — REST API</li>
+          <li><strong>Spring Data JPA</strong> — database access</li>
+          <li><strong>MySQL Driver</strong> — kết nối MySQL</li>
+          <li><strong>Lombok</strong> — giảm boilerplate code</li>
+          <li><strong>Spring Security</strong> — authentication (bài sau)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CẤU TRÚC DỰ ÁN SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+my-app/
+├── src/main/java/com/example/
+│   ├── MyAppApplication.java  ← Main class
+│   ├── controller/
+│   │   └── UserController.java
+│   ├── service/
+│   │   └── UserService.java
+│   ├── repository/
+│   │   └── UserRepository.java
+│   ├── model/
+│   │   └── User.java          ← Entity
+│   ├── dto/
+│   │   └── UserDTO.java
+│   └── config/
+│       └── SecurityConfig.java
+├── src/main/resources/
+│   ├── application.properties  ← Config DB
+│   └── static/                 ← Static files
+├── src/test/java/              ← Unit tests
+├── pom.xml                     ← Maven config
+└── target/                     ← Build output</pre>
+      </div>
+      <div class="col">
+        <h3>application.properties:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+# Server
+server.port=8080
+
+# Database
+spring.datasource.url=
+  jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=secret
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate
+  .dialect=
+  org.hibernate.dialect.MySQLDialect</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;"><strong>ddl-auto=update:</strong> Hibernate tự tạo/cập nhật bảng từ Entity. Dùng cho dev, KHÔNG dùng cho production.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ENTITY — ÁNH XẠ DATABASE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Entity</strong> đại diện cho 1 bảng trong database. Mỗi instance = 1 row.</p>
+        <h3>Annotations chính:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td><code>@Entity</code></td><td>Đánh dấu class là entity</td></tr>
+            <tr><td><code>@Table</code></td><td>Chỉ định tên bảng</td></tr>
+            <tr><td><code>@Id</code></td><td>Primary key</td></tr>
+            <tr><td><code>@GeneratedValue</code></td><td>Auto-increment</td></tr>
+            <tr><td><code>@Column</code></td><td>Ánh xạ cột (name, nullable, unique)</td></tr>
+            <tr><td><code>@Enumerated</code></td><td>Ánh xạ enum</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: Entity User</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Entity
+@Table(name = "users")
+public class User {
+
+  @Id
+  @GeneratedValue(strategy =
+    GenerationType.IDENTITY)
+  private Long id;
+
+  @Column(nullable = false,
+    unique = true, length = 100)
+  private String email;
+
+  @Column(nullable = false)
+  private String password;
+
+  @Column(name = "full_name")
+  private String fullName;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
+  // Role = enum {STUDENT, TEACHER, ADMIN}
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOMBOK — GIẢM BOILERPLATE CODE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao cần Getters/Setters?</h3>
+        <ul>
+          <li><strong>Encapsulation</strong> — fields private, truy cập qua methods</li>
+          <li><strong>Framework cần</strong> — JPA/Hibernate dùng reflection qua getter/setter</li>
+          <li><strong>Validation</strong> — setter có thể thêm validation logic</li>
+        </ul>
+        <h3>Không dùng Lombok:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+public class User {
+  private String email;
+  public String getEmail() { return email; }
+  public void setEmail(String e) { email = e; }
+  // + constructor, toString, equals, hashCode
+  // = 50-100 dòng boilerplate!
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Với Lombok:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+
+  @Id @GeneratedValue(strategy =
+    GenerationType.IDENTITY)
+  private Long id;
+
+  private String email;
+  private String password;
+  private String fullName;
+  private Role role;
+}</pre>
+        <h3>Lombok Annotations phổ biến:</h3>
+        <ul>
+          <li><code>@Getter/@Setter</code> — auto generate</li>
+          <li><code>@NoArgsConstructor</code> — constructor rỗng</li>
+          <li><code>@AllArgsConstructor</code> — constructor đầy đủ</li>
+          <li><code>@Builder</code> — Builder pattern</li>
+          <li><code>@Data</code> — tổng hợp tất cả</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DTO — DATA TRANSFER OBJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>3 loại data trong Spring Boot:</h3>
+        <table>
+          <thead><tr><th>Loại</th><th>Mục đích</th><th>VD</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Entity</strong></td><td>Ánh xạ DB table, chứa tất cả fields</td><td>User.java (@Entity)</td></tr>
+            <tr><td><strong>DTO</strong></td><td>Truyền dữ liệu qua API, chỉ fields cần thiết</td><td>UserDTO.java</td></tr>
+            <tr><td><strong>Domain Model</strong></td><td>Business objects, chứa business logic</td><td>Report, Calculator</td></tr>
+          </tbody>
+        </table>
+        <h3>Tại sao dùng DTO?</h3>
+        <ul>
+          <li>Không expose toàn bộ Entity (VD: password)</li>
+          <li>Giảm data truyền tải (chỉ fields cần)</li>
+          <li>Tăng bảo mật (ẩn internal structure)</li>
+          <li>Decouple API contract khỏi DB schema</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: Entity vs DTO</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Entity — có password, internal fields
+@Entity
+public class User {
+  private Long id;
+  private String email;
+  private String password;  // KHÔNG expose!
+  private String fullName;
+  private Role role;
+  private LocalDateTime createdAt;
+}
+
+// DTO — chỉ fields cần cho API
+@Data
+public class UserDTO {
+  private Long id;
+  private String email;
+  // KHÔNG có password
+  private String fullName;
+  private String role;
+}
+
+// CreateUserDTO — input cho POST
+@Data
+public class CreateUserDTO {
+  @NotBlank
+  private String email;
+  @Size(min = 8)
+  private String password;
+  private String fullName;
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REPOSITORY — TRUY CẬP DỮ LIỆU</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Repository</strong> là interface cung cấp CRUD operations cho entities — cầu nối với database.</p>
+        <h3>Extends interfaces:</h3>
+        <table class="table-small">
+          <thead><tr><th>Interface</th><th>Cung cấp</th></tr></thead>
+          <tbody>
+            <tr><td><code>CrudRepository</code></td><td>save, findById, findAll, delete</td></tr>
+            <tr><td><code>JpaRepository</code></td><td>CRUD + paging + sorting + flush</td></tr>
+            <tr><td><code>PagingAndSortingRepository</code></td><td>CRUD + paging + sorting</td></tr>
+          </tbody>
+        </table>
+        <h3>Methods có sẵn:</h3>
+        <ul>
+          <li><code>save(entity)</code> — insert hoặc update</li>
+          <li><code>findById(id)</code> — tìm theo ID</li>
+          <li><code>findAll()</code> — lấy tất cả</li>
+          <li><code>deleteById(id)</code> — xóa theo ID</li>
+          <li><code>count()</code> — đếm số lượng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: UserRepository</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+@Repository
+public interface UserRepository
+    extends JpaRepository&lt;User, Long&gt; {
+
+  // Query by method name
+  Optional&lt;User&gt; findByEmail(String email);
+  List&lt;User&gt; findByRole(Role role);
+  boolean existsByEmail(String email);
+
+  // Custom query
+  @Query("SELECT u FROM User u "
+    + "WHERE u.fullName LIKE %:name%")
+  List&lt;User&gt; searchByName(
+    @Param("name") String name);
+
+  // Native SQL
+  @Query(value = "SELECT * FROM users "
+    + "WHERE role = ?1",
+    nativeQuery = true)
+  List&lt;User&gt; findByRoleNative(String role);
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SERVICE — BUSINESS LOGIC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Service</strong> chứa logic nghiệp vụ — cầu nối giữa Controller và Repository.</p>
+        <h3>Vai trò:</h3>
+        <ul>
+          <li>Xử lý business rules</li>
+          <li>Gọi Repository để truy cập DB</li>
+          <li>Giữ Controller đơn giản (thin controller)</li>
+          <li>Transaction management (<code>@Transactional</code>)</li>
+          <li>Validation, transformation, calculations</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>VD: UserService</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+  private final UserRepository userRepo;
+
+  public List&lt;User&gt; getAllUsers() {
+    return userRepo.findAll();
+  }
+
+  public User getUserById(Long id) {
+    return userRepo.findById(id)
+      .orElseThrow(() ->
+        new ResourceNotFoundException(
+          "User not found: " + id));
+  }
+
+  @Transactional
+  public User createUser(UserDTO dto) {
+    if (userRepo.existsByEmail(dto.getEmail()))
+      throw new DuplicateException("Email exists");
+    User user = User.builder()
+      .email(dto.getEmail())
+      .password(encoder.encode(dto.getPassword()))
+      .fullName(dto.getFullName())
+      .role(Role.STUDENT)
+      .build();
+    return userRepo.save(user);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CONTROLLER — XỬ LÝ HTTP REQUESTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Controller</strong> xử lý HTTP requests từ client và gửi responses.</p>
+        <h3>Annotations:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td><code>@RestController</code></td><td>Đánh dấu REST controller</td></tr>
+            <tr><td><code>@RequestMapping</code></td><td>Base path (/api/users)</td></tr>
+            <tr><td><code>@GetMapping</code></td><td>Handle GET request</td></tr>
+            <tr><td><code>@PostMapping</code></td><td>Handle POST request</td></tr>
+            <tr><td><code>@PutMapping</code></td><td>Handle PUT request</td></tr>
+            <tr><td><code>@DeleteMapping</code></td><td>Handle DELETE request</td></tr>
+            <tr><td><code>@PathVariable</code></td><td>Lấy param từ URL</td></tr>
+            <tr><td><code>@RequestBody</code></td><td>Lấy data từ body (JSON)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: UserController</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+
+  private final UserService userService;
+
+  @GetMapping
+  public List&lt;User&gt; getAll() {
+    return userService.getAllUsers();
+  }
+
+  @GetMapping("/{id}")
+  public User getById(@PathVariable Long id) {
+    return userService.getUserById(id);
+  }
+
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public User create(@RequestBody UserDTO dto) {
+    return userService.createUser(dto);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    userService.deleteUser(id);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LUỒNG XỬ LÝ REQUEST</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Client Request</h4><p>Client gửi HTTP request (GET, POST...) đến endpoint trong Controller. VD: <code>GET /api/users/1</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Controller Handling</h4><p>Controller nhận request, validate input, gọi method tương ứng trong Service. VD: <code>userService.getUserById(1)</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Service Logic</h4><p>Service xử lý business logic, gọi Repository. VD: kiểm tra quyền, transform data, gọi <code>userRepo.findById(1)</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Repository → Database</h4><p>Repository thực thi SQL query thông qua JPA/Hibernate. VD: <code>SELECT * FROM users WHERE id = 1</code></p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Response to Client</h4><p>Kết quả trả ngược: DB → Repository → Service → Controller → JSON Response (200 OK)</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BUILD & RUN PROJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Build với Maven:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Build JAR
+mvn clean package
+
+# Output: target/my-app-0.0.1.jar
+
+# Run
+java -jar target/my-app-0.0.1.jar
+
+# Run with profile
+java -jar my-app.jar --spring.profiles.active=prod</pre>
+        <h3>Build với Gradle:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Build JAR
+./gradlew bootJar
+
+# Output: build/libs/my-app-0.0.1.jar
+
+# Run
+java -jar build/libs/my-app-0.0.1.jar</pre>
+      </div>
+      <div class="col">
+        <h3>Docker deployment:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Dockerfile
+FROM openjdk:17-slim
+COPY target/my-app.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# docker-compose.yml
+services:
+  app:
+    build: .
+    ports: ["8080:8080"]
+    depends_on: [mysql]
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: mydb
+    ports: ["3306:3306"]</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>VALIDATION VỚI BEAN VALIDATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot tích hợp Bean Validation (JSR 380) — validate input tự động qua annotations. <a class="ref" href="https://beanvalidation.org/" target="_blank">[Bean Validation]</a></p>
+        <h3>Annotations phổ biến:</h3>
+        <table class="table-small">
+          <thead><tr><th>Annotation</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>@NotNull</code></td><td>Không được null</td></tr>
+            <tr><td><code>@NotBlank</code></td><td>String không null/empty/whitespace</td></tr>
+            <tr><td><code>@NotEmpty</code></td><td>Collection/String không empty</td></tr>
+            <tr><td><code>@Size(min, max)</code></td><td>Độ dài String/Collection</td></tr>
+            <tr><td><code>@Min/@Max</code></td><td>Giá trị tối thiểu/tối đa</td></tr>
+            <tr><td><code>@Email</code></td><td>Email hợp lệ</td></tr>
+            <tr><td><code>@Pattern</code></td><td>Regex pattern</td></tr>
+            <tr><td><code>@Past/@Future</code></td><td>Date trong quá khứ/tương lai</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD: DTO với Validation</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Data
+public class CreateUserDTO {
+  @NotBlank(message = "Email bắt buộc")
+  @Email(message = "Email không hợp lệ")
+  private String email;
+
+  @NotBlank
+  @Size(min = 8, max = 100,
+    message = "Password 8-100 ký tự")
+  private String password;
+
+  @NotBlank
+  @Size(max = 100)
+  private String fullName;
+
+  @Min(value = 18, message = "Tuổi >= 18")
+  private Integer age;
+}
+
+// Controller — thêm @Valid
+@PostMapping
+public User create(
+    @Valid @RequestBody CreateUserDTO dto) {
+  return userService.createUser(dto);
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXCEPTION HANDLING TOÀN CỤC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Sử dụng <code>@ControllerAdvice</code> + <code>@ExceptionHandler</code> để xử lý lỗi tập trung, trả response chuẩn cho client.</p>
+        <h3>Lợi ích:</h3>
+        <ul>
+          <li>Code clean — không try/catch trong từng controller</li>
+          <li>Response format nhất quán</li>
+          <li>Logging tập trung</li>
+          <li>Dễ maintain</li>
+        </ul>
+        <h3>Custom Exception:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException
+    extends RuntimeException {
+  public ResourceNotFoundException(String msg) {
+    super(msg);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Global Exception Handler:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+  @ExceptionHandler(
+    ResourceNotFoundException.class)
+  public ResponseEntity&lt;ErrorResponse&gt;
+      handleNotFound(
+        ResourceNotFoundException ex) {
+    return ResponseEntity
+      .status(HttpStatus.NOT_FOUND)
+      .body(new ErrorResponse(
+        "NOT_FOUND", ex.getMessage()));
+  }
+
+  @ExceptionHandler(
+    MethodArgumentNotValidException.class)
+  public ResponseEntity&lt;ErrorResponse&gt;
+      handleValidation(
+        MethodArgumentNotValidException ex) {
+    Map&lt;String,String&gt; errors = new HashMap&lt;&gt;();
+    ex.getBindingResult().getFieldErrors()
+      .forEach(err -> errors.put(
+        err.getField(),
+        err.getDefaultMessage()));
+    return ResponseEntity.badRequest()
+      .body(new ErrorResponse(
+        "VALIDATION_ERROR", errors));
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LOGGING VỚI SLF4J & LOGBACK</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Boot dùng <strong>SLF4J</strong> (interface) + <strong>Logback</strong> (implementation) làm mặc định.</p>
+        <h3>5 levels:</h3>
+        <table class="table-small">
+          <thead><tr><th>Level</th><th>Khi nào dùng</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TRACE</strong></td><td>Chi tiết nhất, debug sâu</td></tr>
+            <tr><td><strong>DEBUG</strong></td><td>Thông tin debug development</td></tr>
+            <tr><td><strong>INFO</strong></td><td>Sự kiện quan trọng (mặc định)</td></tr>
+            <tr><td><strong>WARN</strong></td><td>Cảnh báo, vẫn hoạt động</td></tr>
+            <tr><td><strong>ERROR</strong></td><td>Lỗi cần xử lý</td></tr>
+          </tbody>
+        </table>
+        <h3>Cấu hình application.properties:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+logging.level.root=INFO
+logging.level.com.example=DEBUG
+logging.file.name=logs/app.log
+logging.pattern.console=
+  %d{HH:mm:ss} %-5level %logger{36} - %msg%n</pre>
+      </div>
+      <div class="col">
+        <h3>Sử dụng trong code:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+@Slf4j  // Lombok tự tạo logger
+public class UserService {
+
+  public User createUser(UserDTO dto) {
+    log.info("Creating user: {}", dto.getEmail());
+
+    try {
+      User user = userRepo.save(...);
+      log.debug("User saved with id: {}",
+        user.getId());
+      return user;
+    } catch (Exception e) {
+      log.error("Failed to create user: {}",
+        dto.getEmail(), e);
+      throw new ServiceException(
+        "Cannot create user", e);
+    }
+  }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Structured Logging</strong> với JSON format được dùng phổ biến cho microservices — dễ search, filter, analyze trong ELK Stack hoặc Datadog.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PAGINATION & SORTING</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Spring Data JPA hỗ trợ <strong>Pagination & Sorting</strong> sẵn — không cần viết SQL <code>LIMIT/OFFSET</code>.</p>
+        <h3>Repository:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public interface UserRepository
+    extends JpaRepository&lt;User, Long&gt; {
+
+  // Pageable đã có sẵn từ JpaRepository
+  Page&lt;User&gt; findByRole(
+    Role role, Pageable pageable);
+
+  Page&lt;User&gt; findByEmailContaining(
+    String email, Pageable pageable);
+}</pre>
+        <h3>Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+public Page&lt;User&gt; getUsers(
+    int page, int size, String sortBy) {
+  Pageable pageable = PageRequest.of(
+    page, size, Sort.by(sortBy).descending());
+  return userRepo.findAll(pageable);
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Controller:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@GetMapping
+public Page&lt;User&gt; getAll(
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size,
+    @RequestParam(defaultValue = "id") String sort) {
+  return userService.getUsers(page, size, sort);
+}
+
+// Hoặc dùng Pageable trực tiếp
+@GetMapping
+public Page&lt;User&gt; getAll(Pageable pageable) {
+  return userRepo.findAll(pageable);
+}</pre>
+        <h3>Request example:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+GET /api/users?page=0&amp;size=10&amp;sort=createdAt,desc
+
+Response:
+{
+  "content": [...],
+  "totalElements": 100,
+  "totalPages": 10,
+  "number": 0,
+  "size": 10
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>NÂNG CAO</h1>
+    <p class="section-desc">DTO — Data Types — Bean Life Cycle — Build & Run</p>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>API DOCUMENTATION VỚI SWAGGER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>SpringDoc OpenAPI</strong> tự động sinh tài liệu API từ code, kèm UI test API. <a class="ref" href="https://springdoc.org/" target="_blank">[springdoc.org]</a></p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
+  &lt;artifactId&gt;
+    springdoc-openapi-starter-webmvc-ui
+  &lt;/artifactId&gt;
+  &lt;version&gt;2.3.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+        <p>Truy cập:</p>
+        <ul>
+          <li><strong>Swagger UI:</strong> <code>/swagger-ui.html</code></li>
+          <li><strong>OpenAPI JSON:</strong> <code>/v3/api-docs</code></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Annotations:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@Tag(name = "User", description = "User APIs")
+public class UserController {
+
+  @Operation(summary = "Get all users")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200"),
+    @ApiResponse(responseCode = "401")
+  })
+  @GetMapping
+  public Page&lt;UserDTO&gt; getAll(
+      @Parameter(description = "Page number")
+      @RequestParam(defaultValue = "0") int page) {
+    return userService.getAll(page);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CACHING TRONG SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Caching tăng tốc bằng cách lưu kết quả vào memory, tránh truy vấn DB lặp lại.</p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+@SpringBootApplication
+@EnableCaching
+public class MyAppApplication { }</pre>
+        <h3>Cache providers:</h3>
+        <ul>
+          <li><strong>ConcurrentMap</strong> — mặc định</li>
+          <li><strong>Caffeine</strong> — high performance local</li>
+          <li><strong>Redis</strong> — distributed cache</li>
+          <li><strong>EhCache, Hazelcast</strong> — enterprise</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Sử dụng:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Service
+public class CourseService {
+
+  @Cacheable(value = "courses", key = "#id")
+  public Course getById(Long id) {
+    log.info("Loading from DB: {}", id);
+    return courseRepo.findById(id).orElseThrow();
+  }
+
+  @CacheEvict(value = "courses", key = "#id")
+  public Course update(Long id, CourseDTO dto) {
+    // Xóa cache khi update
+  }
+
+  @CacheEvict(value = "courses",
+    allEntries = true)
+  public void clearAll() { }
+}</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Redis</strong> là cache phổ biến nhất cho microservices — distributed, persistent, hỗ trợ pub/sub.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ASYNC & SCHEDULED TASKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>@Async — Bất đồng bộ:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootApplication
+@EnableAsync
+public class MyAppApplication { }
+
+@Service
+public class EmailService {
+
+  @Async
+  public void sendWelcomeEmail(String email) {
+    // Mất 5-10s, không block request
+    log.info("Sending email to {}", email);
+    mailSender.send(...);
+  }
+}
+
+// Controller
+@PostMapping
+public User register(@RequestBody UserDTO dto) {
+  User user = userService.create(dto);
+  emailService.sendWelcomeEmail(user.getEmail());
+  return user; // Trả ngay, không chờ
+}</pre>
+      </div>
+      <div class="col">
+        <h3>@Scheduled — Cron Jobs:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootApplication
+@EnableScheduling
+public class MyAppApplication { }
+
+@Component
+@Slf4j
+public class ReportScheduler {
+
+  // Mỗi 5 giây
+  @Scheduled(fixedRate = 5000)
+  public void healthCheck() {
+    log.info("Health check OK");
+  }
+
+  // Mỗi ngày 2h sáng (cron)
+  @Scheduled(cron = "0 0 2 * * *")
+  public void generateDailyReport() {
+    log.info("Generating daily report...");
+    reportService.generateDaily();
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATABASE MIGRATION VỚI FLYWAY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Flyway</strong> quản lý DB schema bằng version control — thay thế <code>ddl-auto=update</code> cho production. <a class="ref" href="https://flywaydb.org/" target="_blank">[flywaydb.org]</a></p>
+        <h3>Tại sao cần?</h3>
+        <ul>
+          <li><strong>Versioned</strong> — schema có lịch sử, rollback được</li>
+          <li><strong>Reproducible</strong> — DB giống nhau ở mọi môi trường</li>
+          <li><strong>Team collaboration</strong> — migrations trong Git</li>
+          <li><strong>Production safe</strong> — không tự ý đổi schema</li>
+        </ul>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.flywaydb&lt;/groupId&gt;
+  &lt;artifactId&gt;flyway-mysql&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Cấu trúc files:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+src/main/resources/db/migration/
+  V1__create_users_table.sql
+  V2__add_email_index.sql
+  V3__create_courses_table.sql
+  V4__add_role_column.sql</pre>
+        <h3>VD: V1__create_users_table.sql</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+CREATE TABLE users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(100) NOT NULL,
+  role VARCHAR(20) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_email (email)
+) ENGINE=InnoDB CHARSET=utf8mb4;</pre>
+        <p style="font-size:13px; color:#C00000; margin-top:8px;">⚠️ KHÔNG sửa migration đã apply — tạo migration mới.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING PROFILES — DEV / STAGING / PROD</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Profiles cho phép cấu hình khác nhau cho từng môi trường — DB khác, log level khác, security khác.</p>
+        <h3>Cấu trúc files:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+src/main/resources/
+  application.yml           ← Common config
+  application-dev.yml       ← Dev environment
+  application-staging.yml   ← Staging
+  application-prod.yml      ← Production</pre>
+        <h3>application.yml chính:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+spring:
+  application:
+    name: my-app
+  profiles:
+    active: dev  # Profile mặc định</pre>
+      </div>
+      <div class="col">
+        <h3>application-prod.yml:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+spring:
+  datasource:
+    url: jdbc:mysql://prod-db:3306/mydb
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: validate  # KHÔNG update prod!
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.example: INFO
+  file:
+    name: /var/log/app.log
+
+server:
+  port: 8080
+  ssl:
+    enabled: true</pre>
+        <h3>Chạy với profile cụ thể:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+java -jar app.jar --spring.profiles.active=prod
+# Hoặc env var
+SPRING_PROFILES_ACTIVE=prod java -jar app.jar</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SPRING BOOT ACTUATOR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Actuator cung cấp <strong>production-ready features</strong> — health checks, metrics, monitoring qua HTTP endpoints. <a class="ref" href="https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html" target="_blank">[Spring Docs]</a></p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;
+    spring-boot-starter-actuator
+  &lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+        <h3>Endpoints quan trọng:</h3>
+        <table class="table-small">
+          <thead><tr><th>Endpoint</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td>/actuator/health</td><td>Health check (UP/DOWN)</td></tr>
+            <tr><td>/actuator/info</td><td>App info, version</td></tr>
+            <tr><td>/actuator/metrics</td><td>Memory, CPU, threads</td></tr>
+            <tr><td>/actuator/env</td><td>Environment variables</td></tr>
+            <tr><td>/actuator/loggers</td><td>Xem/đổi log levels</td></tr>
+            <tr><td>/actuator/mappings</td><td>Tất cả endpoints</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Cấu hình:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true</pre>
+        <h3>VD response /health:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+{
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP",
+      "details": {
+        "database": "MySQL",
+        "validationQuery": "isValid()"
+      }
+    },
+    "diskSpace": {"status": "UP"},
+    "ping": {"status": "UP"}
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING TRONG SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Các loại test:</h3>
+        <table class="table-small">
+          <thead><tr><th>Loại</th><th>Annotation</th><th>Mục đích</th></tr></thead>
+          <tbody>
+            <tr><td>Unit Test</td><td>@Mock, @InjectMocks</td><td>Test 1 class isolated</td></tr>
+            <tr><td>Slice Test</td><td>@WebMvcTest, @DataJpaTest</td><td>Test 1 layer</td></tr>
+            <tr><td>Integration</td><td>@SpringBootTest</td><td>Test toàn bộ app</td></tr>
+          </tbody>
+        </table>
+        <h3>Unit Test với Mockito:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+  @Mock UserRepository userRepo;
+  @InjectMocks UserService userService;
+
+  @Test
+  void shouldFindUserById() {
+    User user = new User(1L, "test@cmc.vn");
+    when(userRepo.findById(1L))
+      .thenReturn(Optional.of(user));
+
+    User found = userService.getUserById(1L);
+
+    assertEquals("test@cmc.vn", found.getEmail());
+    verify(userRepo).findById(1L);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Integration Test với MockMvc:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserControllerTest {
+
+  @Autowired MockMvc mockMvc;
+
+  @Test
+  void shouldGetAllUsers() throws Exception {
+    mockMvc.perform(get("/api/users"))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$").isArray());
+  }
+
+  @Test
+  void shouldCreateUser() throws Exception {
+    String json = """
+      {
+        "email": "new@cmc.vn",
+        "password": "secret123",
+        "fullName": "New User"
+      }
+      """;
+    mockMvc.perform(post("/api/users")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath("$.email")
+        .value("new@cmc.vn"));
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CORS — KẾT NỐI ANGULAR & SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>CORS</strong> (Cross-Origin Resource Sharing) — cho phép Angular (port 4200) gọi API Spring Boot (port 8080). Mặc định browser chặn cross-origin requests.</p>
+        <h3>Cách 1: @CrossOrigin annotation</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@RestController
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200")
+public class UserController { ... }</pre>
+        <h3>Cách 2: Global config</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+@Configuration
+public class WebConfig
+    implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(
+      CorsRegistry registry) {
+    registry.addMapping("/api/**")
+      .allowedOrigins("http://localhost:4200")
+      .allowedMethods("GET","POST","PUT","DELETE")
+      .allowedHeaders("*")
+      .allowCredentials(true);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Cách 3: Spring Security Config</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Bean
+public CorsConfigurationSource
+    corsConfigurationSource() {
+  CorsConfiguration config =
+    new CorsConfiguration();
+  config.setAllowedOrigins(
+    List.of("http://localhost:4200",
+      "https://myapp.cmc.vn"));
+  config.setAllowedMethods(
+    List.of("GET","POST","PUT","DELETE"));
+  config.setAllowedHeaders(List.of("*"));
+  config.setAllowCredentials(true);
+
+  UrlBasedCorsConfigurationSource source =
+    new UrlBasedCorsConfigurationSource();
+  source.registerCorsConfiguration(
+    "/**", config);
+  return source;
+}
+
+// Trong SecurityFilterChain
+http.cors(cors ->
+  cors.configurationSource(
+    corsConfigurationSource()));</pre>
+        <p style="font-size:13px; color:#C00000;">⚠️ KHÔNG dùng <code>allowedOrigins("*")</code> với <code>allowCredentials(true)</code> — sẽ bị browser block.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEST PRACTICES SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Nên làm:</h3>
+        <ul>
+          <li><strong>Constructor injection</strong> — không dùng @Autowired field</li>
+          <li><strong>DTO cho API</strong> — không expose Entity trực tiếp</li>
+          <li><strong>@Transactional</strong> ở Service layer</li>
+          <li><strong>Validation</strong> với @Valid + Bean Validation</li>
+          <li><strong>Global exception handler</strong> với @ControllerAdvice</li>
+          <li><strong>application-{profile}.yml</strong> — tách config theo môi trường</li>
+          <li><strong>Logging có context</strong> — log.info("User {} created", id)</li>
+          <li><strong>Pagination</strong> cho list endpoints</li>
+          <li><strong>HTTPS</strong> cho production</li>
+          <li><strong>Environment variables</strong> cho secrets (KHÔNG commit password)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Tránh:</h3>
+        <ul>
+          <li>❌ Field injection (@Autowired field)</li>
+          <li>❌ Return Entity từ Controller</li>
+          <li>❌ Logic nghiệp vụ trong Controller</li>
+          <li>❌ <code>ddl-auto=update</code> ở production</li>
+          <li>❌ Hardcode credentials trong code</li>
+          <li>❌ N+1 query problem (dùng @EntityGraph hoặc fetch join)</li>
+          <li>❌ Catch Exception generic — bắt cụ thể</li>
+          <li>❌ Synchronized methods — dùng @Async khi cần</li>
+          <li>❌ Không có test → dễ bug</li>
+          <li>❌ Dùng <code>Optional</code> làm field hoặc parameter</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Spring Boot 3.2+ hỗ trợ <strong>Virtual Threads</strong> (Project Loom) — xử lý hàng triệu concurrent requests với rất ít memory.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỖI THƯỜNG GẶP & CÁCH XỬ LÝ</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Lỗi</th><th style="width:35%">Nguyên nhân</th><th>Cách sửa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Port 8080 already in use</strong></td><td>Có process khác chiếm port</td><td>Đổi <code>server.port</code> hoặc kill process</td></tr>
+        <tr><td><strong>Failed to configure DataSource</strong></td><td>Thiếu DB config hoặc DB không chạy</td><td>Kiểm tra <code>application.yml</code>, start MySQL</td></tr>
+        <tr><td><strong>NoSuchBeanDefinitionException</strong></td><td>Bean chưa được tạo (thiếu @Component/@Service)</td><td>Thêm annotation, kiểm tra @ComponentScan</td></tr>
+        <tr><td><strong>LazyInitializationException</strong></td><td>Truy cập lazy collection ngoài transaction</td><td>Dùng @Transactional hoặc fetch eager</td></tr>
+        <tr><td><strong>404 Not Found</strong></td><td>URL sai, controller thiếu @RequestMapping</td><td>Kiểm tra path, /actuator/mappings</td></tr>
+        <tr><td><strong>403 Forbidden</strong></td><td>Spring Security chặn request</td><td>Cấu hình SecurityFilterChain</td></tr>
+        <tr><td><strong>CORS error trong browser</strong></td><td>Frontend gọi từ origin khác</td><td>Cấu hình CORS (slide trước)</td></tr>
+        <tr><td><strong>JsonMappingException</strong></td><td>Circular reference (User → Order → User)</td><td>Dùng @JsonIgnore hoặc @JsonManagedReference</td></tr>
+        <tr><td><strong>OutOfMemoryError</strong></td><td>Heap nhỏ hoặc memory leak</td><td>Tăng -Xmx, profile bằng VisualVM</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>Spring Boot</strong> = framework Java, auto-config, embedded server</li>
+          <li><strong>MVC:</strong> Controller → Service → Repository → Entity</li>
+          <li><strong>REST:</strong> HTTP methods, status codes, JSON, stateless</li>
+          <li><strong>Entity</strong> = @Entity, ánh xạ DB table</li>
+          <li><strong>Repository</strong> = JpaRepository, CRUD + custom queries</li>
+          <li><strong>Service</strong> = @Service, business logic</li>
+          <li><strong>Controller</strong> = @RestController, handle HTTP</li>
+          <li><strong>DTO</strong> = data transfer, không expose Entity</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. Spring Boot có những ưu điểm gì?</li>
+          <li>2. Giải thích luồng xử lý request trong Spring MVC.</li>
+          <li>3. Entity khác DTO thế nào? Tại sao cần DTO?</li>
+          <li>4. Các annotations chính của Entity?</li>
+          <li>5. JpaRepository cung cấp methods gì?</li>
+          <li>6. @RestController vs @Controller?</li>
+          <li>7. Bean Life Cycle gồm mấy giai đoạn?</li>
+          <li>8. Cách build và deploy Spring Boot project?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

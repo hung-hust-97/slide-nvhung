@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 02 - Kiến trúc ứng dụng di động đa nền tảng</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>KIẾN TRÚC ỨNG DỤNG<br>DI ĐỘNG ĐA NỀN TẢNG</h1>
+    <p class="subtitle">Cross-Platform Architecture: Từ Native đến Flutter & React Native</p>
+  </div>
+  <span class="slide-num">1</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 2 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>KIẾN TRÚC ỨNG DỤNG<br>DI ĐỘNG ĐA NỀN TẢNG</h1>
+    <p class="section-desc">Native architecture, cross-platform frameworks, và tiêu chí lựa chọn phù hợp</p>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 3 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>HỆ THỐNG KIẾN TRÚC DI ĐỘNG — 3 ĐẶC TÍNH CỐT LÕI</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Uniformity — Tính đồng nhất</h4>
+        <p>Dữ liệu có thể dễ dàng chuyển đổi giữa phần cứng, ứng dụng và máy chủ. API chuẩn hóa, data format nhất quán (JSON, Protocol Buffers).</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>Transparency — Tính minh bạch</h4>
+        <p>Phát hiện và xử lý lỗi từ các thành phần khác một cách rõ ràng. Error handling, logging, crash reporting chuẩn hóa.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Portability — Tính di động</h4>
+        <p>Component có thể thay thế dễ dàng, giảm thời gian chỉnh sửa. Module hóa, dependency injection, plugin architecture.</p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:12px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>Clean Architecture + Hexagonal Architecture</strong> giúp app mobile đạt cả 3 đặc tính trên. Module tách biệt, test được, deploy độc lập — Spotify, Uber áp dụng thành công.</p>
+    </div>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 4 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỊCH SỬ PHÁT TRIỂN LẬP TRÌNH DI ĐỘNG</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">2007</div>
+        <div class="step-content">
+          <h4>iPhone SDK ra đời</h4>
+          <p>Apple công bố iPhone, mở đầu kỷ nguyên smartphone hiện đại. Native iOS development với Objective-C.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2008</div>
+        <div class="step-content">
+          <h4>Android Market mở cửa</h4>
+          <p>Android 1.0 ra mắt, Google Play Store. Java/Kotlin cho Android native development.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2012</div>
+        <div class="step-content">
+          <h4>PhoneGap &amp; Cordova</h4>
+          <p>Hybrid app framework phổ biến. HTML5/CSS/JS chạy trong WebView. Performance kém, UX không native.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2015</div>
+        <div class="step-content">
+          <h4>React Native ra mắt</h4>
+          <p>Facebook (Meta) công bố React Native. JavaScript + Native bridge. Hot reload, cross-platform thực sự.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2017</div>
+        <div class="step-content">
+          <h4>Flutter 1.0 beta</h4>
+          <p>Google công bố Flutter. Dart language, Skia rendering, 1 codebase cho 6 nền tảng. Hot reload cực nhanh.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2024</div>
+        <div class="step-content">
+          <h4>Flutter 3.22 &amp; AI era</h4>
+          <p>Impeller rendering, Dart 3.5, AI integration (Gemini), PWA-ready. Cross-platform mobile dev trở thành chuẩn ngành.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 5 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CÁC MÔ HÌNH KIẾN TRÚC PHẦN MỀM MOBILE</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>MVC — Model-View-Controller</h4>
+        <p>Phân tách rõ ràng: Display (View) — Processing (Controller) — Data (Model). Pattern cơ bản nhất, dễ hiểu, phổ biến trong iOS native development.</p>
+        <p style="font-size:13px; color:#666; margin-top:6px;"><em>Ví dụ: iOS UIKit ViewController, Android Activity</em></p>
+      </div>
+      <div class="card accent-orange">
+        <h4>MVVM — Model-View-ViewModel</h4>
+        <p>Hỗ trợ two-way data binding. ViewModel làm trung gian giữa View và Model. Phổ biến trên Android (Jetpack ViewModel), WPF, Flutter.</p>
+        <p style="font-size:13px; color:#666; margin-top:6px;"><em>Ví dụ: Android ViewModel, SwiftUI View, Flutter Provider/Riverpod</em></p>
+      </div>
+      <div class="card accent-green">
+        <h4>Three-Layer Architecture</h4>
+        <p>Presentation — Business (Domain) — Data layers tách biệt. Dễ bảo trì, test, mở rộng. Flutter Clean Architecture dùng pattern này.</p>
+        <p style="font-size:13px; color:#666; margin-top:6px;"><em>Ví dụ: Flutter Clean Architecture, Android Clean Architecture</em></p>
+      </div>
+    </div>
+    <div class="ai-box" style="margin-top:12px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>BLoC Pattern</strong> (Business Logic Component) kết hợp MVVM + reactive streams. Dùng trong enterprise Flutter apps (Google, Grab). Tách biệt hoàn toàn UI và business logic.</p>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 6 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC TRONG PHÁT TRIỂN IOS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Model</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">class User {
+  let id: String
+  let name: String
+  let email: String
+  let avatarURL: URL?
+
+  init(id: String, name: String,
+       email: String, avatarURL: URL?) {
+    self.id = id
+    self.name = name
+    self.email = email
+    self.avatarURL = avatarURL
+  }
+}</pre>
+        </div>
+        <h3 style="margin-top:10px;">Controller</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">class UserListVC: UIViewController {
+  @IBOutlet weak var tableView: UITableView!
+  var users: [User] = []
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    fetchUsers()
+  }
+
+  func fetchUsers() {
+    // Call API, update users
+    // Reload tableView
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>MVC trong iOS</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>View</h4>
+            <p>Storyboard, XIB, hoặc code SwiftUI. UserInterface tĩnh, nhận input từ user. Gửi action về Controller.</p>
+          </div>
+          <div class="card">
+            <h4>Controller</h4>
+            <p>UIViewController. Điều phối Model và View. Xử lý lifecycle, navigation, user actions.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Model</h4>
+            <p>Business logic, data structures, API calls. Hoàn toàn độc lập với View/Controller.</p>
+          </div>
+        </div>
+        <div class="quote-box" style="margin-top:10px;">
+          <p>"MVC là design pattern nền tảng của iOS — tất cả Apple frameworks (UIKit, SwiftUI, WatchKit) đều dựa trên nó."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 7 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVVM TRONG ANDROID</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Model &amp; ViewModel</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">data class User(
+  val id: String,
+  val name: String,
+  val email: String
+)
+
+class UserViewModel(
+  private val repo: UserRepository
+): ViewModel() {
+  private val _users =
+    MutableStateFlow&lt;UiState&gt;(UiState.Loading)
+  val users: StateFlow&lt;UiState&gt; = _users
+
+  fun loadUsers() {
+    viewModelScope.launch {
+      _users.value = UiState.Loading
+      _users.value = repo.getUsers()
+        .fold(
+          onSuccess = { UiState.Success(it) },
+          onFailure = { UiState.Error(it) }
+        )
+    }
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>MVVM trong Android (Jetpack)</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>View</h4>
+            <p>Activity/Fragment. Quan sát ViewModel qua StateFlow. Không có business logic — chỉ render UI.</p>
+          </div>
+          <div class="card">
+            <h4>ViewModel</h4>
+            <p>Giữ UI state, survives configuration change. Dùng viewModelScope cho coroutines.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Model</h4>
+            <p>Repository pattern — abstract data source. Remote (API) hoặc Local (Room).</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Jetpack Compose</strong> + <strong>MVVM</strong> = Android UI 2025. Declarative UI kết hợp reactive ViewModel, code ngắn gọn, dễ test gấp 3 lần XML-based UI.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 8 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANDROID APPLICATION ARCHITECTURE — CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Application Layer</h4>
+            <p>User-created apps nằm ở đây. APK = Android Package. Google signs APK khi upload lên Play Store. App Signing service lưu private keys.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Application Framework</h4>
+            <p>Higher-level services qua Java/Kotlin classes. Activity Manager, Window Manager, Content Providers, Notification Manager.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Android Runtime</h4>
+            <p>Dalvik/ART virtual machine. Mỗi app có VM riêng → security sandbox. Write once, run everywhere.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Linux Kernel</h4>
+            <p>Memory management, process scheduling, security, driver model. Hardware abstraction layer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Android Sandbox Security</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Separate Sandbox</h4>
+              <p>Mỗi app có process ID riêng. File permissions restricted — app chỉ đọc file của mình.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Data Sharing có kiểm soát</h4>
+              <p>App share data qua Content Provider. Quyền truy cập: Address, Phone Status, SMS phải xin permission runtime.</p>
+            </div>
+          </div>
+        </div>
+        <div class="quote-box" style="margin-top:10px;">
+          <p>"Android: mỗi app là 1 process riêng với private VM. iOS: sandbox riêng nhưng không có VM — code chạy trực tiếp."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 9 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>IOS APPLICATION ARCHITECTURE — CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Cocoa Touch</h4>
+            <p>Frameworks &amp; APIs cho UI và event handling. UIKit, Foundation, MapKit, EventKit, MessageUI, GameKit.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Media Layer</h4>
+            <p>Quản lý audio, video, images, graphics. AVFoundation, Core Graphics, Core Image, Core Audio.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Core Services</h4>
+            <p>Essential system services. Core Data, CloudKit, Net Services, Security, Localization.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Core OS</h4>
+            <p>Memory, processes, file systems, security, hardware drivers. Kernel, Mach, BSD, Security frameworks.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Android vs iOS differences</h3>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:30%">Aspect</th>
+              <th>Android</th>
+              <th>iOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Programming</td>
+              <td>Java/Kotlin</td>
+              <td>Swift/Objective-C</td>
+            </tr>
+            <tr>
+              <td>VM layer</td>
+              <td>Dalvik/ART (Java VM)</td>
+              <td>Không có — native code</td>
+            </tr>
+            <tr>
+              <td>Openness</td>
+              <td>Open source (AOSP)</td>
+              <td>Closed source</td>
+            </tr>
+            <tr>
+              <td>Publishing</td>
+              <td>Google Play + sideloading</td>
+              <td>App Store only</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Kotlin Multiplatform (KMP)</strong> share business logic giữa Android (Kotlin) và iOS (Swift). 2024: Notion, Netflix, McDonald's dùng KMP.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 10 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>CROSS-PLATFORM<br>FRAMEWORKS</h1>
+    <p class="section-desc">Từ Native đơn nền đến "Write Once, Run Anywhere"</p>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 11 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CROSS-PLATFORM LÀ GÌ — ĐỊNH NGHĨA</h2></div>
+  <div class="slide-body">
+    <div class="quote-box">
+      <p>"Cross-platform development: Ứng dụng được phát triển bằng framework hỗ trợ nhiều nền tảng. Write once, run anywhere."</p>
+    </div>
+    <div class="two-columns" style="margin-top:14px;">
+      <div class="col">
+        <h3>Nếu KHÔNG dùng cross-platform</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-orange">
+            <h4>iOS Team</h4>
+            <p>Swift/SwiftUI developer. macOS + Xcode bắt buộc. Code iOS-only.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Android Team</h4>
+            <p>Kotlin/Java developer. Android Studio. Code Android-only.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Kết quả</h4>
+            <p>2 codebase riêng biệt, 2 team, 2 timeline, chi phí x2.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Nếu DÙNG cross-platform</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>1 Team</h4>
+            <p>Dart (Flutter), JavaScript (RN), hoặc C# (Xamarin). 1 codebase cho cả iOS + Android.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>1 Codebase</h4>
+            <p>Shared logic, shared UI (hoặc platform-adaptive). Deploy đồng thời lên cả 2 stores.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Kết quả</h4>
+            <p>Tiết kiệm 40-50% chi phí, development time nhanh hơn 40%.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 12 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TIÊU CHÍ ĐÁNH GIÁ CROSS-PLATFORM</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Target User Group</h4>
+          <p>App chỉ cho Android, chỉ cho iOS, hay cả 2? Nếu chỉ 1 nền tảng → native có thể tốt hơn. Nếu cả 2+ → cross-platform tiết kiệm.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Budget</h4>
+          <p>Ngân sách hạn chế? Cross-platform giảm 50% chi phí phát triển. Startup? Indie developer? → cross-platform recommended.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>User Experience Expectations</h4>
+          <p>Kỳ vọng UX "native-like" hay chấp nhận "good enough"? Game, AR/VR → native. Business app, MVP → cross-platform OK.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Payment Solution</h4>
+          <p>In-app purchase (IAP) khác nhau trên iOS (Apple takes 30%) và Android (Google takes 30%). Subscription model cần platform-specific integration.</p>
+        </div>
+      </div>
+    </div>
+    <div class="quote-box" style="margin-top:12px;">
+      <p>"Cross-platform apps: phát triển nhanh hơn, rẻ hơn — nhưng thường không đạt chất lượng native 100%."</p>
+    </div>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 13 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CROSS-PLATFORM — VẤN ĐỀ TRƯỚC ĐÂY VÀ CẢI TIẾN HIỆN TẠI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Vấn đề trước đây</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-orange">
+            <h4>Poor UI &amp; Performance</h4>
+            <p>Hybrid apps (PhoneGap) chạy trong WebView → laggy, không smooth. Animation phức tạp không làm được.</p>
+          </div>
+          <div class="card">
+            <h4>Large App Size</h4>
+            <p>Cross-platform framework nặng, app size lớn hơn native. User không muốn tải app nặng 50MB thay vì 10MB.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Ignored by Platform Developers</h4>
+            <p>Apple/Google không ưu tiên cross-platform tools. API mới nhất không support ngay.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Cải tiến hiện tại (2024-2025)</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Better Customizable UIs</h4>
+            <p>Flutter's Skia/Impeller vẽ pixel riêng → UI nhất quán 100%. React Native New Architecture cải thiện đáng kể.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Backed by Major Tech Companies</h4>
+            <p>Microsoft (Xamarin → MAUI), Google (Flutter), Meta (React Native) — đầu tư mạnh, cập nhật liên tục.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Smaller Installation Sizes</h4>
+            <p>Flutter compile AOT, tree-shaking, unused code elimination. APK size 5-10MB cho simple app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 14 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SO SÁNH FRAMEWORKS — FLUTTER, REACT NATIVE, XAMARIN</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:16%">Tiêu chí</th>
+          <th>Flutter</th>
+          <th>React Native</th>
+          <th>Xamarin / MAUI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ngôn ngữ</td>
+          <td>Dart</td>
+          <td>JavaScript</td>
+          <td>C#</td>
+        </tr>
+        <tr>
+          <td>Company</td>
+          <td>Google</td>
+          <td>Meta</td>
+          <td>Microsoft</td>
+        </tr>
+        <tr>
+          <td>Rendering</td>
+          <td>Skia/Impeller engine</td>
+          <td>Native bridge</td>
+          <td>Native controls</td>
+        </tr>
+        <tr>
+          <td>Performance</td>
+          <td>&#10004; Xuất sắc</td>
+          <td>&#10004; Tốt</td>
+          <td>&#10004; Tốt</td>
+        </tr>
+        <tr>
+          <td>Hot Reload</td>
+          <td>&#10004; &lt;1s</td>
+          <td>&#10004; ~3s</td>
+          <td>&#10004; ~5s</td>
+        </tr>
+        <tr>
+          <td>Ecosystem</td>
+          <td>pub.dev (30k+)</td>
+          <td>npm (1M+)</td>
+          <td>NuGet (.NET)</td>
+        </tr>
+        <tr>
+          <td>Nền tảng</td>
+          <td>6 (Mobile, Web, Desktop)</td>
+          <td>3 (Mobile, Web, PC)</td>
+          <td>4 (Mobile, Desktop)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>Google Trends 2024</strong>: Flutter vượt React Native về search volume. <strong>Stack Overflow Survey 2024</strong>: Flutter được yêu thích hơn Xamarin.</p>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 15 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER HIGHLIGHTS — VÌ SAO CHỌN FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="cards">
+      <div class="card">
+        <h4>Custom Widgets — UI nhất quán tuyệt đối</h4>
+        <p>Flutter KHÔNG dùng native widgets. Dùng Skia graphics engine vẽ pixel riêng → UI nhất quán 100% trên mọi nền tảng. Không bị lag khi iOS/Android update UI guidelines.</p>
+      </div>
+      <div class="card accent-green">
+        <h4>Dart — JIT + AOT Compilation</h4>
+        <p>JIT (Just In Time) trong development: Hot Reload &lt;1 giây. AOT (Ahead Of Time) trong production: native code tối ưu. Dart cũng compile thành JavaScript → web support.</p>
+        <p style="font-size:13px; color:#666; margin-top:6px;">Strong typing, null safety, clean syntax. Dễ học hơn Kotlin, nhanh hơn JavaScript về type safety.</p>
+      </div>
+      <div class="card accent-orange">
+        <h4>High Performance — Direct Native Access</h4>
+        <p>Flutter giao tiếp trực tiếp với GPU qua Skia, không qua native bridge như React Native. Platform channels cho native API access khi cần. 60 FPS, 120 FPS trên ProMotion iPhone.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 16 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REACT NATIVE — ĐẶC ĐIỂM VÀ HẠN CHẾ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Ưu điểm React Native</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>JavaScript Ecosystem</h4>
+            <p>1 triệu npm packages. React dev từ web chuyển sang mobile dễ dàng. Shared knowledge với React web projects.</p>
+          </div>
+          <div class="card">
+            <h4>New Architecture (Fabric)</h4>
+            <p>RN 0.76+ với JSI thay bridge cũ. Synchronous native calls, better concurrency. Performance gần bằng native.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Expo Framework</h4>
+            <p>Development đơn giản hơn, không cần Xcode/Android Studio. OTA updates — fix bug không cần re-submit app store.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Hạn chế React Native</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-orange">
+            <h4>Bridge overhead</h4>
+            <p>Legacy bridge: async communication giữa JS và native. Có thể gây lag trong animation phức tạp. Đã cải thiện với New Architecture.</p>
+          </div>
+          <div class="card">
+            <h4>Third-party library quality</h4>
+            <p>npm có nhiều package nhưng chất lượng không đồng đều. Deprecated packages, abandoned projects phổ biến.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Platform-specific differences</h4>
+            <p>Vẫn có những khác biệt UI nhỏ giữa iOS/Android. "Learn once, write anywhere" ≠ "Write once, run anywhere".</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 17 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>XAMARIN / .NET MAUI — MICROSOFT ECOSYSTEM</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Xamarin.Forms → .NET MAUI</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>C# Single Codebase</h4>
+            <p>C# cho cả iOS (Xamarin.iOS), Android (Xamarin.Android), Windows. Visual Studio for Mac/Windows là IDE chính.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>.NET MAUI (2022+)</h4>
+            <p>Evolution của Xamarin.Forms. Single project cho multi-platform. Hỗ trợ iOS, Android, macOS, Windows. .NET 8 LTS.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Native Bindings</h4>
+            <p>Truy cập 100% native APIs. Dùng C# binding cho Android SDK, iOS SDK. Hiệu suất gần bằng native.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>So sánh nhanh</h3>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:35%">Tiêu chí</th>
+              <th>.NET MAUI</th>
+              <th>Flutter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ngôn ngữ</td>
+              <td>C#</td>
+              <td>Dart</td>
+            </tr>
+            <tr>
+              <td>UI</td>
+              <td>Native controls</td>
+              <td>Custom (Skia)</td>
+            </tr>
+            <tr>
+              <td>Ecosystem</td>
+              <td>.NET, NuGet</td>
+              <td>Dart, pub.dev</td>
+            </tr>
+            <tr>
+              <td>Best for</td>
+              <td>.NET team, enterprise</td>
+              <td>Startup, mobile-first</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="quote-box" style="margin-top:10px;">
+          <p>"Microsoft khuyến khích .NET MAUI cho enterprise apps — đặc biệt khi cần tích hợp Azure, Office 365, Dynamics 365."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 18 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>KHI NÀO CHỌN NÀO — DECISION MATRIX</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%">Scenario</th>
+          <th>Khuyên dùng</th>
+          <th>Lý do</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MVP / Startup</td>
+          <td>Flutter</td>
+          <td>1 codebase, nhanh nhất, chi phí thấp</td>
+        </tr>
+        <tr>
+          <td>Team có React experience</td>
+          <td>React Native</td>
+          <td>Tận dụng JS ecosystem, learning curve thấp</td>
+        </tr>
+        <tr>
+          <td>Enterprise với .NET stack</td>
+          <td>.NET MAUI</td>
+          <td>Tích hợp Azure, Visual Studio, C#</td>
+        </tr>
+        <tr>
+          <td>Game 3D / AR/VR</td>
+          <td>Native (Unity/Unreal)</td>
+          <td>Performance tối ưu, hardware access</td>
+        </tr>
+        <tr>
+          <td>Kotlin Multiplatform</td>
+          <td>KMP</td>
+          <td>Share logic, keep native UI</td>
+        </tr>
+        <tr>
+          <td>AI-powered app</td>
+          <td>Flutter + Gemini</td>
+          <td>Google AI integration tốt nhất</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ai-box" style="margin-top:10px;">
+      <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+      <p><strong>2025 recommendation</strong>: Flutter cho 80% use cases. Native cho 10% (game, AR, hardware-intensive). KMP cho 10% còn lại.</p>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 19 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER PLATFORM CHANNELS — GỌI NATIVE API</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Khi nào cần Platform Channels?</h3>
+        <p>Flutter không cover 100% native APIs. Platform channels cho phép gọi Swift/Kotlin code từ Dart khi cần.</p>
+        <div class="cards" style="margin-top:10px; flex-direction:column; gap:8px;">
+          <div class="card accent-orange">
+            <h4>Khi nào cần?</h4>
+            <ul>
+              <li>API iOS/Android mới nhất chưa có Flutter plugin</li>
+              <li>Performance-critical native code</li>
+              <li>Third-party SDK chỉ có native version</li>
+              <li>Hardware access đặc biệt (Bluetooth LE, NFC)</li>
+            </ul>
+          </div>
+          <div class="card accent-green">
+            <h4>Khi nào KHÔNG cần?</h4>
+            <ul>
+              <li>pub.dev có plugin sẵn — dùng plugin</li>
+              <li>Camera, location, Firebase — đều có plugins</li>
+              <li>HTTP, local storage — đã có Dart packages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ Platform Channel</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Dart side
+static const channel =
+  MethodChannel('com.cmc/battery');
+
+Future&lt;int&gt; getBatteryLevel() async {
+  final level =
+    await channel.invokeMethod('getBattery');
+  return level;
+}
+
+// iOS (Swift) side
+FlutterMethodChannel(
+  "com.cmc/battery",
+  handler: (call, result) {
+    if call.method == "getBattery" {
+      result(UIDevice.current.batteryLevel)
+    }
+  }
+)</pre>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p>MethodChannel = synchronous call.<br>EventChannel = streaming data.<br>BasicMessageChannel = bi-directional messaging.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 20 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>FLUTTER ARCHITECTURE<br>&amp; ECOSYSTEM</h1>
+    <p class="section-desc">Clean Architecture, State Management, Navigation, CI/CD, Firebase Integration</p>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 21 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER CLEAN ARCHITECTURE — CẤU TRÚC DỰ ÁN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="quote-box" style="font-family:monospace; font-size:11px;">
+          <pre style="margin:0; font-family:monospace;">lib/
+  core/
+    constants/
+    errors/
+    network/      # Dio setup
+    theme/        # Material 3
+  data/
+    datasources/  # Remote + Local
+    models/      # JSON serialization
+    repositories/
+  domain/
+    entities/    # Pure Dart
+    repositories/# Abstract interfaces
+    usecases/    # Business logic
+  presentation/
+    providers/   # State management
+    screens/    # Full pages
+    widgets/     # Reusable components
+  main.dart</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Layer responsibilities</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Domain (innermost)</h4>
+            <p>Entities = pure Dart, no dependencies. Usecases = single business logic. Repository interfaces = contracts.</p>
+          </div>
+          <div class="card">
+            <h4>Data (middle)</h4>
+            <p>Models = entities + JSON. DataSources = API calls hoặc DB. Repository implementation = implements domain interface.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Presentation (outermost)</h4>
+            <p>Providers = state management. Screens = pages composed of widgets. Widgets = reusable UI. Không có business logic.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Dependency Rule</h4>
+            <p>Inner layers không biết outer layers tồn tại. Domain ← Data ← Presentation. Dễ test, dễ thay tech stack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 22 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER WIDGET — MỌI THỨ ĐỀU LÀ WIDGET</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Widget Tree</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">MaterialApp
+  Scaffold
+    AppBar (Stateless)
+    Center
+      Column
+        Text('Hello Flutter!')
+        ElevatedButton
+          Icon(Icons.thumb_up)
+          Text('Click Me')
+    BottomNavigationBar
+      BottomNavItem #1
+      BottomNavItem #2</pre>
+        </div>
+        <h3 style="margin-top:10px;">2 loại Widget chính</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>StatelessWidget</h4>
+            <p>Props in → UI out. Không thay đổi sau khi build. Dùng cho static content.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>StatefulWidget</h4>
+            <p>Có internal state thay đổi được. setState() trigger rebuild. Dùng cho interactive UI.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Ví dụ StatefulWidget</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">class CounterWidget
+    extends StatefulWidget {
+  @override
+  State&lt;CounterWidget&gt; createState() =>
+      _CounterWidgetState();
+}
+
+class _CounterWidgetState
+    extends State&lt;CounterWidget&gt; {
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('Count: $_count'),
+        ElevatedButton(
+          onPressed: () {
+            setState(() =&gt; _count++);
+          },
+          child: Text('+1'),
+        ),
+      ],
+    );
+  }
+}</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter 3.22+</strong>: const constructor mặc định khuyến khích. const Widget() — compile-time constant, rebuild tối ưu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 23 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER STATE MANAGEMENT — TỔNG QUAN</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%">Solution</th>
+          <th>Type</th>
+          <th>Complexity</th>
+          <th>Use case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>setState</td>
+          <td>Built-in</td>
+          <td>Rất thấp</td>
+          <td>Local state, tiny widget</td>
+        </tr>
+        <tr>
+          <td>Provider</td>
+          <td>Simple</td>
+          <td>Thấp</td>
+          <td>Small-medium app</td>
+        </tr>
+        <tr>
+          <td>Riverpod</td>
+          <td>Compile-safe</td>
+          <td>Trung bình</td>
+          <td>Medium-large app</td>
+        </tr>
+        <tr>
+          <td>BLoC</td>
+          <td>Event-driven</td>
+          <td>Cao</td>
+          <td>Complex app, enterprise</td>
+        </tr>
+        <tr>
+          <td>GetX</td>
+          <td>All-in-one</td>
+          <td>Thấp</td>
+          <td>Rapid development</td>
+        </tr>
+        <tr>
+          <td>Redux</td>
+          <td>Centralized</td>
+          <td>Cao</td>
+          <td>Large team, strict architecture</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <div class="quote-box">
+          <p>"State management không có giải pháp "đúng" duy nhất. Chọn framework phù hợp với team size và project complexity."</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Riverpod 2.0</strong> (code generation) là trend 2025. Flutter team khuyên dùng Provider/Riverpod thay vì BLoC cho simple-medium apps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 24 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROVIDER — VÍ DỤ THỰC TẾ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Model &amp; Provider</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">class User {
+  final String name;
+  final String email;
+  User({required this.name,
+       required this.email});
+}
+
+class UserProvider
+    extends ChangeNotifier {
+  List&lt;User&gt; _users = [];
+  List&lt;User&gt; get users =&gt; _users;
+
+  bool _isLoading = false;
+  bool get isLoading =&gt; _isLoading;
+
+  Future&lt;void&gt; fetchUsers() async {
+    _isLoading = true;
+    notifyListeners();
+
+    _users = await api.getUsers();
+    _isLoading = false;
+    notifyListeners();
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng trong Widget</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// main.dart
+MultiProvider(
+  providers: [
+    ChangeNotifierProvider(
+      create: (_) =&gt; UserProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) =&gt; ThemeProvider(),
+    ),
+  ],
+  child: MyApp(),
+);
+
+// Trong Widget
+Consumer&lt;UserProvider&gt;(
+  builder: (ctx, userProvider, _) {
+    if (userProvider.isLoading) {
+      return CircularProgressIndicator();
+    }
+    return ListView.builder(
+      itemCount: userProvider.users.length,
+      itemBuilder: (ctx, i) =&gt;
+        UserTile(userProvider.users[i]),
+    );
+  },
+);</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 25 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>RIVERPOD — STATE MANAGEMENT THẾ HỆ MỚI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao Riverpod?</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Compile-time safety</h4>
+            <p>Lỗi được phát hiện lúc compile, không phải runtime. ref.watch() type-safe, không null pointer crash.</p>
+          </div>
+          <div class="card">
+            <h4>Provider hell solved</h4>
+            <p>Nested Provider được flatten. Provider override dễ dàng. Mock trong test không cần ProviderInjection.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Code generation</h4>
+            <p>Riverpod 2.0 với @riverpod_annotation: chỉ cần khai báo, code được generate tự động. flutter pub run build_runner build.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Riverpod code example</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Định nghĩa Provider
+@riverpod
+Future&lt;List&lt;User&gt;&gt; users(UsersRef ref) async {
+  return api.getUsers();
+}
+
+// Trong Widget
+@riverpod
+class UserList extends _$UserList {
+  @override
+  Future&lt;List&lt;User&gt;&gt; build() =&gt; ref.watch(
+    usersProvider.future,
+  );
+
+  Future&lt;void&gt; refresh() async {
+    invalidate(usersProvider);
+  }
+}</pre>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p>"Riverpod 2.0 + code generation = Flutter state management tương lai. Google dùng trong Google Fonts, Flutter inspect."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 26 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER NAVIGATION — GO_ROUTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao go_router?</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Navigator 2.0 declarative</h4>
+            <p>Declarative routing — định nghĩa routes bằng code, không phải imperative push/pop. URL-based navigation.</p>
+          </div>
+          <div class="card">
+            <h4>Deep linking built-in</h4>
+            <p>URL scheme tự động: myapp://home, https://myapp.com/home. iOS universal links, Android app links.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Redirect logic</h4>
+            <p>Authentication redirect: chưa login → redirect về login page. Role-based routing: admin → admin panel.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>go_router code example</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">final router = GoRouter(
+  initialLocation: '/',
+  redirect: (context, state) {
+    final isLoggedIn =
+      ref.read(authProvider).isLoggedIn;
+    final isLoginRoute =
+      state.matchedLocation == '/login';
+    if (!isLoggedIn &amp;&amp; !isLoginRoute) {
+      return '/login';
+    }
+    return null;
+  },
+  routes: [
+    GoRoute(path: '/', builder: (_, __)
+        =&gt; HomeScreen()),
+    GoRoute(path: '/login',
+        builder: (_, __) =&gt; LoginScreen()),
+    GoRoute(path: '/user/:id',
+        builder: (_, state) =&gt;
+          UserDetailScreen(
+            id: state.pathParameters['id']!,
+          )),
+  ],
+);</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 27 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FIREBASE INTEGRATION — BACKEND-AS-A-SERVICE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Firebase modules phổ biến</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Chức năng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Firebase Auth</td>
+              <td>Email/password, Google, Apple, phone SMS</td>
+            </tr>
+            <tr>
+              <td>Firestore</td>
+              <td>NoSQL real-time database</td>
+            </tr>
+            <tr>
+              <td>Realtime Database</td>
+              <td>JSON real-time sync</td>
+            </tr>
+            <tr>
+              <td>Cloud Storage</td>
+              <td>File storage (images, videos)</td>
+            </tr>
+            <tr>
+              <td>Cloud Messaging</td>
+              <td>Push notifications</td>
+            </tr>
+            <tr>
+              <td>Firebase Hosting</td>
+              <td>Static web hosting</td>
+            </tr>
+            <tr>
+              <td>Crashlytics</td>
+              <td>Crash reporting</td>
+            </tr>
+            <tr>
+              <td>Analytics</td>
+              <td>User behavior tracking</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Flutter Firebase setup</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// pubspec.yaml
+dependencies:
+  firebase_core: ^3.0.0
+  cloud_firestore: ^5.0.0
+  firebase_auth: ^5.0.0
+  firebase_storage: ^12.0.0
+
+// main.dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-orange">
+            <h4>Firebase alternatives</h4>
+            <p>Supabase (PostgreSQL, real-time, auth). Appwrite (self-host option). Parse (on-premise). Chọn dựa trên data model và compliance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 28 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER CI/CD — GITHUB ACTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>GitHub Actions workflow</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">name: Flutter CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build apk --release</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Deployment pipeline</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>PR opened</h4>
+              <p>flutter analyze + flutter test chạy tự động. Reviewer approve trước khi merge.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Merge to main</h4>
+              <p>flutter build apk --release. Build artifact được upload lên GitHub Releases.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Firebase App Distribution</h4>
+              <p>Firebase CLI distribute AAB tới QA testers. Testers nhận notification với link download.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Dependabot</strong> auto-update dependencies. <strong>SonarCloud</strong> static code analysis. CI/CD pipeline toàn diện giảm 60% production bugs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 29 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER TESTING — TỪ UNIT ĐẾN INTEGRATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Unit Test</h4>
+            <p>Test function, class logic riêng lẻ. flutter test. Mock dependencies. Chạy nhanh, không cần simulator.</p>
+            <div class="quote-box" style="font-family:monospace; font-size:11px; margin-top:6px;">
+              <pre style="margin:0; font-family:monospace;">test('calculateTotal returns correct',
+    () {
+  expect(calculateTotal([1, 2, 3]), 6);
+});</pre>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Widget Test</h4>
+            <p>Test widget render đúng chưa. tester.pumpWidget(). Tốc độ trung bình.</p>
+            <div class="quote-box" style="font-family:monospace; font-size:11px; margin-top:6px;">
+              <pre style="margin:0; font-family:monospace;">testWidgets('Button shows text',
+    (WidgetTester t) async {
+  await t.pumpWidget(MyButton());
+  expect(find.text('Click'), findsOneWidget);
+});</pre>
+            </div>
+          </div>
+          <div class="card accent-orange">
+            <h4>Integration Test</h4>
+            <p>Test luồng user hoàn chỉnh. Chạy trên real device hoặc emulator. flutter integration_test.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Best practices</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-gold">
+            <h4>Arrange-Act-Assert (AAA)</h4>
+            <p>Setup dữ liệu → Thực thi action → Kiểm tra kết quả. Chuẩn mực testing pattern.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Given-When-Then (GWT)</h4>
+            <p>Tương tự AAA nhưng viết tự nhiên hơn. Given user logged in → When tap logout → Then navigate to login.</p>
+          </div>
+          <div class="card">
+            <h4>Code Coverage Target</h4>
+            <p>Target: &gt;80% coverage cho business logic. flutter test --coverage. Codecov tích hợp với GitHub Actions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 30 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER PERFORMANCE — TỐI ƯU CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Metrics cần theo dõi</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Mục tiêu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cold start</td>
+              <td>&lt; 2s (iPhone), &lt; 3s (Android)</td>
+            </tr>
+            <tr>
+              <td>Frame rate</td>
+              <td>60 FPS (120 FPS ProMotion)</td>
+            </tr>
+            <tr>
+              <td>Memory</td>
+              <td>&lt; 150MB</td>
+            </tr>
+            <tr>
+              <td>APK size</td>
+              <td>&lt; 15MB (release, minified)</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Impeller</strong> engine (Flutter 3.16+) loại bỏ shader compilation lag trên iOS. 60→90 FPS consistent trên mọi iPhone.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Kỹ thuật tối ưu</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>const Constructor</h4>
+            <p>const Widget() thay vì Widget() — compile-time constant, không rebuild. const Text('OK').</p>
+          </div>
+          <div class="card">
+            <h4>RepaintBoundary</h4>
+            <p>Ngăn widget tree rebuild không cần thiết. Chia nhỏ repaint area giúp GPU render hiệu quả.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Lazy Loading</h4>
+            <p>ListView.builder() với itemExtent cố định — virtualized list, chỉ render visible items.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Isolate cho Heavy Computation</h4>
+            <p>Dart Isolate xử lý JSON parsing lớn, image processing trên background thread — không block UI.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 31 ==================== -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>FLUTTER ADVANCED<br>PATTERNS</h1>
+    <p class="section-desc">Code Generation, Error Handling, Dependency Injection, Caching</p>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 32 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CODE GENERATION — FREEZED, JSON_SERIALIZABLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>freezed — Immutable data classes</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Chỉ cần khai báo
+@freezed
+class User with _$User {
+  const factory User({
+    required String id,
+    required String name,
+    String? avatarUrl,
+    @Default([]) List&lt;String&gt; roles,
+  }) = _User;
+
+  factory User.fromJson(
+          Map&lt;String, Object?&gt; json) =&gt;
+      _$UserFromJson(json);
+}
+
+// Được generate tự động:
+// - toString(), ==, hashCode
+// - copyWith()
+// - fromJson(), toJson()
+// - toStringPretty()</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>json_serializable</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// pubspec.yaml
+dev_dependencies:
+  build_runner: ^2.4.0
+  freezed: ^2.5.0
+  json_annotation: ^4.9.0
+
+// Chạy code generation
+flutter pub run build_runner build
+// hoặc watch mode:
+flutter pub run build_runner watch</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-green">
+            <h4>Benefits</h4>
+            <p>Type-safe JSON parsing. Immutable objects. Runtime performance tốt hơn manual serialization. Zero runtime overhead.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 33 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ERROR HANDLING — RESULTTYPE TRONG FLUTTER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Result type pattern</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Định nghĩa Result
+sealed class Result&lt;T&gt; {
+  const Result();
+}
+
+final class Success&lt;T&gt;
+    extends Result&lt;T&gt; {
+  const Success(this.value);
+  final T value;
+}
+
+final class Failure&lt;T&gt;
+    extends Result&lt;T&gt; {
+  const Failure(this.exception);
+  final Exception exception;
+}
+
+// Sử dụng
+Future&lt;Result&lt;List&lt;User&gt;&gt;&gt; getUsers() async {
+  try {
+    final data = await api.getUsers();
+    return Success(data);
+  } on DioException catch (e) {
+    return Failure(NetworkException(e));
+  } on Exception catch (e) {
+    return Failure(e);
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Xử lý trong Widget</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">final result =
+    await userRepository.getUsers();
+
+switch (result) {
+  case Success(data: final users):
+    return UserListView(users: users);
+  case Failure(exception: final err):
+    return ErrorView(
+      message: err.toString(),
+      onRetry: () =&gt; fetchUsers(),
+    );
+}</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-orange">
+            <h4>Tại sao không dùng try-catch trực tiếp?</h4>
+            <p>Result type: explicit error handling, compile-time safety. try-catch: implicit, easy to forget, nested catch blocks.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Flutter best practice</h4>
+            <p>Dùng Either type (functional package) hoặc sealed class Result. Không bao giờ để unhandled exception trong production app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 34 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DEPENDENCY INJECTION — GET_IT &amp; INJECTABLE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>get_it — Service Locator</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// setup_locator.dart
+final getIt = GetIt.instance;
+
+Future&lt;void&gt; setupLocator() async {
+  // Register dependencies
+  getIt.registerLazySingleton&lt;Dio&gt;(
+    () =&gt; Dio(BaseOptions(
+      baseUrl: 'https://api.example.com',
+    )),
+  );
+
+  getIt.registerLazySingleton&lt;UserRepository&gt;(
+    () =&gt; UserRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton&lt;UserProvider&gt;(
+    () =&gt; UserProvider(getIt()),
+  );
+}
+
+// Sử dụng ở bất kỳ đâu
+final userRepo = getIt&lt;UserRepository&gt;();</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>injectable — Auto DI</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Chú thích annotation
+@injectable
+class UserRepositoryImpl
+    implements UserRepository {
+  final Dio _dio;
+  @inject
+  UserRepositoryImpl(this._dio);
+}
+
+// Chạy code generation
+flutter pub run build_runner build
+
+// Kết quả: auto-registered vào getIt
+// Không cần manual register nữa</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-gold">
+            <h4>DI Benefits</h4>
+            <p>Tái sử dụng dependencies. Mock trong test dễ dàng. Decouple modules. Lazy loading — chỉ tạo khi cần.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 35 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CACHING STRATEGY — OFFLINE-FIRST APPROACH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Caching layers</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Memory Cache</h4>
+              <p>LRU cache (flutter_cache_manager). Giữ data trong memory khi app đang chạy. Tốc độ nhanh nhất, dung lượng nhỏ.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Disk Cache</h4>
+              <p>SharedPreferences (key-value), Hive (NoSQL), SQLite (relational). Persist data khi app tắt. offline-first data.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Network (Remote)</h4>
+              <p>API server. Chỉ gọi khi cache stale hoặc không có trong local. Implement stale-while-revalidate pattern.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Offline-first pattern</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">Future&lt;List&lt;User&gt;&gt; getUsers(
+    {bool forceRefresh = false}) async {
+  // 1. Check memory cache first
+  if (!forceRefresh &amp;&amp;
+      memoryCache.hasValidData) {
+    return memoryCache.getUsers();
+  }
+
+  // 2. Check disk cache
+  final diskData = await hiveDb.getUsers();
+  if (diskData != null) {
+    // Show cached data immediately
+    scheduleMicrotask(() =&gt;
+        refreshFromNetwork());
+    return diskData;
+  }
+
+  // 3. Fetch from network
+  final networkData = await api.getUsers();
+  await hiveDb.saveUsers(networkData);
+  return networkData;
+}</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Connectivity Plus</strong> package kiểm tra network status. <strong>Isar</strong> (by dart_cached) thay thế Hive — performance tốt hơn 10x.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 36 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER WEB — PWA VÀ DEPLOYMENT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Flutter Web architecture</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Compiler: Dart → JavaScript/WASM</h4>
+            <p>flutter build web → JavaScript (DDC hoặc AOT). WASM compilation (Flutter 3.22+) cho performance tốt hơn JavaScript.</p>
+          </div>
+          <div class="card">
+            <h4>Renderer: CanvasKit vs HTML</h4>
+            <p>CanvasKit: Skia-based, pixel-perfect, file size lớn. HTML: DOM-based, lightweight, accessibility tốt. CanvasKit recommended cho complex graphics.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>PWA support</h4>
+            <p>Service Worker tự động được generate. Offline mode, installable, push notification. flutter.web renderer = 'canvaskit'.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Deploy options</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Firebase Hosting</h4>
+            <p>firebase init hosting. firebase deploy. Free tier tốt, CDN toàn cầu, SSL tự động.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Vercel / Netlify</h4>
+            <p>Zero-config deployment. git push → auto deploy. Preview deployments cho PR. Custom domain + SSL.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Cloudflare Pages</h4>
+            <p>Edge network toàn cầu. Free tier generous. 2024: 1 triệu+ sites dùng Flutter web deployed on Cloudflare.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>SEO considerations</h4>
+            <p>Flutter web SPA (Single Page App) — SEO không tốt như SSR. Dùng flutter_sitemap, structured data, prerendering cho SEO.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 37 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER ACCESSIBILITY — DESIGN FOR ALL</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Semantics widget</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">Semantics(
+  label: 'Submit button',
+  hint: 'Double tap to submit form',
+  button: true,
+  enabled: isFormValid,
+  child: ElevatedButton(
+    onPressed: isFormValid
+        ? () =&gt; submit()
+        : null,
+    child: Text('Submit'),
+  ),
+)</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-green">
+            <h4>Screen reader support</h4>
+            <p>TalkBack (Android), VoiceOver (iOS), NVDA (Windows). Semantics widget cung cấp accessibility tree cho screen readers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Accessibility checklist</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card">
+            <h4>Contrast ratio</h4>
+            <p>Text: 4.5:1 minimum (WCAG AA). Large text: 3:1. Icons: 3:1. Dùng Material ColorScheme đảm bảo đủ contrast.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Touch target size</h4>
+            <p>Tối thiểu 48x48dp. Padding đủ rộng. Không đặt buttons quá gần nhau — accidental tap prevention.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Dynamic text</h4>
+            <p>Text scaling với MediaQuery.textScaleFactor. App phải render tốt khi user đặt text size lớn (1.5x, 2x).</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Color-blind safe</h4>
+            <p>Không dùng màu duy nhất để truyền thông tin. Icon + text + pattern kết hợp. Test với color blindness simulator.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 38 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER LOCALIZATION — ĐA NGÔN NGỮ</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>flutter_localizations setup</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// pubspec.yaml
+dependencies:
+  flutter_localizations:
+    sdk: true
+  intl: ^0.19.0
+
+// l10n.yaml
+arb-dir: lib/l10n
+template-arb-file: app_vi.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+
+// lib/l10n/app_vi.arb
+{
+  "greeting": "Xin chào",
+  "submitButton": "Gửi đi"
+}
+
+// lib/l10n/app_en.arb
+{
+  "greeting": "Hello",
+  "submitButton": "Submit"
+}</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Sử dụng translations</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// main.dart
+return MaterialApp(
+  locale: Localizations.localeOf(context),
+  supportedLocales: AppLocalizations.supportedLocales,
+  localizationsDelegates: [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ],
+  home: HomeScreen(),
+);
+
+// Trong Widget
+Text(AppLocalizations.of(context).greeting)</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-orange">
+            <h4>RTL support</h4>
+            <p>Flutter tự động hỗ trợ RTL languages (Arabic, Hebrew). Directional widgets: Directionality, TextDirection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 39 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER SECURITY — BEST PRACTICES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-orange">
+            <h4>Secure Storage</h4>
+            <p>Lưu token/password với flutter_secure_storage (encrypted). Không bao giờ dùng SharedPreferences cho sensitive data.</p>
+          </div>
+          <div class="card">
+            <h4>Network Security</h4>
+            <p>HTTPS everywhere. Certificate pinning với flutter_cert_pinning. Interceptors kiểm tra SSL certificates.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Biometric Authentication</h4>
+            <p>local_auth package: FaceID/TouchID (iOS), Fingerprint/Face (Android). Fallback PIN/password.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Obfuscation</h4>
+            <p>ProGuard/R8 cho Android, ip-obfuscator cho iOS. flutter build apk --obfuscate. Bảo vệ business logic khỏi reverse engineering.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Firebase Security Rules</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Firestore rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.uid == userId
+        && request.resource.data.email
+            is string;
+    }
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete:
+        if request.auth.uid == resource.data.authorId;
+    }
+  }
+}</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>App Privacy Manifest</strong> (Apple iOS 17+) yêu cầu khai báo API usage. <strong>Google Play Data Safety</strong> form bắt buộc. Compliance là must-have.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 40 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER + AI — THỰC HÀNH THẾ NÀO</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>flutter_gemini code example</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">import 'package:flutter_gemini/flutter_gemini.dart';
+
+final gemini = Gemini.init(
+  apiKey: 'YOUR_API_KEY',
+);
+
+// Text generation
+final response = await gemini.text(
+  'Explain Flutter state management',
+);
+
+// Streaming response
+gemini.textStream('Tell me a story')
+  .listen((chunk) =&gt; print(chunk));</pre>
+        </div>
+        <h3 style="margin-top:10px;">AI use cases</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Smart Search</h4>
+            <p>Gemini hiểu ngữ cảnh. "Find restaurants like this" — so sánh với database.</p>
+          </div>
+          <div class="card">
+            <h4>Onboarding Assistant</h4>
+            <p>AI chatbot hướng dẫn user mới. Context-aware help.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Firebase Genkit architecture</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Flutter side
+final response = await dio.post(
+  'https://backend.web.app/ai/generate',
+  data: {
+    'prompt': userMessage,
+    'context': conversationHistory,
+  },
+);
+final text = response.data['text'];
+
+// Backend (Cloud Functions)
+import { gemini } from '@genkit-ai/gemini';
+
+export const generate = onCall(async (req) =&gt; {
+  const result = await gemini.generate({
+    prompt: req.data.prompt,
+  });
+  return { text: result.text };
+});</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Firebase Genkit</strong> (2024) là framework mới tạo AI-powered apps. <strong>RAG pipeline</strong> built-in, multi-model support (Gemini, Claude, Llama).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">40</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 41 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER DESKTOP — WINDOWS, MACOS, LINUX</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Flutter Desktop overview</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Platform support</h4>
+            <p>Windows (Win32, UWP), macOS (Intel + Apple Silicon), Linux (GTK). Flutter 3.22+: desktop stable, production-ready.</p>
+          </div>
+          <div class="card">
+            <h4>Use cases</h4>
+            <p>Tooling, admin dashboards, internal tools, productivity apps. Shopify dùng Flutter desktop cho merchant app. Ubuntu Software Center tái viết bằng Flutter.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Desktop-specific considerations</h4>
+            <p>Window management (resize, minimize, maximize). Keyboard shortcuts. Menu bar (macOS). Right-click context menu. Mouse hover states.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Desktop code example</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Keyboard shortcuts
+Shortcuts(
+  shortcuts: {
+    LogicalKeySet(LogicalKeyboardKey.control,
+            LogicalKeyboardKey.keyS):
+        SaveIntent(),
+    LogicalKeySet(LogicalKeyboardKey.control,
+            LogicalKeyboardKey.keyZ):
+        UndoIntent(),
+  },
+  child: Actions(
+    actions: {
+      SaveIntent: CallbackAction&lt;SaveIntent&gt;(
+        onInvoke: (_) =&gt; saveDocument(),
+      ),
+    },
+    child: MyDocumentApp(),
+  ),
+);</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter Linux</strong> được Canonical (Ubuntu) đầu tư mạnh. Canonical dùng Flutter cho snaps, Ubuntu app store, và các ứng dụng hệ thống.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">41</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 42 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER STATE MANAGEMENT SO SÁNH CHI TIẾT</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:16%">Solution</th>
+          <th>Setup</th>
+          <th>Boilerplate</th>
+          <th>Testability</th>
+          <th>Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>setState</td>
+          <td>None</td>
+          <td>Very low</td>
+          <td>Hard</td>
+          <td>Tiny widget</td>
+        </tr>
+        <tr>
+          <td>Provider</td>
+          <td>Easy</td>
+          <td>Low</td>
+          <td>Medium</td>
+          <td>Small-medium</td>
+        </tr>
+        <tr>
+          <td>Riverpod</td>
+          <td>Easy</td>
+          <td>Medium</td>
+          <td>Easy</td>
+          <td>Medium-large</td>
+        </tr>
+        <tr>
+          <td>BLoC</td>
+          <td>Medium</td>
+          <td>High</td>
+          <td>Very Easy</td>
+          <td>Enterprise, complex</td>
+        </tr>
+        <tr>
+          <td>GetX</td>
+          <td>Very Easy</td>
+          <td>Very low</td>
+          <td>Hard</td>
+          <td>Rapid prototype</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="two-columns" style="margin-top:10px;">
+      <div class="col">
+        <div class="quote-box">
+          <p>"Chọn Provider/Riverpod cho 90% Flutter projects. BLoC khi team đã quen với event-driven architecture."</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Riverpod 2.0</strong> (2024) với code generation giảm boilerplate đáng kể. Flutter team khuyên dùng Riverpod thay vì Provider.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">42</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 43 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER + GRAPHQL — API LAYER HIỆN ĐẠI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tại sao GraphQL?</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Single endpoint</h4>
+            <p>Một endpoint /graphql thay vì nhiều REST endpoints. Client chỉ request data cần thiết.</p>
+          </div>
+          <div class="card">
+            <h4>No over-fetching / under-fetching</h4>
+            <p>REST: lấy 20 fields nhưng chỉ cần 5. GraphQL: chỉ lấy đúng 5 fields. Tiết kiệm bandwidth đáng kể.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Strongly typed schema</h4>
+            <p>Schema định nghĩa rõ ràng data types. Code generation tự động tạo Dart types từ schema.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Flutter GraphQL example</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Query
+final result = await client.query(
+  QueryOptions(
+    document: gql('''
+      query GetUsers {
+        users {
+          id
+          name
+          email
+        }
+      }
+    '''),
+  ),
+);
+
+final users = result.data?['users'];
+
+// Subscription (real-time)
+client.subscribe(
+  SubscriptionOptions(
+    document: gql('''
+      subscription OnMessage {
+        messageReceived {
+          id
+          content
+        }
+      }
+    '''),
+  ),
+).listen((result) {
+  print(result.data);
+});</pre>
+        </div>
+        <div class="quote-box" style="margin-top:8px;">
+          <p>graphql_flutter package — official Flutter GraphQL client. Tích hợp với Provider/Riverpod.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">43</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 44 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER MONITORING — CRASHLYTICS &amp; PERFORMANCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Firebase Crashlytics</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// pubspec.yaml
+dependencies:
+  firebase_crashlytics: ^4.0.0
+
+// main.dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FlutterError.onError = (details) {
+    FirebaseCrashlytics.instance.recordError(
+      details.exception,
+      details.stack,
+    );
+  };
+
+  runApp(MyApp());
+}</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-orange">
+            <h4>Crashlytics features</h4>
+            <p>Auto capture fatal/non-fatal crashes. Stack trace chi tiết. Device info, OS version. Anr detection (Android). Alerting rules.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Firebase Performance</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// Auto-tracked
+// - App startup time
+// - Screen render time
+// - Network request duration
+
+// Custom traces
+await FirebasePerformance.instance
+  .startTrace('custom_sort_operation')
+  ..incrementMetric('items_sorted', 1000)
+  ..stop();</pre>
+        </div>
+        <div class="cards" style="margin-top:10px;">
+          <div class="card accent-green">
+            <h4>Performance dashboard</h4>
+            <p>Startup time, screen renders, network latency. So sánh theo device, OS version, country. Phát hiện regression trước khi user phàn nàn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">44</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 45 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER ANIMATION — CHUYỂN ĐỘNG CÓ Ý NGHĨA</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Animation types</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Implicit Animation</h4>
+            <p>AnimatedContainer, AnimatedOpacity, AnimatedCrossFade. Tự động animate khi property thay đổi. Đơn giản, ít code.</p>
+          </div>
+          <div class="card">
+            <h4>Explicit Animation</h4>
+            <p>AnimationController + Tween. Kiểm soát hoàn toàn. Dùng khi implicit không đủ. AnimationStatefulWidget.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Hero Animation</h4>
+            <p>Chuyển đổi widget giữa 2 screens với animation mượt. Dùng cho: product image → product detail, avatar → profile.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Staggered Animation</h4>
+            <p>Chạy nhiều animations theo thứ tự. List items appear từng cái một. Lottie file playback cho complex animations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Implicit Animation code</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">// AnimatedContainer — tự động animate
+AnimatedContainer(
+  duration: Duration(milliseconds: 300),
+  curve: Curves.easeInOut,
+  width: isExpanded ? 300 : 100,
+  height: isExpanded ? 300 : 100,
+  color: isExpanded ? Colors.blue : Colors.red,
+  child: Center(child: Icon(Icons.star)),
+)
+
+// AnimatedSwitcher — animate giữa 2 widgets
+AnimatedSwitcher(
+  duration: Duration(milliseconds: 300),
+  child: Text(
+    key: ValueKey(count),
+    '\$count',
+  ),
+)</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Rive</strong> và <strong>Lottie</strong> cho complex animations. Designers tạo animation trong Figma/After Effects → export → Flutter render. Không cần developer viết animation code.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">45</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 46 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER FORM HANDLING — VALIDATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Form + TextFormField</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">final formKey = GlobalKey&lt;FormState&gt;();
+
+Form(
+  key: formKey,
+  child: Column(
+    children: [
+      TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Email',
+          errorText: _emailError,
+        ),
+        validator: (value) {
+          if (!EmailValidator.validate(value)) {
+            return 'Email không hợp lệ';
+          }
+          return null;
+        },
+      ),
+      TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Password',
+        ),
+        obscureText: true,
+        validator: (value) {
+          if (value!.length &lt; 8) {
+            return 'Password tối thiểu 8 ký tự';
+          }
+          return null;
+        },
+      ),
+      ElevatedButton(
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            submit();
+          }
+        },
+        child: Text('Submit'),
+      ),
+    ],
+  ),
+)</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Validation best practices</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Server-side validation</h4>
+            <p>KHÔNG chỉ validate ở client. Server validate LUÔN LUÔN. Client validation chỉ để UX tốt, không phải bảo mật.</p>
+          </div>
+          <div class="card">
+            <h4>Real-time feedback</h4>
+            <p>OnChanged callback → validate ngay khi user gõ. Debounce 300ms để tránh gọi validator quá nhiều lần.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Error message rõ ràng</h4>
+            <p>"Invalid email" không tốt. "Vui lòng nhập email đúng định dạng: abc@xyz.com" tốt hơn.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>flutter_form_builder</h4>
+            <p>Package xử lý form phức tạp: auto-save, field arrays, conditional fields. Tiết kiệm 50% form code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">46</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 47 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>FLUTTER API CLIENT — DIO + INTERCEPTORS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Dio setup with interceptors</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">final dio = Dio(BaseOptions(
+  baseUrl: 'https://api.example.com',
+  connectTimeout: Duration(seconds: 10),
+  receiveTimeout: Duration(seconds: 10),
+));
+
+dio.interceptors.add(InterceptorsWrapper(
+  onRequest: (options, handler) {
+    // Add auth token
+    final token = getIt&lt;AuthService&gt;().token;
+    options.headers['Authorization'] =
+        'Bearer \$token';
+    return handler.next(options);
+  },
+  onError: (error, handler) {
+    if (error.response?.statusCode == 401) {
+      // Token expired → refresh
+      refreshToken();
+    }
+    return handler.next(error);
+  },
+));</pre>
+        </div>
+      </div>
+      <div class="col">
+        <h3>API service pattern</h3>
+        <div class="quote-box" style="font-family:monospace; font-size:12px;">
+          <pre style="margin:0; font-family:monospace;">class UserApiService {
+  UserApiService(this._dio);
+
+  Future&lt;Result&lt;User&gt;&gt; getUser(String id) async {
+    try {
+      final response =
+          await _dio.get('/users/\$id');
+      return Success(User.fromJson(response.data));
+    } on DioException catch (e) {
+      return Failure(_handleError(e));
+    }
+  }
+
+  Future&lt;Result&lt;User&gt;&gt; updateUser(
+      String id, Map&lt;String, dynamic&gt; data) async {
+    try {
+      final response =
+          await _dio.put('/users/\$id', data: data);
+      return Success(User.fromJson(response.data));
+    } on DioException catch (e) {
+      return Failure(_handleError(e));
+    }
+  }
+}</pre>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Dio 5.0+</strong> với retry interceptor, conditional retry, caching interceptor. <strong>Chopper</strong> — Retrofit-style API client cho Flutter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">47</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 48 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>APP PUBLISHING — APP STORE &amp; GOOGLE PLAY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Google Play — AAB flow</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>flutter build appbundle</h4>
+              <p>flutter build appbundle --release. AAB tối ưu kích thước qua Play Feature Delivery.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Play Console</h4>
+              <p>Create app, fill metadata: tên, mô tả, icon, screenshot, privacy policy. Upload AAB.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Review &amp; Release</h4>
+              <p>Automated review: 1-7 ngày (thường &lt;24h). Internal → Closed (alpha) → Open (beta) → Production.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>App Store — IPA flow</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Certificates &amp; Provisioning</h4>
+              <p>Apple Developer Account ($99/năm). App ID, provisioning profiles, certificates (development + distribution).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Build IPA</h4>
+              <p>flutter build ipa --release. Xcode: Product → Archive → Distribute via App Store.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>App Store Connect</h4>
+              <p>Upload IPA via Transporter. App Store Connect: metadata, screenshot mỗi device size. Review: 24-48h (thông thường).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">48</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 49 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TƯƠNG LAI FLUTTER — 2025-2026</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Xu hướng sắp tới</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>WASM — WebAssembly</h4>
+            <p>Flutter web → WASM compilation. Performance gần bằng native. Flutter 3.22+ stable WASM output. 5-10x performance improvement.</p>
+          </div>
+          <div class="card">
+            <h4>Impeller everywhere</h4>
+            <p>Impeller thay thế Skia trên cả Android (Flutter 3.22+). Loại bỏ shader compilation jank — startup nhanh hơn 50%.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Serverpod — Full-stack Dart</h4>
+            <p>Backend viết bằng Dart. Generated type-safe API client. Severless deployment lên AWS/Google Cloud.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4>Rust + Flutter (FFI)</h4>
+            <p>ffi gọi Rust từ Dart. Performance-critical code viết bằng Rust. ffigen auto-generation bindings.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Công nghệ mới nổi</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-purple">
+            <h4>Declarative AI UI</h4>
+            <p>AI generate Flutter code từ prompt. FlutterFlow AI → production code. Figma AI → Flutter widgets export.</p>
+          </div>
+          <div class="card">
+            <h4>Platform Views hybrid</h4>
+            <p>Nhúng native view (Map, WebView, AR) vào Flutter với PlatformViewController. ARKit integration mượt hơn.</p>
+          </div>
+          <div class="card accent-green">
+            <h4>Ambient computing</h4>
+            <p>Flutter cho IoT, automotive (Android Auto, Apple CarPlay). Google Nest, Samsung SmartThings integrations.</p>
+          </div>
+        </div>
+        <div class="ai-box" style="margin-top:10px;">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>Flutter OS</strong>: Google đang phát triển Flutter như OS layer cho Fuchsia device. Long-term: Flutter có thể là key cho Google's IoT ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">49</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 50 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CHỌN ĐÚNG KIẾN TRÚC — KẾT LUẬN</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Decision summary</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Evaluate project needs</h4>
+              <p>Xác định target platforms, team size, budget, timeline. MVP → cross-platform. Game 3D → native. Enterprise → native or KMP.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Prioritize user experience</h4>
+              <p>Performance, friendly UI, stability là 3 trụ cột. Không hy sinh UX để tiết kiệm thời gian.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Sustainable development</h4>
+              <p>Chọn technologies giảm cost và accelerate growth. Flutter: 1 team, 6 platforms, 40-50% cost saving.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Bài tập thực hành</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Lab 1: Clean Architecture Setup</h4>
+            <p>Tạo Flutter project với cấu trúc Clean Architecture. setup get_it DI, Provider, Dio. Fetch data từ JSONPlaceholder API.</p>
+          </div>
+          <div class="card">
+            <h4>Lab 2: Navigation + State</h4>
+            <p>go_router với authentication redirect. Provider/Riverpod cho state. Error handling với Result type.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Lab 3: Deploy</h4>
+            <p>CI/CD với GitHub Actions. Build release APK/AAB. Submit Firebase App Distribution. Public beta testing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">50</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 51 ==================== -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT BÀI 02 — KEY TAKEAWAYS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Nội dung đã học</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Mobile Architecture</h4>
+              <p>MVC (iOS), MVVM (Android), Three-Layer. Uniformity, Transparency, Portability.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Cross-Platform Frameworks</h4>
+              <p>Flutter vs React Native vs .NET MAUI. Pros/cons, performance, ecosystem. Decision matrix cho từng use case.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Flutter Ecosystem</h4>
+              <p>Clean Architecture, Provider/Riverpod, go_router, Firebase, CI/CD, Testing, Security, Performance, AI integration.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Tương lai</h4>
+              <p>WASM, Impeller, Serverpod, Rust FFI, AI-native development. Flutter cho IoT, automotive, desktop, web.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Resources</h3>
+        <div class="cards" style="flex-direction:column; gap:8px;">
+          <div class="card accent-green">
+            <h4>Official docs</h4>
+            <p>flutter.dev/docs, api.flutter.dev, pub.dev. Flutter YouTube channel, Dartpad online editor.</p>
+          </div>
+          <div class="card">
+            <h4>Communities</h4>
+            <p>Flutter Discord (100k+ members), r/FlutterDev, Flutter Community Medium, FlutterVikings conference.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>Learning path</h4>
+            <p>Dart basics → Widget → State → Navigation → Firebase → CI/CD. 6-8 tuần từ beginner → production-ready Flutter developer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">51</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<!-- ==================== SLIDE 52 ==================== -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:22px; color:white; margin-top:40px; font-weight:400;">Bài tiếp theo: Tổng quan ngôn ngữ Dart (Dart Basics)</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">52</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.7);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>

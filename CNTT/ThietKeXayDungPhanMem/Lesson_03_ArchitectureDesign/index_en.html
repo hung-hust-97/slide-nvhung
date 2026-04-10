@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 03 - Architecture Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- ========== PART 1: INTRODUCTION ========== -->
+
+<!-- SLIDE 1: Title -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>ARCHITECTURE<br>DESIGN</h1>
+    <p class="subtitle">Software Architecture Design</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 2: Contents -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LESSON CONTENTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Part 1: From SRS to SDD</h3>
+        <ul>
+          <li>SRS Review &amp; Impact on Architecture</li>
+          <li>Process: SRS → SDD</li>
+          <li>Example: Requirements → Architecture Decisions</li>
+        </ul>
+        <h3>Part 2: Architectural Patterns</h3>
+        <ul>
+          <li>Monolithic Architecture</li>
+          <li>Layered Architecture (N-Tier)</li>
+          <li>MVC Pattern (Spring MVC + Angular)</li>
+          <li>Microservices Architecture</li>
+          <li>Event-Driven Architecture (EDA)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Part 3: Choosing an Architecture</h3>
+        <ul>
+          <li>When to use which architecture?</li>
+          <li>Comparing advantages/disadvantages</li>
+          <li>Selection guidelines</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 2: FROM SRS TO ARCHITECTURE ========== -->
+
+<!-- SLIDE 3: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>FROM SRS TO SDD</h1>
+    <p class="section-desc">Transforming software requirements into architecture decisions</p>
+  </div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 4: SRS Review & Impact on Architecture -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REVIEW: SRS &amp; IMPACT ON ARCHITECTURE</h2></div>
+  <div class="slide-body">
+    <p style="font-size:15px; color:#666; font-style:italic; margin-bottom:8px;">* SRS, User Stories, Use Cases were covered in detail in Lesson 02 (SDD). Here we focus on how they influence architecture decisions.</p>
+    <table>
+      <thead><tr><th style="width:25%">SRS Component</th><th style="width:40%">Content</th><th>Impact on Architecture</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Functional Requirements</strong></td><td>What the system must do — Use Cases, User Stories</td><td>Determines which <strong>components</strong> are needed (modules, services)</td></tr>
+        <tr><td><strong>Non-Functional Requirements</strong></td><td>Performance, security, scalability, availability</td><td>Determines <strong>patterns</strong> and infrastructure (monolithic vs microservices)</td></tr>
+        <tr><td><strong>Constraints</strong></td><td>Technology, budget, timeline, team size</td><td>Limits <strong>choices</strong> (e.g., team of 3 → should not use microservices)</td></tr>
+        <tr><td><strong>Dependencies</strong></td><td>Third-party APIs, legacy systems, external services</td><td>Determines <strong>integration patterns</strong> (API Gateway, message queue)</td></tr>
+      </tbody>
+    </table>
+    <div class="quote-box" style="margin-top:10px;">
+      <p><strong>Principle:</strong> Functional requirements tell us what the system needs to <strong>do</strong> → identify components. Non-functional requirements tell us how the system must <strong>behave</strong> → determine architecture.</p>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 5: Process SRS → Architecture -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROCESS: SRS → SDD</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Analyze Requirements</h4><p>Read SRS → identify functional requirements (Use Cases) and non-functional requirements (quality attributes)</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Identify Architectural Drivers</h4><p>Select the requirements that have the <strong>greatest impact</strong> on architecture: scalability, security, performance, team size, deadline</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Choose Architectural Pattern</h4><p>Based on drivers → choose a suitable pattern: Monolithic, Layered, Microservices, Event-Driven</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Design Components &amp; Interfaces</h4><p>Divide the system into modules/services, define communication between them (REST APIs, message queues)</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>Choose Technology Stack</h4><p>Select language, framework, database, infrastructure suitable for the chosen pattern</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 6: Example: Non-functional → Architecture Decision -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXAMPLE: REQUIREMENTS → ARCHITECTURE DECISIONS</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:30%">Requirement from SRS</th><th style="width:35%">Architecture Decision</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Support 10,000 CCU</td><td>Microservices + Load Balancer</td><td>Horizontal scaling per service</td></tr>
+        <tr><td>Real-time notifications</td><td>Event-Driven (Kafka/WebSocket)</td><td>Async, push immediately when event occurs</td></tr>
+        <tr><td>Team of 3, 3-month deadline</td><td>Monolithic (Spring Boot)</td><td>Simple, fast, 1 codebase</td></tr>
+        <tr><td>CRUD web app, long-term maintenance needed</td><td>Layered Architecture</td><td>Separation of concerns, easy to maintain</td></tr>
+        <tr><td>Sensitive data (healthcare, finance)</td><td>Add Security Layer + Encryption</td><td>Compliance, audit trail</td></tr>
+        <tr><td>Multiple teams developing in parallel</td><td>Microservices + API Gateway</td><td>Independent deployment, bounded context</td></tr>
+      </tbody>
+    </table>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Many organizations use <strong>Architecture Decision Records (ADRs)</strong> — documenting each architecture decision along with reasons, alternatives considered, and trade-offs. ADRs help new team members understand "why" the system was designed that way.</p>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 3: ARCHITECTURAL PATTERNS ========== -->
+
+<!-- SLIDE 7: Section Architectural Patterns -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>COMMON ARCHITECTURAL PATTERNS</h1>
+    <p class="section-desc">Monolithic — Layered — MVC — Microservices — Event-Driven</p>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 8: Architectural Decisions Overview -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ARCHITECTURAL PATTERNS OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p style="margin-bottom:10px;">Presented in order from <strong>simple → complex</strong>, reflecting the evolution of software architecture:</p>
+    <table>
+      <thead><tr><th style="width:22%">Pattern</th><th style="width:40%">Key Characteristics</th><th>Suitable For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Monolithic</strong></td><td>The entire application is a single unit, all components are tightly coupled</td><td>Startup, MVP, small team</td></tr>
+        <tr><td><strong>2. Layered (N-Tier)</strong></td><td>Application divided into layers (Presentation → Business → Data), each layer has its own responsibility</td><td>Web app, enterprise (ERP, CRM)</td></tr>
+        <tr><td><strong>3. MVC</strong></td><td>Model-View-Controller: separates logic, interface, and control. A variant of Layered</td><td>Web frameworks (Spring MVC, Angular)</td></tr>
+        <tr><td><strong>4. Microservices</strong></td><td>Many small, independent services, deployed separately, each service owns its own database</td><td>Large systems, multiple teams, need to scale</td></tr>
+        <tr><td><strong>5. Event-Driven</strong></td><td>System flow driven by events, asynchronous communication via message broker</td><td>Real-time, IoT, data pipeline</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;"><strong>Note:</strong> There is no "best" architecture — only the <strong>most suitable</strong> architecture for a specific context.</p>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== MONOLITHIC ===== -->
+
+<!-- SLIDE 24: Monolithic Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MONOLITHIC ARCHITECTURE — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p>The entire application is built as <strong>a single unit</strong>. All components (UI, business logic, data access) are tightly coupled and operate as a single deployment unit. <a class="ref" href="https://en.wikipedia.org/wiki/Monolithic_application" target="_blank">[Wikipedia]</a></p>
+    <div class="quote-box">
+      <p><strong>Example:</strong> A Java Spring Boot application packaged as a single .jar file — containing all controllers, services, repositories. Browser sends HTTP request → 1 application handles everything → returns response.</p>
+    </div>
+    <table style="margin-top:12px;">
+      <thead><tr><th style="width:30%">Characteristic</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Unified Codebase</strong></td><td>The entire application resides in 1 codebase, easy to start development</td></tr>
+        <tr><td><strong>Tight Coupling</strong></td><td>All modules are tightly integrated, dependent on each other</td></tr>
+        <tr><td><strong>Single Deployment</strong></td><td>Packaged and deployed at once (1 .jar/.war/.exe file)</td></tr>
+        <tr><td><strong>Shared Database</strong></td><td>Uses 1 centralized database for all modules</td></tr>
+        <tr><td><strong>Homogeneous Stack</strong></td><td>The entire application uses 1 tech stack/framework</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 25: Monolithic Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MONOLITHIC — ADVANTAGES &amp; DISADVANTAGES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Advantages:</h3>
+        <ul>
+          <li><strong>Simplified Development</strong> — 1 project, 1 IDE, easy to start</li>
+          <li><strong>High Performance</strong> — direct communication between components (in-process calls), no network needed</li>
+          <li><strong>Easier Debugging</strong> — trace errors within 1 codebase</li>
+          <li><strong>Simple Deployment</strong> — deploy a single file</li>
+          <li><strong>Simple Testing</strong> — easy end-to-end testing</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Disadvantages:</h3>
+        <ul>
+          <li><strong>Poor Scalability</strong> — must scale the entire application</li>
+          <li><strong>Deployment Bottlenecks</strong> — even small changes require redeploying everything</li>
+          <li><strong>Limited Fault Isolation</strong> — an error in 1 module can crash the entire app</li>
+          <li><strong>Not Cloud-Native Friendly</strong> — hard to leverage container orchestration</li>
+          <li><strong>Codebase bloat</strong> — hard to understand and maintain over time</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Shopify still uses a <strong>Modular Monolith</strong> — monolithic but divided into clear bounded contexts. This is an intermediate step before transitioning to microservices. <a class="ref" href="https://shopify.engineering/deconstructing-monolith-designing-software-maximizes-developer-productivity" target="_blank">[Shopify Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Monolithic Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXAMPLE: MONOLITHIC WITH SPRING BOOT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Monolithic Project Structure:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+my-app/
+  src/main/java/com/example/
+    controller/
+      UserController.java
+      CourseController.java
+      PaymentController.java
+    service/
+      UserService.java
+      CourseService.java
+      PaymentService.java
+    repository/
+      UserRepository.java
+      CourseRepository.java
+    model/
+      User.java, Course.java
+    config/
+      SecurityConfig.java
+  src/main/resources/
+    application.yml
+  pom.xml
+  → Build: 1 file app.jar</pre>
+      </div>
+      <div class="col">
+        <h3>Deployment Characteristics:</h3>
+        <ul>
+          <li><strong>Build:</strong> <code>mvn package</code> → 1 .jar file</li>
+          <li><strong>Run:</strong> <code>java -jar app.jar</code></li>
+          <li><strong>Database:</strong> 1 shared MySQL instance</li>
+          <li><strong>All modules</strong> run in the same process</li>
+        </ul>
+        <h3>When is monolithic enough?</h3>
+        <ul>
+          <li>Team ≤ 5 people</li>
+          <li>MVP or prototype</li>
+          <li>Simple domain, few modules</li>
+          <li>No need to scale individual parts</li>
+          <li>Tight deadline, need to ship fast</li>
+        </ul>
+        <p style="font-size:14px; color:#666; margin-top:8px;"><strong>The course project</strong> is suitable to start with Monolithic + Layered/MVC.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== LAYERED ARCHITECTURE ===== -->
+
+<!-- SLIDE: Layered Architecture Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LAYERED ARCHITECTURE — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p>A design model that divides the application into <strong>multiple layers</strong>, each layer having a specific role and responsibility. This is the most common architecture for web and enterprise applications. <a class="ref" href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">[Wikipedia]</a></p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Presentation Layer</h4><p>User interface (UI), API Gateway. Handles input and displays data.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Application Layer</h4><p>Orchestrates business logic flow. Contains Services, Use Cases.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Domain / Business Logic Layer</h4><p>Centralized processing of business rules. Contains Entities, Business Rules.</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Data Layer</h4><p>Manages data: Repositories, DAO. Stores and retrieves from database.</p></div></div>
+    </div>
+    <p style="margin-top:8px;"><strong>Principle:</strong> Each layer only calls the layer directly below it, no "skipping" layers.</p>
+  </div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 14: Presentation Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PRESENTATION LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Role:</strong> Directly interacts with the end user.</p>
+        <h3>Components:</h3>
+        <ul>
+          <li><strong>User Interface (UI)</strong> — Angular components, HTML/CSS</li>
+          <li><strong>API Gateway</strong> — single entry point for clients</li>
+          <li><strong>Controllers</strong> — receive HTTP requests, return responses</li>
+        </ul>
+        <h3>Functions:</h3>
+        <ul>
+          <li>Handle user input (clicks, data entry)</li>
+          <li>Display data to the user</li>
+          <li>Client-side validation (email format, required fields)</li>
+          <li>Routing, navigation</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Example with Angular:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px; overflow:auto;">
+src/app/
+  components/
+    login/
+      login.component.ts
+      login.component.html
+    dashboard/
+      dashboard.component.ts
+  services/
+    auth.service.ts
+    api.service.ts
+  guards/
+    auth.guard.ts</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Presentation Layer only calls Application Layer through HTTP APIs, does not access the database directly.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 15: Application + Domain Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>APPLICATION &amp; DOMAIN LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Application Layer</h3>
+        <p><strong>Role:</strong> Orchestrates business logic flow.</p>
+        <ul>
+          <li><strong>Services</strong> — orchestrate business operations</li>
+          <li><strong>Use Cases</strong> — handle specific tasks</li>
+          <li><strong>DTOs</strong> — Data Transfer Objects between layers</li>
+        </ul>
+        <h3>Example with Java Spring Boot:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+@Service
+public class CourseService {
+  @Autowired
+  private CourseRepository repo;
+
+  public CourseDTO getCourse(Long id) {
+    Course c = repo.findById(id)
+      .orElseThrow();
+    return mapper.toDTO(c);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Domain / Business Logic Layer</h3>
+        <p><strong>Role:</strong> Centralized processing of business rules.</p>
+        <ul>
+          <li><strong>Entities</strong> — business objects (User, Course, Order)</li>
+          <li><strong>Business Rules</strong> — rules (price ≥ 0, enrollment ≤ max)</li>
+          <li><strong>Value Objects</strong> — Email, Money, Address</li>
+          <li><strong>Domain Events</strong> — business events</li>
+        </ul>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+@Entity
+public class Course {
+  @Id @GeneratedValue
+  private Long id;
+  private String title;
+  private BigDecimal price;
+
+  public void enroll(User user) {
+    if (students.size() >= maxCapacity)
+      throw new FullException();
+    students.add(user);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 16: Data Layer -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>DATA LAYER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Role:</strong> Manages the system's data — stores and retrieves from database or other sources.</p>
+        <h3>Components:</h3>
+        <ul>
+          <li><strong>Repositories</strong> — data access interface</li>
+          <li><strong>DAO (Data Access Objects)</strong> — concrete implementation</li>
+          <li><strong>ORM Mapping</strong> — Entity ↔ Table mapping (JPA/Hibernate)</li>
+          <li><strong>Database Migrations</strong> — Flyway, Liquibase</li>
+        </ul>
+        <h3>Example Repository (Spring Data JPA):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:8px; font-size:13px;">
+public interface CourseRepository
+    extends JpaRepository&lt;Course, Long&gt; {
+
+  List&lt;Course&gt; findByCategory(String cat);
+
+  @Query("SELECT c FROM Course c
+    WHERE c.price <= :max")
+  List&lt;Course&gt; findAffordable(BigDecimal max);
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Backend Directory Structure:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+src/main/java/com/example/
+  controller/     ← Presentation
+    CourseController.java
+  service/        ← Application
+    CourseService.java
+  model/          ← Domain
+    Course.java
+    User.java
+  repository/     ← Data
+    CourseRepository.java
+  dto/
+    CourseDTO.java
+  config/
+    SecurityConfig.java</pre>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Each package corresponds to 1 layer — helping organize code clearly following layered architecture.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 17: Layered Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LAYERED ARCHITECTURE — ADVANTAGES &amp; DISADVANTAGES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Advantages:</h3>
+        <ul>
+          <li><strong>Easy maintenance</strong> — changing 1 layer does not affect other layers</li>
+          <li><strong>Clear separation</strong> — each layer has its own responsibility (Separation of Concerns)</li>
+          <li><strong>Easy to test</strong> — mock each layer for unit testing</li>
+          <li><strong>Extensible</strong> — add layers or change implementation</li>
+          <li><strong>Team collaboration</strong> — FE team works on Presentation, BE team works on Business + Data</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Disadvantages:</h3>
+        <ul>
+          <li><strong>Performance overhead</strong> — requests must pass through multiple layers</li>
+          <li><strong>More complex</strong> — more layers = more boilerplate code</li>
+          <li><strong>Hard to optimize</strong> — data flow must go through each layer</li>
+          <li><strong>Tight coupling between layers</strong> — if not well designed</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Java Spring Boot + Angular is a classic example of Layered Architecture: Angular (Presentation) → Spring Controllers (Application) → Services (Domain) → JPA Repositories (Data).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== MVC PATTERN ===== -->
+
+<!-- MVC Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC PATTERN — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Model-View-Controller (MVC)</strong> is a pattern that separates the application into 3 independent components, helping to separate logic, interface, and control. This is the most popular variant of Layered Architecture for web apps. <a class="ref" href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">[Wikipedia]</a></p>
+        <h3>3 Components:</h3>
+        <ul>
+          <li><strong>Model</strong> — Data and business logic (Entity, Service, Repository)</li>
+          <li><strong>View</strong> — User interface (HTML/CSS, Angular templates)</li>
+          <li><strong>Controller</strong> — Orchestrates: receives requests from View, calls Model, returns results to View</li>
+        </ul>
+        <h3>Workflow:</h3>
+        <p>User → <strong>Controller</strong> (receives request) → <strong>Model</strong> (processes data) → <strong>View</strong> (displays) → User</p>
+      </div>
+      <div class="col-img">
+        <img src="assets/mvc-process.svg" alt="MVC Process Diagram">
+        <p class="img-caption">MVC Pattern — interaction flow between Model, View, Controller<br><a href="https://commons.wikimedia.org/wiki/File:MVC-Process.svg" target="_blank">Source: Wikimedia Commons</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- MVC in Spring Boot + Angular -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC IN JAVA SPRING BOOT + ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Backend — Spring MVC:</h3>
+        <table class="table-small">
+          <thead><tr><th>Component</th><th>Role</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Controller</strong></td><td>Receives HTTP request, returns response</td><td>@RestController</td></tr>
+            <tr><td><strong>Service</strong></td><td>Business logic</td><td>@Service</td></tr>
+            <tr><td><strong>Repository</strong></td><td>Data access (Model)</td><td>JpaRepository</td></tr>
+            <tr><td><strong>Entity</strong></td><td>Data model (Model)</td><td>@Entity</td></tr>
+            <tr><td><strong>DTO</strong></td><td>Data transfer</td><td>CourseDTO</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Frontend — Angular (MVVM):</h3>
+        <table class="table-small">
+          <thead><tr><th>Component</th><th>Role</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Component (.ts)</strong></td><td>Controller/ViewModel</td><td>CourseComponent</td></tr>
+            <tr><td><strong>Template (.html)</strong></td><td>View</td><td>course.component.html</td></tr>
+            <tr><td><strong>Service</strong></td><td>API calls (Model)</td><td>CourseService</td></tr>
+            <tr><td><strong>Interface</strong></td><td>Data model</td><td>Course interface</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">Angular actually uses <strong>MVVM</strong> (Model-View-ViewModel), a modern variant of MVC with two-way data binding.</p>
+      </div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>The course project uses <strong>Java Spring Boot (MVC backend)</strong> + <strong>Angular (MVVM frontend)</strong> — the most popular combination for enterprise web apps today.</p>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- MVC Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MVC — ADVANTAGES &amp; DISADVANTAGES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Advantages:</h3>
+        <ul>
+          <li><strong>Separation of Concerns</strong> — clearly separates logic, interface, control</li>
+          <li><strong>Parallel Development</strong> — FE and BE develop simultaneously</li>
+          <li><strong>Reusable Models</strong> — Model shared across multiple Views</li>
+          <li><strong>Testable</strong> — unit test Controller and Model separately</li>
+          <li><strong>Framework support</strong> — Spring MVC, Angular, .NET MVC all built-in</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Disadvantages:</h3>
+        <ul>
+          <li><strong>Learning curve</strong> — need to understand the MVC flow well</li>
+          <li><strong>Boilerplate code</strong> — many files for 1 feature (Entity, DTO, Service, Controller, Component, Template)</li>
+          <li><strong>Controller bloat</strong> — without separating Service, Controller easily becomes a "God class"</li>
+          <li><strong>Complex for simple UI</strong> — overhead for small applications</li>
+        </ul>
+        <h3>MVC vs Layered Comparison:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>MVC</th><th>Layered</th></tr></thead>
+          <tbody>
+            <tr><td>Focus</td><td>Separate UI from logic</td><td>Separate responsibilities by layer</td></tr>
+            <tr><td>Scope</td><td>Presentation layer</td><td>Entire application</td></tr>
+            <tr><td>Relationship</td><td colspan="2" style="text-align:center;">MVC usually <strong>sits within</strong> Layered Architecture</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== MICROSERVICES ===== -->
+
+<!-- SLIDE 21: Microservices Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MICROSERVICES ARCHITECTURE — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p>The application is developed as a collection of <strong>small, independent, and loosely coupled services</strong>. Each service is responsible for a specific business capability and can be developed, deployed, and scaled independently. <a class="ref" href="https://martinfowler.com/articles/microservices.html" target="_blank">[Martin Fowler]</a></p>
+    <div class="quote-box">
+      <p><strong>Example:</strong> An e-commerce application consisting of: UserService, ProductService, OrderService, PaymentService, NotificationService — each service has its own database, deployed separately, and can be written in different languages.</p>
+    </div>
+    <div class="cards" style="gap:12px; margin-top:12px;">
+      <div class="card"><h4>Independence</h4><p>Each service is an independent unit — develop, deploy, maintain separately</p></div>
+      <div class="card accent-orange"><h4>Bounded Context</h4><p>Each service is responsible for 1 specific business function</p></div>
+      <div class="card accent-green"><h4>Decentralized Data</h4><p>Each service manages its own database — data isolation</p></div>
+      <div class="card accent-purple"><h4>APIs for Communication</h4><p>Communicate via REST, gRPC, or messaging (Kafka)</p></div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 22: Microservices Key Characteristics -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MICROSERVICES CHARACTERISTICS</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Characteristic</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Independence</strong></td><td>Each microservice is an independent unit that can be developed, deployed, and maintained separately</td></tr>
+        <tr><td><strong>Bounded Context</strong></td><td>Each service is responsible for 1 specific business function (e.g., user management, payment processing) and has its own domain</td></tr>
+        <tr><td><strong>Decentralized Data</strong></td><td>Each service manages its own database, ensuring data isolation — no shared DB between services</td></tr>
+        <tr><td><strong>APIs for Communication</strong></td><td>Communicate via lightweight APIs: REST, gRPC, or messaging protocols (Kafka, RabbitMQ)</td></tr>
+        <tr><td><strong>Polyglot Development</strong></td><td>Each service can use different languages/frameworks as needed (Java, Node.js, Python, Go)</td></tr>
+        <tr><td><strong>Resilience</strong></td><td>Failure in 1 service does not directly affect other services — graceful degradation</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Scale each service independently based on demand (e.g., PaymentService needs more scaling than ProfileService)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 23: Microservices Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>MICROSERVICES — ADVANTAGES &amp; DISADVANTAGES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Advantages:</h3>
+        <ul>
+          <li><strong>Scalability</strong> — scale each service independently</li>
+          <li><strong>Flexibility in Technology</strong> — use different tech stacks</li>
+          <li><strong>Faster Development</strong> — small teams develop in parallel</li>
+          <li><strong>Improved Fault Isolation</strong> — errors don't spread</li>
+          <li><strong>Easier Maintenance</strong> — small codebase, easy to understand</li>
+          <li><strong>Independent Deployment</strong> — deploy without system-wide downtime</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Disadvantages:</h3>
+        <ul>
+          <li><strong>Increased Complexity</strong> — managing many services</li>
+          <li><strong>Communication Overhead</strong> — network calls between services</li>
+          <li><strong>Data Consistency</strong> — hard to maintain consistency across services</li>
+          <li><strong>Requires robust DevOps</strong> — CI/CD, monitoring, logging for each service</li>
+          <li><strong>Complex testing</strong> — integration testing across many services</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Netflix operates <strong>1000+ microservices</strong>, Uber uses the DOMA (Domain-Oriented Microservice Architecture) model to manage complexity. <a class="ref" href="https://www.uber.com/blog/microservice-architecture/" target="_blank">[Uber Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== EVENT-DRIVEN ARCHITECTURE ===== -->
+
+<!-- SLIDE 18: EDA Intro -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EVENT-DRIVEN ARCHITECTURE (EDA) — OVERVIEW</h2></div>
+  <div class="slide-body">
+    <p>Event-driven architecture — the workflow is <strong>controlled by events</strong>. Focuses on producing, detecting, and reacting to events. Highly adaptable for asynchronous, distributed, and real-time systems. <a class="ref" href="https://en.wikipedia.org/wiki/Event-driven_architecture" target="_blank">[Wikipedia]</a></p>
+    <div class="cards" style="gap:14px;">
+      <div class="card"><h4>Event Producer</h4><p>Creates events when state changes (e.g., order placed, sensor triggered). Publishes event to Event Broker.</p></div>
+      <div class="card accent-orange"><h4>Event Broker</h4><p>Central hub for managing events — receives from Producer, distributes to Consumer. E.g., Apache Kafka, RabbitMQ, Amazon SNS/SQS.</p></div>
+      <div class="card accent-green"><h4>Event Consumer</h4><p>Subscribes to event types of interest. Performs corresponding actions (send notification, process transaction).</p></div>
+    </div>
+    <div class="quote-box" style="margin-top:12px;">
+      <p><strong>Example:</strong> User places order → OrderService publishes event "OrderCreated" → PaymentService processes payment → NotificationService sends email → InventoryService updates stock.</p>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 19: EDA Producers & Consumers -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EVENT PRODUCERS &amp; CONSUMERS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Producers:</h3>
+        <ul>
+          <li>Create events when an event or state change occurs</li>
+          <li>E.g., order placed, sensor triggered, user registered</li>
+          <li>Publish events to Event Broker</li>
+          <li><strong>Don't need to know</strong> who will receive the event (decoupled)</li>
+        </ul>
+        <h3>Consumers:</h3>
+        <ul>
+          <li>Subscribe to event types of interest</li>
+          <li>Listen to (consume) events from Event Broker</li>
+          <li>Perform corresponding actions</li>
+          <li>E.g., send notification, process payment, update cache</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Event Broker (Middleware):</h3>
+        <p>Central hub for managing events, ensuring events are distributed to all subscribed consumers.</p>
+        <table class="table-small">
+          <thead><tr><th>Broker</th><th>Characteristics</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Apache Kafka</strong></td><td>High throughput, durable, distributed log. Suitable for large data pipelines</td></tr>
+            <tr><td><strong>RabbitMQ</strong></td><td>Flexible routing, multiple protocols (AMQP). Suitable for task queues</td></tr>
+            <tr><td><strong>Amazon SNS/SQS</strong></td><td>Managed service, easy to scale. Suitable for cloud-native</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 20: EDA Advantages/Disadvantages -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EDA — ADVANTAGES &amp; DISADVANTAGES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Advantages:</h3>
+        <ul>
+          <li><strong>Asynchronous Communication</strong> — no need to wait for response</li>
+          <li><strong>Loose Coupling</strong> — services are not directly dependent</li>
+          <li><strong>Scalability</strong> — scale each consumer independently</li>
+          <li><strong>Flexibility</strong> — adding new consumers doesn't affect the system</li>
+          <li><strong>Real-Time Processing</strong> — process immediately when event occurs</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Disadvantages:</h3>
+        <ul>
+          <li><strong>Increased Complexity</strong> — managing event flows is complex</li>
+          <li><strong>Difficult debugging</strong> — tracing asynchronous flows</li>
+          <li><strong>Event Ordering</strong> — hard to guarantee event order</li>
+          <li><strong>Requires robust middleware</strong> — needs stable Kafka/RabbitMQ</li>
+          <li><strong>Eventual Consistency</strong> — data is not immediately consistent</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>LinkedIn processes <strong>7 million events/second</strong> via Apache Kafka. IoT, fintech, and e-commerce systems all use EDA for real-time processing. <a class="ref" href="https://engineering.linkedin.com/blog" target="_blank">[LinkedIn Engineering]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ===== REAL-WORLD EXAMPLES ===== -->
+
+<!-- Layered Example with image -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXAMPLE: LAYERED ARCHITECTURE — 3-TIER</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Real-world Application: Spring Boot + Angular</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Presentation (Angular)</h4><p>Components, Templates, Services → sends HTTP requests to backend</p></div></div>
+          <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Application (Spring Controllers)</h4><p>Receives requests, validates, calls Service layer</p></div></div>
+          <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Business Logic (Services)</h4><p>Processes business logic, business rules, transactions</p></div></div>
+          <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Data (JPA Repositories)</h4><p>CRUD operations, query database (MySQL)</p></div></div>
+        </div>
+      </div>
+      <div class="col-img">
+        <img src="assets/three-tier.svg" alt="3-Tier Architecture">
+        <p class="img-caption">3-Tier Architecture (Presentation → Logic → Data)<br><a href="https://en.wikipedia.org/wiki/Multitier_architecture" target="_blank">Source: Wikipedia</a></p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Microservices Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXAMPLE: MICROSERVICES — E-COMMERCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>E-commerce Architecture with Microservices:</h3>
+        <table class="table-small">
+          <thead><tr><th>Service</th><th>Database</th><th>Tech</th></tr></thead>
+          <tbody>
+            <tr><td><strong>User Service</strong></td><td>PostgreSQL</td><td>Java Spring</td></tr>
+            <tr><td><strong>Product Service</strong></td><td>MongoDB</td><td>Node.js</td></tr>
+            <tr><td><strong>Order Service</strong></td><td>MySQL</td><td>Java Spring</td></tr>
+            <tr><td><strong>Payment Service</strong></td><td>PostgreSQL</td><td>Go</td></tr>
+            <tr><td><strong>Notification</strong></td><td>Redis</td><td>Python</td></tr>
+          </tbody>
+        </table>
+        <h3>Communication:</h3>
+        <ul>
+          <li><strong>Sync:</strong> REST APIs via API Gateway</li>
+          <li><strong>Async:</strong> Kafka for events (OrderCreated, PaymentCompleted)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Real-world Examples:</h3>
+        <div class="cards" style="gap:10px;">
+          <div class="card"><h4>Netflix</h4><p>1000+ microservices, Java + Node.js, Eureka service discovery, Zuul API Gateway <a class="ref" href="https://netflixtechblog.com/" target="_blank">[Netflix Tech Blog]</a></p></div>
+          <div class="card accent-orange"><h4>Uber</h4><p>DOMA (Domain-Oriented Microservice Architecture), gRPC, Kafka <a class="ref" href="https://www.uber.com/blog/microservice-architecture/" target="_blank">[Uber Blog]</a></p></div>
+          <div class="card accent-green"><h4>Amazon</h4><p>Microservices pioneer, "two-pizza team" rule, AWS Lambda for serverless <a class="ref" href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/introduction.html" target="_blank">[AWS]</a></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- EDA Example -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>EXAMPLE: EVENT-DRIVEN — ORDER PROCESSING FLOW</h2></div>
+  <div class="slide-body">
+    <h3>Order processing flow via events:</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>User places order</h4><p>OrderService creates order → publishes event <strong>"OrderCreated"</strong> to Kafka</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>PaymentService receives event</h4><p>Processes payment → publishes <strong>"PaymentCompleted"</strong> or <strong>"PaymentFailed"</strong></p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>InventoryService receives event</h4><p>Deducts inventory, updates product quantities</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>NotificationService receives event</h4><p>Sends confirmation email/SMS to customer</p></div></div>
+      <div class="step"><div class="step-num" style="background:#C00000;">5</div><div class="step-content"><h4>AnalyticsService receives event</h4><p>Updates dashboard, real-time statistics</p></div></div>
+    </div>
+    <p style="margin-top:10px;"><strong>Note:</strong> Each service processes <strong>independently</strong>, no need to wait for other services. If NotificationService fails, the order is still processed normally.</p>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Evolution Path -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SOFTWARE ARCHITECTURE EVOLUTION</h2></div>
+  <div class="slide-body">
+    <p>Software architecture is <strong>not fixed</strong> — it evolves with the system. Many large organizations have gone through the following evolution:</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Monolithic</h4><p>Start simple, ship MVP fast. E.g., Shopify, Netflix in early stages</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Modular Monolith</h4><p>Divide monolith into clear modules (bounded contexts), preparing for service separation. E.g., Shopify currently</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Microservices</h4><p>Split modules into independent services when scaling is needed. E.g., Netflix, Uber, Amazon</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Event-Driven + Microservices</h4><p>Combine async messaging for real-time, loose coupling. E.g., LinkedIn, fintech</p></div></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Martin Fowler advises: <strong>"MonolithFirst"</strong> — start with a monolith, only transition to microservices when truly needed. Premature decomposition is more costly than a monolith. <a class="ref" href="https://martinfowler.com/bliki/MonolithFirst.html" target="_blank">[Martin Fowler]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Monolithic vs Microservices -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPARISON: MONOLITHIC VS MICROSERVICES</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Criteria</th><th style="width:37%">Monolithic</th><th>Microservices</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Codebase</strong></td><td>1 single codebase</td><td>Multiple repos, 1 repo per service</td></tr>
+        <tr><td><strong>Deployment</strong></td><td>Deploy everything each time</td><td>Deploy each service independently</td></tr>
+        <tr><td><strong>Database</strong></td><td>1 shared database</td><td>Each service has its own database</td></tr>
+        <tr><td><strong>Communication</strong></td><td>In-process (method calls)</td><td>Network (REST, gRPC, Kafka)</td></tr>
+        <tr><td><strong>Scaling</strong></td><td>Scale entire app</td><td>Scale each service separately</td></tr>
+        <tr><td><strong>Team</strong></td><td>1 shared team</td><td>Multiple small teams (2-pizza teams)</td></tr>
+        <tr><td><strong>Failure</strong></td><td>1 error → crash entire app</td><td>1 error → only 1 service down</td></tr>
+        <tr><td><strong>DevOps</strong></td><td>Simple</td><td>Complex (CI/CD, monitoring, logging for each service)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Course Project Recommendation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ARCHITECTURE FOR THE COURSE PROJECT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Recommended Architecture:</h3>
+        <p><strong>Monolithic + Layered + MVC</strong></p>
+        <ul>
+          <li><strong>Backend:</strong> Java Spring Boot (MVC pattern)</li>
+          <li><strong>Frontend:</strong> Angular (MVVM pattern)</li>
+          <li><strong>Database:</strong> MySQL</li>
+          <li><strong>Deployment:</strong> Docker Compose</li>
+        </ul>
+        <h3>Why?</h3>
+        <ul>
+          <li>Team of 3-5 people → monolithic is sufficient</li>
+          <li>CRUD web app → layered is suitable</li>
+          <li>Spring Boot + Angular → MVC/MVVM built-in</li>
+          <li>No need for microservices for the course project</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Project Structure:</h3>
+        <pre style="background:#f5f5f5; padding:12px; border-radius:8px; font-size:13px;">
+project/
+  backend/        ← Java Spring Boot
+    controller/   ← Presentation (API)
+    service/      ← Business Logic
+    repository/   ← Data Access
+    model/        ← Entities
+    dto/          ← Data Transfer
+    config/       ← Security, CORS
+  frontend/       ← Angular
+    components/   ← View (UI)
+    services/     ← API calls
+    guards/       ← Auth guards
+  docker-compose.yml
+  README.md</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- ========== PART 4: CHOOSING AN ARCHITECTURE ========== -->
+
+<!-- SLIDE 26: Section -->
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content">
+    <h1>CHOOSING AN ARCHITECTURE</h1>
+    <p class="section-desc">Comparison and guidelines for selecting the right architecture</p>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 27: Choosing Architecture -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>WHEN TO USE WHICH ARCHITECTURE?</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Architecture</th><th style="width:45%">Suitable For</th><th>Real-world Examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Monolithic</strong></td><td>Small to medium apps, startup/MVP, applications that don't need large-scale scaling</td><td>Shopify in early stages, WordPress</td></tr>
+        <tr><td><strong>Layered</strong></td><td>Web apps (Java Spring Boot, .NET), large enterprise applications (ERP, CRM)</td><td>Most CRUD web applications</td></tr>
+        <tr><td><strong>MVC</strong></td><td>Web apps needing clear FE/BE separation, using frameworks with built-in MVC</td><td>Spring MVC + Angular (this course's project)</td></tr>
+        <tr><td><strong>Microservices</strong></td><td>Large-scale apps, multiple teams, need to scale individual parts</td><td>Netflix, Uber, Amazon</td></tr>
+        <tr><td><strong>Event-Driven</strong></td><td>Real-time, IoT, data pipelines, microservices integration</td><td>LinkedIn, fintech, IoT</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 28: Comparison Table -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ARCHITECTURAL PATTERNS COMPARISON</h2></div>
+  <div class="slide-body">
+    <table class="table-small">
+      <thead><tr><th style="width:16%">Criteria</th><th>Monolithic</th><th>Layered</th><th>MVC</th><th>Microservices</th><th>Event-Driven</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Complexity</strong></td><td>Low</td><td>Medium</td><td>Medium</td><td>Very High</td><td>High</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Vertical</td><td>Vertical</td><td>Vertical</td><td>Horizontal</td><td>Horizontal</td></tr>
+        <tr><td><strong>Deploy</strong></td><td>1 unit</td><td>1 unit</td><td>1 unit</td><td>Per service</td><td>Multi comp.</td></tr>
+        <tr><td><strong>Performance</strong></td><td>Very Good</td><td>Good</td><td>Good</td><td>Avg (network)</td><td>Very Good (async)</td></tr>
+        <tr><td><strong>Fault Isol.</strong></td><td>Poor</td><td>Poor</td><td>Poor</td><td>Very Good</td><td>Good</td></tr>
+        <tr><td><strong>Team</strong></td><td>Small</td><td>Small-Med</td><td>Small-Med</td><td>Large</td><td>Med-Large</td></tr>
+        <tr><td><strong>Suitable</strong></td><td>MVP, startup</td><td>Enterprise</td><td>Web app</td><td>Large scale</td><td>Real-time</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 29: Decision Flowchart -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ARCHITECTURE SELECTION GUIDELINES</h2></div>
+  <div class="slide-body">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Small team (&lt;5 people), MVP, tight deadline?</h4><p>→ <strong>Monolithic</strong> — simple, fast, easy to debug</p></div></div>
+      <div class="step"><div class="step-num" style="background:#ED7D31;">2</div><div class="step-content"><h4>Enterprise web app, need clear structure?</h4><p>→ <strong>Layered Architecture</strong> — separation of concerns, easy to maintain, suitable for Java Spring Boot + Angular</p></div></div>
+      <div class="step"><div class="step-num" style="background:#70AD47;">3</div><div class="step-content"><h4>Need real-time, async, data pipeline?</h4><p>→ <strong>Event-Driven</strong> — Kafka/RabbitMQ, loose coupling, real-time processing</p></div></div>
+      <div class="step"><div class="step-num" style="background:#7030A0;">4</div><div class="step-content"><h4>Large system, multiple teams, need to scale individual parts?</h4><p>→ <strong>Microservices</strong> — independent deployment, polyglot, fault isolation</p></div></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-label">&#x2728; MODERN TRENDS</div>
+      <p>Many organizations start with <strong>Monolithic → Modular Monolith → Microservices</strong> (evolutionary architecture). You should not use microservices from the start if the team is small and doesn't fully understand the domain. <a class="ref" href="https://martinfowler.com/bliki/MonolithFirst.html" target="_blank">[Martin Fowler]</a></p>
+    </div>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Architecture Anti-patterns -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANTI-PATTERNS — MISTAKES TO AVOID</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:25%">Anti-pattern</th><th style="width:40%">Problem</th><th>How to Avoid</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Big Ball of Mud</strong></td><td>No clear architecture, messy code, tangled module dependencies</td><td>Apply Layered/MVC from the start</td></tr>
+        <tr><td><strong>God Class</strong></td><td>1 class/controller contains too much logic, thousands of lines of code</td><td>Single Responsibility, separate Service</td></tr>
+        <tr><td><strong>Distributed Monolith</strong></td><td>Using microservices but still tightly coupled, deployment must be synchronized</td><td>Clear bounded context, async communication</td></tr>
+        <tr><td><strong>Premature Optimization</strong></td><td>Using microservices/Kafka for a small app → over-engineering</td><td>MonolithFirst, YAGNI principle</td></tr>
+        <tr><td><strong>Shared Database</strong></td><td>Multiple services sharing 1 DB → tight coupling through data</td><td>Database per service, API communication</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Architecture Documentation -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ARCHITECTURE DOCUMENTATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>What to document in SDD:</h3>
+        <ul>
+          <li><strong>Architecture Pattern</strong> chosen and reasoning</li>
+          <li><strong>Component Diagram</strong> — modules and relationships</li>
+          <li><strong>Deployment Diagram</strong> — infrastructure</li>
+          <li><strong>Technology Stack</strong> — language, framework, DB</li>
+          <li><strong>API Contracts</strong> — endpoints, request/response</li>
+          <li><strong>Architecture Decision Records (ADRs)</strong></li>
+        </ul>
+        <h3>Diagramming Tools:</h3>
+        <ul>
+          <li><strong>draw.io</strong> — free, drag-and-drop, export PNG/SVG</li>
+          <li><strong>PlantUML</strong> — code-based, version control on Git</li>
+          <li><strong>Mermaid</strong> — write in Markdown</li>
+          <li><strong>Lucidchart</strong> — online, collaboration</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>ADR Template (Architecture Decision Record):</h3>
+        <table class="table-small">
+          <thead><tr><th style="width:30%">Section</th><th>Content</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Title</strong></td><td>Choose Layered Architecture for course project</td></tr>
+            <tr><td><strong>Status</strong></td><td>Accepted</td></tr>
+            <tr><td><strong>Context</strong></td><td>CRUD web app, team of 4, 3-month deadline</td></tr>
+            <tr><td><strong>Decision</strong></td><td>Monolithic + Layered + MVC (Spring Boot + Angular)</td></tr>
+            <tr><td><strong>Alternatives</strong></td><td>Microservices (rejected: small team, over-engineering)</td></tr>
+            <tr><td><strong>Consequences</strong></td><td>+ Simple, fast<br>- Hard to scale if app grows large</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- Case Study -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CASE STUDY: NETFLIX'S ARCHITECTURE EVOLUTION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Development Phases:</h3>
+        <table class="table-small">
+          <thead><tr><th>Year</th><th>Architecture</th><th>Reason for Transition</th></tr></thead>
+          <tbody>
+            <tr><td><strong>2007</strong></td><td>Monolithic (Java)</td><td>Initially sufficient</td></tr>
+            <tr><td><strong>2008</strong></td><td>DB corruption → 3 days downtime</td><td>Single point of failure</td></tr>
+            <tr><td><strong>2009-2012</strong></td><td>Migration to Cloud + Microservices</td><td>Scale for 200+ countries</td></tr>
+            <tr><td><strong>2016+</strong></td><td>1000+ microservices on AWS</td><td>Independent deployment, fault isolation</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:14px; color:#666; margin-top:8px;">The transition took <strong>7 years</strong> — not overnight. <a class="ref" href="https://netflixtechblog.com/" target="_blank">[Netflix Tech Blog]</a></p>
+      </div>
+      <div class="col">
+        <h3>Lessons Learned:</h3>
+        <ul>
+          <li>Start <strong>monolithic</strong> when domain is not fully understood</li>
+          <li>Transition to microservices when there is a <strong>real need</strong> (scale, large team)</li>
+          <li>Migration is a <strong>long process</strong>, not a rewrite</li>
+          <li>Need <strong>DevOps maturity</strong> before transitioning (CI/CD, monitoring, logging)</li>
+          <li>Chaos Engineering (Chaos Monkey) to test fault tolerance</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; MODERN TRENDS</div>
+          <p>Netflix open-sourced many tools: <strong>Eureka</strong> (service discovery), <strong>Zuul</strong> (API gateway), <strong>Hystrix</strong> (circuit breaker) — widely used in the Spring Cloud ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE: Summary -->
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SUMMARY &amp; REVIEW QUESTIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Core Knowledge:</h3>
+        <ul>
+          <li><strong>SRS → SDD:</strong> Functional requirements determine components, Non-functional determine patterns</li>
+          <li><strong>User Stories:</strong> As a [role], I want [feature], so that [benefit]</li>
+          <li><strong>Use Case:</strong> Actor, Goal, Steps, Pre/Post-conditions</li>
+          <li><strong>5 architectural patterns:</strong> Monolithic, Layered, MVC, Microservices, Event-Driven</li>
+          <li>There is no "best" architecture — only the <strong>most suitable</strong> one</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Review Questions:</h3>
+        <ul>
+          <li>1. Functional vs Non-functional requirements?</li>
+          <li>2. How does a User Story differ from a Use Case?</li>
+          <li>3. Name the 4 layers in Layered Architecture.</li>
+          <li>4. When is Event-Driven Architecture suitable?</li>
+          <li>5. Compare Microservices vs Monolithic.</li>
+          <li>6. When should you start with Monolithic?</li>
+          <li>7. Which architecture should the course project use? Why?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+<!-- SLIDE 31: Thank You -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Questions? Discussion?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">MSc. Nguyen Viet Hung - CMC University</span>
+</section>
+
+</body>
+</html>

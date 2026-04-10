@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 08 - Angular Framework</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../template.css">
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="title-content">
+    <h1>ANGULAR<br>FRAMEWORK</h1>
+    <p class="subtitle">Xây dựng Frontend với Angular & TypeScript</p>
+  </div>
+  <span class="slide-num" style="color:white;">1</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NỘI DUNG BÀI HỌC</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Phần 1: Giới thiệu Angular</h3>
+        <ul><li>Angular là gì? Key features</li><li>Components, Modules, Services</li><li>Cài đặt & tạo project</li></ul>
+        <h3>Phần 2: Data Binding</h3>
+        <ul><li>Interpolation {{ }}</li><li>Property binding [ ]</li><li>Event binding ( )</li><li>Two-way binding [( )]</li></ul>
+      </div>
+      <div class="col">
+        <h3>Phần 3: Directives</h3>
+        <ul><li>Structural: *ngIf, *ngFor, *ngSwitch</li><li>Custom directives</li></ul>
+        <h3>Phần 4: Routing & Services</h3>
+        <ul><li>Angular Router</li><li>Services & Dependency Injection</li><li>Bài tập: To-Do App</li></ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">2</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>GIỚI THIỆU ANGULAR</h1><p class="section-desc">TypeScript-based framework by Google</p></div>
+  <span class="slide-num">3</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR LÀ GÌ?</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Angular</strong> là TypeScript-based frontend framework, maintained by Google. Dùng cho Single Page Applications (SPA). <a class="ref" href="https://angular.io/" target="_blank">[angular.io]</a></p>
+        <h3>Key Features:</h3>
+        <ul>
+          <li><strong>Component-Based</strong> — modular, reusable components</li>
+          <li><strong>TypeScript</strong> — static typing, better tooling</li>
+          <li><strong>Two-Way Data Binding</strong> — sync model ↔ view</li>
+          <li><strong>Dependency Injection</strong> — built-in DI system</li>
+          <li><strong>Routing</strong> — SPA navigation (Angular Router)</li>
+          <li><strong>RxJS</strong> — reactive programming với Observables</li>
+          <li><strong>CLI</strong> — generate components, services, modules</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Cài đặt:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:13px;">
+# Install Node.js (LTS)
+# Install Angular CLI
+npm install -g @angular/cli
+
+# Create project
+ng new my-app
+cd my-app
+
+# Start dev server
+ng serve
+# → http://localhost:4200</pre>
+        <h3>Project structure:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+my-app/
+├── src/app/
+│   ├── app.component.ts   ← Root component
+│   ├── app.module.ts      ← Root module
+│   └── app-routing.module.ts
+├── angular.json
+├── package.json
+└── tsconfig.json</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">4</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TYPESCRIPT — NỀN TẢNG CỦA ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>TypeScript</strong> = JavaScript + Static Typing. Microsoft phát triển, Angular dùng chính thức. <a class="ref" href="https://www.typescriptlang.org/" target="_blank">[typescriptlang.org]</a></p>
+        <h3>Tại sao TypeScript?</h3>
+        <ul>
+          <li><strong>Type safety</strong> — phát hiện lỗi compile-time</li>
+          <li><strong>IDE support</strong> — autocomplete, refactoring</li>
+          <li><strong>Modern features</strong> — interfaces, generics, enums</li>
+          <li><strong>Backward compatible</strong> — JS hợp lệ là TS</li>
+          <li><strong>Compile to JS</strong> — chạy mọi browser</li>
+        </ul>
+        <h3>Basic types:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+let name: string = "Hung";
+let age: number = 30;
+let active: boolean = true;
+let tags: string[] = ["js","ts"];
+let user: { id: number, name: string };
+let result: any;  // Tránh dùng
+let value: unknown;  // Strict hơn any</pre>
+      </div>
+      <div class="col">
+        <h3>Interfaces & Classes:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+interface User {
+  id: number;
+  email: string;
+  fullName: string;
+  role?: string;  // Optional
+  readonly createdAt: Date;  // Immutable
+}
+
+class UserService {
+  private apiUrl = '/api/users';
+
+  constructor(private http: HttpClient) {}
+
+  getById(id: number): Observable&lt;User&gt; {
+    return this.http.get&lt;User&gt;(
+      `${this.apiUrl}/${id}`);
+  }
+}
+
+// Generics
+function getFirst&lt;T&gt;(arr: T[]): T | undefined {
+  return arr.length &gt; 0 ? arr[0] : undefined;
+}
+
+// Enums
+enum Role {
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+  ADMIN = 'ADMIN'
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">5</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR CLI — COMMANDS THƯỜNG DÙNG</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Project commands:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+# Tạo project mới
+ng new my-app
+ng new my-app --routing --style=scss
+
+# Start dev server
+ng serve
+ng serve --port=4201 --open
+
+# Build production
+ng build
+ng build --configuration=production
+
+# Run tests
+ng test
+ng e2e
+
+# Update Angular
+ng update
+ng update @angular/core @angular/cli</pre>
+      </div>
+      <div class="col">
+        <h3>Generate commands:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+# Component
+ng generate component user-list
+ng g c user-list
+
+# Service
+ng g s services/user
+
+# Module
+ng g m admin --routing
+
+# Directive
+ng g d directives/highlight
+
+# Pipe
+ng g p pipes/truncate
+
+# Guard
+ng g g guards/auth
+
+# Interface
+ng g i models/user
+
+# Class
+ng g cl utils/helper</pre>
+        <p style="font-size:13px; color:#666;">Angular CLI tự cập nhật module, tạo files theo convention, viết template basic.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">6</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPONENTS — BUILDING BLOCKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Components là <strong>building blocks</strong> của Angular app. Mỗi component gồm 3 phần:</p>
+        <table class="table-small">
+          <thead><tr><th>File</th><th>Vai trò</th></tr></thead>
+          <tbody>
+            <tr><td><strong>.ts</strong></td><td>Logic (TypeScript class)</td></tr>
+            <tr><td><strong>.html</strong></td><td>Template (View)</td></tr>
+            <tr><td><strong>.css/.scss</strong></td><td>Styles (scoped)</td></tr>
+            <tr><td><strong>.spec.ts</strong></td><td>Unit test</td></tr>
+          </tbody>
+        </table>
+        <h3>Tạo component:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:13px;">ng generate component user-list
+# hoặc: ng g c user-list</pre>
+      </div>
+      <div class="col">
+        <h3>VD: user-list.component.ts</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
+})
+export class UserListComponent
+    implements OnInit {
+  users: User[] = [];
+
+  constructor(
+    private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.getAll()
+      .subscribe(data => this.users = data);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">7</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPONENT LIFECYCLE HOOKS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular gọi các method đặc biệt trong vòng đời component — gọi là <strong>lifecycle hooks</strong>.</p>
+        <table class="table-small">
+          <thead><tr><th>Hook</th><th>Khi nào gọi</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ngOnChanges</strong></td><td>Khi @Input thay đổi</td></tr>
+            <tr><td><strong>ngOnInit</strong></td><td>Sau constructor + OnChanges đầu</td></tr>
+            <tr><td><strong>ngDoCheck</strong></td><td>Mọi change detection cycle</td></tr>
+            <tr><td><strong>ngAfterContentInit</strong></td><td>Sau content projection</td></tr>
+            <tr><td><strong>ngAfterContentChecked</strong></td><td>Sau check content</td></tr>
+            <tr><td><strong>ngAfterViewInit</strong></td><td>Sau view init</td></tr>
+            <tr><td><strong>ngAfterViewChecked</strong></td><td>Sau check view</td></tr>
+            <tr><td><strong>ngOnDestroy</strong></td><td>Trước khi destroy component</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>VD sử dụng:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class UserListComponent
+    implements OnInit, OnDestroy {
+
+  users: User[] = [];
+  private subscription: Subscription;
+
+  constructor(
+    private userService: UserService) {}
+
+  ngOnInit(): void {
+    // Init logic — gọi API
+    this.subscription = this.userService
+      .getAll()
+      .subscribe(data => this.users = data);
+  }
+
+  ngOnDestroy(): void {
+    // Cleanup — unsubscribe
+    this.subscription?.unsubscribe();
+  }
+}</pre>
+        <p style="font-size:13px; color:#C00000;">⚠️ Luôn unsubscribe trong ngOnDestroy để tránh memory leak.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">8</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>COMPONENT COMMUNICATION — @INPUT & @OUTPUT</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Parent → Child: @Input</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Child component
+@Component({
+  selector: 'app-user-card',
+  template: `
+    &lt;div class="card"&gt;
+      &lt;h3&gt;{{ user.fullName }}&lt;/h3&gt;
+      &lt;p&gt;{{ user.email }}&lt;/p&gt;
+      &lt;button (click)="onDelete()"&gt;
+        Delete
+      &lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class UserCardComponent {
+  @Input() user!: User;
+  @Output() deleted =
+    new EventEmitter&lt;number&gt;();
+
+  onDelete() {
+    this.deleted.emit(this.user.id);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Parent template:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;!-- parent.component.html --&gt;
+&lt;app-user-card
+  *ngFor="let u of users"
+  [user]="u"
+  (deleted)="handleDelete($event)"&gt;
+&lt;/app-user-card&gt;</pre>
+        <h3>Parent component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export class UserListComponent {
+  users: User[] = [];
+
+  handleDelete(userId: number) {
+    this.userService.delete(userId)
+      .subscribe(() => {
+        this.users = this.users.filter(
+          u => u.id !== userId);
+      });
+  }
+}</pre>
+        <h3>Cách khác:</h3>
+        <ul>
+          <li><strong>@ViewChild</strong> — parent gọi method child</li>
+          <li><strong>Service</strong> — share data giữa unrelated components</li>
+          <li><strong>Subject/BehaviorSubject</strong> — reactive sharing</li>
+          <li><strong>NgRx Store</strong> — global state</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">9</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SERVICES & DEPENDENCY INJECTION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Services</strong> chứa business logic, share data giữa components, gọi API. Inject vào components qua constructor.</p>
+        <h3>Tạo service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng generate service services/user
+# Tạo: user.service.ts</pre>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({
+  providedIn: 'root'  // Singleton toàn app
+})
+export class UserService {
+  private apiUrl = 'http://localhost:8080/api/users';
+  private currentUser$ =
+    new BehaviorSubject&lt;User | null&gt;(null);
+
+  constructor(private http: HttpClient) {}
+
+  getCurrentUser(): Observable&lt;User | null&gt; {
+    return this.currentUser$.asObservable();
+  }
+
+  setCurrentUser(user: User) {
+    this.currentUser$.next(user);
+  }
+
+  getAll(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.apiUrl);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Provider scopes:</h3>
+        <table class="table-small">
+          <thead><tr><th>Scope</th><th>Mô tả</th></tr></thead>
+          <tbody>
+            <tr><td><code>'root'</code></td><td>Singleton, toàn app</td></tr>
+            <tr><td><code>'platform'</code></td><td>Multiple Angular apps</td></tr>
+            <tr><td><code>'any'</code></td><td>Per lazy module</td></tr>
+            <tr><td>Module providers</td><td>Per module</td></tr>
+            <tr><td>Component providers</td><td>Per component instance</td></tr>
+          </tbody>
+        </table>
+        <h3>Inject service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class UserListComponent {
+  // Constructor injection
+  constructor(
+    private userService: UserService,
+    private router: Router) {}
+
+  // Hoặc inject() function (Angular 14+)
+  private userService = inject(UserService);
+  private router = inject(Router);
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">10</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NGMODULES VS STANDALONE COMPONENTS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>NgModules (truyền thống):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@NgModule({
+  declarations: [
+    AppComponent,
+    UserListComponent,
+    UserCardComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule
+  ],
+  providers: [
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}</pre>
+      </div>
+      <div class="col">
+        <h3>Standalone (Angular 14+):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-user-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    UserCardComponent,  // Import trực tiếp
+    RouterLink
+  ],
+  templateUrl: './user-list.component.html'
+})
+export class UserListComponent { }
+
+// main.ts
+import { bootstrapApplication } from
+  '@angular/platform-browser';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([authInterceptor]))
+  ]
+});</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular 17+ <strong>standalone components mặc định</strong> — đơn giản hơn, tree-shakable tốt hơn, không cần NgModule.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">11</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>DATA BINDING</h1><p class="section-desc">Interpolation — Property — Event — Two-Way</p></div>
+  <span class="slide-num">12</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>4 LOẠI DATA BINDING</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:20%">Loại</th><th style="width:15%">Cú pháp</th><th style="width:15%">Hướng</th><th style="width:25%">VD</th><th>Mô tả</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Interpolation</strong></td><td>{{ }}</td><td>Component → View</td><td><code>{{ user.name }}</code></td><td>Hiển thị data từ component lên template</td></tr>
+        <tr><td><strong>Property Binding</strong></td><td>[ ]</td><td>Component → View</td><td><code>[src]="imageUrl"</code></td><td>Bind giá trị vào HTML property</td></tr>
+        <tr><td><strong>Event Binding</strong></td><td>( )</td><td>View → Component</td><td><code>(click)="onSave()"</code></td><td>Xử lý events từ user</td></tr>
+        <tr><td><strong>Two-Way</strong></td><td>[( )]</td><td>Component ↔ View</td><td><code>[(ngModel)]="name"</code></td><td>Sync 2 chiều (cần FormsModule)</td></tr>
+      </tbody>
+    </table>
+    <div class="two-columns" style="margin-top:12px;">
+      <div class="col">
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;!-- Interpolation --&gt;
+&lt;h1&gt;Welcome, {{ userName }}&lt;/h1&gt;
+
+&lt;!-- Property Binding --&gt;
+&lt;img [src]="user.avatar" [alt]="user.name"&gt;
+&lt;button [disabled]="isLoading"&gt;Save&lt;/button&gt;</pre>
+      </div>
+      <div class="col">
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;!-- Event Binding --&gt;
+&lt;button (click)="deleteUser(user.id)"&gt;Delete&lt;/button&gt;
+&lt;input (keyup.enter)="search()"&gt;
+
+&lt;!-- Two-Way Binding --&gt;
+&lt;input [(ngModel)]="searchTerm"&gt;
+&lt;p&gt;Searching: {{ searchTerm }}&lt;/p&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">13</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PIPES — TRANSFORM DATA TRONG TEMPLATE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Pipes</strong> transform giá trị hiển thị trong template — format date, number, currency, uppercase...</p>
+        <h3>Built-in Pipes:</h3>
+        <table class="table-small">
+          <thead><tr><th>Pipe</th><th>VD</th></tr></thead>
+          <tbody>
+            <tr><td><code>date</code></td><td>{{ today | date:'dd/MM/yyyy' }}</td></tr>
+            <tr><td><code>uppercase</code></td><td>{{ name | uppercase }}</td></tr>
+            <tr><td><code>lowercase</code></td><td>{{ email | lowercase }}</td></tr>
+            <tr><td><code>currency</code></td><td>{{ price | currency:'VND' }}</td></tr>
+            <tr><td><code>number</code></td><td>{{ pi | number:'1.2-2' }}</td></tr>
+            <tr><td><code>percent</code></td><td>{{ rate | percent }}</td></tr>
+            <tr><td><code>json</code></td><td>{{ obj | json }}</td></tr>
+            <tr><td><code>slice</code></td><td>{{ text | slice:0:10 }}</td></tr>
+            <tr><td><code>async</code></td><td>{{ user$ | async }}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h3>Chain pipes:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+{{ user.email | lowercase | slice:0:20 }}
+{{ today | date:'fullDate' | uppercase }}</pre>
+        <h3>Custom Pipe:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Pipe({
+  name: 'truncate',
+  standalone: true
+})
+export class TruncatePipe
+    implements PipeTransform {
+
+  transform(value: string,
+      limit: number = 50,
+      suffix: string = '...'): string {
+    if (!value) return '';
+    if (value.length &lt;= limit) return value;
+    return value.substring(0, limit) + suffix;
+  }
+}
+
+// Sử dụng
+&lt;p&gt;{{ description | truncate:100 }}&lt;/p&gt;</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p><strong>async pipe</strong> tự động subscribe + unsubscribe Observable — không cần manual lifecycle management.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">14</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-section" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="section-content"><h1>STRUCTURAL DIRECTIVES</h1><p class="section-desc">*ngIf — *ngFor — *ngSwitch — Custom Directives</p></div>
+  <span class="slide-num">15</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>*NGIF, *NGFOR, *NGSWITCH</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>*ngIf — Hiển thị theo điều kiện:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;div *ngIf="isLoggedIn"&gt;
+  Welcome, {{ user.name }}
+&lt;/div&gt;
+
+&lt;div *ngIf="users.length > 0; else noData"&gt;
+  &lt;app-user-list [users]="users"&gt;&lt;/app-user-list&gt;
+&lt;/div&gt;
+&lt;ng-template #noData&gt;
+  &lt;p&gt;No users found.&lt;/p&gt;
+&lt;/ng-template&gt;</pre>
+        <h3>*ngFor — Lặp collection:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;ul&gt;
+  &lt;li *ngFor="let user of users; let i = index"&gt;
+    {{ i + 1 }}. {{ user.name }} - {{ user.email }}
+  &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>*ngSwitch — Chọn theo điều kiện:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+&lt;div [ngSwitch]="user.role"&gt;
+  &lt;p *ngSwitchCase="'ADMIN'"&gt;Admin Panel&lt;/p&gt;
+  &lt;p *ngSwitchCase="'TEACHER'"&gt;Teacher View&lt;/p&gt;
+  &lt;p *ngSwitchCase="'STUDENT'"&gt;Student View&lt;/p&gt;
+  &lt;p *ngSwitchDefault&gt;Guest View&lt;/p&gt;
+&lt;/div&gt;</pre>
+        <h3>Modules & Services:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:12px;">
+// app.module.ts
+@NgModule({
+  declarations: [AppComponent, UserListComponent],
+  imports: [BrowserModule, HttpClientModule,
+    FormsModule, AppRoutingModule],
+  providers: [UserService],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">16</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>NEW CONTROL FLOW (ANGULAR 17+)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular 17 giới thiệu <strong>built-in control flow</strong> mới — nhanh hơn, không cần import directives.</p>
+        <h3>@if / @else:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@if (user.isLoggedIn) {
+  &lt;p&gt;Welcome, {{ user.name }}&lt;/p&gt;
+} @else if (loading) {
+  &lt;p&gt;Loading...&lt;/p&gt;
+} @else {
+  &lt;a routerLink="/login"&gt;Login&lt;/a&gt;
+}</pre>
+        <h3>@for:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@for (user of users; track user.id) {
+  &lt;div&gt;{{ $index + 1 }}. {{ user.name }}&lt;/div&gt;
+} @empty {
+  &lt;p&gt;No users found.&lt;/p&gt;
+}</pre>
+      </div>
+      <div class="col">
+        <h3>@switch:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@switch (user.role) {
+  @case ('ADMIN') {
+    &lt;app-admin-panel /&gt;
+  }
+  @case ('TEACHER') {
+    &lt;app-teacher-view /&gt;
+  }
+  @case ('STUDENT') {
+    &lt;app-student-view /&gt;
+  }
+  @default {
+    &lt;p&gt;Unknown role&lt;/p&gt;
+  }
+}</pre>
+        <h3>So sánh:</h3>
+        <table class="table-small">
+          <thead><tr><th>Cũ</th><th>Mới</th></tr></thead>
+          <tbody>
+            <tr><td>*ngIf</td><td>@if</td></tr>
+            <tr><td>*ngFor</td><td>@for (track required)</td></tr>
+            <tr><td>*ngSwitch</td><td>@switch</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#666;">Cú pháp mới có performance tốt hơn 90% và bundle size nhỏ hơn.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">17</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CUSTOM DIRECTIVES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Attribute Directive:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Directive({
+  selector: '[appHighlight]',
+  standalone: true
+})
+export class HighlightDirective {
+  @Input() appHighlight = 'yellow';
+
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2) {}
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'background-color',
+      this.appHighlight);
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'background-color', null);
+  }
+}
+
+// Sử dụng
+&lt;p appHighlight="lightblue"&gt;Hover me&lt;/p&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Structural Directive:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Directive({
+  selector: '[appHasRole]',
+  standalone: true
+})
+export class HasRoleDirective {
+  @Input() set appHasRole(role: string) {
+    if (this.authService.hasRole(role)) {
+      this.viewContainer.createEmbeddedView(
+        this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+
+  constructor(
+    private templateRef: TemplateRef&lt;any&gt;,
+    private viewContainer: ViewContainerRef,
+    private authService: AuthService) {}
+}
+
+// Sử dụng
+&lt;button *appHasRole="'ADMIN'"&gt;
+  Delete
+&lt;/button&gt;
+// Chỉ ADMIN thấy nút này</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">18</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TEMPLATE-DRIVEN FORMS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular có 2 cách xử lý forms: <strong>Template-Driven</strong> (đơn giản) và <strong>Reactive</strong> (mạnh mẽ).</p>
+        <h3>Template-Driven:</h3>
+        <ul>
+          <li>Logic chủ yếu trong template HTML</li>
+          <li>Dùng <code>ngModel</code> two-way binding</li>
+          <li>Phù hợp form đơn giản</li>
+          <li>Cần <code>FormsModule</code></li>
+        </ul>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;form #loginForm="ngForm"
+  (ngSubmit)="onSubmit(loginForm)"&gt;
+
+  &lt;input
+    name="email"
+    [(ngModel)]="email"
+    required
+    email
+    #emailField="ngModel"&gt;
+
+  &lt;div *ngIf="emailField.invalid &amp;&amp;
+    emailField.touched"&gt;
+    Email không hợp lệ
+  &lt;/div&gt;
+
+  &lt;input
+    name="password"
+    type="password"
+    [(ngModel)]="password"
+    required
+    minlength="8"&gt;
+
+  &lt;button type="submit"
+    [disabled]="loginForm.invalid"&gt;
+    Login
+  &lt;/button&gt;
+&lt;/form&gt;</pre>
+      </div>
+      <div class="col">
+        <h3>Component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html'
+})
+export class LoginComponent {
+  email = '';
+  password = '';
+
+  constructor(
+    private authService: AuthService,
+    private router: Router) {}
+
+  onSubmit(form: NgForm) {
+    if (form.invalid) return;
+
+    this.authService.login(
+      this.email, this.password)
+      .subscribe({
+        next: () => this.router
+          .navigate(['/dashboard']),
+        error: (err) =>
+          alert('Login failed: ' +
+            err.message)
+      });
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">19</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>REACTIVE FORMS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Reactive Forms</strong> mạnh mẽ hơn — định nghĩa form trong code, dễ test, validation phức tạp.</p>
+        <h3>Component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { FormBuilder, FormGroup,
+  Validators } from '@angular/forms';
+
+@Component({...})
+export class RegisterComponent
+    implements OnInit {
+
+  registerForm!: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService) {}
+
+  ngOnInit() {
+    this.registerForm = this.fb.group({
+      email: ['',
+        [Validators.required, Validators.email]],
+      password: ['',
+        [Validators.required,
+        Validators.minLength(8)]],
+      confirmPassword: ['',
+        [Validators.required]],
+      fullName: ['',
+        [Validators.required,
+        Validators.maxLength(100)]],
+      acceptTerms: [false,
+        Validators.requiredTrue]
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  onSubmit() {
+    if (this.registerForm.invalid) return;
+    this.authService.register(
+      this.registerForm.value).subscribe();
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Template:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;form [formGroup]="registerForm"
+  (ngSubmit)="onSubmit()"&gt;
+
+  &lt;input formControlName="email"
+    placeholder="Email"&gt;
+  &lt;div *ngIf="
+    registerForm.get('email')?.touched &amp;&amp;
+    registerForm.get('email')?.errors"&gt;
+    &lt;span *ngIf="registerForm.get('email')
+      ?.errors?.['required']"&gt;
+      Email bắt buộc
+    &lt;/span&gt;
+    &lt;span *ngIf="registerForm.get('email')
+      ?.errors?.['email']"&gt;
+      Email không hợp lệ
+    &lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;input formControlName="password"
+    type="password"&gt;
+
+  &lt;input formControlName="fullName"&gt;
+
+  &lt;label&gt;
+    &lt;input type="checkbox"
+      formControlName="acceptTerms"&gt;
+    Tôi đồng ý với điều khoản
+  &lt;/label&gt;
+
+  &lt;button type="submit"
+    [disabled]="registerForm.invalid"&gt;
+    Đăng ký
+  &lt;/button&gt;
+&lt;/form&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">20</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR ROUTER — NAVIGATION</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Setup routes:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// app-routing.module.ts
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'courses',
+    component: CourseListComponent },
+  { path: 'courses/:id',
+    component: CourseDetailComponent },
+  { path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard] },
+  { path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module')
+        .then(m => m.AdminModule),
+    canActivate: [AdminGuard] },
+  { path: '**',
+    component: NotFoundComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}</pre>
+      </div>
+      <div class="col">
+        <h3>Navigation trong template:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;nav&gt;
+  &lt;a routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact:true}"&gt;
+    Home
+  &lt;/a&gt;
+  &lt;a routerLink="/courses"
+    routerLinkActive="active"&gt;
+    Courses
+  &lt;/a&gt;
+  &lt;a [routerLink]="['/courses', course.id]"&gt;
+    {{ course.title }}
+  &lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;router-outlet&gt;&lt;/router-outlet&gt;</pre>
+        <h3>Programmatic navigation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+constructor(private router: Router) {}
+
+goToProfile() {
+  this.router.navigate(['/profile']);
+}
+
+goToCourse(id: number) {
+  this.router.navigate(['/courses', id],
+    { queryParams: { ref: 'home' } });
+}
+
+goBack() {
+  this.location.back();
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">21</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ROUTE PARAMS & GUARDS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Đọc route params:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({...})
+export class CourseDetailComponent
+    implements OnInit {
+
+  course?: Course;
+
+  constructor(
+    private route: ActivatedRoute,
+    private courseService: CourseService) {}
+
+  ngOnInit() {
+    // Snapshot (1 lần)
+    const id = this.route.snapshot
+      .paramMap.get('id');
+
+    // Hoặc subscribe (reactive)
+    this.route.paramMap.subscribe(params => {
+      const id = +params.get('id')!;
+      this.courseService.getById(id)
+        .subscribe(c => this.course = c);
+    });
+
+    // Query params
+    this.route.queryParams.subscribe(qp => {
+      console.log('ref:', qp['ref']);
+    });
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Auth Guard:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router) {}
+
+  canActivate(
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot): boolean {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    }
+
+    this.router.navigate(['/login'],
+      { queryParams: {
+        returnUrl: state.url } });
+    return false;
+  }
+}</pre>
+        <h3>Role Guard:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class AdminGuard implements CanActivate {
+  constructor(
+    private authService: AuthService) {}
+
+  canActivate(): boolean {
+    return this.authService
+      .hasRole('ADMIN');
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">22</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR SIGNALS — REACTIVITY MỚI</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Signals</strong> (Angular 16+) là cách reactive mới — đơn giản hơn RxJS cho state management.</p>
+        <h3>Tạo signal:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { signal, computed, effect }
+  from '@angular/core';
+
+export class CounterComponent {
+  // Writable signal
+  count = signal(0);
+
+  // Computed (derived)
+  doubled = computed(() => this.count() * 2);
+
+  isEven = computed(() =>
+    this.count() % 2 === 0);
+
+  // Effect (side effect)
+  constructor() {
+    effect(() => {
+      console.log('Count:',
+        this.count());
+    });
+  }
+
+  increment() {
+    this.count.update(v => v + 1);
+  }
+
+  reset() {
+    this.count.set(0);
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Template:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;div&gt;
+  &lt;p&gt;Count: {{ count() }}&lt;/p&gt;
+  &lt;p&gt;Doubled: {{ doubled() }}&lt;/p&gt;
+  &lt;p&gt;{{ isEven() ? 'Even' : 'Odd' }}&lt;/p&gt;
+
+  &lt;button (click)="increment()"&gt;+1&lt;/button&gt;
+  &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;
+&lt;/div&gt;</pre>
+        <h3>Signals vs RxJS:</h3>
+        <table class="table-small">
+          <thead><tr><th></th><th>Signals</th><th>RxJS</th></tr></thead>
+          <tbody>
+            <tr><td>Use case</td><td>Local state</td><td>Async streams</td></tr>
+            <tr><td>Learning</td><td>Đơn giản</td><td>Phức tạp</td></tr>
+            <tr><td>Subscribe</td><td>Tự động</td><td>Manual</td></tr>
+            <tr><td>Multi values</td><td>1 value</td><td>Stream</td></tr>
+          </tbody>
+        </table>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Signals là <strong>future of Angular</strong> — sẽ thay thế Zone.js change detection, mang đến performance 30%+ tốt hơn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">23</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>CHANGE DETECTION STRATEGY</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular tự động phát hiện thay đổi và cập nhật DOM. Có 2 strategies:</p>
+        <h3>Default:</h3>
+        <ul>
+          <li>Check toàn bộ component tree mỗi event</li>
+          <li>Đơn giản, hoạt động luôn đúng</li>
+          <li>Có thể chậm với nhiều components</li>
+        </ul>
+        <h3>OnPush:</h3>
+        <ul>
+          <li>Chỉ check khi: @Input thay đổi reference, event xảy ra trong component, async pipe emit</li>
+          <li>Nhanh hơn nhiều</li>
+          <li>Yêu cầu immutable data</li>
+        </ul>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Component({
+  selector: 'app-user-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @for (user of users(); track user.id) {
+      &lt;app-user-card [user]="user"/&gt;
+    }
+  `
+})
+export class UserListComponent {
+  users = signal&lt;User[]&gt;([]);
+}</pre>
+      </div>
+      <div class="col">
+        <h3>Manual trigger:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+constructor(private cdr: ChangeDetectorRef) {}
+
+updateData() {
+  this.data = [...this.data, newItem];
+  this.cdr.markForCheck();
+  // hoặc
+  this.cdr.detectChanges();
+}</pre>
+        <h3>TrackBy với ngFor:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;li *ngFor="let u of users; trackBy: trackById"&gt;
+  {{ u.name }}
+&lt;/li&gt;
+
+trackById(index: number, user: User) {
+  return user.id;
+}
+// Tránh re-render toàn bộ list
+// khi 1 item thay đổi</pre>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular 18+ <strong>Zoneless mode</strong> + <strong>Signals</strong> = không cần Zone.js, không cần OnPush, vẫn nhanh nhất.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">24</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STATE MANAGEMENT — NGRX</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>NgRx</strong> = Redux pattern cho Angular — quản lý state toàn app theo flux pattern. Phù hợp app lớn, phức tạp.</p>
+        <h3>Concepts:</h3>
+        <ul>
+          <li><strong>Store</strong> — single source of truth</li>
+          <li><strong>Actions</strong> — events mô tả "có gì xảy ra"</li>
+          <li><strong>Reducers</strong> — pure functions update state</li>
+          <li><strong>Selectors</strong> — read state</li>
+          <li><strong>Effects</strong> — side effects (HTTP calls)</li>
+        </ul>
+        <h3>VD Action:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const loadUsers =
+  createAction('[User] Load Users');
+
+export const loadUsersSuccess = createAction(
+  '[User] Load Success',
+  props&lt;{ users: User[] }&gt;()
+);</pre>
+      </div>
+      <div class="col">
+        <h3>Reducer:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+export const userReducer = createReducer(
+  initialState,
+  on(loadUsers, state => ({
+    ...state,
+    loading: true
+  })),
+  on(loadUsersSuccess, (state, { users }) => ({
+    ...state,
+    users,
+    loading: false
+  }))
+);</pre>
+        <h3>Effect (async):</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+loadUsers$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadUsers),
+    mergeMap(() =>
+      this.userService.getAll().pipe(
+        map(users => loadUsersSuccess({ users })),
+        catchError(err => of(loadUsersFailure({ err })))
+      )
+    )
+  )
+);</pre>
+        <p style="font-size:13px; color:#666;">Alternative nhẹ hơn: <strong>NgRx Component Store</strong>, <strong>Akita</strong>, <strong>Signals</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">25</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LAZY LOADING — TỐI ƯU PERFORMANCE</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Lazy Loading</strong> chỉ tải module khi user navigate đến route đó — giảm initial bundle size, app load nhanh hơn.</p>
+        <h3>Cấu hình route:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+
+  // Lazy load admin module
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module')
+        .then(m => m.AdminModule)
+  },
+
+  // Lazy load standalone component
+  {
+    path: 'reports',
+    loadComponent: () =>
+      import('./reports/reports.component')
+        .then(c => c.ReportsComponent)
+  }
+];</pre>
+      </div>
+      <div class="col">
+        <h3>Preloading strategies:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// Preload tất cả lazy modules sau initial load
+RouterModule.forRoot(routes, {
+  preloadingStrategy: PreloadAllModules
+})
+
+// Hoặc custom strategy
+@Injectable()
+export class CustomPreload
+    implements PreloadingStrategy {
+  preload(route: Route, fn: () => Observable&lt;any&gt;) {
+    return route.data?.['preload']
+      ? fn() : EMPTY;
+  }
+}
+
+// Trong route
+{ path: 'admin',
+  loadChildren: ...,
+  data: { preload: true } }</pre>
+        <h3>Bundle analyzer:</h3>
+        <pre style="background:#f5f5f5; padding:8px; border-radius:6px; font-size:11px;">
+ng build --stats-json
+npx webpack-bundle-analyzer
+  dist/my-app/stats.json</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">26</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR ANIMATIONS</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular Animations API cung cấp DSL để tạo animations dựa trên Web Animations API.</p>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { provideAnimations } from
+  '@angular/platform-browser/animations';
+
+bootstrapApplication(AppComponent, {
+  providers: [provideAnimations()]
+});</pre>
+        <h3>Define animation:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+import { trigger, state, style,
+  animate, transition } from
+  '@angular/animations';
+
+@Component({
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateY(-20px)'
+      })),
+      transition(':enter, :leave', [
+        animate('300ms ease-in-out')
+      ])
+    ])
+  ]
+})
+export class NotificationComponent {}</pre>
+      </div>
+      <div class="col">
+        <h3>Sử dụng:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+&lt;div *ngIf="visible"
+  [@fadeInOut]&gt;
+  Notification message
+&lt;/div&gt;</pre>
+        <h3>Animation phức tạp:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+trigger('listAnimation', [
+  transition('* =&gt; *', [
+    query(':enter', [
+      style({ opacity: 0, transform:
+        'translateX(-100px)' }),
+      stagger(100, [
+        animate('500ms ease-out',
+          style({ opacity: 1, transform:
+            'translateX(0)' }))
+      ])
+    ], { optional: true }),
+    query(':leave', [
+      animate('300ms',
+        style({ opacity: 0 }))
+    ], { optional: true })
+  ])
+])
+
+&lt;ul [@listAnimation]="users.length"&gt;
+  &lt;li *ngFor="let u of users"&gt;
+    {{ u.name }}
+  &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">27</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>INTERNATIONALIZATION (I18N)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular hỗ trợ <strong>i18n</strong> để build app đa ngôn ngữ — Tiếng Việt + English chẳng hạn.</p>
+        <h3>Built-in i18n:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng add @angular/localize
+
+# Mark text trong template
+&lt;h1 i18n="@@homeTitle"&gt;Welcome!&lt;/h1&gt;
+&lt;p i18n="@@greeting"&gt;Hello, {{ name }}&lt;/p&gt;
+
+# Extract messages
+ng extract-i18n --output-path src/locale
+
+# messages.xlf được tạo ra
+# Dịch và lưu thành messages.vi.xlf
+
+# Build cho tiếng Việt
+ng build --localize</pre>
+      </div>
+      <div class="col">
+        <h3>Alternative: ngx-translate</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+npm install @ngx-translate/core
+  @ngx-translate/http-loader
+
+// app.config.ts
+provideHttpClient(),
+importProvidersFrom(
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient]
+    }
+  })
+)
+
+// assets/i18n/en.json
+{
+  "WELCOME": "Welcome",
+  "LOGIN": "Login"
+}
+
+// assets/i18n/vi.json
+{
+  "WELCOME": "Chào mừng",
+  "LOGIN": "Đăng nhập"
+}
+
+// Template
+&lt;h1&gt;{{ 'WELCOME' | translate }}&lt;/h1&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">28</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>PROGRESSIVE WEB APP (PWA)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>PWA</strong> = web app chạy như native app — installable, offline-ready, push notifications.</p>
+        <h3>Đặc điểm:</h3>
+        <ul>
+          <li><strong>Installable</strong> — thêm vào home screen</li>
+          <li><strong>Offline support</strong> — Service Worker cache</li>
+          <li><strong>Push notifications</strong></li>
+          <li><strong>Responsive</strong> — mọi thiết bị</li>
+          <li><strong>HTTPS</strong> bắt buộc</li>
+        </ul>
+        <h3>Add PWA support:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng add @angular/pwa
+
+# Tạo:
+# - manifest.webmanifest
+# - ngsw-config.json
+# - icons trong assets/
+# - Service Worker registration</pre>
+      </div>
+      <div class="col">
+        <h3>manifest.webmanifest:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+{
+  "name": "CMC Learn",
+  "short_name": "CMC",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}</pre>
+        <h3>Service Worker config:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+// ngsw-config.json
+{
+  "assetGroups": [{
+    "name": "app",
+    "installMode": "prefetch",
+    "resources": {
+      "files": ["/index.html", "/*.js", "/*.css"]
+    }
+  }],
+  "dataGroups": [{
+    "name": "api",
+    "urls": ["/api/courses"],
+    "cacheConfig": {
+      "maxSize": 100,
+      "maxAge": "1d"
+    }
+  }]
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">29</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>SERVER-SIDE RENDERING (SSR)</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p><strong>Angular Universal</strong> cho phép render Angular app trên server thay vì browser → SEO tốt hơn, FCP nhanh hơn.</p>
+        <h3>Tại sao cần SSR?</h3>
+        <ul>
+          <li><strong>SEO</strong> — Google bot đọc HTML có sẵn</li>
+          <li><strong>First Contentful Paint</strong> nhanh hơn</li>
+          <li><strong>Social media preview</strong> (Open Graph)</li>
+          <li><strong>Slow devices</strong> — server làm việc nặng</li>
+        </ul>
+        <h3>Setup:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng add @angular/ssr
+
+# Tạo:
+# - server.ts (Express server)
+# - main.server.ts
+# - app.config.server.ts
+# - tsconfig.server.json</pre>
+      </div>
+      <div class="col">
+        <h3>Build & Run SSR:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+# Build
+ng build --ssr
+
+# Run
+node dist/my-app/server/server.mjs
+
+# Hoặc Docker
+FROM node:20-alpine
+WORKDIR /app
+COPY dist/my-app ./
+EXPOSE 4000
+CMD ["node", "server/server.mjs"]</pre>
+        <h3>Caveats:</h3>
+        <ul>
+          <li><strong>No window/document</strong> trên server — check <code>isPlatformBrowser</code></li>
+          <li><strong>localStorage</strong> không có — dùng cookie</li>
+          <li><strong>setTimeout</strong> có thể block render</li>
+          <li><strong>Memory leaks</strong> — request không cleanup</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular 17+ <strong>Hydration</strong> — server render HTML, client "hydrate" để interactive — best of both worlds.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">30</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TESTING TRONG ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <p>Angular CLI tự setup <strong>Jasmine + Karma</strong> cho unit tests và <strong>Protractor/Cypress</strong> cho E2E.</p>
+        <h3>Unit test component:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+describe('UserListComponent', () => {
+  let component: UserListComponent;
+  let fixture:
+    ComponentFixture&lt;UserListComponent&gt;;
+  let userService:
+    jasmine.SpyObj&lt;UserService&gt;;
+
+  beforeEach(async () => {
+    const spy = jasmine
+      .createSpyObj('UserService', ['getAll']);
+
+    await TestBed.configureTestingModule({
+      declarations: [UserListComponent],
+      providers: [
+        { provide: UserService, useValue: spy }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(
+      UserListComponent);
+    component = fixture.componentInstance;
+    userService = TestBed.inject(UserService)
+      as jasmine.SpyObj&lt;UserService&gt;;
+  });
+});</pre>
+      </div>
+      <div class="col">
+        <h3>Test cases:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+it('should load users on init', () => {
+  const mockUsers = [
+    { id: 1, name: 'A' },
+    { id: 2, name: 'B' }
+  ];
+  userService.getAll.and.returnValue(
+    of(mockUsers));
+
+  fixture.detectChanges();  // Trigger ngOnInit
+
+  expect(userService.getAll)
+    .toHaveBeenCalled();
+  expect(component.users).toEqual(mockUsers);
+});
+
+it('should display user names', () => {
+  component.users = [{ id: 1, name: 'Hung' }];
+  fixture.detectChanges();
+
+  const compiled = fixture.nativeElement;
+  expect(compiled.querySelector('h3')
+    .textContent).toContain('Hung');
+});
+
+// Run tests
+// ng test
+// ng test --code-coverage</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">31</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>STYLING & UI LIBRARIES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Style scoping:</h3>
+        <ul>
+          <li><strong>Component CSS</strong> — scoped tự động (View Encapsulation)</li>
+          <li><strong>Global styles</strong> — styles.scss áp dụng toàn app</li>
+          <li><strong>::ng-deep</strong> — cross component styling (deprecated)</li>
+        </ul>
+        <h3>SCSS/SASS support:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng new my-app --style=scss
+
+// styles.scss
+$primary-color: #1976d2;
+$breakpoint-mobile: 768px;
+
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+.btn {
+  background: $primary-color;
+  &amp;:hover { opacity: 0.9; }
+  @include mobile {
+    width: 100%;
+  }
+}</pre>
+      </div>
+      <div class="col">
+        <h3>UI Libraries phổ biến:</h3>
+        <table>
+          <thead><tr><th>Library</th><th>Đặc điểm</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Angular Material</strong></td><td>Material Design (Google)</td></tr>
+            <tr><td><strong>PrimeNG</strong></td><td>80+ components, themes</td></tr>
+            <tr><td><strong>Ng-Bootstrap</strong></td><td>Bootstrap cho Angular</td></tr>
+            <tr><td><strong>NG-ZORRO</strong></td><td>Ant Design</td></tr>
+            <tr><td><strong>Clarity</strong></td><td>VMware design</td></tr>
+            <tr><td><strong>Tailwind CSS</strong></td><td>Utility-first CSS</td></tr>
+          </tbody>
+        </table>
+        <h3>Setup Angular Material:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+ng add @angular/material
+
+// Trong component
+import { MatButtonModule } from
+  '@angular/material/button';
+import { MatTableModule } from
+  '@angular/material/table';
+
+// Template
+&lt;button mat-raised-button color="primary"&gt;
+  Save
+&lt;/button&gt;</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">32</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BUILD & DEPLOY ANGULAR APP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Build commands:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:12px;">
+# Development build
+ng build
+
+# Production build (optimized)
+ng build --configuration=production
+
+# Output trong dist/
+dist/my-app/
+  ├── index.html
+  ├── main.[hash].js
+  ├── styles.[hash].css
+  └── assets/</pre>
+        <h3>Optimizations tự động:</h3>
+        <ul>
+          <li><strong>AOT compilation</strong> — compile templates trước</li>
+          <li><strong>Tree shaking</strong> — bỏ code không dùng</li>
+          <li><strong>Minification</strong> — minify JS/CSS</li>
+          <li><strong>Bundle splitting</strong> — vendor + app</li>
+          <li><strong>Lazy loading</strong> — chunks riêng</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Deploy với Docker + Nginx:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+# Dockerfile
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build --prod
+
+FROM nginx:alpine
+COPY --from=build \
+  /app/dist/my-app /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80</pre>
+        <h3>nginx.conf:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+server {
+  listen 80;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # SPA routing
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+
+  # Proxy API
+  location /api/ {
+    proxy_pass http://backend:8080/;
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">33</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BEST PRACTICES ANGULAR</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3 style="color:#70AD47;">Nên làm:</h3>
+        <ul>
+          <li>✅ <strong>OnPush change detection</strong> cho performance</li>
+          <li>✅ <strong>Async pipe</strong> thay vì manual subscribe</li>
+          <li>✅ <strong>TrackBy</strong> trong @for/*ngFor</li>
+          <li>✅ <strong>Lazy loading</strong> cho feature modules</li>
+          <li>✅ <strong>Reactive Forms</strong> cho form phức tạp</li>
+          <li>✅ <strong>Smart/Dumb components</strong> pattern</li>
+          <li>✅ <strong>Strict TypeScript</strong> mode</li>
+          <li>✅ <strong>Environment files</strong> cho config</li>
+          <li>✅ <strong>Standalone components</strong> (Angular 17+)</li>
+          <li>✅ <strong>Signals</strong> cho local state</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 style="color:#C00000;">Tránh:</h3>
+        <ul>
+          <li>❌ <strong>Logic phức tạp trong template</strong></li>
+          <li>❌ <strong>Function calls trong template</strong> (chạy mỗi CD)</li>
+          <li>❌ <strong>Mutate input arrays/objects</strong></li>
+          <li>❌ <strong>any type</strong> — dùng unknown hoặc proper type</li>
+          <li>❌ <strong>Subscribe trong template</strong> manually</li>
+          <li>❌ <strong>Quên unsubscribe</strong> → memory leak</li>
+          <li>❌ <strong>Direct DOM manipulation</strong> — dùng Renderer2</li>
+          <li>❌ <strong>Logic gọi API trong constructor</strong></li>
+          <li>❌ <strong>Hardcode URLs</strong> — dùng environment.ts</li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular 18+: <strong>Zoneless</strong> change detection (không dùng Zone.js) — performance đỉnh cao, cần Signals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">34</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>ANGULAR VS REACT VS VUE</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:18%">Tiêu chí</th><th>Angular</th><th>React</th><th>Vue</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Type</strong></td><td>Full framework</td><td>Library (UI)</td><td>Framework</td></tr>
+        <tr><td><strong>Language</strong></td><td>TypeScript</td><td>JS/TS</td><td>JS/TS</td></tr>
+        <tr><td><strong>Maintained by</strong></td><td>Google</td><td>Meta</td><td>Open source (Evan You)</td></tr>
+        <tr><td><strong>Learning curve</strong></td><td>Cao</td><td>Trung bình</td><td>Thấp</td></tr>
+        <tr><td><strong>Architecture</strong></td><td>Opinionated</td><td>Flexible</td><td>Flexible</td></tr>
+        <tr><td><strong>State mgmt</strong></td><td>NgRx, Signals</td><td>Redux, Zustand</td><td>Pinia, Vuex</td></tr>
+        <tr><td><strong>Routing</strong></td><td>Built-in</td><td>React Router</td><td>Vue Router</td></tr>
+        <tr><td><strong>Forms</strong></td><td>Built-in mạnh</td><td>3rd party</td><td>Built-in</td></tr>
+        <tr><td><strong>Mobile</strong></td><td>Ionic, NativeScript</td><td>React Native</td><td>NativeScript</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Enterprise apps</td><td>Mọi loại</td><td>SMB, prototype</td></tr>
+        <tr><td><strong>Job market (VN)</strong></td><td>Cao (enterprise)</td><td>Cao nhất</td><td>Thấp hơn</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">35</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>BÀI TẬP LỚN — TO-DO LIST APP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Yêu cầu:</h3>
+        <ul>
+          <li><strong>CRUD tasks</strong> — thêm, sửa, xóa, đánh dấu hoàn thành</li>
+          <li><strong>Filter</strong> — All / Active / Completed</li>
+          <li><strong>Persist data</strong> — gọi Spring Boot API</li>
+          <li><strong>Routing</strong> — multiple pages</li>
+          <li><strong>Login</strong> — JWT auth</li>
+        </ul>
+        <h3>Cấu trúc:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+src/app/
+  ├── components/
+  │   ├── task-list/
+  │   ├── task-item/
+  │   └── task-form/
+  ├── services/
+  │   ├── task.service.ts
+  │   └── auth.service.ts
+  ├── models/
+  │   └── task.model.ts
+  ├── guards/
+  │   └── auth.guard.ts
+  └── interceptors/
+      └── auth.interceptor.ts</pre>
+      </div>
+      <div class="col">
+        <h3>Task Service:</h3>
+        <pre style="background:#f5f5f5; padding:10px; border-radius:6px; font-size:11px;">
+@Injectable({ providedIn: 'root' })
+export class TaskService {
+  private apiUrl = '/api/tasks';
+
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable&lt;Task[]&gt; {
+    return this.http.get&lt;Task[]&gt;(this.apiUrl);
+  }
+
+  create(task: Task): Observable&lt;Task&gt; {
+    return this.http.post&lt;Task&gt;(
+      this.apiUrl, task);
+  }
+
+  update(id: number, task: Task)
+      : Observable&lt;Task&gt; {
+    return this.http.put&lt;Task&gt;(
+      `${this.apiUrl}/${id}`, task);
+  }
+
+  delete(id: number): Observable&lt;void&gt; {
+    return this.http.delete&lt;void&gt;(
+      `${this.apiUrl}/${id}`);
+  }
+
+  toggleComplete(id: number)
+      : Observable&lt;Task&gt; {
+    return this.http.patch&lt;Task&gt;(
+      `${this.apiUrl}/${id}/toggle`, {});
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">36</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>LỖI THƯỜNG GẶP TRONG ANGULAR</h2></div>
+  <div class="slide-body">
+    <table>
+      <thead><tr><th style="width:35%">Lỗi</th><th>Nguyên nhân & Cách sửa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>NG0100: ExpressionChangedAfterChecked</strong></td><td>Thay đổi giá trị sau khi change detection — wrap trong setTimeout hoặc dùng ChangeDetectorRef</td></tr>
+        <tr><td><strong>Cannot read property of undefined</strong></td><td>Truy cập object null — dùng safe navigation <code>user?.name</code></td></tr>
+        <tr><td><strong>NullInjectorError</strong></td><td>Service không được provide — thêm vào providers</td></tr>
+        <tr><td><strong>Can't bind to 'X' since it isn't a known property</strong></td><td>Thiếu import module chứa directive/component</td></tr>
+        <tr><td><strong>StaticInjectorError HttpClient</strong></td><td>Thiếu HttpClientModule import hoặc provideHttpClient()</td></tr>
+        <tr><td><strong>Error: Template parse errors</strong></td><td>Syntax sai, thiếu component/directive</td></tr>
+        <tr><td><strong>CORS error</strong></td><td>Backend chưa cho phép origin — config CORS Spring Boot</td></tr>
+        <tr><td><strong>404 Not Found khi refresh</strong></td><td>SPA routing — config nginx try_files</td></tr>
+        <tr><td><strong>Memory leak</strong></td><td>Quên unsubscribe — dùng async pipe hoặc takeUntilDestroyed</td></tr>
+        <tr><td><strong>Bundle size lớn</strong></td><td>Import full library — dùng tree-shakable imports, lazy loading</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num">37</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TÀI LIỆU & RESOURCES</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Tài liệu chính thức:</h3>
+        <ul>
+          <li><strong>angular.dev</strong> — official docs (mới) <a class="ref" href="https://angular.dev" target="_blank">[link]</a></li>
+          <li><strong>angular.io</strong> — legacy docs <a class="ref" href="https://angular.io" target="_blank">[link]</a></li>
+          <li><strong>RxJS</strong> <a class="ref" href="https://rxjs.dev" target="_blank">[rxjs.dev]</a></li>
+          <li><strong>TypeScript Handbook</strong> <a class="ref" href="https://www.typescriptlang.org/docs/" target="_blank">[link]</a></li>
+        </ul>
+        <h3>Tools:</h3>
+        <ul>
+          <li><strong>Angular DevTools</strong> — Chrome extension</li>
+          <li><strong>StackBlitz</strong> — online IDE</li>
+          <li><strong>Storybook</strong> — develop components độc lập</li>
+          <li><strong>Compodoc</strong> — auto generate docs</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Community & Learning:</h3>
+        <ul>
+          <li><strong>Angular Blog</strong> <a class="ref" href="https://blog.angular.io" target="_blank">[link]</a></li>
+          <li><strong>Angular University</strong></li>
+          <li><strong>Ultimate Angular</strong> — Todd Motto</li>
+          <li><strong>Angular In Depth</strong></li>
+          <li><strong>Reddit r/angular</strong></li>
+          <li><strong>YouTube: Joshua Morony, Decoded Frontend</strong></li>
+        </ul>
+        <h3>Projects mẫu:</h3>
+        <ul>
+          <li><strong>Tour of Heroes</strong> — official tutorial</li>
+          <li><strong>RealWorld App</strong> — Conduit clone</li>
+          <li><strong>Angular Material starter</strong></li>
+        </ul>
+        <div class="ai-box">
+          <div class="ai-label">&#x2728; XU HƯỚNG HIỆN ĐẠI</div>
+          <p>Angular release cycle <strong>6 tháng</strong> — version mới mỗi nửa năm. Luôn check breaking changes khi update.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">38</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-content" style="background-image:url('../../shared/bg-content.jpg')">
+  <img class="slide-logo" src="../../shared/logo-white.png" alt="CMC University">
+  <div class="slide-header"><h2>TỔNG KẾT & CÂU HỎI ÔN TẬP</h2></div>
+  <div class="slide-body">
+    <div class="two-columns">
+      <div class="col">
+        <h3>Kiến thức cốt lõi:</h3>
+        <ul>
+          <li><strong>Angular</strong> = TypeScript framework, component-based, SPA</li>
+          <li><strong>Component</strong> = .ts + .html + .css (logic + view + style)</li>
+          <li><strong>Data Binding:</strong> Interpolation, Property, Event, Two-Way</li>
+          <li><strong>Directives:</strong> *ngIf, *ngFor, *ngSwitch</li>
+          <li><strong>Services</strong> = business logic, injectable, DI</li>
+          <li><strong>Modules</strong> = containers cho components, services</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Câu hỏi ôn tập:</h3>
+        <ul>
+          <li>1. Angular component gồm mấy file?</li>
+          <li>2. 4 loại data binding trong Angular?</li>
+          <li>3. *ngIf vs *ngSwitch — khi nào dùng?</li>
+          <li>4. Two-way binding cần import module gì?</li>
+          <li>5. Service trong Angular dùng để làm gì?</li>
+          <li>6. Tạo component bằng Angular CLI thế nào?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num">39</span>
+  <span class="slide-author">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+<section class="slide slide-title-page" style="background-image:url('../../shared/bg-title.png'); justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+  <img src="../../shared/logo-white.png" alt="CMC University" style="height:80px; margin-bottom:30px;">
+  <h1 style="font-family:'Open Sans',sans-serif; font-size:72px; font-weight:700; color:white; text-shadow:2px 3px 10px rgba(0,0,0,0.4);">Thank You!</h1>
+  <p style="font-size:28px; color:white; margin-top:20px; font-weight:300;">Câu hỏi? Thảo luận?</p>
+  <span class="slide-num" style="color:rgba(255,255,255,0.7);">40</span>
+  <span class="slide-author" style="color:rgba(255,255,255,0.8);">ThS. Nguyễn Việt Hưng - Trường Đại học CMC</span>
+</section>
+
+</body>
+</html>
